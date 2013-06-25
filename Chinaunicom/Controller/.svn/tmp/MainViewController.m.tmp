@@ -1,0 +1,76 @@
+//
+//  MainViewController.m
+//  Chinaunicom
+//
+//  Created by  on 13-5-4.
+//  Copyright (c) 2013年 Chinaunicom. All rights reserved.
+//
+
+#import "MainViewController.h"
+#import "BaseNavigationController.h"
+#import "LoginViewController.h"
+#import "SafetyViewController.h"
+#import "SafeDetailController.h"
+@interface MainViewController ()
+
+@end
+
+@implementation MainViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title=@"首页";
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self initLayoutUI];
+}
+
+- (void)initLayoutUI
+{
+    UIButton *login=[UIButton buttonWithType:UIButtonTypeCustom];
+    login.frame=CGRectMake(0.0, 0.0, 48.0, 30.0);
+    [login setBackgroundImage:[UIImage imageNamed:@"btn_1_On"] forState:UIControlStateNormal];
+    login.titleLabel.font=[UIFont fontWithName:@"TrebuchetMS-Bold" size:13];
+    [login setTitle:@"登录" forState:UIControlStateNormal];
+    [login addTarget:self action:@selector(Login) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *barItem=[[UIBarButtonItem alloc] initWithCustomView:login];
+    barItem.style=UIBarButtonItemStylePlain;
+    self.navigationItem.rightBarButtonItem=barItem;
+    
+   
+}
+
+
+- (void) Login
+{
+    LoginViewController  *loginCtrl=[[LoginViewController alloc] init];
+    [self.navigationController pushViewController:loginCtrl animated:YES];
+}
+
+- (IBAction)safetyTouch:(id)sender {
+    
+    SafetyViewController *safetyCtrl=[[SafetyViewController alloc] init];
+    //BaseNavigationController *baseNav=[[BaseNavigationController alloc] initWithRootViewController:safetyCtrl];
+    [self.navigationController pushViewController:safetyCtrl animated:YES];
+    //SafeDetailController *safedetail=[[SafeDetailController alloc] init];
+    //[self.navigationController pushViewController:safedetail animated:YES];
+}
+
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    
+}
+
+@end

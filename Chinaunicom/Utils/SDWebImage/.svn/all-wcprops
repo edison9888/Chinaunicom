@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/liantong/!svn/ver/136/Chinaunicom/Chinaunicom/Utils/SDWebImage
+END
+SDWebImageDownloader.m
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/liantong/!svn/ver/136/Chinaunicom/Chinaunicom/Utils/SDWebImage/SDWebImageDownloader.m
+END
+SDWebImageManagerDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/liantong/!svn/ver/136/Chinaunicom/Chinaunicom/Utils/SDWebImage/SDWebImageManagerDelegate.h
+END
+SDWebImageDecoder.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/liantong/!svn/ver/136/Chinaunicom/Chinaunicom/Utils/SDWebImage/SDWebImageDecoder.h
+END
+SDImageCache.h
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/liantong/!svn/ver/136/Chinaunicom/Chinaunicom/Utils/SDWebImage/SDImageCache.h
+END
+SDWebImageManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/liantong/!svn/ver/136/Chinaunicom/Chinaunicom/Utils/SDWebImage/SDWebImageManager.h
+END
+SDWebImageDecoder.m
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/liantong/!svn/ver/136/Chinaunicom/Chinaunicom/Utils/SDWebImage/SDWebImageDecoder.m
+END
+SDImageCache.m
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/liantong/!svn/ver/136/Chinaunicom/Chinaunicom/Utils/SDWebImage/SDImageCache.m
+END
+UIButton+WebCache.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/liantong/!svn/ver/136/Chinaunicom/Chinaunicom/Utils/SDWebImage/UIButton+WebCache.h
+END
+SDWebImageManager.m
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/liantong/!svn/ver/136/Chinaunicom/Chinaunicom/Utils/SDWebImage/SDWebImageManager.m
+END
+UIImageView+WebCache.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/liantong/!svn/ver/136/Chinaunicom/Chinaunicom/Utils/SDWebImage/UIImageView+WebCache.h
+END
+SDWebImageCompat.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/liantong/!svn/ver/136/Chinaunicom/Chinaunicom/Utils/SDWebImage/SDWebImageCompat.h
+END
+UIButton+WebCache.m
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/liantong/!svn/ver/136/Chinaunicom/Chinaunicom/Utils/SDWebImage/UIButton+WebCache.m
+END
+UIImageView+WebCache.m
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/liantong/!svn/ver/136/Chinaunicom/Chinaunicom/Utils/SDWebImage/UIImageView+WebCache.m
+END
+SDWebImagePrefetcher.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/liantong/!svn/ver/136/Chinaunicom/Chinaunicom/Utils/SDWebImage/SDWebImagePrefetcher.h
+END
+.gitignore
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/liantong/!svn/ver/136/Chinaunicom/Chinaunicom/Utils/SDWebImage/.gitignore
+END
+SDWebImageDownloaderDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/liantong/!svn/ver/136/Chinaunicom/Chinaunicom/Utils/SDWebImage/SDWebImageDownloaderDelegate.h
+END
+SDWebImagePrefetcher.m
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/liantong/!svn/ver/136/Chinaunicom/Chinaunicom/Utils/SDWebImage/SDWebImagePrefetcher.m
+END
+SDWebImageDownloader.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/liantong/!svn/ver/136/Chinaunicom/Chinaunicom/Utils/SDWebImage/SDWebImageDownloader.h
+END
+SDImageCacheDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/liantong/!svn/ver/136/Chinaunicom/Chinaunicom/Utils/SDWebImage/SDImageCacheDelegate.h
+END

@@ -1,0 +1,137 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/liantong/!svn/ver/100/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest
+END
+ASIHTTPRequest.m
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/liantong/!svn/ver/50/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/ASIHTTPRequest.m
+END
+ASINetworkQueue.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/liantong/!svn/ver/50/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/ASINetworkQueue.h
+END
+ASICacheDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/liantong/!svn/ver/50/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/ASICacheDelegate.h
+END
+ASIProgressDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/liantong/!svn/ver/50/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/ASIProgressDelegate.h
+END
+ASIAuthenticationDialog.h
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/liantong/!svn/ver/49/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/ASIAuthenticationDialog.h
+END
+ASIDataDecompressor.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/liantong/!svn/ver/50/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/ASIDataDecompressor.h
+END
+ASIDownloadCache.m
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/liantong/!svn/ver/50/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/ASIDownloadCache.m
+END
+Reachability.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/liantong/!svn/ver/50/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/Reachability.h
+END
+ASINetworkQueue.m
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/liantong/!svn/ver/50/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/ASINetworkQueue.m
+END
+ASIAuthenticationDialog.m
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/liantong/!svn/ver/49/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/ASIAuthenticationDialog.m
+END
+ASIDataDecompressor.m
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/liantong/!svn/ver/50/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/ASIDataDecompressor.m
+END
+ASIFormDataRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/liantong/!svn/ver/50/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/ASIFormDataRequest.h
+END
+Reachability.m
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/liantong/!svn/ver/100/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/Reachability.m
+END
+ASIFormDataRequest.m
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/liantong/!svn/ver/50/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/ASIFormDataRequest.m
+END
+ASIInputStream.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/liantong/!svn/ver/50/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/ASIInputStream.h
+END
+ASIHTTPRequestConfig.h
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/liantong/!svn/ver/50/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/ASIHTTPRequestConfig.h
+END
+ASIInputStream.m
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/liantong/!svn/ver/50/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/ASIInputStream.m
+END
+ASIHTTPRequestDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/liantong/!svn/ver/50/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/ASIHTTPRequestDelegate.h
+END
+ASIDataCompressor.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/liantong/!svn/ver/50/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/ASIDataCompressor.h
+END
+ASIHTTPRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/liantong/!svn/ver/50/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/ASIHTTPRequest.h
+END
+ASIDownloadCache.h
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/liantong/!svn/ver/50/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/ASIDownloadCache.h
+END
+ASIDataCompressor.m
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/liantong/!svn/ver/50/Chinaunicom/Chinaunicom/Utils/ASIHttpRequest/ASIDataCompressor.m
+END

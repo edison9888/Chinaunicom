@@ -1,0 +1,344 @@
+//
+//  WonderfulCommentsViewController.m
+//  Chinaunicom
+//
+//  Created by  on 13-5-5.
+//  Copyright (c) 2013年 Chinaunicom. All rights reserved.
+//
+
+#import "WonderfulCommentsViewController.h"
+#import "ASIHTTPRequest.h"
+#import "CustomWonderfulCommentsCell.h"
+#import "SysConfig.h"
+#import "HttpRequestHelper.h"
+#import "ASIFormDataRequest.h"
+#import "Report.h"
+#import "User.h"
+#import "requestServiceHelper.h"
+
+
+
+@interface WonderfulCommentsViewController ()
+@property (nonatomic) CGRect theTableViewOriFrame;
+@property (nonatomic) CGRect inputViewOriFrame;
+- (void)keyboardWillShow:(NSNotification *)notification;
+- (void)keyboardWillHide:(NSNotification *)notification;
+@end
+
+@implementation WonderfulCommentsViewController
+@synthesize myTableView,dataArray,recoderAndPlayer,myReport;
+@synthesize textview = _textView;
+@synthesize bottombar = _inputView;
+@synthesize theTableViewOriFrame = _theTableViewOriFrame;
+@synthesize inputViewOriFrame = _inputViewOriFrame;
+@synthesize isText = _isText;
+@synthesize talkbutton = _talkButton;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title=@"精彩评论";
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.recodAlert = [[UIImageView alloc] initWithFrame:CGRectMake(95, 50, 130, 130)];
+    //添加播放图片
+    [self.recodAlert setImage:[UIImage imageNamed:@"record"]];
+    [self.view.window  addSubview:self.recodAlert];
+    recoderAndPlayer = [[RecoderAndPlayer alloc] init];
+    [self.navigationController.navigationBar setHidden:NO];
+    //返回按钮
+    UIButton* backButton= [UIButton buttonWithType:UIButtonTypeCustom];
+    backButton.frame = CGRectMake(0, 0, 32, 32);
+    [backButton setBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem* backButtonItem= [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+    
+    dataArray = [[NSMutableArray alloc] init];
+    self.recodAlert.hidden=YES;
+    //key board view
+//   [self.keyBoardView setBackgroundColor:[CommonHelper hexStringToColor:@"#E8E8E8"]];
+    [self fetchData];
+    NSLog(@"height－－－－－－－－－－－－－－:%f",self.view.frame.size.height);
+    //[self.bottombar setFrame:CGRectMake(0.0f,380,self.view.frame.size.width,44)];
+}
+
+-(void)fetchData
+{
+    
+    [self showLoadingActivityViewWithString:@"加载数据"];
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+    //115
+    //[dictionary setObject:self.myReport.reportId forKey:@"reportId"];
+    [dictionary setObject:@"115" forKey:@"reportId"];
+    [dictionary setObject:@"10" forKey:@"pageSize"];
+    [dictionary setObject:@"1" forKey:@"pageIndex"];
+    
+    [[requestServiceHelper defaultService] getCommentsWithParamter:dictionary sucess:^(NSMutableArray *commentDictionary) {
+        
+        self.dataArray=commentDictionary;
+        [self performSelectorOnMainThread:@selector(isOver) withObject:nil waitUntilDone:NO];
+        
+    } falid:^(NSString *errorMsg) {
+        //
+        [self hideLoadingActivityView];
+    }];
+}
+
+
+-(void)isOver
+{
+    
+    [myTableView reloadData];
+    [self hideLoadingActivityView];
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [recoderAndPlayer stopPlaying];
+    UIImageView *rightDiv=(UIImageView*)[self.navigationController.navigationBar viewWithTag:102];
+    [rightDiv setHidden:YES];
+    _inputViewOriFrame = _inputView.frame;
+    _theTableViewOriFrame = self.view.frame;
+    
+}
+
+#pragma mark - Rotation control
+- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+    [[NSNotificationCenter defaultCenter] postNotificationName:UIKeyboardCoViewWillRotateNotification object:nil];
+}
+
+- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
+    [[NSNotificationCenter defaultCenter] postNotificationName:UIKeyboardCoViewDidRotateNotification object:nil];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
+    return YES;
+}
+
+
+#pragma mark - IBActions
+- (IBAction)backgroundTouchDown:(id)sender {
+    //[self.texField resignFirstResponder];
+
+}
+
+
+
+#pragma mark - Table view data source
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    //NSLog(@"da ------------ %@",dataArray);
+    return [self.dataArray count];
+    
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 96;//此处返回cell的高度
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *simpleTableIdentifier = @"CustomWonderfulCommentsCell";
+    
+    CustomWonderfulCommentsCell *cell = (CustomWonderfulCommentsCell*)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];//复用cell
+    
+    if (cell == nil) {
+        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"CustomWonderfulCommentsCell" owner:self options:nil];//加载自定义cell的xib文件
+        cell = [array objectAtIndex:0];
+    }
+    cell.userNameLabel.text=[[dataArray objectAtIndex:indexPath.row] objectForKey:@"nickName"];
+    cell.contextLabel.text=[[dataArray objectAtIndex:indexPath.row] objectForKey:@"commentContent"];
+    
+    cell.dateTimeLabel.text=[[dataArray objectAtIndex:indexPath.row] objectForKey:@"commentDate"];
+    //[cell.image addTarget:self action:@selector(zan) forControlEvents:UIControlEventTouchUpInside];
+    return cell;
+    
+}
+//- (IBAction)comment:(id)sender {
+//    
+//  
+//    [self.commentsTextField resignFirstResponder];
+//    if ([[self.commentsTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
+//
+//        [self showAlertViewWithString:@"请输入评论！" setDelegate:nil setTag:0];
+//        return;
+//    }
+//    
+//    NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
+//    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
+//    NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
+//   
+//    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+//    
+//    [dictionary setObject:self.myReport.reportId forKey:@"reportId"];
+//    
+//    [dictionary setObject:userid forKey:@"userId"];
+//    NSData *data = [self.commentsTextField.text  dataUsingEncoding: NSUTF8StringEncoding];
+//    NSString *content=[[NSString alloc]initWithData:data encoding:1];
+//    [dictionary setObject:content forKey:@"content"];
+//    [dictionary setObject:@"amr" forKey:@"audioType"];
+//    //if(isRecord)
+//    //{
+//        NSString *filePath = [NSString stringWithFormat:@"%@",[[[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"SpeechSoundDir"] stringByAppendingPathComponent:@"alreadyEncoderData.amr"]];
+//        NSFileManager *fm = [NSFileManager defaultManager];
+//        BOOL exist= [fm fileExistsAtPath:filePath];
+////        if (!exist) {
+////            return;
+////        }
+//       NSData *soundData = [NSData dataWithContentsOfFile:filePath];
+//    [self showLoadingActivityViewWithString:@"正在发布..."];
+//      [[requestServiceHelper defaultService] PublishCommentsWithAudioParamter:dictionary fileName:@"alreadyEncoderData" fileData:soundData uploadKey:@"audioType" Progress:self sucess:^(NSString *state) {
+//              [self fetchData];
+//           [self hideLoadingActivityView];
+//      } falid:^(NSString *errorMsg) {
+//          [self hideLoadingActivityView];
+//      }];
+//}
+//
+
+
+
+-(void)back
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidUnload {
+    [self setMyTableView:nil];
+    [self setMyTableView:nil];
+    [self setBottombar:nil];
+    [self setTextview:nil];
+    [self setTalkbutton:nil];
+    [super viewDidUnload];
+}
+- (IBAction)startRecord:(id)sender {
+        [recoderAndPlayer setViewDelegate:self];
+        [recoderAndPlayer SpeechRecordStart];
+    self.recodAlert.hidden=NO;
+     [self.recodAlert bringSubviewToFront:self.view];
+}
+
+- (IBAction)endRecord:(id)sender {
+    [recoderAndPlayer SpeechRecordStop];
+    self.recodAlert.hidden=YES;
+}
+//录音时间
+-(void)TimePromptAction:(int)sencond
+{
+   
+}
+-(void)playingFinishWithBBS:(BOOL)isFinish
+{
+}
+-(void)recordAndSendAudioFile:(NSString *)fileName fileSize:(NSString *)fileSize duration:(NSString *)timelength
+{
+    isRecord=YES;
+    NSLog(@"file:%@",fileName);
+}
+- (IBAction)send:(id)sender {
+      NSLog(@"send按钮按下");
+}
+
+-(IBAction)switchTextAndSpeecn:(id)sender{
+    NSLog(@"按钮按下");
+    UIButton *button = (UIButton *)sender;
+    if (_isText) {
+        [_textView resignFirstResponder];
+        [button setImage:[UIImage imageNamed:@"chat_word_bt.png"] forState:UIControlStateNormal];
+        _talkButton.hidden = NO;
+        _textView.hidden = YES;
+        _isText = NO;
+    }else {
+        [button setImage:[UIImage imageNamed:@"voice_select.png"] forState:UIControlStateNormal];
+        _talkButton.hidden = YES;
+        _textView.hidden = NO;
+        _isText = YES;
+        
+    }
+
+}
+
+
+-(void)keyboardWillShow:(NSNotification *)notification
+{
+    if (nil == self.view.superview)
+        return;
+    /*
+     Reduce the size of the text view so that it's not obscured by the keyboard.
+     Animate the resize so that it's in sync with the appearance of the keyboard.
+     */
+    
+    NSDictionary *userInfo = [notification userInfo];
+    
+    // Get the origin of the keyboard when it's displayed.
+    NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    
+    // Get the top of the keyboard as the y coordinate of its origin in self's view's coordinate system. The bottom of the text view's frame should align with the top of the keyboard's final position.
+    CGRect keyboardRect = [aValue CGRectValue];
+    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
+    
+    
+    // Get the duration of the animation.
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue: &animationDuration];
+    
+    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration: animationDuration];
+    
+    if ([_textView isFirstResponder])
+    {
+        self.view.frame = CGRectMake(_theTableViewOriFrame.origin.x, _theTableViewOriFrame.origin.y, _theTableViewOriFrame.size.width, _theTableViewOriFrame.size.height - keyboardRect.size.height);
+        _inputView.frame = CGRectMake(_inputViewOriFrame.origin.x, _inputViewOriFrame.origin.y-keyboardRect.size.height, _inputViewOriFrame.size.width,_inputViewOriFrame.size.height);
+    }
+    
+    [UIView commitAnimations];
+    
+}
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    if (nil == self.view.superview)
+        return;
+    NSDictionary* userInfo = [notification userInfo];
+    
+    /*
+     Restore the size of the text view (fill self's view).
+     Animate the resize so that it's in sync with the disappearance of the keyboard.
+     */
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    
+    if ([_textView isFirstResponder])
+    {
+        self.view.frame = _theTableViewOriFrame;
+        _inputView.frame = _inputViewOriFrame;
+    }
+    
+    [UIView commitAnimations];
+
+}
+@end

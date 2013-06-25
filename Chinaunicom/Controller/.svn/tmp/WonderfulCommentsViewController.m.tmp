@@ -1,0 +1,108 @@
+//
+//  WonderfulCommentsViewController.m
+//  Chinaunicom
+//
+//  Created by  on 13-5-5.
+//  Copyright (c) 2013年 Chinaunicom. All rights reserved.
+//
+
+#import "WonderfulCommentsViewController.h"
+
+@interface WonderfulCommentsViewController ()
+
+@end
+
+@implementation WonderfulCommentsViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title=@"精彩评论";
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    //返回按钮
+    UIButton* backButton= [UIButton buttonWithType:UIButtonTypeCustom];
+    backButton.frame = CGRectMake(0, 0, 51, 30);
+    [backButton setBackgroundImage:[UIImage imageNamed:@"back_btn.png"] forState:UIControlStateNormal];
+    [backButton setTitle:@"返回" forState:UIControlStateNormal];
+    backButton.titleLabel.font=[UIFont fontWithName:@"TrebuchetMS-Bold" size:12];
+    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem* backButtonItem= [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+    
+    [self initDataSource];
+    
+}
+
+-(void)initDataSource
+{
+    self.dataSource=@[@"这个方案做得很好，可以继续！",
+                      @"这个方案做得很好，可以继续！",
+                      @"这个方案做得很好，可以继续！",
+                      @"这个方案做得很好，可以继续！"];
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    
+    return [self.dataSource count];
+    
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 96;//此处返回cell的高度
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *simpleTableIdentifier = @"CustomWonderfulCommentsCell";
+    
+    CustomWonderfulCommentsCell *cell = (CustomWonderfulCommentsCell*)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];//复用cell
+    
+    if (cell == nil) {
+        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"CustomWonderfulCommentsCell" owner:self options:nil];//加载自定义cell的xib文件
+        cell = [array objectAtIndex:0];
+    }
+    cell.userNameLabel.text=@"测试标题";
+    cell.contextLabel.text=[self.dataSource objectAtIndex:indexPath.row];
+    cell.countLabel.text=@"2000";
+    cell.dateTimeLabel.text=@"05-05";
+    //[cell.image addTarget:self action:@selector(zan) forControlEvents:UIControlEventTouchUpInside];
+    return cell;
+    
+}
+- (IBAction)comment:(id)sender {
+    UIAlertView *coll=[[UIAlertView alloc] initWithTitle:@""
+                                                 message:@"评论成功"
+                                                delegate:self
+                                       cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [coll show];
+}
+- (IBAction)zan:(id)sender {
+    UIAlertView *coll=[[UIAlertView alloc] initWithTitle:@""
+                                                 message:@"赞一个成功"
+                                                delegate:self
+                                       cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [coll show];
+}
+
+-(void)back
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end

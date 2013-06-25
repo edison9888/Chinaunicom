@@ -1,0 +1,297 @@
+//
+//  SafetyViewController.m
+//  Chinaunicom
+//
+//  Created by  on 13-5-4.
+//  Copyright (c) 2013年 Chinaunicom. All rights reserved.
+//
+
+#import "MainViewController.h"
+#import "SysConfig.h"
+#import "requestServiceHelper.h"
+@interface MainViewController ()
+
+@end
+
+@implementation MainViewController
+
+
+
+-(void)pushRoot
+{
+    NSLog(@"Left delegate");
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+        self.title=@"电商头条";
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self initDataSource];
+    
+}
+
+-(void)initDataSource
+{
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+    
+    [dictionary setValue: @"128" forKey:@"userId"];//这个id应该取登陆id
+    [dictionary setValue: @"1" forKey:@"index"];
+    [dictionary setValue: @"100" forKey:@"pageNumber"];
+<<<<<<< .mine
+    [[requestServiceHelper defaultService] getReportList:dictionary sucess:^(NSMutableDictionary *user) {
+        //<#code#>
+    } falid:^(NSString *errorMsg) {
+        //<#code#>
+    }];
+=======
+//    [[requestServiceHelper defaultService] getReportList:dictionary sucess:^(NSString *user) {
+//        
+//    } falid:^(NSString *errorMsg) {
+//        
+//    }];
+>>>>>>> .r66
+    
+    
+    self.dataSource=@[@"中国联通将在今年7月推出Wocloud3.0版本",
+                     @"中国联通将在今年8月推出Wocloud3.0版本",
+                     @"中国联通将在今年8月推出Wocloud3.0版本",
+                     @"中国联通将在今年11月推出Wocloud3.0版本"];
+    
+    self.imageArray=@[@"mesImage",
+                     @"",
+                     @"",
+                     @""];
+     
+    //多菜单按钮
+    UIButton* listButton= [UIButton buttonWithType:UIButtonTypeCustom];
+    listButton.frame = CGRectMake(0, 0, 32, 32);
+    [listButton setBackgroundImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];
+    [listButton addTarget:self action:@selector(showLeft) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem* leftItem= [[UIBarButtonItem alloc] initWithCustomView:listButton];
+    self.navigationItem.leftBarButtonItem = PP_AUTORELEASE(leftItem);
+    /*分割线1*/
+    UIImageView *imageViewTopDiv1=[[UIImageView alloc] initWithFrame:CGRectMake(30, -10, 30, 63)];
+    [imageViewTopDiv1 setImage:[UIImage imageNamed:@"topDividingLine"]];
+    [imageViewTopDiv1 setTag:101];
+    [self.navigationController.navigationBar addSubview:imageViewTopDiv1];
+    
+    //个人中心按钮
+    UIButton* personalButton= [UIButton buttonWithType:UIButtonTypeCustom];
+    personalButton.frame = CGRectMake(0, 0, 32, 32);
+    [personalButton setBackgroundImage:[UIImage imageNamed:@"user"] forState:UIControlStateNormal];
+    [personalButton addTarget:self action:@selector(showRight) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem* rightItem= [[UIBarButtonItem alloc] initWithCustomView:personalButton];
+    self.navigationItem.rightBarButtonItem=PP_AUTORELEASE(rightItem);
+    
+    /*分割线2*/
+    UIImageView *imageViewTopDiv2=[[UIImageView alloc] initWithFrame:CGRectMake(260, -10, 30, 63)];
+    [imageViewTopDiv2 setImage:[UIImage imageNamed:@"topDividingLine"]];
+    [imageViewTopDiv2 setTag:102];
+    [self.navigationController.navigationBar addSubview:imageViewTopDiv2];
+   
+    //背景图片
+    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]];
+    //搜索
+    [self.mySearch setBackgroundImage:[UIImage imageNamed:@"searchbg"]];
+    if (self.myTableView) {
+        [self.myTableView setBackgroundView:nil];
+        [self.myTableView setBackgroundColor:[UIColor clearColor]];
+    }
+   
+    //[self.myTableView setSeparatorColor:[UIColor clearColor]];
+    
+}
+
+#pragma mark - Table view data source
+-(void)initCustomTableCell:(CustomMainViewCell*)cell IndexPath:(NSIndexPath *)indexPath
+{
+    
+    //通过代码将cell添加上去
+    if ([[self.imageArray objectAtIndex:indexPath.row] length]>0) {
+        
+        //内容摘要
+        UILabel *contextLabel=[[UILabel alloc] initWithFrame:CGRectMake(14, 10, 200, 49)];
+        contextLabel.text=[self.dataSource objectAtIndex:indexPath.row];
+        [contextLabel setBackgroundColor:[UIColor clearColor]];
+        [contextLabel setNumberOfLines:0];
+        [cell addSubview:contextLabel];
+        //评论
+        UILabel *countLabel=[[UILabel alloc] initWithFrame:CGRectMake(120, 68, 80, 21)];
+        countLabel.text=@"评论 2000";
+        [countLabel setBackgroundColor:[UIColor clearColor]];
+        [countLabel setTextColor:[CommonHelper hexStringToColor:@"#8D8D8E"]];
+        [cell addSubview:countLabel];
+
+        UIImageView *typeImageView=[[UIImageView alloc] init];
+        [typeImageView setFrame:CGRectMake(14, 62, 34, 34)];
+        [cell addSubview:typeImageView];
+        //分类图标
+        if (indexPath.row==0) {
+            typeImageView.image=[UIImage imageNamed:@"type_safe"];
+            UIImageView *imageView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mesImage"]];
+            [imageView setFrame:CGRectMake(215, 10, 95, 79)];
+            [cell addSubview:imageView];
+        }else if (indexPath.row==1) {
+            typeImageView.image=[UIImage imageNamed:@"type_intenet"];
+        }else{
+            typeImageView.image=[UIImage imageNamed:@"type_other"];
+        }
+        
+    }else{
+        //内容摘要
+        UILabel *contextLabel=[[UILabel alloc] initWithFrame:CGRectMake(14, 10, 302, 49)];
+        contextLabel.text=[self.dataSource objectAtIndex:indexPath.row];
+        [contextLabel setBackgroundColor:[UIColor clearColor]];
+        [contextLabel setNumberOfLines:0];
+        [cell addSubview:contextLabel];
+        //评论
+        UILabel *countLabel=[[UILabel alloc] initWithFrame:CGRectMake(230, 68, 80, 21)];
+        countLabel.text=@"评论 2000";
+        [countLabel setBackgroundColor:[UIColor clearColor]];
+        [countLabel setTextColor:[CommonHelper hexStringToColor:@"#8D8D8E"]];
+        [cell addSubview:countLabel];
+        
+        UIImageView *typeImageView=[[UIImageView alloc] init];
+        [typeImageView setFrame:CGRectMake(14, 62, 34, 34)];
+        [cell addSubview:typeImageView];
+        //分类图标
+        if (indexPath.row==0) {
+            typeImageView.image=[UIImage imageNamed:@"type_safe"];
+        }else if (indexPath.row==1) {
+            typeImageView.image=[UIImage imageNamed:@"type_intenet"];
+        }else{
+            typeImageView.image=[UIImage imageNamed:@"type_other"];
+        }
+        
+    }
+
+    
+    
+}
+//添加标题和脚本信息
+- (NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDate *now;
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit |
+    NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    now=[NSDate date];
+    comps = [calendar components:unitFlags fromDate:now];
+    NSDate *  senddate=[NSDate date];
+    NSDateFormatter  *dateformatter=[[NSDateFormatter alloc] init];
+    [dateformatter setDateFormat:@"YYYY-MM-dd"];
+    NSString *  locationString=[dateformatter stringFromDate:senddate];
+    int week=[comps weekday];
+    NSString *weekStr;
+    if(week==1)
+    {
+        weekStr=@"   星期天";
+    }else if(week==2){
+        weekStr=@"   星期一";
+        
+    }else if(week==3){
+        weekStr=@"   星期二";
+        
+    }else if(week==4){
+        weekStr=@"   星期三";
+        
+    }else if(week==5){
+        weekStr=@"   星期四";
+        
+    }else if(week==6){
+        weekStr=@"   星期五";
+        
+    }else if(week==7){
+        weekStr=@"   星期六";
+        
+    }  
+    return [locationString stringByAppendingString:weekStr];
+
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    
+    return [self.dataSource count];
+    
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100;//此处返回cell的高度
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //UITableViewCell *cell;
+        
+    static NSString *CellWithIdentifier = @"CustomMainViewCell";
+    CustomMainViewCell *cell = (CustomMainViewCell*)[tableView dequeueReusableCellWithIdentifier:CellWithIdentifier];//复用cell
+    //通过XIB将cell添加上去
+    if (cell == nil) {
+            NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"CustomMainViewCell" owner:self options:nil];
+            cell = [array objectAtIndex:0];
+    }
+    [self initCustomTableCell:cell IndexPath:indexPath];
+    
+    return cell;
+    
+}
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{ 
+    
+    //NSString *rowString = [self.dataSource objectAtIndex:indexPath.row];
+    ContextDetailController *safeDetailCtrl=[[ContextDetailController alloc] init];
+    [self.navigationController pushViewController:safeDetailCtrl animated:YES];
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //左边菜单
+    LeftMenuViewController *left = [[LeftMenuViewController alloc] init];
+    //BaseNavigationController *leftBaseNav=[[BaseNavigationController alloc] initWithRootViewController:left];
+    [self.revealSideViewController preloadViewController:left forSide:PPRevealSideDirectionLeft];
+    //右边菜单
+    RightMenuViewController *right = [[RightMenuViewController alloc] init];
+    //BaseNavigationController *rightBaseNav=[[BaseNavigationController alloc] initWithRootViewController:right];
+    [self.revealSideViewController preloadViewController: right forSide:PPRevealSideDirectionRight];
+    
+    [self.navigationController.navigationBar setHidden:NO];
+}
+
+-(void)back
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void) showLeft
+{
+    [self.revealSideViewController pushOldViewControllerOnDirection:PPRevealSideDirectionLeft animated:YES];
+}
+
+- (void) showRight
+{
+    [self.revealSideViewController pushOldViewControllerOnDirection:PPRevealSideDirectionRight animated:YES];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidUnload {
+
+
+    [super viewDidUnload];
+}
+@end
