@@ -50,6 +50,17 @@
     [imageViewTopDiv1 setImage:[UIImage imageNamed:@"topDividingLine"]];
     [imageViewTopDiv1 setTag:101];
     [self.navigationController.navigationBar addSubview:imageViewTopDiv1];
+    
+//    //返回按钮
+//    UIButton* backButton= [UIButton buttonWithType:UIButtonTypeCustom];
+//    UIImage *image=[UIImage imageNamed:@"left_arrow"];
+//    backButton.frame = CGRectMake(10, 0, 30, 30);
+//    [backButton setBackgroundImage:image forState:UIControlStateNormal];
+//    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *backItem=[[UIBarButtonItem alloc] initWithCustomView:backButton];
+//    self.navigationItem.leftBarButtonItem=backItem;
+    
+    
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString* documentsDirectory = [paths objectAtIndex:0];
     // Now we get the full path to the file
@@ -63,6 +74,16 @@
     NSString *picpath=[user.icon stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
     [self.icon setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:picpath]]];
     }
+    
+    //自定义switch...
+    self.message.on=YES;
+    self.sound.on=YES;
+    self.message.onText=@"声音";
+    self.message.offText=@"震动";
+    self.sound.onText=@"开";
+    self.sound.offText=@"关";
+    [self.message addTarget:self action:@selector(messageChange:) forControlEvents:UIControlEventValueChanged];
+    [self.sound addTarget:self action:@selector(soundChange:) forControlEvents:UIControlEventValueChanged];
 }
 
 -(void)back
@@ -208,6 +229,7 @@
 }
 
 - (IBAction)messageChange:(id)sender {
+   
 }
 
 - (IBAction)soundChange:(id)sender {

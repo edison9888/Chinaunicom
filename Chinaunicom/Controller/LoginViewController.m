@@ -16,7 +16,9 @@
 
 
 @interface LoginViewController ()
-
+{
+    BOOL isOff;
+}
 @end
 
 @implementation LoginViewController
@@ -45,8 +47,8 @@
     //背景图片
     self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg"]];
     //修改placeholder颜色
-    [self.userNameTextField setValue:[UIColor darkGrayColor] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.passWordTextField setValue:[UIColor darkGrayColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.userNameTextField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [self.passWordTextField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
     
     //设置光标初始位置
     [self.passWordTextField setSecureTextEntry:YES];//设置成密码框
@@ -94,6 +96,7 @@
         self.passWordTextField.text = @"";
        ((UIButton*)[self.view viewWithTag:1]).selected=NO;
     }
+   
 }
 
 - (IBAction)checkbox:(id)sender {
@@ -188,6 +191,7 @@
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
     NSInteger tag=textField.tag;
+    
     if(tag==10010){
         [textField setBackground:[UIImage imageNamed:@"user2"]];
         [self.passWordTextField setBackground:[UIImage imageNamed:@"password1"]];
@@ -197,19 +201,23 @@
         [self.userNameTextField setBackground:[UIImage imageNamed:@"user1"]];
     }
 }
+
 -(void)textFieldDidEndEditing:(UITextField *)textField{
-     NSInteger tag=textField.tag;
-    if(tag==10010){
-        [textField setBackground:[UIImage imageNamed:@"user1"]];
-        [self.passWordTextField setBackground:[UIImage imageNamed:@"password2"]];
-    }
-    else{
-        [textField setBackground:[UIImage imageNamed:@"password1"]];
-        [self.userNameTextField setBackground:[UIImage imageNamed:@"user2"]];
+    NSInteger tag=textField.tag;
+    
+    if (isOff==YES) {
+        if(tag==10010){
+            [textField setBackground:[UIImage imageNamed:@"user1"]];
+            [self.passWordTextField setBackground:[UIImage imageNamed:@"password2"]];
+        }
+        else{
+            [textField setBackground:[UIImage imageNamed:@"password1"]];
+            [self.userNameTextField setBackground:[UIImage imageNamed:@"user2"]];
+        }
     }
 }
 - (IBAction)backgroundTouch:(id)sender {
-    
+    isOff = NO;
     [self.userNameTextField resignFirstResponder];
     [self.passWordTextField resignFirstResponder];
 }

@@ -59,7 +59,6 @@
     self.myPageControl.numberOfPages = 2;
     self.myPageControl.currentPage = 0;
     
-    //
     [self loadScrollViewWithPage:0];
     [self loadScrollViewWithPage:1];
     
