@@ -63,7 +63,9 @@ static requestServiceHelper *requestService;
 {
     [HttpRequestHelper asyncGetRequest:url parameter:dictionary requestComplete:^(NSString *responseStr) {
         if([responseStr isEqualToString:@"success"])
-            sucess(true);
+        {
+            sucess(YES);
+        }
         else
             sucess(NO);
     } requestFailed:^(NSString *errorMsg) {
@@ -312,4 +314,36 @@ static requestServiceHelper *requestService;
 
     }];
 }
+
+/**********************************************************************************/
+//获取ESS实时看板用户发展总数
+-(void)getESStotleNum:(NSMutableDictionary *)dictionary sucess:(void (^) ( NSMutableArray *commentDictionary))sucess falid:(void (^) (NSString *errorMsg))faild{
+    
+    [HttpRequestHelper asyncPostRequest:GET_ESS_TOTALNUM parameter:dictionary requestComplete:^(NSString *responseStr) {
+
+        NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
+        //NSMutableDictionary *dictionary=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+        
+        NSMutableArray *reportArray=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingMutableLeaves) error:nil];
+        
+//        NSMutableDictionary *reportDic=[[NSMutableDictionary alloc] initWithObjects:[reportArray objectAtIndex:1] forKeys:[reportArray objectAtIndex:1]];
+        
+        if ([reportArray count]>0) {
+            
+            sucess(reportArray);
+            
+        }else{
+            
+            faild(responseStr);
+        }
+        
+        
+    }requestFailed:^(NSString *errorMsg) {
+        NSLog(@"errorms=%@",errorMsg);
+        faild(errorMsg);
+        
+    }];
+    
+}
+
 @end

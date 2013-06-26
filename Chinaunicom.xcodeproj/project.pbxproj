@@ -170,6 +170,14 @@
 		DD0F9B2C1771B39200909EC2 /* left_main_menu23.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0F9B271771B39200909EC2 /* left_main_menu23.png */; };
 		DD0F9B2D1771B39200909EC2 /* left_main_menu24.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0F9B281771B39200909EC2 /* left_main_menu24.png */; };
 		DD0F9B2E1771B39200909EC2 /* left_main_menu25.png in Resources */ = {isa = PBXBuildFile; fileRef = DD0F9B291771B39200909EC2 /* left_main_menu25.png */; };
+		DD1C5243177A8EAA0077042C /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = DD1C523C177A8EAA0077042C /* MMDrawerBarButtonItem.m */; };
+		DD1C5244177A8EAA0077042C /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD1C523E177A8EAA0077042C /* MMDrawerController.m */; };
+		DD1C5245177A8EAA0077042C /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = DD1C5240177A8EAA0077042C /* MMDrawerVisualState.m */; };
+		DD1C5246177A8EAA0077042C /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD1C5242177A8EAA0077042C /* UIViewController+MMDrawerController.m */; };
+		DD1C524D177AD84B0077042C /* ESSTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD1C524B177AD8440077042C /* ESSTimeViewController.m */; };
+		DD1C524E177AD84B0077042C /* ESSTimeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD1C524C177AD8480077042C /* ESSTimeViewController.xib */; };
+		DD1C5252177AEB300077042C /* BussinessDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD1C5250177AEB260077042C /* BussinessDataViewController.m */; };
+		DD1C5253177AEB300077042C /* BussinessDataViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD1C5251177AEB290077042C /* BussinessDataViewController.xib */; };
 		DD1CED17174E3FD90014AA0E /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DD1CED15174E3FD90014AA0E /* libopencore-amrnb.a */; };
 		DD1CED18174E3FD90014AA0E /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DD1CED16174E3FD90014AA0E /* libopencore-amrwb.a */; };
 		DD37B3371755C32F00BE188A /* record.png in Resources */ = {isa = PBXBuildFile; fileRef = DD37B3361755C32F00BE188A /* record.png */; };
@@ -438,6 +446,20 @@
 		DD0F9B271771B39200909EC2 /* left_main_menu23.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left_main_menu23.png; sourceTree = "<group>"; };
 		DD0F9B281771B39200909EC2 /* left_main_menu24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left_main_menu24.png; sourceTree = "<group>"; };
 		DD0F9B291771B39200909EC2 /* left_main_menu25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left_main_menu25.png; sourceTree = "<group>"; };
+		DD1C523B177A8EAA0077042C /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
+		DD1C523C177A8EAA0077042C /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
+		DD1C523D177A8EAA0077042C /* MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerController.h; sourceTree = "<group>"; };
+		DD1C523E177A8EAA0077042C /* MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerController.m; sourceTree = "<group>"; };
+		DD1C523F177A8EAA0077042C /* MMDrawerVisualState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerVisualState.h; sourceTree = "<group>"; };
+		DD1C5240177A8EAA0077042C /* MMDrawerVisualState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerVisualState.m; sourceTree = "<group>"; };
+		DD1C5241177A8EAA0077042C /* UIViewController+MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MMDrawerController.h"; sourceTree = "<group>"; };
+		DD1C5242177A8EAA0077042C /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
+		DD1C524A177AD8400077042C /* ESSTimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESSTimeViewController.h; sourceTree = "<group>"; };
+		DD1C524B177AD8440077042C /* ESSTimeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESSTimeViewController.m; sourceTree = "<group>"; };
+		DD1C524C177AD8480077042C /* ESSTimeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ESSTimeViewController.xib; sourceTree = "<group>"; };
+		DD1C524F177AEB220077042C /* BussinessDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BussinessDataViewController.h; sourceTree = "<group>"; };
+		DD1C5250177AEB260077042C /* BussinessDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BussinessDataViewController.m; sourceTree = "<group>"; };
+		DD1C5251177AEB290077042C /* BussinessDataViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BussinessDataViewController.xib; sourceTree = "<group>"; };
 		DD1CED15174E3FD90014AA0E /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrnb.a"; sourceTree = "<group>"; };
 		DD1CED16174E3FD90014AA0E /* libopencore-amrwb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrwb.a"; sourceTree = "<group>"; };
 		DD37B3361755C32F00BE188A /* record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record.png; sourceTree = "<group>"; };
@@ -808,6 +830,12 @@
 				77292B9F17354DB7004988E0 /* MainViewController1.m */,
 				43B6EBC7173B83F4008C08AE /* ToolsViewController.h */,
 				43B6EBC8173B83F4008C08AE /* ToolsViewController.m */,
+				DD1C524A177AD8400077042C /* ESSTimeViewController.h */,
+				DD1C524B177AD8440077042C /* ESSTimeViewController.m */,
+				DD1C524C177AD8480077042C /* ESSTimeViewController.xib */,
+				DD1C524F177AEB220077042C /* BussinessDataViewController.h */,
+				DD1C5250177AEB260077042C /* BussinessDataViewController.m */,
+				DD1C5251177AEB290077042C /* BussinessDataViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -869,6 +897,7 @@
 		77E14AAC1737E6A900C2BD2A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				DD1C523A177A8EAA0077042C /* MMDrawerController */,
 				DD9B87531764325100C979D3 /* Utility.h */,
 				DD9B87541764325100C979D3 /* Utility.m */,
 				DD9B87501764169000C979D3 /* ALToastView.h */,
@@ -966,6 +995,21 @@
 				DD0E68FA1748FCF800623A4B /* whiteArrow@2x.png */,
 			);
 			path = EGOTableViewPullRefresh;
+			sourceTree = "<group>";
+		};
+		DD1C523A177A8EAA0077042C /* MMDrawerController */ = {
+			isa = PBXGroup;
+			children = (
+				DD1C523B177A8EAA0077042C /* MMDrawerBarButtonItem.h */,
+				DD1C523C177A8EAA0077042C /* MMDrawerBarButtonItem.m */,
+				DD1C523D177A8EAA0077042C /* MMDrawerController.h */,
+				DD1C523E177A8EAA0077042C /* MMDrawerController.m */,
+				DD1C523F177A8EAA0077042C /* MMDrawerVisualState.h */,
+				DD1C5240177A8EAA0077042C /* MMDrawerVisualState.m */,
+				DD1C5241177A8EAA0077042C /* UIViewController+MMDrawerController.h */,
+				DD1C5242177A8EAA0077042C /* UIViewController+MMDrawerController.m */,
+			);
+			path = MMDrawerController;
 			sourceTree = "<group>";
 		};
 		DD6E42B81779583100B43DB7 /* DCRoundSwitch */ = {
@@ -1256,6 +1300,8 @@
 				DD0F9B2C1771B39200909EC2 /* left_main_menu23.png in Resources */,
 				DD0F9B2D1771B39200909EC2 /* left_main_menu24.png in Resources */,
 				DD0F9B2E1771B39200909EC2 /* left_main_menu25.png in Resources */,
+				DD1C524E177AD84B0077042C /* ESSTimeViewController.xib in Resources */,
+				DD1C5253177AEB300077042C /* BussinessDataViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1321,6 +1367,12 @@
 				DD6E42C21779583100B43DB7 /* DCRoundSwitchKnobLayer.m in Sources */,
 				DD6E42C31779583100B43DB7 /* DCRoundSwitchOutlineLayer.m in Sources */,
 				DD6E42C41779583100B43DB7 /* DCRoundSwitchToggleLayer.m in Sources */,
+				DD1C5243177A8EAA0077042C /* MMDrawerBarButtonItem.m in Sources */,
+				DD1C5244177A8EAA0077042C /* MMDrawerController.m in Sources */,
+				DD1C5245177A8EAA0077042C /* MMDrawerVisualState.m in Sources */,
+				DD1C5246177A8EAA0077042C /* UIViewController+MMDrawerController.m in Sources */,
+				DD1C524D177AD84B0077042C /* ESSTimeViewController.m in Sources */,
+				DD1C5252177AEB300077042C /* BussinessDataViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

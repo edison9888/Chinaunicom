@@ -9,6 +9,7 @@
 #import "BaseViewController.h"
 
 @interface LoginViewController : BaseViewController<UITextFieldDelegate>
+
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passWordTextField;
 
@@ -16,5 +17,5 @@
 
 - (IBAction)checkbox:(id)sender;
 - (IBAction)login:(id)sender;
-- (IBAction)backgroundTouch:(id)sender;
+
 @end

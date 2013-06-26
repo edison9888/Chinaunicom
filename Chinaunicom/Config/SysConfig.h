@@ -74,4 +74,7 @@
 //退回报告
 #define backReportUrl [SERVERPATH stringByAppendingFormat:@"RepAuditRestful/backRepAudit"]
 #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+/********************************ESS实时看板***********************************************/
+//我的评论列表
+#define GET_ESS_TOTALNUM [SERVERPATH stringByAppendingFormat:@"essCurr/getDevUserSum"]
 #endif

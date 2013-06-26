@@ -12,8 +12,11 @@
 #import "Report.h"
 #import "User.h"
 #import "UIImageView+WebCache.h"
+#import "UIViewController+MMDrawerController.h"
+#import "LeftMenuViewController.h"
 #define KEY_LOAD 201316
 #define AnnimationTime 0.5
+
 @interface MainViewController ()
 
 @end
@@ -22,13 +25,12 @@
 
 @synthesize myTableView,page,totalresult,pagesize,df;
 
--(void)pushToMainPage:(int)tag
+-(void)pushToMainPage:(int)tag title:(NSString *)str
 {
     NSLog(@"Left delegate  %d",tag);
-//
-//    [self setTitle:@"安全"];
-//    [self.navigationItem setTitle:@"ff"];
-//    [self.revealSideViewController.navigationItem setTitle:@"ttt"];
+    self.title =str;
+    self.reportid=[NSString stringWithFormat:@"%d",tag];
+    [self initDataSource];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -44,7 +46,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.dataSource = [[NSMutableArray alloc] init];
+   LeftMenuViewController *viewc= (LeftMenuViewController *)self.mm_drawerController.leftDrawerViewController;
+    viewc.leftMenudelegate=self;
+    //初始化tableview
     [self initParmeter];
+    [self initView];
     [self initDataSource];
     for (UIView *view in self.mySearch.subviews){
         if ([view isKindOfClass: [UITextField class]]) {
@@ -52,53 +60,17 @@
             df.delegate = self;
             break;
         }
-                                  }
+    }
 }
--(void) initParmeter{
-    myTableView =  [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 44, 320, 420+(iPhone5?88:0))];
-    self.dataSource = [[NSMutableArray alloc] init];
-    [myTableView setDelegate:self];
-    [myTableView setDataSource:self];
-    [self.view addSubview:self.myTableView];
-    myTableView.tableFooterView.hidden=YES;
-    page=1;
-    totalresult=0;
-    pagesize=10;
-    self.isfirst=YES;
-}
--(void)initDataSource
+-(void)initView
 {
-   
-    NSString *url=ReportPath;
-    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-    [dictionary setValue: [NSString stringWithFormat:@"%d",page] forKey:@"index"];
-    [dictionary setValue: [NSString stringWithFormat:@"%d",pagesize] forKey:@"pageNumber"];
-    if(self.reportid==NULL|| [self.reportid isEqualToString:@"0"]||[self.reportid isEqualToString:@""]){
-        url=AllReportPath;
-    NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
-    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
-    NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
-    
-       // NSLog(@"USERID %@",userid);
-        
-    [dictionary setValue: userid forKey:@"userId"];
-    }
-    else{
-     [dictionary setValue:self.reportid forKey:@"repTypeId"];
-        url=ReportPath;
-    }
-   
-    [self getreportList:url parmeter:dictionary];
-
-    
-    
     //多菜单按钮
     UIButton* listButton= [UIButton buttonWithType:UIButtonTypeCustom];
     listButton.frame = CGRectMake(0, 0, 32, 32);
     [listButton setBackgroundImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];
     [listButton addTarget:self action:@selector(showLeft) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* leftItem= [[UIBarButtonItem alloc] initWithCustomView:listButton];
-    self.navigationItem.leftBarButtonItem = PP_AUTORELEASE(leftItem);
+    self.navigationItem.leftBarButtonItem = leftItem;
     /*分割线1*/
     UIImageView *imageViewTopDiv1=[[UIImageView alloc] initWithFrame:CGRectMake(30, -10, 30, 63)];
     [imageViewTopDiv1 setImage:[UIImage imageNamed:@"topDividingLine"]];
@@ -111,14 +83,14 @@
     [personalButton setBackgroundImage:[UIImage imageNamed:@"user"] forState:UIControlStateNormal];
     [personalButton addTarget:self action:@selector(showRight) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* rightItem= [[UIBarButtonItem alloc] initWithCustomView:personalButton];
-    self.navigationItem.rightBarButtonItem=PP_AUTORELEASE(rightItem);
+    self.navigationItem.rightBarButtonItem=rightItem;
     
     /*分割线2*/
     UIImageView *imageViewTopDiv2=[[UIImageView alloc] initWithFrame:CGRectMake(260, -10, 30, 63)];
     [imageViewTopDiv2 setImage:[UIImage imageNamed:@"topDividingLine"]];
     [imageViewTopDiv2 setTag:102];
     [self.navigationController.navigationBar addSubview:imageViewTopDiv2];
-   
+    
     //背景图片
     self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"listbg"]];
     //搜索
@@ -128,13 +100,51 @@
         [self.myTableView setBackgroundView:nil];
         [self.myTableView setBackgroundColor:[UIColor clearColor]];
     }
-   //去掉分割线
+    //去掉分割线
     [self.myTableView setSeparatorColor:[UIColor clearColor]];
+//    
+//    UITapGestureRecognizer *singleTouch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+//    [self.navigationController.navigationBar addGestureRecognizer:singleTouch];
+
+}
+-(void) initParmeter{
+    myTableView =  [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 44, 320, 420+(iPhone5?88:0))];
+    [myTableView setDelegate:self];
+    [myTableView setDataSource:self];
+    [self.view addSubview:self.myTableView];
+    myTableView.tableFooterView.hidden=YES;
+    page=1;
+    totalresult=0;
+    pagesize=10;
+    self.isfirst=YES;
+}
+
+-(void)initDataSource
+{
+   
+    NSString *url=ReportPath;
     
-    UITapGestureRecognizer *singleTouch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
-    [self.navigationController.navigationBar addGestureRecognizer:singleTouch];
-     
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+    [dictionary setValue: [NSString stringWithFormat:@"%d",page] forKey:@"index"];
+    [dictionary setValue: [NSString stringWithFormat:@"%d",pagesize] forKey:@"pageNumber"];
     
+    if(self.reportid==NULL|| [self.reportid isEqualToString:@"0"]||[self.reportid isEqualToString:@""])
+    {
+        url=AllReportPath;
+        
+        NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
+        User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
+        
+        NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
+        [dictionary setValue: userid forKey:@"userId"];
+    }
+    else
+    {
+        [dictionary setValue:self.reportid forKey:@"repTypeId"];
+        url=ReportPath;
+    }
+   
+    [self getreportList:url parmeter:dictionary];
 }
 //获取报告列表
 -(void)getreportList:(NSString *)url parmeter:(NSMutableDictionary *)dictionary
@@ -142,7 +152,6 @@
     
     [self showLoadingActivityViewWithString:@"数据加载中"];
     [[requestServiceHelper defaultService]getReportList:url parmeter:dictionary sucess:^(NSMutableArray *reportDictionary, NSInteger result) {
-        NSLog(@"%@",reportDictionary);
         totalresult =result;
          myTableView.tableFooterView.hidden=NO;
         [self hideLoadingActivityView];
@@ -153,7 +162,7 @@
             }
             
             [self.dataSource addObjectsFromArray:reportDictionary];
-            [myTableView reloadData:NO];
+            [myTableView reloadData:YES];
         }else {
             [myTableView reloadData:NO];
             return;
@@ -164,7 +173,6 @@
         
     } falid:^(NSString *errorMsg) {
         [self hideLoadingActivityView];
-        NSLog(@"%@",errorMsg);
     }];
     
     
@@ -334,7 +342,7 @@
 }
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"title:%@",[[self.dataSource objectAtIndex:indexPath.row] objectForKey:@"reportTitle"]);
+//    NSLog(@"title:%@",[[self.dataSource objectAtIndex:indexPath.row] objectForKey:@"reportTitle"]);
     NSString *reportId = [[self.dataSource objectAtIndex:indexPath.row] objectForKey:@"reportId"];
       ContextDetailController *contextDetailCtrl=[[ContextDetailController alloc] init];
     Report *_report=[[Report alloc] init];
@@ -346,43 +354,51 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //左边菜单
-    LeftMenuViewController *left = [[LeftMenuViewController alloc] init];
-    //BaseNavigationController *leftBaseNav=[[BaseNavigationController alloc] initWithRootViewController:left];
-    [self.revealSideViewController preloadViewController:left forSide:PPRevealSideDirectionLeft];
-    //右边菜单
-    RightMenuViewController *right = [[RightMenuViewController alloc] init];
-    BaseNavigationController *rightBaseNav=[[BaseNavigationController alloc] initWithRootViewController:right];
-    [self.revealSideViewController preloadViewController: rightBaseNav forSide:PPRevealSideDirectionRight];
+//    //左边菜单
+//    LeftMenuViewController *left = [[LeftMenuViewController alloc] init];
+//    //BaseNavigationController *leftBaseNav=[[BaseNavigationController alloc] initWithRootViewController:left];
+//    [self.revealSideViewController preloadViewController:left forSide:PPRevealSideDirectionLeft];
+//    //右边菜单
+//    RightMenuViewController *right = [[RightMenuViewController alloc] init];
+//    BaseNavigationController *rightBaseNav=[[BaseNavigationController alloc] initWithRootViewController:right];
+//    [self.revealSideViewController preloadViewController: rightBaseNav forSide:PPRevealSideDirectionRight];
     
-    [self.navigationController.navigationBar setHidden:NO];
-    [super viewWillAppear:animated];
+//    [self.navigationController.navigationBar setHidden:NO];
     
-    if (!self.isfirst) {
-        [myTableView reloadData];
-        self.isfirst = YES;
-    }
-    self.isfirst = NO;
-    self.revealSideViewController.panInteractionsWhenClosed = 6;
-    self.revealSideViewController.tapInteractionsWhenOpened=YES;
+//    if (!self.isfirst) {
+//        [myTableView reloadData];
+//        self.isfirst = YES;
+//    }
+//    self.isfirst = NO;
+//    self.revealSideViewController.panInteractionsWhenClosed = 6;
+//    self.revealSideViewController.tapInteractionsWhenOpened=YES;
 }
 
 -(void)back
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-- (void) showLeft
+#pragma mark - Button Handlers
+-(void)showLeft
 {
-    [self.revealSideViewController pushOldViewControllerOnDirection:PPRevealSideDirectionLeft animated:YES];
-    [self dismissKeyboard];
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
-- (void) showRight
+-(void) showRight
 {
-    [self dismissKeyboard];
-    [self.revealSideViewController pushOldViewControllerOnDirection:PPRevealSideDirectionRight animated:YES];
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideRight animated:YES completion:nil];
 }
+//- (void) showLeft
+//{
+//    [self.revealSideViewController pushOldViewControllerOnDirection:PPRevealSideDirectionLeft animated:YES];
+//    [self dismissKeyboard];
+//}
+//
+//- (void) showRight
+//{
+//    [self dismissKeyboard];
+//    [self.revealSideViewController pushOldViewControllerOnDirection:PPRevealSideDirectionRight animated:YES];
+//}
 
 - (void)dismissKeyboard {
     [self.mySearch resignFirstResponder];
@@ -407,7 +423,6 @@
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     NSInteger returnKey = [myTableView tableViewDidEndDragging];
-    NSLog(@"maing listview:%d",returnKey);
     if (returnKey != k_RETURN_DO_NOTHING) {
         switch (returnKey) {
             case k_RETURN_REFRESH:{

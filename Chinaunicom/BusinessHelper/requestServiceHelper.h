@@ -44,4 +44,7 @@
 -(void) opreateReportType:(NSString *)url paramter:(NSMutableDictionary *)dictionary sucess:(void(^)(BOOL *isSucess))sucess falid:(void(^)(NSString *errorMsg))faild;
 //获取审核列表
 - (void)getAduitingList:(NSMutableDictionary *)dictionary sucess:(void (^) (NSMutableArray *reportDictionary,NSInteger result))sucess falid:(void (^) (NSString *errorMsg))faild;
+/**********************************************************************************/
+//获取ESS实时看板用户发展总数
+-(void)getESStotleNum:(NSMutableDictionary *)dictionary sucess:(void (^) ( NSMutableArray *commentDictionary))sucess falid:(void (^) (NSString *errorMsg))faild;
 @end

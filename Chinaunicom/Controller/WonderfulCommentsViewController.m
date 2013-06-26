@@ -185,7 +185,8 @@
     else{
         cell.play.hidden=YES;
     }
-    [cell.headPic setImageWithURL:pcipath] ;
+    NSURL *tturl=[NSURL URLWithString:pcipath];
+    [cell.headPic setImageWithURL:tturl] ;
     cell.dateTimeLabel.text=[[dataArray objectAtIndex:indexPath.row] objectForKey:@"commentDate"];
     //[cell.image addTarget:self action:@selector(zan) forControlEvents:UIControlEventTouchUpInside];
     return cell;
@@ -217,6 +218,7 @@
         
     }];
     [request setFailedBlock:^{
+        
         [request clearDelegatesAndCancel];
         
     }];

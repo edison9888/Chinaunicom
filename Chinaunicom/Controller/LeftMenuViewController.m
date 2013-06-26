@@ -11,9 +11,15 @@
 //#import "CommonHelper.h"
 #import "requestServiceHelper.h"
 #import "User.h"
+#import "JKCustomAlert.h"
+#import "UIViewController+MMDrawerController.h"
+
+
+#import "ESSTimeViewController.h"
+#import "BussinessDataViewController.h"
 #define IMAGE_GAP 56
 #define MaxTagNumber 999
-#import "JKCustomAlert.h"
+
 /////////////////////////////////////////////////////////////////
 static const CGFloat kWobbleRadians = 1.5;
 static const NSTimeInterval kWobbleTime = 0.07;
@@ -26,7 +32,7 @@ static const NSTimeInterval kWobbleTime = 0.07;
 @implementation LeftMenuViewController
 
 @synthesize mytableView=_mytableView;
-//
+
 @synthesize viewDataArray;
 @synthesize cardsViewCenterArray;
 @synthesize buttonViewCenterArray;
@@ -36,7 +42,7 @@ static const NSTimeInterval kWobbleTime = 0.07;
 @synthesize tempViewArray;
 @synthesize scrollView;
 @synthesize bottomViewDataArray;
-
+@synthesize leftMenudelegate=_leftMenudelegate;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -57,7 +63,7 @@ static const NSTimeInterval kWobbleTime = 0.07;
 	scrollView.alwaysBounceVertical = YES;
 	scrollView.alwaysBounceHorizontal = NO;
     scrollView.showsHorizontalScrollIndicator=NO;
-    //scrollView.showsVerticalScrollIndicator=NO;
+
 	scrollView.tag = MaxTagNumber;//防止删除子视图时将scrollView删掉
     scrollView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"left_menu_bg"]];
 	[self.view addSubview:scrollView];
@@ -189,7 +195,6 @@ static const NSTimeInterval kWobbleTime = 0.07;
     [CommonHelper changeSortArray:menuArray orderWithKey:@"" ascending:YES];
     [CommonHelper changeSortArray:tempViewArray orderWithKey:@"" ascending:YES];
     
-    NSLog(@"bottomMenu %@",bottomMenu);
     
 }
 -(void) removeScrollViewAllViews
@@ -564,35 +569,84 @@ static const NSTimeInterval kWobbleTime = 0.07;
 -(void)mainMenuTouch:(UIButton*)sender
 {
     
+//    NSLog(@"1111=%@",self.mm_drawerController.centerViewController);
+//    UINavigationController *ct= self.mm_drawerController.centerViewController;
+    if (sender.tag<219)
+    {
+        if ([_leftMenudelegate respondsToSelector:@selector(pushToMainPage:title:)]) {
+            NSString *str=@"";
+            int reid=0;
+            if (sender.tag==211) {
+                str=@"全部";
+                reid=0;
+            }else  if (sender.tag==213) {
+                str=@"维护类";
+                reid=13;
+            }
+            else  if (sender.tag==212) {
+                str=@"安全类";
+                reid=12;
+            }
+            else  if (sender.tag==214) {
+                str=@"分析类";
+                reid=14;
+            }
+            else if (sender.tag==215)
+            {
+                str=@"其他";
+                reid=15;
+            }
+            
+            [_leftMenudelegate pushToMainPage:reid title:str];
+        }
+        [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
+        }];
+
+    }
+    else
+    {
+        if (sender.tag==221)
+        {
+            ESSTimeViewController *ess=[[ESSTimeViewController alloc]initWithNibName:@"ESSTimeViewController" bundle:nil];
+            [self.navigationController pushViewController:ess animated:YES];
+        }else if (sender.tag==222)
+        {
+            BussinessDataViewController *bd=[[BussinessDataViewController alloc]initWithNibName:@"BussinessDataViewController" bundle:nil];
+            bd.name=@"实时ESS合约计划";
+            [self.navigationController pushViewController:bd animated:YES];
+            
+        }else if (sender.tag==223)
+        {
+            BussinessDataViewController *bd=[[BussinessDataViewController alloc]initWithNibName:@"BussinessDataViewController" bundle:nil];
+            bd.name=@"实时ECS交易总额";
+            [self.navigationController pushViewController:bd animated:YES];
+            
+        }else if (sender.tag==224)
+        {
+            BussinessDataViewController *bd=[[BussinessDataViewController alloc]initWithNibName:@"BussinessDataViewController" bundle:nil];
+            bd.name=@"实时ECS商城订单";
+            [self.navigationController pushViewController:bd animated:YES];
+            
+        }else if (sender.tag==225)
+        {
+            BussinessDataViewController *bd=[[BussinessDataViewController alloc]initWithNibName:@"BussinessDataViewController" bundle:nil];
+            bd.name=@"实时ECS用户发展";
+            [self.navigationController pushViewController:bd animated:YES];
+        }
+    }
+   //    [self.mm_drawerController setCenterViewController:self.mm_drawerController.centerViewController withCloseAnimation:YES completion:nil];
+
     
-    MainViewController *mainCtrl=[[MainViewController alloc] init];
-    self.delegate=mainCtrl;
-    NSLog(@"button tag%d",[sender tag]);
-    if ([sender tag]==211) {
-        mainCtrl.title=@"全部";
-        mainCtrl.reportid=@"0";
-    }else  if ([sender tag]==213) {
-        mainCtrl.title=@"维护类";
-        mainCtrl.reportid=@"13";
-    }
-    else  if ([sender tag]==212) {
-        mainCtrl.title=@"安全类";
-        mainCtrl.reportid=@"12";
-    }
-    else  if ([sender tag]==214) {
-        mainCtrl.title=@"分析类";
-        mainCtrl.reportid=@"14";
-    }
-    else  if ([sender tag]==215) {
-        mainCtrl.title=@"其他";
-        mainCtrl.reportid=@"15";
-    }
-    
-    [self.delegate pushToMainPage:[sender tag]];
-    
-    BaseNavigationController *nav=[[BaseNavigationController alloc] initWithRootViewController:mainCtrl];
-    [self.revealSideViewController popViewControllerWithNewCenterController:nav
-                                                                   animated:YES];
+//    MainViewController *mainCtrl=[[MainViewController alloc] init];
+//    self.delegate=mainCtrl;
+//    NSLog(@"button tag%d",[sender tag]);
+
+//
+//    [self.delegate pushToMainPage:[sender tag]];
+//
+//    BaseNavigationController *nav=[[BaseNavigationController alloc] initWithRootViewController:mainCtrl];
+//    [self.revealSideViewController popViewControllerWithNewCenterController:nav
+//                                                                   animated:YES];
     
 }
 

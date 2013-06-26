@@ -20,32 +20,33 @@
 {
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
-
-//    
-//    LeftMenuViewController *r=[[LeftMenuViewController alloc] init];
-//    //BaseNavigationController *baseNav=[[BaseNavigationController alloc] initWithRootViewController:r];
-//    self.revealSideViewController = [[PPRevealSideViewController alloc] initWithRootViewController:r];
-//    self.window.rootViewController =self.revealSideViewController;
-  
+    // 引导页
     loadingcontroller=[[LoadingController alloc] initWithNibName:@"LoadingController" bundle:nil];
     self.window.rootViewController =loadingcontroller;
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
+    //3秒后转到登陆页
    timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(myThreadMainMethod) userInfo:nil repeats:NO];
-
     return YES;
 }
 //进入登陆页
--(void)myThreadMainMethod{
-//    [NSThread sleepForTimeInterval:3.0];
+-(void)myThreadMainMethod
+{
+    //移除引导页
     [loadingcontroller.view removeFromSuperview];
-  //  [loadingcontroller release];
     loadingcontroller=nil;
+    
+    //实例化一个登陆页
     LoginViewController *login=[[LoginViewController alloc]  initWithNibName:@"LoginViewController" bundle:nil];
-    BaseNavigationController *baseNav=[[BaseNavigationController alloc] initWithRootViewController:login];
-    self.revealSideViewController = [[PPRevealSideViewController alloc] initWithRootViewController:baseNav];
-    self.window.rootViewController =self.revealSideViewController;
+    //自定义一个导航控制器
+//    BaseNavigationController *baseNav=[[BaseNavigationController alloc] initWithRootViewController:login];
+    UINavigationController *loginNav=[[UINavigationController alloc]initWithRootViewController:login];
+    [loginNav setNavigationBarHidden:YES];
+//    [loginNav.navigationBar setBackgroundImage:[UIImage imageNamed:@"title@2x.png"] forBarMetrics:UIBarMetricsDefault];
+    self.window.rootViewController =loginNav;
+//    self.revealSideViewController = [[PPRevealSideViewController alloc] initWithRootViewController:login];
+//    self.window.rootViewController =self.revealSideViewController;
 }
 - (void)applicationWillResignActive:(UIApplication *)application
 {

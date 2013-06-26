@@ -13,8 +13,9 @@
 #import "ASIHTTPRequest.h"
 #import "TKAlertCenter.h"
 #import "Reachability.h"
-
-
+#import "MMDrawerController.h"
+#import "LeftMenuViewController.h"
+#import "RightMenuViewController.h"
 @interface LoginViewController ()
 {
     BOOL isOff;
@@ -125,7 +126,7 @@
 }
 - (IBAction)login:(id)sender {
  
-      [self.userNameTextField resignFirstResponder];
+    [self.userNameTextField resignFirstResponder];
     [self.passWordTextField resignFirstResponder];
     
     NSString *username=self.userNameTextField.text;
@@ -176,7 +177,6 @@
             [self.userDefault setObject:@"" forKey:KEY_USER_PWD];
             [self.userDefault synchronize];
         }
-
         self.view.userInteractionEnabled = YES;
         
     } falid:^(NSString *errorMsg) {
@@ -216,30 +216,56 @@
         }
     }
 }
-- (IBAction)backgroundTouch:(id)sender {
-    isOff = NO;
-    [self.userNameTextField resignFirstResponder];
-    [self.passWordTextField resignFirstResponder];
-}
+
 
 //获取我已关注的菜单分类
 -(void)getReportType:(NSString*)userId
 {
     
     [[requestServiceHelper defaultService] getMyMenuReportType:userId sucess:^(NSArray *array) {
-            [self hideLoadingActivityView];
         
+        [self hideLoadingActivityView];
         [self.userDefault setObject:array forKey:KEY_LEFTMENU_INFO];
         [self.userDefault synchronize];
         
-        MainViewController *safeDetailCtrl=[[MainViewController alloc] init];
-        [self.navigationController pushViewController:safeDetailCtrl animated:YES];
+        MMDrawerController *drawerController= [self makeNewframeWork];
+//        MainViewController *safeDetailCtrl=[[MainViewController alloc] init];
+        [self.navigationController pushViewController:drawerController animated:YES];
     
     } falid:^(NSString *errorMsg) {
-        NSLog(@"%@",errorMsg);
+        
         [self hideLoadingActivityView];
+        
     }];
     
 }
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [super touchesBegan:touches withEvent:event];
+    [self.view endEditing:YES];
+}
 
+-(MMDrawerController *)makeNewframeWork
+{
+    LeftMenuViewController * leftSideDrawerViewController = [[LeftMenuViewController alloc] init];
+    
+    MainViewController * centerViewController = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
+    
+    RightMenuViewController * rightSideDrawerViewController = [[RightMenuViewController alloc] init];
+    
+    //中间层导航条
+    UINavigationController * navigationController = [[UINavigationController alloc] initWithRootViewController:centerViewController];
+    [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"title@2x.png"] forBarMetrics:UIBarMetricsDefault];
+    
+    UINavigationController * navigationController2 = [[UINavigationController alloc] initWithRootViewController:rightSideDrawerViewController];
+    
+    MMDrawerController * drawerController = [[MMDrawerController alloc]
+                                             initWithCenterViewController:navigationController
+                                             leftDrawerViewController:leftSideDrawerViewController
+                                             rightDrawerViewController:navigationController2];
+    [drawerController setMaximumRightDrawerWidth:280.0];
+    [drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+    [drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
+    return drawerController;
+}
 @end
