@@ -225,6 +225,11 @@
         }
     NSString *picpath=[[[self.dataSource objectAtIndex:indexPath.row] objectForKey:@"picPath"] stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
     
+
+//    UIImageView *bgView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 190)];
+//    [bgView setImage:[UIImage imageNamed:@"cell_bg.png"]];
+//    cell.backgroundView=bgView;
+    
     if (picpath!=NULL&&![picpath isEqualToString:@""]) {
         NSLog(@"picpath:%@",picpath);
         NSLog(@"index%d",[picpath rangeOfString:@""].length);
@@ -237,12 +242,14 @@
                 [cell addSubview:image];
             }
              [cell.countLabel setFrame:CGRectMake(215, 68, 80, 21)];
+//            [cell.backgroundView setFrame:CGRectMake(0, 0, 320, 190)];
         }
         else{
         cell.contextImage=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mesImage"]];
         [cell.contextImage setFrame:CGRectMake(215, 10, 95, 79)];
         [cell.contextImage setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:picpath]]];
             [cell addSubview:cell.contextImage];
+//            [cell.backgroundView setFrame:CGRectMake(0, 0, 320, 100)];
         }
     }
     else{
