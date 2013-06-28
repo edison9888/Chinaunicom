@@ -27,7 +27,6 @@
 
 -(void)pushToMainPage:(int)tag title:(NSString *)str
 {
-    NSLog(@"Left delegate  %d",tag);
     self.title =str;
     self.reportid=[NSString stringWithFormat:@"%d",tag];
     [self initDataSource];
@@ -231,8 +230,7 @@
 //    cell.backgroundView=bgView;
     
     if (picpath!=NULL&&![picpath isEqualToString:@""]) {
-        NSLog(@"picpath:%@",picpath);
-        NSLog(@"index%d",[picpath rangeOfString:@""].length);
+
         if([picpath rangeOfString:@","].length>0){
             NSArray *picarray=[picpath componentsSeparatedByString:@","];
             for(int i=0;i<(picarray.count>3?3:picarray.count);i++){
@@ -313,8 +311,6 @@
     NSString *picpath=[[[self.dataSource objectAtIndex:indexPath.row] objectForKey:@"picPath"] stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
     
     if (picpath!=NULL&&![picpath isEqualToString:@""]) {
-        NSLog(@"picpath:%@",picpath);
-        NSLog(@"index%d",[picpath rangeOfString:@""].length);
         if([picpath rangeOfString:@","].length>0){
             
             return 190;

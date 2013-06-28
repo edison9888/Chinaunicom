@@ -47,7 +47,7 @@
     [self showLoadingActivityViewWithString:@"正在加载..."];
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     [dictionary setValue: self.myReport.reportId forKey:@"reportId"];
-    NSLog(@"reportId:%@",self.myReport.reportId);
+    
     NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
     User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
     NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
@@ -89,8 +89,6 @@
             isHasFav=true;
             [favButton setBackgroundImage:[UIImage imageNamed:@"favorites@2x"] forState:UIControlStateNormal];
         }
-        NSLog(@"text hegiht,%d",y);
-        NSLog(@"socrview height,%f",self.scorollview.contentSize.height);
         NSString *picpath=[self.myReportDetail.picPath stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
         
         if (picpath!=NULL&&![picpath isEqualToString:@""]) {
@@ -274,7 +272,7 @@
 
 - (void)dismissKeyboard {
     [self.contentDetailLabel resignFirstResponder];
-    NSLog(@"touch");
+   
 }
 - (void)didReceiveMemoryWarning
 {

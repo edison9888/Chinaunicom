@@ -41,4 +41,9 @@
 +(CGFloat)calCellUILabelHeightWithFont:(float)fontSize contentWidth:(float)textWidth textContent:(NSString*)text;
 //计算购物车商品数量
 +(int)cartShopCount:(NSMutableArray*)array;
++(NSString *)changeToyuan :(NSString *)num;
++(NSString *)changeTohu :(NSString *)num;
++(NSString *)changeToWan :(NSString *)num;
+//获取当天日期
++(NSString *)getTodayDate;
 @end

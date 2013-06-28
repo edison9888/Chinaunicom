@@ -152,8 +152,6 @@
 
 -(void)mainMenuTouch:(UIButton*)sender
 {
-    
-    NSLog(@"button tag%d",[sender tag]);
     SendAudiReport *sendCtrl=[[SendAudiReport alloc] init];
     sendCtrl.reportTypeId=[NSString stringWithFormat:@"%d",sender.tag];
     [self.navigationController pushViewController:sendCtrl animated:YES];

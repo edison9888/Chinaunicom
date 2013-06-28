@@ -607,30 +607,32 @@ static const NSTimeInterval kWobbleTime = 0.07;
     {
         if (sender.tag==221)
         {
-            ESSTimeViewController *ess=[[ESSTimeViewController alloc]initWithNibName:@"ESSTimeViewController" bundle:nil];
-            [self.navigationController pushViewController:ess animated:YES];
+            BussinessDataViewController *bd=[[BussinessDataViewController alloc]initWithNibName:@"BussinessDataViewController" bundle:nil];
+            bd.name=@"ESS实时看板";
+            [self.navigationController pushViewController:bd animated:YES];
+
         }else if (sender.tag==222)
         {
             BussinessDataViewController *bd=[[BussinessDataViewController alloc]initWithNibName:@"BussinessDataViewController" bundle:nil];
-            bd.name=@"实时ESS合约计划";
+            bd.name=@"ESS合约计划";
             [self.navigationController pushViewController:bd animated:YES];
             
         }else if (sender.tag==223)
         {
             BussinessDataViewController *bd=[[BussinessDataViewController alloc]initWithNibName:@"BussinessDataViewController" bundle:nil];
-            bd.name=@"实时ECS交易总额";
+            bd.name=@"ECS交易额";
             [self.navigationController pushViewController:bd animated:YES];
             
         }else if (sender.tag==224)
         {
             BussinessDataViewController *bd=[[BussinessDataViewController alloc]initWithNibName:@"BussinessDataViewController" bundle:nil];
-            bd.name=@"实时ECS商城订单";
+            bd.name=@"ECS商城订单";
             [self.navigationController pushViewController:bd animated:YES];
             
         }else if (sender.tag==225)
         {
             BussinessDataViewController *bd=[[BussinessDataViewController alloc]initWithNibName:@"BussinessDataViewController" bundle:nil];
-            bd.name=@"实时ECS用户发展";
+            bd.name=@"ECS用户发展";
             [self.navigationController pushViewController:bd animated:YES];
         }
     }
@@ -730,7 +732,7 @@ static const NSTimeInterval kWobbleTime = 0.07;
         [[NSUserDefaults standardUserDefaults] setObject:bottomViewDataArray forKey:KEY_LEFT_BOTTOM_MENU_INFO];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        NSLog(@"add %@   bottomViewDataArray %@",[NSString stringWithFormat:@"%d",[reportid intValue]+5],bottomViewDataArray);
+      
         
     }
     self.view.userInteractionEnabled=NO;

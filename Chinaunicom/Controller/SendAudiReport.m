@@ -216,7 +216,7 @@
     } requestFailed:^(NSString *errorMsg) {
         //   <#code#>
         [self hideLoadingActivityView];
-        NSLog(@"error");
+       
     }];
 }
 - (void)dismissKeyboard {
@@ -256,7 +256,7 @@
     
     [UIView commitAnimations];
     
-    NSLog(@"f");
+   
     
     return YES;
     

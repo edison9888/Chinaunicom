@@ -147,7 +147,7 @@
     [[requestServiceHelper defaultService] getAduitingList:dictionary sucess:^(NSMutableArray *reportDictionary, NSInteger result) {
         totalresult =result;
         myTableView.tableFooterView.hidden=NO;
-        NSLog(@"%@",reportDictionary);
+       
         [self hideLoadingActivityView];
         if (totalresult > 0) {
             NSString *msg=@"";

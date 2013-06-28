@@ -160,7 +160,7 @@ _mytableView=[[UITableView alloc] initWithFrame:CGRectMake(60, 11, 250, 350) sty
         [_mytableView reloadData];
          [self hideLoadingActivityView];
     } falid:^(NSString *errorMsg) {
-        NSLog(@"%@",errorMsg);
+      
          [self hideLoadingActivityView];
     }];
     
@@ -244,7 +244,7 @@ _mytableView=[[UITableView alloc] initWithFrame:CGRectMake(60, 11, 250, 350) sty
 }
 -(IBAction)buttonDown:(id)sender
 {
-    NSLog(@"----------111111");
+   
      UIButton *btn=(UIButton*)sender;
     if ([btn tag]==2) {}
     else if([btn tag]==4){}
