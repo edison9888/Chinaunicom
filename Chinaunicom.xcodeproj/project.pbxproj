@@ -516,7 +516,6 @@
 		DD1C524A177AD8400077042C /* ESSTimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESSTimeViewController.h; sourceTree = "<group>"; };
 		DD1C524B177AD8440077042C /* ESSTimeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESSTimeViewController.m; sourceTree = "<group>"; };
 		DD1C524C177AD8480077042C /* ESSTimeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ESSTimeViewController.xib; sourceTree = "<group>"; };
-		DD1C5251177AEB290077042C /* BussinessDataViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BussinessDataViewController.xib; sourceTree = "<group>"; };
 		DD1CED15174E3FD90014AA0E /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrnb.a"; sourceTree = "<group>"; };
 		DD1CED16174E3FD90014AA0E /* libopencore-amrwb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrwb.a"; sourceTree = "<group>"; };
 		DD37B3361755C32F00BE188A /* record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record.png; sourceTree = "<group>"; };
@@ -921,9 +920,24 @@
 				DD1C524A177AD8400077042C /* ESSTimeViewController.h */,
 				DD1C524B177AD8440077042C /* ESSTimeViewController.m */,
 				DD1C524C177AD8480077042C /* ESSTimeViewController.xib */,
-				DD1C524F177AEB220077042C /* BussinessDataViewController.h */,
-				DD1C5250177AEB260077042C /* BussinessDataViewController.m */,
-				DD1C5251177AEB290077042C /* BussinessDataViewController.xib */,
+				66A8BC0C177CD4A200D6FF89 /* BussinessDataViewController.h */,
+				66A8BC0D177CD4A200D6FF89 /* BussinessDataViewController.m */,
+				66A8BC0E177CD4A200D6FF89 /* BussinessDataViewController.xib */,
+				66A8BBFD177CD21E00D6FF89 /* PayViewController.h */,
+				66A8BBFF177CD21E00D6FF89 /* PayViewController.m */,
+				66A8BC00177CD21E00D6FF89 /* PayViewController.xib */,
+				66A8BBFB177CD21E00D6FF89 /* MonthDataViewController.h */,
+				66A8BBFC177CD21E00D6FF89 /* MonthDataViewController.m */,
+				66A8BBFE177CD21E00D6FF89 /* MonthDataViewController.xib */,
+				66A8BBF0177CD1DD00D6FF89 /* YearDataViewController.h */,
+				66A8BBEF177CD1DD00D6FF89 /* YearDataViewController.m */,
+				66A8BBF1177CD1DD00D6FF89 /* YearDataViewController.xib */,
+				66A8BBF6177CD20A00D6FF89 /* AreaViewController.h */,
+				66A8BBF7177CD20A00D6FF89 /* AreaViewController.m */,
+				66A8BBF8177CD20A00D6FF89 /* AreaViewController.xib */,
+				66A8BC09177CD37A00D6FF89 /* TimeViewController.h */,
+				66A8BC08177CD37A00D6FF89 /* TimeViewController.m */,
+				66A8BC07177CD37A00D6FF89 /* TimeViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -956,7 +970,7 @@
 			isa = PBXGroup;
 			children = (
 				77292BB3173562E4004988E0 /* MainViewController.h */,
-				77292BB4173562E4004988E0 /* MainViewController.m */,
+				66A8BBF4177CD1FF00D6FF89 /* MainViewController.m */,
 				776C7E2D1736A279007BC364 /* CustomMainViewCell.h */,
 				776C7E2E1736A279007BC364 /* CustomMainViewCell.m */,
 				DDD2607317365F12004870A0 /* ContextDetailController.h */,
@@ -1420,7 +1434,6 @@
 				DD0F9B2D1771B39200909EC2 /* left_main_menu24.png in Resources */,
 				DD0F9B2E1771B39200909EC2 /* left_main_menu25.png in Resources */,
 				DD1C524E177AD84B0077042C /* ESSTimeViewController.xib in Resources */,
-				DD1C5253177AEB300077042C /* BussinessDataViewController.xib in Resources */,
 				DDB61453177BDC8200C16C64 /* business_view_bg@2x.png in Resources */,
 				DDB61455177BDDD800C16C64 /* new_arraw@2x.png in Resources */,
 				DDB61457177BE4AC00C16C64 /* new_arraw.png in Resources */,
@@ -1452,6 +1465,12 @@
 				DDB61490177C405E00C16C64 /* x_label@2x.png in Resources */,
 				DDB61493177C406500C16C64 /* juxing.png in Resources */,
 				DDB61494177C406500C16C64 /* juxing@2x.png in Resources */,
+				66A8BBF3177CD1DD00D6FF89 /* YearDataViewController.xib in Resources */,
+				66A8BBFA177CD20A00D6FF89 /* AreaViewController.xib in Resources */,
+				66A8BC02177CD21E00D6FF89 /* MonthDataViewController.xib in Resources */,
+				66A8BC04177CD21E00D6FF89 /* PayViewController.xib in Resources */,
+				66A8BC0A177CD37B00D6FF89 /* TimeViewController.xib in Resources */,
+				66A8BC10177CD4A200D6FF89 /* BussinessDataViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1470,7 +1489,6 @@
 				77292BA6173550D9004988E0 /* BaseViewController.m in Sources */,
 				77292BA917355261004988E0 /* BaseNavigationController.m in Sources */,
 				77292BB017355BBE004988E0 /* LoginViewController.m in Sources */,
-				77292BB6173562E4004988E0 /* MainViewController.m in Sources */,
 				DDD2607617365F12004870A0 /* ContextDetailController.m in Sources */,
 				776C7E2F1736A279007BC364 /* CustomMainViewCell.m in Sources */,
 				776C7E3B1736B18F007BC364 /* WonderfulCommentsViewController.m in Sources */,
@@ -1522,7 +1540,13 @@
 				DD1C5245177A8EAA0077042C /* MMDrawerVisualState.m in Sources */,
 				DD1C5246177A8EAA0077042C /* UIViewController+MMDrawerController.m in Sources */,
 				DD1C524D177AD84B0077042C /* ESSTimeViewController.m in Sources */,
-				DD1C5252177AEB300077042C /* BussinessDataViewController.m in Sources */,
+				66A8BBF2177CD1DD00D6FF89 /* YearDataViewController.m in Sources */,
+				66A8BBF5177CD1FF00D6FF89 /* MainViewController.m in Sources */,
+				66A8BBF9177CD20A00D6FF89 /* AreaViewController.m in Sources */,
+				66A8BC01177CD21E00D6FF89 /* MonthDataViewController.m in Sources */,
+				66A8BC03177CD21E00D6FF89 /* PayViewController.m in Sources */,
+				66A8BC0B177CD37B00D6FF89 /* TimeViewController.m in Sources */,
+				66A8BC0F177CD4A200D6FF89 /* BussinessDataViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
