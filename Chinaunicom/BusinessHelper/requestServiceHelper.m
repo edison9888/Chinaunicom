@@ -471,16 +471,16 @@ static requestServiceHelper *requestService;
 }
 //ESS合约计划整点趋势图
 -(void)getEssHourTrend:(NSMutableDictionary *)dictionary
-                  sucess:(void (^) (NSArray *str))sucess
+                  sucess:(void (^) (NSDictionary *nsdict))sucess
                    falid:(void (^) (NSString *errorMsg))faild{
     
     [HttpRequestHelper asyncGetRequest:GET_ESS_HOURTREND parameter:dictionary requestComplete:^(NSString *responseStr) {
         
         NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
         
-        NSArray *array=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
-        if (array) {
-            sucess(array);
+        NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        if (dict) {
+            sucess(dict);
         }
         
     }requestFailed:^(NSString *errorMsg) {

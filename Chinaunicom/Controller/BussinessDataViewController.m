@@ -126,7 +126,7 @@
 //底部View动画 和 中间label动画
 -(void)bottomViewanimation : (UIViewController *)viewController
 {
-    [UIView animateWithDuration:2 animations:^{
+    [UIView animateWithDuration:0.5 animations:^{
         [self.bottomView setFrame:CGRectMake(0, self.view.frame.size.height, 320, self.bottomView.frame.size.height)];
         [self.nameLabel setAlpha:0];
         [self.moneyLabel setAlpha:0];

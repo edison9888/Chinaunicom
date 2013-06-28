@@ -80,7 +80,7 @@
                    falid:(void (^) (NSString *errorMsg))faild;
 //ESS合约计划整点趋势图
 -(void)getEssHourTrend:(NSMutableDictionary *)dictionary
-                sucess:(void (^) (NSArray *str))sucess
+                sucess:(void (^) (NSDictionary *nsdict))sucess
                  falid:(void (^) (NSString *errorMsg))faild;
 
 

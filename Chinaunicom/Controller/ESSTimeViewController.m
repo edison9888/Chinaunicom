@@ -216,7 +216,7 @@
     UIImage *image = [UIImage imageNamed:@"new_ess_tu.png"];
     for (int i = 0 ; i<[muArray count];i++) {
         float y=[[muArray objectAtIndex:i]floatValue];
-        UIView *newView=[[UIView alloc]initWithFrame:CGRectMake(16*(i*2.69 +1), 190-y, image.size.width, y)];
+        UIView *newView=[[UIView alloc]initWithFrame:CGRectMake(16*(i*2.69 +1), 202-y, image.size.width, y)];
         [newView setBackgroundColor:[UIColor colorWithPatternImage:image]];
         newView.transform = CGAffineTransformRotate(newView.transform, 3.14);
         [self.bgImageView addSubview:newView];
@@ -249,10 +249,17 @@
 }
 -(NSMutableArray *)ratio :(NSArray *)dataArray total:(int)num
 {
+    float new=0;
     NSMutableArray *array=[NSMutableArray arrayWithCapacity:[dataArray count]];
     for (int i=0; i<[dataArray count]; i++) {
         int data = [[dataArray objectAtIndex:i]intValue];
-        float new=data*190/num;
+        if (data==0) {
+            new=0;
+        }else
+        {
+           new =data*190/num;
+        }
+        
         [array addObject:[NSString stringWithFormat:@"%f",new]];
     }
     return array;
