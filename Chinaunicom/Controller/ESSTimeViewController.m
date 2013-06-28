@@ -8,14 +8,13 @@
 
 #import "ESSTimeViewController.h"
 #import "requestServiceHelper.h"
-#import <math.h>
-#import <stdio.h>
+#import "Utility.h"
 @interface ESSTimeViewController ()
 
 @end
 
 @implementation ESSTimeViewController
-
+@synthesize titleStr=_titleStr;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -24,37 +23,144 @@
     }
     return self;
 }
-
-- (void)viewDidLoad
+-(void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidLoad];
+    [super viewWillAppear:animated];
+    //获取ESS实时3G用户发展总数
+     NSMutableDictionary *dict= [NSMutableDictionary dictionary];
+    if ([_titleStr isEqualToString:@"实时ESS用户发展总数"]) {
+        [dict setValue:@"currData" forKey:@"timeStr"];
+
+    }else if ([_titleStr isEqualToString:@"ESS月数据总数"]){
+        [dict setValue:@"monthData" forKey:@"timeStr"];
+       
+    }else if ([_titleStr isEqualToString:@"ESS年数据总数"]){
+        [dict setValue:@"yearData" forKey:@"timeStr"];
+    }
     
-//    [self.threeGButton setShadowColor:[UIColor blueColor] ];
+    [[requestServiceHelper defaultService]getESStotleNum:dict sucess:^(NSString *str) {
+        NSString *num=[Utility changeTohu:str];
+        self.numLabel.text=num;
+    } falid:^(NSString *errorMsg) {
+    }];
     
-    
-    [self numForLabel:@"a"];
-    
-    NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:@"25/06/2013",@"timeStr", nil];
-    [[requestServiceHelper defaultService]getESStotleNum:dict sucess:^(NSMutableArray *commentDictionary) {
-        NSLog(@"co=%@",commentDictionary);
+    [[requestServiceHelper defaultService]getEssAreaNum:dict sucess:^(NSArray *array) {
+        self.hdLabel.text=[Utility changeToWan:[array objectAtIndex:3]];
+        self.hnLabel.text=[Utility changeToWan:[array objectAtIndex:5]];
+        self.hbLabel.text=[Utility changeToWan:[array objectAtIndex:0]];
+        self.hzLabel.text=[Utility changeToWan:[array objectAtIndex:6]];
+        self.xbLabel.text=[Utility changeToWan:[array objectAtIndex:1]];
+        self.xnLabel.text=[Utility changeToWan:[array objectAtIndex:2]];
+        self.dbLabel.text=[Utility changeToWan:[array objectAtIndex:4]];
+        [self numForLabel];
     } falid:^(NSString *errorMsg) {
         NSLog(@"err=%@",errorMsg);
     }];
+}
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.titleLabel.text=_titleStr;
     // Do any additional setup after loading the view from its nib.
 }
 - (IBAction)pressThreeGbutton:(UIButton *)sender {
     [self isInTheRect:sender];
-    [self numForLabel:@"a"];
+    //获取ESS实时3G用户发展总数
+    NSMutableDictionary *dict= [NSMutableDictionary dictionary];
+    if ([_titleStr isEqualToString:@"实时ESS用户发展总数"]) {
+        [dict setValue:@"currData" forKey:@"timeStr"];
+        
+    }else if ([_titleStr isEqualToString:@"ESS月数据总数"]){
+        [dict setValue:@"monthData" forKey:@"timeStr"];
+        
+    }else if ([_titleStr isEqualToString:@"ESS年数据总数"]){
+        [dict setValue:@"yearData" forKey:@"timeStr"];
+    }
+    
+    [[requestServiceHelper defaultService]getESStotleNum:dict sucess:^(NSString *str) {
+        NSString *num=[Utility changeTohu:str];
+        self.numLabel.text=num;
+    } falid:^(NSString *errorMsg) {
+    }];
+    
+    [[requestServiceHelper defaultService]getEssAreaNum:dict sucess:^(NSArray *array) {
+        self.hdLabel.text=[Utility changeToWan:[array objectAtIndex:3]];
+        self.hnLabel.text=[Utility changeToWan:[array objectAtIndex:5]];
+        self.hbLabel.text=[Utility changeToWan:[array objectAtIndex:0]];
+        self.hzLabel.text=[Utility changeToWan:[array objectAtIndex:6]];
+        self.xbLabel.text=[Utility changeToWan:[array objectAtIndex:1]];
+        self.xnLabel.text=[Utility changeToWan:[array objectAtIndex:2]];
+        self.dbLabel.text=[Utility changeToWan:[array objectAtIndex:4]];
+        [self numForLabel];
+    } falid:^(NSString *errorMsg) {
+        NSLog(@"err=%@",errorMsg);
+    }];
 }
 
 - (IBAction)pressIphoneFiveButton:(UIButton *)sender {
     [self isInTheRect:sender];
-    [self numForLabel:@"b"];
+    //获取ESS实时Iphone5用户发展总数
+    NSMutableDictionary *dict= [NSMutableDictionary dictionary];
+    if ([_titleStr isEqualToString:@"实时ESS用户发展总数"]) {
+        [dict setValue:@"currData" forKey:@"timeStr"];
+        
+    }else if ([_titleStr isEqualToString:@"ESS月数据总数"]){
+        [dict setValue:@"monthData" forKey:@"timeStr"];
+        
+    }else if ([_titleStr isEqualToString:@"ESS年数据总数"]){
+        [dict setValue:@"yearData" forKey:@"timeStr"];
+    }
+    [[requestServiceHelper defaultService]getESSIphoneFiveNum:dict sucess:^(NSString *str) {
+        NSString *num=[Utility changeTohu:str];
+        self.numLabel.text=num;
+    } falid:^(NSString *errorMsg) {
+    }];
+    
+    [[requestServiceHelper defaultService]getEssAreaIphoneFiveNum:dict sucess:^(NSArray *array) {
+        self.hdLabel.text=[Utility changeToWan:[array objectAtIndex:3]];
+        self.hnLabel.text=[Utility changeToWan:[array objectAtIndex:5]];
+        self.hbLabel.text=[Utility changeToWan:[array objectAtIndex:0] ];
+        self.hzLabel.text=[Utility changeToWan:[array objectAtIndex:6] ];
+        self.xbLabel.text=[Utility changeToWan:[array objectAtIndex:1] ];
+        self.xnLabel.text=[Utility changeToWan:[array objectAtIndex:2] ];
+        self.dbLabel.text=[Utility changeToWan:[array objectAtIndex:4] ];
+        [self numForLabel];
+    } falid:^(NSString *errorMsg) {
+        NSLog(@"err=%@",errorMsg);
+    }];
 }
 
 - (IBAction)pressIphoneFour:(UIButton *)sender {
     [self isInTheRect:sender];
-    [self numForLabel:@"c"];
+    //获取ESS实时iphone4s用户发展总数
+    NSMutableDictionary *dict= [NSMutableDictionary dictionary];
+    if ([_titleStr isEqualToString:@"实时ESS用户发展总数"]) {
+        [dict setValue:@"currData" forKey:@"timeStr"];
+        
+    }else if ([_titleStr isEqualToString:@"ESS月数据总数"]){
+        [dict setValue:@"monthData" forKey:@"timeStr"];
+        
+    }else if ([_titleStr isEqualToString:@"ESS年数据总数"]){
+        [dict setValue:@"yearData" forKey:@"timeStr"];
+    }
+    [[requestServiceHelper defaultService]getESSIphoneFsNum:dict sucess:^(NSString *str) {
+        NSString *num=[Utility changeTohu:str];
+        self.numLabel.text=num;
+    } falid:^(NSString *errorMsg) {
+    }];
+    
+    [[requestServiceHelper defaultService]getEssAreaIphoneFsNum:dict sucess:^(NSArray *array) {
+        self.hdLabel.text=[Utility changeToWan:[array objectAtIndex:3]];
+        self.hnLabel.text=[Utility changeToWan:[array objectAtIndex:5]];
+        self.hbLabel.text=[Utility changeToWan:[array objectAtIndex:0]];
+        self.hzLabel.text=[Utility changeToWan:[array objectAtIndex:6]];
+        self.xbLabel.text=[Utility changeToWan:[array objectAtIndex:1]];
+        self.xnLabel.text=[Utility changeToWan:[array objectAtIndex:2]];
+        self.dbLabel.text=[Utility changeToWan:[array objectAtIndex:4]];
+        [self numForLabel];
+    } falid:^(NSString *errorMsg) {
+        NSLog(@"err=%@",errorMsg);
+    }];
 }
 
 -(void)isInTheRect : (UIButton *)bt
@@ -92,39 +198,8 @@
     }
     
 }
--(void)numForLabel : (NSString *)str
+-(void)numForLabel 
 {
-    if ([str isEqualToString:@"a"])
-    {
-        self.hdLabel.text=[NSString stringWithFormat:@"111"];
-        self.hnLabel.text=[NSString stringWithFormat:@"222"];
-        self.hbLabel.text=[NSString stringWithFormat:@"333"];
-        self.hzLabel.text=[NSString stringWithFormat:@"444"];
-        self.xbLabel.text=[NSString stringWithFormat:@"555"];
-        self.xnLabel.text=[NSString stringWithFormat:@"666"];
-        self.dbLabel.text=[NSString stringWithFormat:@"777"];
-    }
-    else if ([str isEqualToString:@"b"])
-    {
-        self.hdLabel.text=[NSString stringWithFormat:@"200"];
-        self.hnLabel.text=[NSString stringWithFormat:@"2000"];
-        self.hbLabel.text=[NSString stringWithFormat:@"20000"];
-        self.hzLabel.text=[NSString stringWithFormat:@"200000"];
-        self.xbLabel.text=[NSString stringWithFormat:@"20000"];
-        self.xnLabel.text=[NSString stringWithFormat:@"2000"];
-        self.dbLabel.text=[NSString stringWithFormat:@"200"];
-    }
-    else
-    {
-        self.hdLabel.text=[NSString stringWithFormat:@"100"];
-        self.hnLabel.text=[NSString stringWithFormat:@"100"];
-        self.hbLabel.text=[NSString stringWithFormat:@"100"];
-        self.hzLabel.text=[NSString stringWithFormat:@"100"];
-        self.xbLabel.text=[NSString stringWithFormat:@"100"];
-        self.xnLabel.text=[NSString stringWithFormat:@"100"];
-        self.dbLabel.text=[NSString stringWithFormat:@"1000"];
-    }
-    
     NSArray *array=[NSArray arrayWithObjects:
                      self.hdLabel.text,
                      self.hnLabel.text,
@@ -149,7 +224,7 @@
 }
 -(IBAction)back:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissModalViewControllerAnimated:YES];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -169,6 +244,7 @@
     [self setLineImageView:nil];
     [self setNumLabel:nil];
     [self setVpLabel:nil];
+    [self setTitleLabel:nil];
     [super viewDidUnload];
 }
 -(NSMutableArray *)ratio :(NSArray *)dataArray total:(int)num

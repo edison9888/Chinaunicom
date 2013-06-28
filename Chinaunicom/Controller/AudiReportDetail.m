@@ -248,7 +248,6 @@
 
 - (void)dismissKeyboard {
     [self.contentDetailLabel resignFirstResponder];
-    NSLog(@"touch");
 }
 
 - (void)viewDidUnload {

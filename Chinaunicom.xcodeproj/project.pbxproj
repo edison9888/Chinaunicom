@@ -202,6 +202,8 @@
 		DD6E42C21779583100B43DB7 /* DCRoundSwitchKnobLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DD6E42BC1779583100B43DB7 /* DCRoundSwitchKnobLayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DD6E42C31779583100B43DB7 /* DCRoundSwitchOutlineLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DD6E42BE1779583100B43DB7 /* DCRoundSwitchOutlineLayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DD6E42C41779583100B43DB7 /* DCRoundSwitchToggleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DD6E42C01779583100B43DB7 /* DCRoundSwitchToggleLayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DD7BB736177D8F32001DCE5F /* zhengdian.png in Resources */ = {isa = PBXBuildFile; fileRef = DD7BB734177D8F2F001DCE5F /* zhengdian.png */; };
+		DD7BB737177D8F32001DCE5F /* zhengdian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DD7BB735177D8F31001DCE5F /* zhengdian@2x.png */; };
 		DD913306175DB717001086CC /* JKCustomAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = DD913305175DB717001086CC /* JKCustomAlert.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DD91330A175DCAD0001086CC /* addsuccess.png in Resources */ = {isa = PBXBuildFile; fileRef = DD913307175DCAD0001086CC /* addsuccess.png */; };
 		DD91330B175DCAD0001086CC /* delte@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DD913308175DCAD0001086CC /* delte@2x.png */; };
@@ -535,6 +537,8 @@
 		DD6E42BE1779583100B43DB7 /* DCRoundSwitchOutlineLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCRoundSwitchOutlineLayer.m; sourceTree = "<group>"; };
 		DD6E42BF1779583100B43DB7 /* DCRoundSwitchToggleLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCRoundSwitchToggleLayer.h; sourceTree = "<group>"; };
 		DD6E42C01779583100B43DB7 /* DCRoundSwitchToggleLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCRoundSwitchToggleLayer.m; sourceTree = "<group>"; };
+		DD7BB734177D8F2F001DCE5F /* zhengdian.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhengdian.png; sourceTree = "<group>"; };
+		DD7BB735177D8F31001DCE5F /* zhengdian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhengdian@2x.png"; sourceTree = "<group>"; };
 		DD913304175DB717001086CC /* JKCustomAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKCustomAlert.h; sourceTree = "<group>"; };
 		DD913305175DB717001086CC /* JKCustomAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKCustomAlert.m; sourceTree = "<group>"; };
 		DD913307175DCAD0001086CC /* addsuccess.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addsuccess.png; sourceTree = "<group>"; };
@@ -917,12 +921,12 @@
 				77292B9F17354DB7004988E0 /* MainViewController1.m */,
 				43B6EBC7173B83F4008C08AE /* ToolsViewController.h */,
 				43B6EBC8173B83F4008C08AE /* ToolsViewController.m */,
-				DD1C524A177AD8400077042C /* ESSTimeViewController.h */,
-				DD1C524B177AD8440077042C /* ESSTimeViewController.m */,
-				DD1C524C177AD8480077042C /* ESSTimeViewController.xib */,
 				66A8BC0C177CD4A200D6FF89 /* BussinessDataViewController.h */,
 				66A8BC0D177CD4A200D6FF89 /* BussinessDataViewController.m */,
 				66A8BC0E177CD4A200D6FF89 /* BussinessDataViewController.xib */,
+				DD1C524A177AD8400077042C /* ESSTimeViewController.h */,
+				DD1C524B177AD8440077042C /* ESSTimeViewController.m */,
+				DD1C524C177AD8480077042C /* ESSTimeViewController.xib */,
 				66A8BBFD177CD21E00D6FF89 /* PayViewController.h */,
 				66A8BBFF177CD21E00D6FF89 /* PayViewController.m */,
 				66A8BC00177CD21E00D6FF89 /* PayViewController.xib */,
@@ -1133,6 +1137,8 @@
 		DD6E42C6177961B800B43DB7 /* new_resource */ = {
 			isa = PBXGroup;
 			children = (
+				DD7BB734177D8F2F001DCE5F /* zhengdian.png */,
+				DD7BB735177D8F31001DCE5F /* zhengdian@2x.png */,
 				DDB61491177C406500C16C64 /* juxing.png */,
 				DDB61492177C406500C16C64 /* juxing@2x.png */,
 				DDB6148D177C405E00C16C64 /* x_label.png */,
@@ -1471,6 +1477,8 @@
 				66A8BC04177CD21E00D6FF89 /* PayViewController.xib in Resources */,
 				66A8BC0A177CD37B00D6FF89 /* TimeViewController.xib in Resources */,
 				66A8BC10177CD4A200D6FF89 /* BussinessDataViewController.xib in Resources */,
+				DD7BB736177D8F32001DCE5F /* zhengdian.png in Resources */,
+				DD7BB737177D8F32001DCE5F /* zhengdian@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

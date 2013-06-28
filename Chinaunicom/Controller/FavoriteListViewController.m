@@ -154,8 +154,7 @@
                 [self.myTabelView reloadData];
             }
         } requestFailed:^(NSString *errorMsg) {
-            //<#code#>
-            NSLog(@"-------");
+
             [self hideLoadingActivityView];
         }];
     }
@@ -206,8 +205,7 @@
           [self.myTabelView reloadData];
       }
     } requestFailed:^(NSString *errorMsg) {
-        //<#code#>
-          NSLog(@"-------");
+
             [self hideLoadingActivityView];
     }];
     }

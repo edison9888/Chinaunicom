@@ -75,6 +75,27 @@
 #define backReportUrl [SERVERPATH stringByAppendingFormat:@"RepAuditRestful/backRepAudit"]
 #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 /********************************ESS实时看板***********************************************/
-//我的评论列表
-#define GET_ESS_TOTALNUM [SERVERPATH stringByAppendingFormat:@"essCurr/getDevUserSum"]
+//ESS实时看板 用户发展总数（实时数据、月数据、年数据）
+#define GET_ESS_TOTALNUM [SERVERPATH stringByAppendingFormat:@"daping/getDevUserSum"]
+//获取ESS实时看板iPhone5总销量
+#define GET_ESS_IPHONE5NUM [SERVERPATH stringByAppendingFormat:@"daping/getiPhone5Sum"]
+//获取ESS实时看板iPhone 4S总销量
+#define GET_ESS_IPHONE4GNUM [SERVERPATH stringByAppendingFormat:@"daping/getiPhone4SSum"]
+//获取ESS实时看板3G用户发展行政区排名
+#define GET_ESS_AREA_3GNUM [SERVERPATH stringByAppendingFormat:@"daping/getCurrDevUserDistrictRanking"]
+//获取ESS实时看板iPhone5用户发展行政区排名
+#define GET_ESS__AREA_IPHONE5NUM [SERVERPATH stringByAppendingFormat:@"daping/getiPhone5SaleDistrictRanking"]
+//获取ESS实时看板iPhone4S用户发展行政区排名
+#define GET_ESS_AREA_IPHONE4GNUM [SERVERPATH stringByAppendingFormat:@"daping/getiPhone4SSaleDistrictRanking"]
+
+
+//ESS合约计划 整点合约计划总数
+#define GET_ESS_CONTRANCTNUM [SERVERPATH stringByAppendingFormat:@"daping/getContSumOfESS"]
+//ESS合约计划 整点趋势图
+#define GET_ESS_HOURTREND [SERVERPATH stringByAppendingFormat:@"daping/get24HoursChartOfESS"]
+
+//ECS交易额 实时ECS交易总额
+#define GET_ECS_TRADENUM [SERVERPATH stringByAppendingFormat:@"daping/getCurrGMVofECS"]
+//商城订单量 整点商城订单总量
+#define GET_ESS_STORENUM [SERVERPATH stringByAppendingFormat:@"daping/getMallGrossOfMall"]
 #endif

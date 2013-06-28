@@ -23,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *dbLabel;
 @property (weak, nonatomic) IBOutlet UILabel *numLabel;
 @property (weak, nonatomic) IBOutlet UILabel *vpLabel;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (nonatomic,copy)NSString *titleStr;
 - (IBAction)pressThreeGbutton:(UIButton *)sender;
 - (IBAction)pressIphoneFiveButton:(UIButton *)sender;
 - (IBAction)pressIphoneFour:(UIButton *)sender;

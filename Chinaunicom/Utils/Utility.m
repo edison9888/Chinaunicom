@@ -169,4 +169,57 @@ static Utility *shareSource = nil;
     }
 }
 
+
++(NSString *)changeToyuan :(NSString *)num
+{
+    NSString *str=[NSString stringWithFormat:@"%@",num];
+    if (str!=nil ) {
+       
+        if(str.length >4 && str.length <9){
+            str =[NSString stringWithFormat:@"%.2f万元",[str doubleValue]/10000];
+        }else if (str.length>8){
+            str=[NSString stringWithFormat:@"%.2f亿元",[str doubleValue]/100000000];
+        }else{
+            str=[NSString stringWithFormat:@"%@元",str];
+        }
+    }
+    return str;
+}
++(NSString *)changeTohu :(NSString *)num
+{
+    NSString *str=[NSString stringWithFormat:@"%@",num];
+    if (str!=nil && ![str isEqualToString:@""]) {
+        if(str.length >4 && str.length <9){
+            str =[NSString stringWithFormat:@"%.2f万户",[str doubleValue]/10000];
+        }else if (str.length>8){
+            str=[NSString stringWithFormat:@"%.2f亿户",[str doubleValue]/100000000];
+        }else{
+            str=[NSString stringWithFormat:@"%@户",str];
+        }
+    }
+    return str;
+}
++(NSString *)changeToWan :(NSString *)num
+{
+    NSString *str=[NSString stringWithFormat:@"%@",num];
+    if (str!=nil && ![str isEqualToString:@""]) {
+        if(str.length >4 && str.length <9){
+            str =[NSString stringWithFormat:@"%.2f万",[str doubleValue]/10000];
+        }else if (str.length>8){
+            str=[NSString stringWithFormat:@"%.2f亿",[str doubleValue]/100000000];
+        }else{
+            str=[NSString stringWithFormat:@"%@",str];
+        }
+    }
+    return str;
+}
++(NSString *)getTodayDate
+{
+    
+    NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"dd"];
+    NSString *date = [formatter stringFromDate:[NSDate date]];
+    return date;
+}
+
 @end

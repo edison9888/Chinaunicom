@@ -316,34 +316,215 @@ static requestServiceHelper *requestService;
 }
 
 /**********************************************************************************/
-//获取ESS实时看板用户发展总数
--(void)getESStotleNum:(NSMutableDictionary *)dictionary sucess:(void (^) ( NSMutableArray *commentDictionary))sucess falid:(void (^) (NSString *errorMsg))faild{
+//获取ESS实时看板3G用户发展总数
+-(void)getESStotleNum:(NSMutableDictionary *)dictionary
+               sucess:(void (^) (NSString *str))sucess
+                falid:(void (^) (NSString *errorMsg))faild{
     
-    [HttpRequestHelper asyncPostRequest:GET_ESS_TOTALNUM parameter:dictionary requestComplete:^(NSString *responseStr) {
-
+    [HttpRequestHelper asyncGetRequest:GET_ESS_TOTALNUM parameter:dictionary requestComplete:^(NSString *responseStr) {
+        
         NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
-        //NSMutableDictionary *dictionary=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
         
-        NSMutableArray *reportArray=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingMutableLeaves) error:nil];
-        
-//        NSMutableDictionary *reportDic=[[NSMutableDictionary alloc] initWithObjects:[reportArray objectAtIndex:1] forKeys:[reportArray objectAtIndex:1]];
-        
-        if ([reportArray count]>0) {
-            
-            sucess(reportArray);
-            
-        }else{
-            
-            faild(responseStr);
-        }
-        
-        
+        NSString *str=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        sucess(str);
+
     }requestFailed:^(NSString *errorMsg) {
-        NSLog(@"errorms=%@",errorMsg);
+    
         faild(errorMsg);
         
     }];
-    
 }
+//获取ESS实时看板3G用户发展行政区排名
+-(void)getEssAreaNum:(NSMutableDictionary *)dictionary
+               sucess:(void (^) (NSArray *str))sucess
+                falid:(void (^) (NSString *errorMsg))faild{
+    
+    [HttpRequestHelper asyncGetRequest:GET_ESS_AREA_3GNUM parameter:dictionary requestComplete:^(NSString *responseStr) {
+        
+        NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
+        
+        NSArray *array=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        
+    
+         if (array) {
+             NSMutableArray *muArray=[NSMutableArray arrayWithCapacity:7];
+             for (int i=0; i<[array count]; i++) {
+                 NSString *str=[[array objectAtIndex:i]objectForKey:@"value"];
+                 [muArray addObject:str];
+             }
+             NSArray *newArray=[NSArray arrayWithArray:muArray];
+             sucess(newArray);
+        }
+     
+    }requestFailed:^(NSString *errorMsg) {
+        
+        faild(errorMsg);
+        
+    }];
+}
+//获取ESS实时看板iphone5用户发展总数
+-(void)getESSIphoneFiveNum:(NSMutableDictionary *)dictionary
+               sucess:(void (^) (NSString *str))sucess
+                falid:(void (^) (NSString *errorMsg))faild{
+    
+    [HttpRequestHelper asyncGetRequest:GET_ESS_IPHONE5NUM parameter:dictionary requestComplete:^(NSString *responseStr) {
+        
+        NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
+        
+        NSString *str=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        sucess(str);
+        
+    }requestFailed:^(NSString *errorMsg) {
+        
+        faild(errorMsg);
+        
+    }];
+}
+//获取ESS实时看板iphone5用户发展行政区排名
+-(void)getEssAreaIphoneFiveNum:(NSMutableDictionary *)dictionary
+              sucess:(void (^) (NSArray *str))sucess
+               falid:(void (^) (NSString *errorMsg))faild{
+    
+    [HttpRequestHelper asyncGetRequest:GET_ESS__AREA_IPHONE5NUM parameter:dictionary requestComplete:^(NSString *responseStr) {
+        
+        NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
+        
+        NSArray *array=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        if (array) {
+            NSMutableArray *muArray=[NSMutableArray arrayWithCapacity:7];
+            for (int i=0; i<[array count]; i++) {
+                NSString *str=[[array objectAtIndex:i]objectForKey:@"value"];
+                [muArray addObject:str];
+            }
+            NSArray *newArray=[NSArray arrayWithArray:muArray];
+            sucess(newArray);
+        }
+        
+    }requestFailed:^(NSString *errorMsg) {
+        
+        faild(errorMsg);
+        
+    }];
+}
+//获取ESS实时看板iphone4s用户发展总数
+-(void)getESSIphoneFsNum:(NSMutableDictionary *)dictionary
+               sucess:(void (^) (NSString *str))sucess
+                falid:(void (^) (NSString *errorMsg))faild{
+    
+    [HttpRequestHelper asyncGetRequest:GET_ESS_IPHONE4GNUM parameter:dictionary requestComplete:^(NSString *responseStr) {
+        
+        NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
+        
+        NSString *str=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        sucess(str);
+        
+    }requestFailed:^(NSString *errorMsg) {
+        
+        faild(errorMsg);
+        
+    }];
+}
+//获取ESS实时看板iphone4s用户发展行政区排名
+-(void)getEssAreaIphoneFsNum:(NSMutableDictionary *)dictionary
+              sucess:(void (^) (NSArray *str))sucess
+               falid:(void (^) (NSString *errorMsg))faild{
+    
+    [HttpRequestHelper asyncGetRequest:GET_ESS_AREA_IPHONE4GNUM parameter:dictionary requestComplete:^(NSString *responseStr) {
+        
+        NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
+        
+        NSArray *array=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        if (array) {
+            NSMutableArray *muArray=[NSMutableArray arrayWithCapacity:7];
+            for (int i=0; i<[array count]; i++) {
+                NSString *str=[[array objectAtIndex:i]objectForKey:@"value"];
+                [muArray addObject:str];
+            }
+            NSArray *newArray=[NSArray arrayWithArray:muArray];
+            sucess(newArray);
+        }
+        
+    }requestFailed:^(NSString *errorMsg) {
+        
+        faild(errorMsg);
+        
+    }];
+}
+//获取ESS合约计划
+//整点合约计划总数
+-(void)getEsscontractNum:(NSMutableDictionary *)dictionary
+               sucess:(void (^) (NSString *str))sucess
+                falid:(void (^) (NSString *errorMsg))faild{
+    
+    [HttpRequestHelper asyncGetRequest:GET_ESS_CONTRANCTNUM parameter:dictionary requestComplete:^(NSString *responseStr) {
+        
+        NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
+        
+        NSString *str=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        sucess(str);
+        
+    }requestFailed:^(NSString *errorMsg) {
+        
+        faild(errorMsg);
+        
+    }];
+}
+//ESS合约计划整点趋势图
+-(void)getEssHourTrend:(NSMutableDictionary *)dictionary
+                  sucess:(void (^) (NSArray *str))sucess
+                   falid:(void (^) (NSString *errorMsg))faild{
+    
+    [HttpRequestHelper asyncGetRequest:GET_ESS_HOURTREND parameter:dictionary requestComplete:^(NSString *responseStr) {
+        
+        NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
+        
+        NSArray *array=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        if (array) {
+            sucess(array);
+        }
+        
+    }requestFailed:^(NSString *errorMsg) {
+        
+        faild(errorMsg);
+        
+    }];
+}
+//ECS交易额
+//实时ECS交易总额
+-(void)getEcstradeNum:(NSMutableDictionary *)dictionary
+               sucess:(void (^) (NSString *str))sucess
+                falid:(void (^) (NSString *errorMsg))faild{
+    
+    [HttpRequestHelper asyncGetRequest:GET_ECS_TRADENUM parameter:dictionary requestComplete:^(NSString *responseStr) {
+        
+        NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
+        
+        NSString *str=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        sucess(str);
+        
+    }requestFailed:^(NSString *errorMsg) {
+        
+        faild(errorMsg);
+        
+    }];
 
+}
+//商城订单量
+//整点商城订单总量
+-(void)getEssstoreNum:(NSMutableDictionary *)dictionary
+               sucess:(void (^) (NSString *str))sucess
+                falid:(void (^) (NSString *errorMsg))faild{
+    [HttpRequestHelper asyncGetRequest:GET_ESS_STORENUM parameter:dictionary requestComplete:^(NSString *responseStr) {
+        
+        NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
+        
+        NSString *str=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        sucess(str);
+        
+    }requestFailed:^(NSString *errorMsg) {
+        
+        faild(errorMsg);
+        
+    }];
+}
 @end

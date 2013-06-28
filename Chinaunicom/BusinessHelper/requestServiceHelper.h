@@ -46,5 +46,55 @@
 - (void)getAduitingList:(NSMutableDictionary *)dictionary sucess:(void (^) (NSMutableArray *reportDictionary,NSInteger result))sucess falid:(void (^) (NSString *errorMsg))faild;
 /**********************************************************************************/
 //获取ESS实时看板用户发展总数
--(void)getESStotleNum:(NSMutableDictionary *)dictionary sucess:(void (^) ( NSMutableArray *commentDictionary))sucess falid:(void (^) (NSString *errorMsg))faild;
+-(void)getESStotleNum:(NSMutableDictionary *)dictionary
+               sucess:(void (^) (NSString *str))sucess
+                falid:(void (^) (NSString *errorMsg))faild;
+//获取ESS实时看板3G用户发展行政区排名
+-(void)getEssAreaNum:(NSMutableDictionary *)dictionary
+              sucess:(void (^) (NSArray *str))sucess
+               falid:(void (^) (NSString *errorMsg))faild;
+//获取ESS实时看板iphone5用户发展总数
+-(void)getESSIphoneFiveNum:(NSMutableDictionary *)dictionary
+                    sucess:(void (^) (NSString *str))sucess
+                     falid:(void (^) (NSString *errorMsg))faild;
+//获取ESS实时看板iphone5用户发展行政区排名
+-(void)getEssAreaIphoneFiveNum:(NSMutableDictionary *)dictionary
+                        sucess:(void (^) (NSArray *str))sucess
+                         falid:(void (^) (NSString *errorMsg))faild;
+//获取ESS实时看板iphone4s用户发展总数
+-(void)getESSIphoneFsNum:(NSMutableDictionary *)dictionary
+                  sucess:(void (^) (NSString *str))sucess
+                   falid:(void (^) (NSString *errorMsg))faild;
+//获取ESS实时看板iphone4s用户发展行政区排名
+-(void)getEssAreaIphoneFsNum:(NSMutableDictionary *)dictionary
+                      sucess:(void (^) (NSArray *str))sucess
+                       falid:(void (^) (NSString *errorMsg))faild;
+
+
+
+
+//获取ESS合约计划
+//整点合约计划总数
+-(void)getEsscontractNum:(NSMutableDictionary *)dictionary
+                  sucess:(void (^) (NSString *str))sucess
+                   falid:(void (^) (NSString *errorMsg))faild;
+//ESS合约计划整点趋势图
+-(void)getEssHourTrend:(NSMutableDictionary *)dictionary
+                sucess:(void (^) (NSArray *str))sucess
+                 falid:(void (^) (NSString *errorMsg))faild;
+
+
+
+
+//ECS交易额
+//实时ECS交易总额
+-(void)getEcstradeNum:(NSMutableDictionary *)dictionary
+                  sucess:(void (^) (NSString *str))sucess
+                falid:(void (^) (NSString *errorMsg))faild;
+//商城订单量
+//整点商城订单总量
+-(void)getEssstoreNum:(NSMutableDictionary *)dictionary
+                  sucess:(void (^) (NSString *str))sucess
+                falid:(void (^) (NSString *errorMsg))faild;
+
 @end
