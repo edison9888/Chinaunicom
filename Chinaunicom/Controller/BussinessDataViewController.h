@@ -13,6 +13,14 @@
     
 }
 @property (nonatomic,weak)IBOutlet UILabel *nameLabel;
+@property (nonatomic,weak)IBOutlet UILabel *moneyLabel;
+@property (nonatomic,weak)IBOutlet UIView *bottomView;
+@property (nonatomic,weak)IBOutlet UIButton *payButton;
+@property (nonatomic,weak)IBOutlet UIButton *monthButton;
+@property (nonatomic,weak)IBOutlet UIButton *yearButton;
 @property (nonatomic,copy)NSString *name;
 -(IBAction)backToLeftMenu:(id)sender;
+-(IBAction)pressPayButton:(id)sender;
+-(IBAction)pressMonthButton:(id)sender;
+-(IBAction)pressYearButton:(id)sender;
 @end
