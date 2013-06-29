@@ -7,8 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface PayViewController : UIViewController
+#import "PointImageView.h"
+@interface PayViewController : UIViewController<pointDelegate>
+@property (nonatomic,strong)NSDictionary  *todayDict;
+@property (nonatomic,strong)NSDictionary *avgDict;
+@property (nonatomic,strong)NSDictionary *yesterdayDict;
+@property (nonatomic,strong)NSMutableArray *todayArray;
+@property (nonatomic,strong)NSMutableArray *yesterdayArray;
+@property (nonatomic,strong)NSMutableArray *avgArray;
 @property (nonatomic,copy)NSString *str;
 @property (weak, nonatomic) IBOutlet UIButton *yesterdayButton;
 @property (weak, nonatomic) IBOutlet UIButton *todayButton;
@@ -17,7 +23,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *numLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *lineImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *bgImageView;
+@property (weak, nonatomic) IBOutlet PointImageView *pointImageView;
 @property (weak, nonatomic) IBOutlet UILabel *localTimeLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *blueDian;
+
 - (IBAction)pressTodayButton:(id)sender;
 - (IBAction)pressAvgButton:(id)sender;
 - (IBAction)pressYesterdayButton:(id)sender;

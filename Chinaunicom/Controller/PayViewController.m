@@ -9,8 +9,14 @@
 #import "PayViewController.h"
 #import "requestServiceHelper.h"
 #import "Utility.h"
+#import "LineImageView.h"
 @interface PayViewController ()
-
+{
+    int t;
+    NSString *string;
+    float henx;
+    float dijige;
+}
 @end
 
 @implementation PayViewController
@@ -23,39 +29,100 @@
     }
     return self;
 }
+//今日数据
+-(void)todayData : (BOOL)isPress
+{
+    NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObject:@"today" forKey:@"timeStr"];
+    [[requestServiceHelper defaultService]getEssHourTrend:dict sucess:^(NSDictionary *nsdict) {
+        if (isPress) {
+            if ([nsdict count]>0) {
+                NSString *num=[Utility changeToyuan:[nsdict objectForKey:@"00"]];
+                self.numLabel.text=[NSString stringWithFormat:@"00点 : %@",num];
+            }
+        }
+        _todayDict = [NSDictionary dictionaryWithDictionary:nsdict];
+        NSMutableArray *muArray=[self ratio:nsdict];
+        _todayArray=muArray;
+        LineImageView *line=[[LineImageView alloc]initWithFrame:CGRectMake(6, 4, 304, self.bgImageView.frame.size.height-15)];
+        line.blueArray=muArray;
+        line.colorArray=[NSArray arrayWithObjects:@"1.0",@"1.0",@"1.0",@"1.0", nil];
+        [self.bgImageView addSubview:line];
+        self.blueDian.hidden=NO;
+        
+    } falid:^(NSString *errorMsg) {
+    }];
 
+}
+//昨日数据
+-(void)yesterdayData:(BOOL)isPress
+{
+    //昨日数据
+    NSMutableDictionary *yesterdayDict=[NSMutableDictionary dictionaryWithObject:@"yesterday" forKey:@"timeStr"];
+    [[requestServiceHelper defaultService]getEssHourTrend:yesterdayDict sucess:^(NSDictionary *nsdict) {
+
+        _yesterdayDict = [NSDictionary dictionaryWithDictionary:nsdict];
+        NSMutableArray *muArray=[self ratio:nsdict];
+        _yesterdayArray=muArray;
+        LineImageView *line=[[LineImageView alloc]initWithFrame:CGRectMake(6, 4, 304, self.bgImageView.frame.size.height-15)];
+        line.blueArray=muArray;
+        line.colorArray=[NSArray arrayWithObjects:@"0.5",@"0.7",@"1.0",@"1.0", nil];
+        [self.bgImageView addSubview:line];
+        
+    } falid:^(NSString *errorMsg) {
+    }];
+}
+//均值数据
+-(void)avgData:(BOOL)isPress
+{
+    //均值数据
+    NSMutableDictionary *avgDict=[NSMutableDictionary dictionaryWithObject:@"avg" forKey:@"timeStr"];
+    [[requestServiceHelper defaultService]getEssHourTrend:avgDict sucess:^(NSDictionary *nsdict) {
+
+        _avgDict = [NSDictionary dictionaryWithDictionary:nsdict];
+        NSMutableArray *muArray=[self ratio:nsdict];
+        _avgArray=muArray;
+        LineImageView *line=[[LineImageView alloc]initWithFrame:CGRectMake(6, 4, 304, self.bgImageView.frame.size.height-15)];
+        line.blueArray=muArray;
+        line.colorArray=[NSArray arrayWithObjects:@"1.0",@"0.7",@"0.3",@"1.0", nil];
+        [self.bgImageView addSubview:line];
+        
+    } falid:^(NSString *errorMsg) {
+    }];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.titleLabel.text=_str;
     [self getLocalData];
+    [self todayData:YES];
+    [self yesterdayData:NO];
+    [self avgData:NO];
+    string=@"00";
+    self.pointImageView.mydelegate=self;
+    self.pointImageView.blueDianImage=self.blueDian;
     
-    NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObject:@"today" forKey:@"timeStr"];
-    [[requestServiceHelper defaultService]getEssHourTrend:dict sucess:^(NSDictionary *nsdict) {
-        NSString *num=[Utility changeToyuan:[nsdict objectForKey:@"00"]];
-        self.numLabel.text=[NSString stringWithFormat:@"00点 : %@",num];
-        NSMutableArray *muArray=[self ratio:nsdict];
-        [self drawBlueLine:muArray];
-    } falid:^(NSString *errorMsg) {
-    }];
-
-    // Do any additional setup after loading the view from its nib.
 }
 
 - (IBAction)pressTodayButton:(id)sender {
     
     [self getLocalData];
     [self isInTheRect:sender];
+    t=0;
+    [self showTheData:string x:henx num:dijige];
 }
 
 - (IBAction)pressAvgButton:(id)sender {
-    
+
     [self isInTheRect:sender];
+    t=2;
+    [self showTheData:string x:henx num:dijige];
 }
 
 - (IBAction)pressYesterdayButton:(id)sender {
     
     [self isInTheRect:sender];
+    t=1;
+    [self showTheData:string x:henx num:dijige];
 }
 -(void)isInTheRect : (UIButton *)bt
 {
@@ -88,6 +155,8 @@
     [self setLineImageView:nil];
     [self setLocalTimeLabel:nil];
     [self setBgImageView:nil];
+    [self setPointImageView:nil];
+    [self setBlueDian:nil];
     [super viewDidUnload];
 }
 -(void)getLocalData 
@@ -193,54 +262,6 @@
     }
     return array;
 }
--(void)drawBlueLine : (NSMutableArray *)blueArray
-{
-    UIImageView  *imageView=[[UIImageView alloc] initWithFrame:CGRectMake(5, 4, 310, self.bgImageView.frame.size.height-15)];
-    [imageView setBackgroundColor:[UIColor clearColor]];
-//    [imageView.layer setBorderColor:[UIColor redColor].CGColor];
-//    [imageView.layer setBorderWidth:1.0f];
-    [self.bgImageView  addSubview:imageView];
-    
-    UIGraphicsBeginImageContext(imageView.frame.size);
-    [imageView.image drawInRect:CGRectMake(0, 0, imageView.frame.size.width, imageView.frame.size.height)];
-    
-    CGFloat pointLineWidth = 1.5f;
-    CGFloat pointMiterLimit = 1.0f;
-    
-    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), pointLineWidth);//主线宽度
-    CGContextSetMiterLimit(UIGraphicsGetCurrentContext(), pointMiterLimit);//投影角度
-
-    CGContextSetLineJoin(UIGraphicsGetCurrentContext(), 0);
-    
-    CGContextSetLineCap(UIGraphicsGetCurrentContext(), 2 );
-    
-    CGContextSetBlendMode(UIGraphicsGetCurrentContext(), kCGBlendModeNormal);
-    
-    CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), [UIColor blueColor].CGColor);
-    
-	//绘图
-	float p1 = [[blueArray objectAtIndex:0] floatValue];
-	int i = 1;
-	CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 0, imageView.bounds.size.height-p1);
-	for (; i<[blueArray count]; i++)
-	{
-		p1 = [[blueArray objectAtIndex:i] floatValue];
-        CGPoint goPoint = CGPointMake(i*14, imageView.bounds.size.height-p1);
-		CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), goPoint.x, goPoint.y);;
-        
-	}
-	CGContextStrokePath(UIGraphicsGetCurrentContext());
-    imageView.image=UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-}
-//-(int)totalsum : (NSArray *)array num:(int)n
-//{
-//    int sum=0;
-//    for (int i = 0 ; i<[array count]; i++) {
-//        sum+=[[array objectAtIndex:i]intValue];
-//    }
-//    return sum;
-//}
 //找最大值
 -(float )maxNum : (NSMutableArray *)array
 {
@@ -262,5 +283,43 @@
         }
     }
     return small;
+}
+#pragma PointImageviewDelegate
+-(void)showTheData:(NSString *)key x:(float)hx num:(int)num
+{
+    NSString *value=nil;
+    if (t==0) {
+       value= [_todayDict objectForKey:key];
+        if (value !=nil) {
+            self.blueDian.frame=CGRectMake(hx-6, 380-[[_todayArray objectAtIndex:num]floatValue], self.blueDian.frame.size.width, self.blueDian.frame.size.height);
+        }
+
+    }else if (t==1){
+        value= [_yesterdayDict objectForKey:key];
+        if (value!=nil) {
+            self.blueDian.frame=CGRectMake(hx-6, 380-[[_yesterdayArray objectAtIndex:num]floatValue], self.blueDian.frame.size.width, self.blueDian.frame.size.height);
+        }
+
+    }else if (t==2){
+       value= [_avgDict objectForKey:key];
+        if (value !=nil) {
+                    self.blueDian.frame=CGRectMake(hx-6, 380-[[_avgArray objectAtIndex:num]floatValue], self.blueDian.frame.size.width, self.blueDian.frame.size.height);
+        }
+    }
+    
+    if (value==nil) {
+        [self.numLabel setText:[NSString stringWithFormat:@"%@点 : 0元",key]];
+        self.blueDian.hidden=YES;
+    }else
+    {
+        value= [Utility changeToyuan:value];
+        [self.numLabel setText:[NSString stringWithFormat:@"%@点 : %@",key,value]];
+        self.blueDian.hidden=NO;
+    }
+    string=key;
+    
+    
+    henx=hx;
+    dijige=num;
 }
 @end
