@@ -69,7 +69,11 @@
 -(void)getEssAreaIphoneFsNum:(NSMutableDictionary *)dictionary
                       sucess:(void (^) (NSArray *str))sucess
                        falid:(void (^) (NSString *errorMsg))faild;
-
+//省份数据(实时数据、月数据、年数据)
+-(void)getEssProvinceNum:(NSMutableDictionary *)dictionary
+                     url:(NSString *)url
+                  sucess:(void (^) (NSArray *str))sucess
+                   falid:(void (^) (NSString *errorMsg))faild;
 
 
 
@@ -78,11 +82,21 @@
 -(void)getEsscontractNum:(NSMutableDictionary *)dictionary
                   sucess:(void (^) (NSString *str))sucess
                    falid:(void (^) (NSString *errorMsg))faild;
-//ESS合约计划整点趋势图
+//所有整点趋势图
 -(void)getEssHourTrend:(NSMutableDictionary *)dictionary
+                   ulr:(NSString *)url
                 sucess:(void (^) (NSDictionary *nsdict))sucess
                  falid:(void (^) (NSString *errorMsg))faild;
-
+//所有月数据
+-(void)getEssMonthData:(NSMutableDictionary *)dictionary
+                   url:(NSString *)url
+                sucess:(void (^) (NSDictionary *nsdict))sucess
+                 falid:(void (^) (NSString *errorMsg))faild;
+//所有年数据
+-(void)getEssYearData:(NSMutableDictionary *)dictionary
+                  url:(NSString *)url
+               sucess:(void (^) (NSDictionary *nsdict))sucess
+                falid:(void (^) (NSString *errorMsg))faild;
 
 
 
@@ -96,5 +110,9 @@
 -(void)getEssstoreNum:(NSMutableDictionary *)dictionary
                   sucess:(void (^) (NSString *str))sucess
                 falid:(void (^) (NSString *errorMsg))faild;
-
+//商城用户发展
+//整点用户发展总数
+-(void)getEssGuessNum:(NSMutableDictionary *)dictionary
+               sucess:(void (^) (NSString *str))sucess
+                falid:(void (^) (NSString *errorMsg))faild;
 @end

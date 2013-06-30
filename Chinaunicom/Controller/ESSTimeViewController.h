@@ -28,6 +28,6 @@
 - (IBAction)pressThreeGbutton:(UIButton *)sender;
 - (IBAction)pressIphoneFiveButton:(UIButton *)sender;
 - (IBAction)pressIphoneFour:(UIButton *)sender;
-
 -(IBAction)back:(id)sender;
+-(IBAction)pressAreaButton:(UIButton *)sender;
 @end

@@ -450,6 +450,36 @@ static requestServiceHelper *requestService;
         
     }];
 }
+
+//省份数据(实时数据、月数据、年数据)
+-(void)getEssProvinceNum:(NSMutableDictionary *)dictionary
+                     url:(NSString *)url
+                      sucess:(void (^) (NSArray *str))sucess
+                       falid:(void (^) (NSString *errorMsg))faild{
+    
+    [HttpRequestHelper asyncGetRequest:url parameter:dictionary requestComplete:^(NSString *responseStr) {
+        
+        NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
+        
+        NSArray *array=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        if (array) {
+            NSMutableArray *muArray=[NSMutableArray arrayWithCapacity:7];
+            for (int i=0; i<[array count]; i++) {
+                NSString *str=[[array objectAtIndex:i]objectForKey:@"value"];
+                [muArray addObject:str];
+            }
+            NSArray *newArray=[NSArray arrayWithArray:muArray];
+            sucess(newArray);
+        }
+        
+    }requestFailed:^(NSString *errorMsg) {
+        
+        faild(errorMsg);
+        
+    }];
+}
+
+
 //获取ESS合约计划
 //整点合约计划总数
 -(void)getEsscontractNum:(NSMutableDictionary *)dictionary
@@ -469,12 +499,13 @@ static requestServiceHelper *requestService;
         
     }];
 }
-//ESS合约计划整点趋势图
+//整点趋势图
 -(void)getEssHourTrend:(NSMutableDictionary *)dictionary
+                   ulr:(NSString *)url
                   sucess:(void (^) (NSDictionary *nsdict))sucess
                    falid:(void (^) (NSString *errorMsg))faild{
     
-    [HttpRequestHelper asyncGetRequest:GET_ESS_HOURTREND parameter:dictionary requestComplete:^(NSString *responseStr) {
+    [HttpRequestHelper asyncGetRequest:url parameter:dictionary requestComplete:^(NSString *responseStr) {
         
         NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
         
@@ -489,6 +520,49 @@ static requestServiceHelper *requestService;
         
     }];
 }
+//ESS合约计划月数据
+-(void)getEssMonthData:(NSMutableDictionary *)dictionary
+                   url:(NSString *)url
+                sucess:(void (^) (NSDictionary *nsdict))sucess
+                 falid:(void (^) (NSString *errorMsg))faild{
+    
+    [HttpRequestHelper asyncGetRequest:url parameter:dictionary requestComplete:^(NSString *responseStr) {
+        
+        NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
+        
+        NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        if (dict) {
+            sucess(dict);
+        }
+        
+    }requestFailed:^(NSString *errorMsg) {
+        
+        faild(errorMsg);
+        
+    }];
+}
+//ESS合约计划年数据
+-(void)getEssYearData:(NSMutableDictionary *)dictionary
+                  url:(NSString *)url
+                sucess:(void (^) (NSDictionary *nsdict))sucess
+                 falid:(void (^) (NSString *errorMsg))faild{
+    
+    [HttpRequestHelper asyncGetRequest:url parameter:dictionary requestComplete:^(NSString *responseStr) {
+        
+        NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
+        
+        NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        if (dict) {
+            sucess(dict);
+        }
+        
+    }requestFailed:^(NSString *errorMsg) {
+        
+        faild(errorMsg);
+        
+    }];
+}
+
 //ECS交易额
 //实时ECS交易总额
 -(void)getEcstradeNum:(NSMutableDictionary *)dictionary
@@ -526,5 +600,24 @@ static requestServiceHelper *requestService;
         faild(errorMsg);
         
     }];
+}
+//商城用户发展
+//整点用户发展总数
+-(void)getEssGuessNum:(NSMutableDictionary *)dictionary
+               sucess:(void (^) (NSString *str))sucess
+                falid:(void (^) (NSString *errorMsg))faild{
+    [HttpRequestHelper asyncGetRequest:GET_ESS_GUESSNUM parameter:dictionary requestComplete:^(NSString *responseStr) {
+        
+        NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
+        
+        NSString *str=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        sucess(str);
+        
+    }requestFailed:^(NSString *errorMsg) {
+        
+        faild(errorMsg);
+        
+    }];
+
 }
 @end

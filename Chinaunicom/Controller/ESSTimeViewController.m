@@ -9,6 +9,7 @@
 #import "ESSTimeViewController.h"
 #import "requestServiceHelper.h"
 #import "Utility.h"
+#import "AreaViewController.h"
 @interface ESSTimeViewController ()
 
 @end
@@ -26,15 +27,16 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     //获取ESS实时3G用户发展总数
      NSMutableDictionary *dict= [NSMutableDictionary dictionary];
-    if ([_titleStr isEqualToString:@"实时ESS用户发展总数"]) {
+    if ([_titleStr isEqualToString:@"ESS实时趋势图"]) {
         [dict setValue:@"currData" forKey:@"timeStr"];
 
-    }else if ([_titleStr isEqualToString:@"ESS月数据总数"]){
+    }else if ([_titleStr isEqualToString:@"ESS月数据趋势图"]){
         [dict setValue:@"monthData" forKey:@"timeStr"];
        
-    }else if ([_titleStr isEqualToString:@"ESS年数据总数"]){
+    }else if ([_titleStr isEqualToString:@"ESS年数据趋势图"]){
         [dict setValue:@"yearData" forKey:@"timeStr"];
     }
     
@@ -45,13 +47,13 @@
     }];
     
     [[requestServiceHelper defaultService]getEssAreaNum:dict sucess:^(NSArray *array) {
-        self.hdLabel.text=[Utility changeToWan:[array objectAtIndex:3]];
-        self.hnLabel.text=[Utility changeToWan:[array objectAtIndex:5]];
-        self.hbLabel.text=[Utility changeToWan:[array objectAtIndex:0]];
-        self.hzLabel.text=[Utility changeToWan:[array objectAtIndex:6]];
-        self.xbLabel.text=[Utility changeToWan:[array objectAtIndex:1]];
-        self.xnLabel.text=[Utility changeToWan:[array objectAtIndex:2]];
-        self.dbLabel.text=[Utility changeToWan:[array objectAtIndex:4]];
+        self.hdLabel.text=[array objectAtIndex:3];
+        self.hnLabel.text=[array objectAtIndex:5];
+        self.hbLabel.text=[array objectAtIndex:0];
+        self.hzLabel.text=[array objectAtIndex:6];
+        self.xbLabel.text=[array objectAtIndex:1];
+        self.xnLabel.text=[array objectAtIndex:2];
+        self.dbLabel.text=[array objectAtIndex:4];
         [self numForLabel];
     } falid:^(NSString *errorMsg) {
         NSLog(@"err=%@",errorMsg);
@@ -61,20 +63,36 @@
 {
     [super viewDidLoad];
     self.titleLabel.text=_titleStr;
+    if ([_titleStr isEqualToString:@"ESS实时趋势图"]) {
+   
+        self.vpLabel.text=@"3G用户实时开户数量 :";
+        
+    }else if ([_titleStr isEqualToString:@"ESS月数据趋势图"]){
+    
+        self.vpLabel.text=@"3G用户月开户数量 :";
+        
+    }else if ([_titleStr isEqualToString:@"ESS年数据趋势图"]){
+    
+        self.vpLabel.text=@"3G用户年开户数量 :";
+    }
+
     // Do any additional setup after loading the view from its nib.
 }
 - (IBAction)pressThreeGbutton:(UIButton *)sender {
     [self isInTheRect:sender];
     //获取ESS实时3G用户发展总数
     NSMutableDictionary *dict= [NSMutableDictionary dictionary];
-    if ([_titleStr isEqualToString:@"实时ESS用户发展总数"]) {
+    if ([_titleStr isEqualToString:@"ESS实时趋势图"]) {
         [dict setValue:@"currData" forKey:@"timeStr"];
+        self.vpLabel.text=@"3G用户实时开户数量 :";
         
-    }else if ([_titleStr isEqualToString:@"ESS月数据总数"]){
+    }else if ([_titleStr isEqualToString:@"ESS月数据趋势图"]){
         [dict setValue:@"monthData" forKey:@"timeStr"];
+        self.vpLabel.text=@"3G用户月开户数量 :";
         
-    }else if ([_titleStr isEqualToString:@"ESS年数据总数"]){
+    }else if ([_titleStr isEqualToString:@"ESS年数据趋势图"]){
         [dict setValue:@"yearData" forKey:@"timeStr"];
+        self.vpLabel.text=@"3G用户年开户数量 :";
     }
     
     [[requestServiceHelper defaultService]getESStotleNum:dict sucess:^(NSString *str) {
@@ -84,13 +102,13 @@
     }];
     
     [[requestServiceHelper defaultService]getEssAreaNum:dict sucess:^(NSArray *array) {
-        self.hdLabel.text=[Utility changeToWan:[array objectAtIndex:3]];
-        self.hnLabel.text=[Utility changeToWan:[array objectAtIndex:5]];
-        self.hbLabel.text=[Utility changeToWan:[array objectAtIndex:0]];
-        self.hzLabel.text=[Utility changeToWan:[array objectAtIndex:6]];
-        self.xbLabel.text=[Utility changeToWan:[array objectAtIndex:1]];
-        self.xnLabel.text=[Utility changeToWan:[array objectAtIndex:2]];
-        self.dbLabel.text=[Utility changeToWan:[array objectAtIndex:4]];
+        self.hdLabel.text=[array objectAtIndex:3];
+        self.hnLabel.text=[array objectAtIndex:5];
+        self.hbLabel.text=[array objectAtIndex:0];
+        self.hzLabel.text=[array objectAtIndex:6];
+        self.xbLabel.text=[array objectAtIndex:1];
+        self.xnLabel.text=[array objectAtIndex:2];
+        self.dbLabel.text=[array objectAtIndex:4];
         [self numForLabel];
     } falid:^(NSString *errorMsg) {
         NSLog(@"err=%@",errorMsg);
@@ -101,14 +119,17 @@
     [self isInTheRect:sender];
     //获取ESS实时Iphone5用户发展总数
     NSMutableDictionary *dict= [NSMutableDictionary dictionary];
-    if ([_titleStr isEqualToString:@"实时ESS用户发展总数"]) {
+    if ([_titleStr isEqualToString:@"ESS实时趋势图"]) {
         [dict setValue:@"currData" forKey:@"timeStr"];
+         self.vpLabel.text=@"iPhone5实时开户数量 :";
         
-    }else if ([_titleStr isEqualToString:@"ESS月数据总数"]){
+    }else if ([_titleStr isEqualToString:@"ESS月数据趋势图"]){
         [dict setValue:@"monthData" forKey:@"timeStr"];
+         self.vpLabel.text=@"iPhone5月开户数量 :";
         
-    }else if ([_titleStr isEqualToString:@"ESS年数据总数"]){
+    }else if ([_titleStr isEqualToString:@"ESS年数据趋势图"]){
         [dict setValue:@"yearData" forKey:@"timeStr"];
+         self.vpLabel.text=@"iPhone5年开户数量 :";
     }
     [[requestServiceHelper defaultService]getESSIphoneFiveNum:dict sucess:^(NSString *str) {
         NSString *num=[Utility changeTohu:str];
@@ -117,13 +138,13 @@
     }];
     
     [[requestServiceHelper defaultService]getEssAreaIphoneFiveNum:dict sucess:^(NSArray *array) {
-        self.hdLabel.text=[Utility changeToWan:[array objectAtIndex:3]];
-        self.hnLabel.text=[Utility changeToWan:[array objectAtIndex:5]];
-        self.hbLabel.text=[Utility changeToWan:[array objectAtIndex:0] ];
-        self.hzLabel.text=[Utility changeToWan:[array objectAtIndex:6] ];
-        self.xbLabel.text=[Utility changeToWan:[array objectAtIndex:1] ];
-        self.xnLabel.text=[Utility changeToWan:[array objectAtIndex:2] ];
-        self.dbLabel.text=[Utility changeToWan:[array objectAtIndex:4] ];
+        self.hdLabel.text=[array objectAtIndex:3];
+        self.hnLabel.text=[array objectAtIndex:5];
+        self.hbLabel.text=[array objectAtIndex:0];
+        self.hzLabel.text=[array objectAtIndex:6];
+        self.xbLabel.text=[array objectAtIndex:1];
+        self.xnLabel.text=[array objectAtIndex:2];
+        self.dbLabel.text=[array objectAtIndex:4];
         [self numForLabel];
     } falid:^(NSString *errorMsg) {
         NSLog(@"err=%@",errorMsg);
@@ -134,14 +155,17 @@
     [self isInTheRect:sender];
     //获取ESS实时iphone4s用户发展总数
     NSMutableDictionary *dict= [NSMutableDictionary dictionary];
-    if ([_titleStr isEqualToString:@"实时ESS用户发展总数"]) {
+    if ([_titleStr isEqualToString:@"ESS实时趋势图"]) {
         [dict setValue:@"currData" forKey:@"timeStr"];
+        self.vpLabel.text=@"iPhone4S实时开户数量 :";
         
-    }else if ([_titleStr isEqualToString:@"ESS月数据总数"]){
+    }else if ([_titleStr isEqualToString:@"ESS月数据趋势图"]){
         [dict setValue:@"monthData" forKey:@"timeStr"];
+        self.vpLabel.text=@"iPhone4S月开户数量 :";
         
-    }else if ([_titleStr isEqualToString:@"ESS年数据总数"]){
+    }else if ([_titleStr isEqualToString:@"ESS年数据趋势图"]){
         [dict setValue:@"yearData" forKey:@"timeStr"];
+        self.vpLabel.text=@"iPhone4S年开户数量 :";
     }
     [[requestServiceHelper defaultService]getESSIphoneFsNum:dict sucess:^(NSString *str) {
         NSString *num=[Utility changeTohu:str];
@@ -150,13 +174,13 @@
     }];
     
     [[requestServiceHelper defaultService]getEssAreaIphoneFsNum:dict sucess:^(NSArray *array) {
-        self.hdLabel.text=[Utility changeToWan:[array objectAtIndex:3]];
-        self.hnLabel.text=[Utility changeToWan:[array objectAtIndex:5]];
-        self.hbLabel.text=[Utility changeToWan:[array objectAtIndex:0]];
-        self.hzLabel.text=[Utility changeToWan:[array objectAtIndex:6]];
-        self.xbLabel.text=[Utility changeToWan:[array objectAtIndex:1]];
-        self.xnLabel.text=[Utility changeToWan:[array objectAtIndex:2]];
-        self.dbLabel.text=[Utility changeToWan:[array objectAtIndex:4]];
+        self.hdLabel.text=[array objectAtIndex:3];
+        self.hnLabel.text=[array objectAtIndex:5];
+        self.hbLabel.text=[array objectAtIndex:0];
+        self.hzLabel.text=[array objectAtIndex:6];
+        self.xbLabel.text=[array objectAtIndex:1];
+        self.xnLabel.text=[array objectAtIndex:2];
+        self.dbLabel.text=[array objectAtIndex:4];
         [self numForLabel];
     } falid:^(NSString *errorMsg) {
         NSLog(@"err=%@",errorMsg);
@@ -174,31 +198,28 @@
         [self.iphone4SButton.titleLabel setTextColor:[UIColor darkGrayColor]];
         [bt setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
-        [self changeVpLabel:bt.tag];
-        
         [UIView animateWithDuration:0.3f animations:^{
             self.lineImageView.frame=CGRectMake(bt.frame.origin.x+2, self.lineImageView.frame.origin.y, self.lineImageView.frame.size.width, self.lineImageView.frame.size.height);
             
         }];
-        for (UIView *view in [self.bgImageView subviews]){
-            [view removeFromSuperview];
-        }
+
     }
 }
 
--(void)changeVpLabel : (int) tag
-{
-    if (tag==1) {
-        self.vpLabel.text=@"3G用户实时开户数量 :";
-    }else if (tag==2){
-        self.vpLabel.text=@"iPhone5实时开户数量 :";
-    }else if (tag==3)
-    {
-        self.vpLabel.text=@"iPhone4S实时开户数量 :";
-    }
-    
-}
--(void)numForLabel 
+//-(void)changeVpLabel : (int) tag
+//{
+//
+//    if (tag==1) {
+//        self.vpLabel.text=@"3G用户实时开户数量 :";
+//    }else if (tag==2){
+//        self.vpLabel.text=@"iPhone5实时开户数量 :";
+//    }else if (tag==3)
+//    {
+//        self.vpLabel.text=@"iPhone4S实时开户数量 :";
+//    }
+//    
+//}
+-(void)numForLabel
 {
     NSArray *array=[NSArray arrayWithObjects:
                      self.hdLabel.text,
@@ -213,6 +234,17 @@
     int num = totalsum(a, 7);
     NSMutableArray *muArray = [self ratio:array total:num];
     
+    self.hdLabel.text=[Utility changeToWan:self.hdLabel.text];
+    self.hnLabel.text=[Utility changeToWan:self.hnLabel.text];
+    self.hbLabel.text=[Utility changeToWan:self.hbLabel.text ];
+    self.hzLabel.text=[Utility changeToWan:self.hzLabel.text ];
+    self.xbLabel.text=[Utility changeToWan:self.xbLabel.text ];
+    self.xnLabel.text=[Utility changeToWan:self.xnLabel.text ];
+    self.dbLabel.text=[Utility changeToWan:self.dbLabel.text ];
+    
+    for (UIView *view in [self.bgImageView subviews]){
+        [view removeFromSuperview];
+    }
     UIImage *image = [UIImage imageNamed:@"new_ess_tu.png"];
     for (int i = 0 ; i<[muArray count];i++) {
         float y=[[muArray objectAtIndex:i]floatValue];
@@ -225,6 +257,33 @@
 -(IBAction)back:(id)sender
 {
     [self dismissModalViewControllerAnimated:YES];
+}
+-(IBAction)pressAreaButton:(UIButton *)sender
+{
+    AreaViewController *area=[[AreaViewController alloc]initWithNibName:@"AreaViewController" bundle:nil];
+    if (sender.tag==101) {
+        area.title=@"华东地区";
+    }else if (sender.tag==102)
+    {
+        area.title=@"华南地区";
+    }else if (sender.tag==103)
+    {
+        area.title=@"华北地区";
+    }else if (sender.tag==104)
+    {
+        area.title=@"华中地区";
+    }else if (sender.tag==105)
+    {
+        area.title=@"西北地区";
+    }else if (sender.tag==106)
+    {
+        area.title=@"西南地区";
+    }else if (sender.tag==107)
+    {
+        area.title=@"东北地区";
+    }
+    area.vpString=self.vpLabel.text;
+    [self.navigationController pushViewController:area animated:YES];
 }
 - (void)didReceiveMemoryWarning
 {

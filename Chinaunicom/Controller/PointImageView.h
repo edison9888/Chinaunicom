@@ -13,9 +13,9 @@
 @interface PointImageView : UIImageView
 {
     CGPoint beginPoint;
-    id <pointDelegate> myDelegate;
+   __weak id <pointDelegate> _myDelegate;
 }
-@property (nonatomic,assign)id <pointDelegate> mydelegate;
+@property (nonatomic,weak)id <pointDelegate> myDelegate;
 @property (nonatomic,strong)UIImageView *blueDianImage;
 @end
 @protocol pointDelegate <NSObject>

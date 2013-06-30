@@ -57,6 +57,12 @@
             self.moneyLabel.text=num;
         } falid:^(NSString *errorMsg) {
         }];
+    }else if ([_name isEqualToString:@"ECS用户发展"]){
+        [[requestServiceHelper defaultService]getEssGuessNum:[NSMutableDictionary dictionary] sucess:^(NSString *str) {
+            NSString *num=[Utility changeToyuan:str];
+            self.moneyLabel.text=num;
+        } falid:^(NSString *errorMsg) {
+        }];
     }
 }
 - (void)viewDidLoad
@@ -67,9 +73,14 @@
     
     if ([_name isEqualToString:@"ESS实时看板"]) {
         [self.payButton setTitle:@"ESS实时趋势图" forState:UIControlStateNormal];
+        [self.monthButton setTitle:@"ESS月数据趋势图" forState:UIControlStateNormal];
+        [self.yearButton setTitle:@"ESS年数据趋势图" forState:UIControlStateNormal];
     }else {
         [self.payButton setTitle:[NSString stringWithFormat:@"%@实时趋势图",_name] forState:UIControlStateNormal];
+        [self.monthButton setTitle:[NSString stringWithFormat:@"%@月数据趋势图",_name] forState:UIControlStateNormal];
+        [self.yearButton setTitle:[NSString stringWithFormat:@"%@年数据趋势图",_name] forState:UIControlStateNormal];
     }
+
     
 }
 -(IBAction)pressPayButton:(UIButton *)sender
@@ -77,7 +88,7 @@
     if ([_name isEqualToString:@"ESS实时看板"])
     {
         ESSTimeViewController *viewController=[[ESSTimeViewController alloc]initWithNibName:@"ESSTimeViewController" bundle:nil];
-        viewController.titleStr=@"实时ESS用户发展总数";
+        viewController.titleStr=sender.titleLabel.text;
         [self bottomViewanimation:viewController];
     }
     else
@@ -92,14 +103,14 @@
     if ([_name isEqualToString:@"ESS实时看板"]) {
         
         ESSTimeViewController *viewController=[[ESSTimeViewController alloc]initWithNibName:@"ESSTimeViewController" bundle:nil];
-        viewController.titleStr=@"ESS月数据总数";
+        viewController.titleStr=sender.titleLabel.text;
         [self bottomViewanimation:viewController];
         
     }else{
         
         MonthDataViewController *viewController=[[MonthDataViewController alloc]initWithNibName:@"MonthDataViewController" bundle:nil];
         
-        viewController.str=self.nameLabel.text;
+        viewController.str=sender.titleLabel.text;
         [self bottomViewanimation:viewController];
     }
 
@@ -109,13 +120,13 @@
     if ([_name isEqualToString:@"ESS实时看板"]) {
         
         ESSTimeViewController *viewController=[[ESSTimeViewController alloc]initWithNibName:@"ESSTimeViewController" bundle:nil];
-        viewController.titleStr=@"ESS年数据总数";
+        viewController.titleStr=sender.titleLabel.text;
         [self bottomViewanimation:viewController];
         
     }else{
         
         YearDataViewController *viewController=[[YearDataViewController alloc]initWithNibName:@"YearDataViewController" bundle:nil];
-        viewController.yearStr=self.nameLabel.text;
+        viewController.yearStr=sender.titleLabel.text;
         [self bottomViewanimation:viewController];
     }
 }
@@ -132,13 +143,23 @@
         [self.moneyLabel setAlpha:0];
     } completion:^(BOOL finished) {
         [self.bottomView setAlpha:0];
-        //[self presentModalViewController:viewController animated:YES];
-        [self presentViewController:viewController animated:YES completion:^{
+        UINavigationController *nav=[[UINavigationController alloc]initWithRootViewController:viewController];
+        nav.navigationBarHidden=YES;
+        if ([self respondsToSelector:@selector(presentViewController:animated:completion:)]) {
+            [self.navigationController presentViewController:nav animated:YES completion:^{
+                [self.bottomView setFrame:CGRectMake(0, 315, 320, self.bottomView.frame.size.height)];
+                [self.bottomView setAlpha:1];
+                [self.nameLabel setAlpha:1];
+                [self.moneyLabel setAlpha:1];
+                
+            }];
+        }else{
+            [self.navigationController presentModalViewController:nav animated:YES];
             [self.bottomView setFrame:CGRectMake(0, 315, 320, self.bottomView.frame.size.height)];
             [self.bottomView setAlpha:1];
             [self.nameLabel setAlpha:1];
             [self.moneyLabel setAlpha:1];
-        }];
+        }
     }];
 }
 //-(NSString *)everyName

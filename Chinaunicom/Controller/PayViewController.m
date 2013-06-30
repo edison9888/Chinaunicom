@@ -33,7 +33,21 @@
 -(void)todayData : (BOOL)isPress
 {
     NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObject:@"today" forKey:@"timeStr"];
-    [[requestServiceHelper defaultService]getEssHourTrend:dict sucess:^(NSDictionary *nsdict) {
+    NSString *url=@"";
+    if ([_str isEqualToString:@"ESS合约计划实时趋势图"])
+    {
+        url=GET_ESS_HOURTREND;
+    }else if ([_str isEqualToString:@"ECS交易额实时趋势图"])
+    {
+        url=GET_ECS_HOURTREND;
+    }else if ([_str isEqualToString:@"ECS商城订单实时趋势图"])
+    {
+        url=GET_STORE_HOURTREND;
+    }else if ([_str isEqualToString:@"ECS用户发展实时趋势图"])
+    {
+        url=GET_GUESS_HOURTREND;
+    }
+    [[requestServiceHelper defaultService]getEssHourTrend:dict ulr:url sucess:^(NSDictionary *nsdict) {
         if (isPress) {
             if ([nsdict count]>0) {
                 NSString *num=[Utility changeToyuan:[nsdict objectForKey:@"00"]];
@@ -51,15 +65,28 @@
         
     } falid:^(NSString *errorMsg) {
     }];
-
 }
 //昨日数据
 -(void)yesterdayData:(BOOL)isPress
 {
     //昨日数据
-    NSMutableDictionary *yesterdayDict=[NSMutableDictionary dictionaryWithObject:@"yesterday" forKey:@"timeStr"];
-    [[requestServiceHelper defaultService]getEssHourTrend:yesterdayDict sucess:^(NSDictionary *nsdict) {
-
+    NSMutableDictionary *ytDict=[NSMutableDictionary dictionaryWithObject:@"yesterday" forKey:@"timeStr"];
+    NSString *url=@"";
+    if ([_str isEqualToString:@"ESS合约计划实时趋势图"])
+    {
+        url=GET_ESS_HOURTREND;
+    }else if ([_str isEqualToString:@"ECS交易额实时趋势图"])
+    {
+        url=GET_ECS_HOURTREND;
+    }else if ([_str isEqualToString:@"ECS商城订单实时趋势图"])
+    {
+        url=GET_STORE_HOURTREND;
+    }else if ([_str isEqualToString:@"ECS用户发展实时趋势图"])
+    {
+        url=GET_GUESS_HOURTREND;
+    }
+    [[requestServiceHelper defaultService]getEssHourTrend:ytDict ulr:url sucess:^(NSDictionary *nsdict) {
+            
         _yesterdayDict = [NSDictionary dictionaryWithDictionary:nsdict];
         NSMutableArray *muArray=[self ratio:nsdict];
         _yesterdayArray=muArray;
@@ -67,38 +94,58 @@
         line.blueArray=muArray;
         line.colorArray=[NSArray arrayWithObjects:@"0.5",@"0.7",@"1.0",@"1.0", nil];
         [self.bgImageView addSubview:line];
-        
+            
     } falid:^(NSString *errorMsg) {
     }];
+    
+
 }
 //均值数据
 -(void)avgData:(BOOL)isPress
 {
     //均值数据
     NSMutableDictionary *avgDict=[NSMutableDictionary dictionaryWithObject:@"avg" forKey:@"timeStr"];
-    [[requestServiceHelper defaultService]getEssHourTrend:avgDict sucess:^(NSDictionary *nsdict) {
-
-        _avgDict = [NSDictionary dictionaryWithDictionary:nsdict];
-        NSMutableArray *muArray=[self ratio:nsdict];
-        _avgArray=muArray;
-        LineImageView *line=[[LineImageView alloc]initWithFrame:CGRectMake(6, 4, 304, self.bgImageView.frame.size.height-15)];
-        line.blueArray=muArray;
-        line.colorArray=[NSArray arrayWithObjects:@"1.0",@"0.7",@"0.3",@"1.0", nil];
-        [self.bgImageView addSubview:line];
-        
-    } falid:^(NSString *errorMsg) {
+    NSString *url=@"";
+    if ([_str isEqualToString:@"ESS合约计划实时趋势图"])
+    {
+        url=GET_ESS_HOURTREND;
+    }else if ([_str isEqualToString:@"ECS交易额实时趋势图"])
+    {
+        url=GET_ECS_HOURTREND;
+    }else if ([_str isEqualToString:@"ECS商城订单实时趋势图"])
+    {
+        url=GET_STORE_HOURTREND;
+    }else if ([_str isEqualToString:@"ECS用户发展实时趋势图"])
+    {
+        url=GET_GUESS_HOURTREND;
+    }
+    [[requestServiceHelper defaultService]getEssHourTrend:avgDict ulr:url sucess:^(NSDictionary *nsdict) {
+            _avgDict = [NSDictionary dictionaryWithDictionary:nsdict];
+            NSMutableArray *muArray=[self ratio:nsdict];
+            _avgArray=muArray;
+            LineImageView *line=[[LineImageView alloc]initWithFrame:CGRectMake(6, 4, 304, self.bgImageView.frame.size.height-15)];
+            line.blueArray=muArray;
+            line.colorArray=[NSArray arrayWithObjects:@"1.0",@"0.7",@"0.3",@"1.0", nil];
+            [self.bgImageView addSubview:line];
+            
+        } falid:^(NSString *errorMsg) {
     }];
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+
+    [self todayData:YES];
+    [self yesterdayData:NO];
+    [self avgData:NO];
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.titleLabel.text=_str;
     [self getLocalData];
-    [self todayData:YES];
-    [self yesterdayData:NO];
-    [self avgData:NO];
     string=@"00";
-    self.pointImageView.mydelegate=self;
+    henx=16;
+    self.pointImageView.myDelegate=self;
     self.pointImageView.blueDianImage=self.blueDian;
     
 }

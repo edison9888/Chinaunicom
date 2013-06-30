@@ -60,10 +60,11 @@ static const NSTimeInterval kWobbleTime = 0.07;
     self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg"]];
 	
 	scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 44, 265, 410)];
-	scrollView.alwaysBounceVertical = YES;
-	scrollView.alwaysBounceHorizontal = NO;
-    scrollView.showsHorizontalScrollIndicator=NO;
-
+//	scrollView.alwaysBounceVertical = YES;
+//	scrollView.alwaysBounceHorizontal = NO;
+//    scrollView.showsHorizontalScrollIndicator=NO;
+    [scrollView setScrollEnabled:NO];
+    
 	scrollView.tag = MaxTagNumber;//防止删除子视图时将scrollView删掉
     scrollView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"left_menu_bg"]];
 	[self.view addSubview:scrollView];
@@ -103,7 +104,7 @@ static const NSTimeInterval kWobbleTime = 0.07;
 {
     
     //创建navbar
-    UINavigationBar *nav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    UINavigationBar *nav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320  , 44)];
     [nav setBackgroundImage:[UIImage imageNamed:@"title.png"] forBarMetrics:UIBarMetricsDefault];
     //电商头条
     UIImageView *imageView=[[UIImageView alloc] initWithFrame:CGRectMake(10, 8, 30, 30)];

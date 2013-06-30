@@ -9,7 +9,7 @@
 #import "PointImageView.h"
 
 @implementation PointImageView
-@synthesize mydelegate=_mydelegate;
+@synthesize myDelegate=_myDelegate;
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -206,7 +206,7 @@
             hx=305.5;
             num=24;
         }
-    [_mydelegate showTheData:key x:hx num:num];
+    [_myDelegate showTheData:key x:hx num:num];
 }
 /*
 // Only override drawRect: if you perform custom drawing.

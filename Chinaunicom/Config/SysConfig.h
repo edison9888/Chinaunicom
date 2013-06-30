@@ -87,15 +87,48 @@
 #define GET_ESS__AREA_IPHONE5NUM [SERVERPATH stringByAppendingFormat:@"daping/getiPhone5SaleDistrictRanking"]
 //获取ESS实时看板iPhone4S用户发展行政区排名
 #define GET_ESS_AREA_IPHONE4GNUM [SERVERPATH stringByAppendingFormat:@"daping/getiPhone4SSaleDistrictRanking"]
+//3G用户发展省份数据(实时数据、月数据、年数据)
+#define GET_ESS_PROVINCE_3GNUM [SERVERPATH stringByAppendingFormat:@"daping/get3GUserDevData"]
+//iPhone 5省份数据(实时数据、月数据、年数据)
+#define GET_ESS_PROVINCE_FIVENUM [SERVERPATH stringByAppendingFormat:@"daping/getiPhone5ProvinceData"]
+//iPhone 4S省份数据(实时数据、月数据、年数据)
+#define GET_ESS_PROVINCE_FOURSNUM [SERVERPATH stringByAppendingFormat:@"daping/getiPhone4SProvinceData"]
 
 
 //ESS合约计划 整点合约计划总数
 #define GET_ESS_CONTRANCTNUM [SERVERPATH stringByAppendingFormat:@"daping/getContSumOfESS"]
 //ESS合约计划 整点趋势图
 #define GET_ESS_HOURTREND [SERVERPATH stringByAppendingFormat:@"daping/get24HoursChartOfESS"]
+//实时ECS交易总额 整点趋势图
+#define GET_ECS_HOURTREND [SERVERPATH stringByAppendingFormat:@"daping/get24HoursChartOfECS"]
+//整点商城订单总量 整点趋势图
+#define GET_STORE_HOURTREND [SERVERPATH stringByAppendingFormat:@"daping/get24HoursChartOfMall"]
+//商城用户发展 整点趋势图
+#define GET_GUESS_HOURTREND [SERVERPATH stringByAppendingFormat:@""]
+
+
+//ESS合约计划 月数据趋势图
+#define GET_ESS_MONTHDATA [SERVERPATH stringByAppendingFormat:@"daping/getMonthDataOfESS"]
+//ECS交易额 月数据趋势图
+#define GET_ECS_MONTHDATA [SERVERPATH stringByAppendingFormat:@"daping/getMonthDataOfECS"]
+//商城订单总量 月数据趋势图
+#define GET_STORE_MONTHDATA [SERVERPATH stringByAppendingFormat:@"daping/getMonthDataOfMall"]
+//商城用户发展 月数据趋势图
+#define GET_GUESS_MONTHDATA [SERVERPATH stringByAppendingFormat:@"daping/getMonthDataOfMallUser"]
+
+//ESS合约计划 年数据趋势图
+#define GET_ESS_YEARDATA [SERVERPATH stringByAppendingFormat:@"daping/getYearDataOfESS"]
+//ECS交易额 年数据趋势图
+#define GET_ECS_YEARDATA [SERVERPATH stringByAppendingFormat:@"daping/getYearDataOfECS"]
+//商城订单总量 年数据趋势图
+#define GET_STORE_YEARDATA [SERVERPATH stringByAppendingFormat:@"daping/getYearDataOfMall"]
+//商城用户发展 年数据趋势图
+#define GET_GUESS_YEARDATA [SERVERPATH stringByAppendingFormat:@"daping/getYearDataOfMallUser"]
 
 //ECS交易额 实时ECS交易总额
 #define GET_ECS_TRADENUM [SERVERPATH stringByAppendingFormat:@"daping/getCurrGMVofECS"]
 //商城订单量 整点商城订单总量
 #define GET_ESS_STORENUM [SERVERPATH stringByAppendingFormat:@"daping/getMallGrossOfMall"]
+//商城用户发展 整点用户发展总数
+#define GET_ESS_GUESSNUM [SERVERPATH stringByAppendingFormat:@""]
 #endif

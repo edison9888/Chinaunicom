@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface YearDataViewController : UIViewController
+#import "YearPointImageView.h"
+@interface YearDataViewController : UIViewController<yearPointDelegate>
 @property (nonatomic,copy)NSString *yearStr;
 @property (nonatomic,weak)IBOutlet UILabel *yearLabel;
 @property (nonatomic,weak)IBOutlet UILabel *yearNumLabel;
+@property (weak, nonatomic) IBOutlet UILabel *monthNumLabel;
+@property (weak, nonatomic) IBOutlet UILabel *yearNameLable;
+@property (weak, nonatomic) IBOutlet UIImageView *bgImageView;
+@property (weak, nonatomic) IBOutlet YearPointImageView *yearPointImage;
 -(IBAction)popToHigherLevel:(id)sender;
 @end
