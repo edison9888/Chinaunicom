@@ -15,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *monthNumLabel;
 @property (weak, nonatomic) IBOutlet UILabel *yearNameLable;
 @property (weak, nonatomic) IBOutlet UIImageView *bgImageView;
+
 @property (weak, nonatomic) IBOutlet YearPointImageView *yearPointImage;
 -(IBAction)popToHigherLevel:(id)sender;
+- (IBAction)pressMapButton:(id)sender;
 @end

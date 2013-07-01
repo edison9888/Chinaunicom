@@ -115,4 +115,9 @@
 -(void)getEssGuessNum:(NSMutableDictionary *)dictionary
                sucess:(void (^) (NSString *str))sucess
                 falid:(void (^) (NSString *errorMsg))faild;
+//省份数据(实时数据、月数据、年数据)
+-(void)getProvinceNum:(NSMutableDictionary *)dictionary
+                  url:(NSString *)url
+               sucess:(void (^) (NSArray *str))sucess
+                falid:(void (^) (NSString *errorMsg))faild;
 @end

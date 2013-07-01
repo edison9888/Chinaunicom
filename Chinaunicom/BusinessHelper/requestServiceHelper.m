@@ -353,6 +353,7 @@ static requestServiceHelper *requestService;
                  [muArray addObject:str];
              }
              NSArray *newArray=[NSArray arrayWithArray:muArray];
+             
              sucess(newArray);
         }
      
@@ -463,13 +464,13 @@ static requestServiceHelper *requestService;
         
         NSArray *array=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
         if (array) {
-            NSMutableArray *muArray=[NSMutableArray arrayWithCapacity:7];
-            for (int i=0; i<[array count]; i++) {
-                NSString *str=[[array objectAtIndex:i]objectForKey:@"value"];
-                [muArray addObject:str];
-            }
-            NSArray *newArray=[NSArray arrayWithArray:muArray];
-            sucess(newArray);
+//            NSMutableArray *muArray=[NSMutableArray arrayWithCapacity:7];
+//            for (int i=0; i<[array count]; i++) {
+//                NSString *str=[[array objectAtIndex:i]objectForKey:@"value"];
+//                [muArray addObject:str];
+//            }
+//            NSArray *newArray=[NSArray arrayWithArray:muArray];
+            sucess(array);
         }
         
     }requestFailed:^(NSString *errorMsg) {
@@ -620,4 +621,27 @@ static requestServiceHelper *requestService;
     }];
 
 }
+
+//省份数据(实时数据、月数据、年数据)
+-(void)getProvinceNum:(NSMutableDictionary *)dictionary
+                     url:(NSString *)url
+                  sucess:(void (^) (NSArray *str))sucess
+                   falid:(void (^) (NSString *errorMsg))faild{
+    
+    [HttpRequestHelper asyncGetRequest:url parameter:dictionary requestComplete:^(NSString *responseStr) {
+        
+        NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
+        
+        NSArray *array=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        if (array) {
+            sucess(array);
+        }
+        
+    }requestFailed:^(NSString *errorMsg) {
+        
+        faild(errorMsg);
+        
+    }];
+}
+
 @end

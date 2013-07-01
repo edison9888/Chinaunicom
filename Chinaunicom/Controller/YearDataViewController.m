@@ -9,6 +9,7 @@
 #import "YearDataViewController.h"
 #import "requestServiceHelper.h"
 #import "Utility.h"
+#import "TimeViewController.h"
 @interface YearDataViewController ()
 {
     NSMutableArray *yearDataArray;
@@ -101,6 +102,24 @@
 -(IBAction)popToHigherLevel:(id)sender
 {
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (IBAction)pressMapButton:(id)sender {
+    TimeViewController *time=[[TimeViewController alloc]initWithNibName:@"TimeViewController" bundle:nil];
+    if ([_yearStr isEqualToString:@"ESS合约计划年数据趋势图"]) {
+        time.title=@"401";
+    }else if ([_yearStr isEqualToString:@"ECS交易额年数据趋势图"])
+    {
+       time.title=@"402";
+    }else if ([_yearStr isEqualToString:@"ECS商城订单年数据趋势图"])
+    {
+       time.title=@"403";
+    }else if ([_yearStr isEqualToString:@"ECS用户发展年数据趋势图"])
+    {
+        time.title=@"404";
+    }
+    [self.navigationController pushViewController:time animated:YES];
+
 }
 - (void)didReceiveMemoryWarning
 {

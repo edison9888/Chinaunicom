@@ -10,6 +10,7 @@
 #import "requestServiceHelper.h"
 #import "Utility.h"
 #import "LineImageView.h"
+#import "TimeViewController.h"
 @interface PayViewController ()
 {
     int t;
@@ -186,6 +187,25 @@
 -(IBAction)popToHigherLevel:(id)sender
 {
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (IBAction)pressMapButton:(id)sender {
+    
+    TimeViewController *time=[[TimeViewController alloc]initWithNibName:@"TimeViewController" bundle:nil];
+    if ([_str isEqualToString:@"ESS合约计划实时趋势图"])
+    {
+        time.title=@"201";
+    }else if ([_str isEqualToString:@"ECS交易额实时趋势图"])
+    {
+        time.title=@"202";
+    }else if ([_str isEqualToString:@"ECS商城订单实时趋势图"])
+    {
+        time.title=@"203";
+    }else if ([_str isEqualToString:@"ECS用户发展实时趋势图"])
+    {
+        time.title=@"204";
+    }
+    [self.navigationController pushViewController:time animated:YES];
 }
 - (void)didReceiveMemoryWarning
 {

@@ -19,4 +19,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *bMonthLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sMonthLabel;
 -(IBAction)popToHigherLevel:(id)sender;
+- (IBAction)pressMapButton:(id)sender;
 @end

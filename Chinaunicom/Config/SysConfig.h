@@ -131,4 +131,13 @@
 #define GET_ESS_STORENUM [SERVERPATH stringByAppendingFormat:@"daping/getMallGrossOfMall"]
 //商城用户发展 整点用户发展总数
 #define GET_ESS_GUESSNUM [SERVERPATH stringByAppendingFormat:@""]
+
+//ECS交易额 省份排名（整点数据、月数据、年数据）
+#define GET_PROVINCE_ECS [SERVERPATH stringByAppendingFormat:@"ecs/getProvinceRanking"]
+//商城订单量 省份排名（整点数据、月数据、年数据）
+#define GET_PROVINCE_STORE [SERVERPATH stringByAppendingFormat:@"mall/getProvinceRanking"]
+//商城用户发展 省份排名（整点数据、月数据、年数据）
+#define GET_PROVINCE_GUESS [SERVERPATH stringByAppendingFormat:@""]
+//ESS合约计划 省份排名（整点数据、月数据、年数据）
+#define GET_PROVINCE_ESS [SERVERPATH stringByAppendingFormat:@"ess/getProvinceRanking"]
 #endif

@@ -24,6 +24,7 @@
     return self;
 }
 -(void)viewWillAppear:(BOOL)animated{
+    
     [super viewWillAppear:animated];
     NSMutableDictionary *dict= [NSMutableDictionary dictionary];
     if ([_vpString isEqualToString:@"3G用户实时开户数量 :"]) {
@@ -31,12 +32,10 @@
         [[requestServiceHelper defaultService]getEssAreaNum:dict sucess:^(NSArray *array) {
             [self getNumForCode:array];
         } falid:^(NSString *errorMsg) {
-            NSLog(@"err=%@",errorMsg);
         }];
         [dict setValue:[self getCode] forKey:@"areaCode"];
         [[requestServiceHelper defaultService]getEssProvinceNum:dict url:GET_ESS_PROVINCE_3GNUM sucess:^(NSArray *str) {
             //画图
-            NSLog(@"str=%@",str);
             [self drawImage:str];
             
         } falid:^(NSString *errorMsg) {
@@ -53,7 +52,7 @@
          [dict setValue:[self getCode] forKey:@"areaCode"];
         [[requestServiceHelper defaultService]getEssProvinceNum:dict url:GET_ESS_PROVINCE_3GNUM sucess:^(NSArray *str) {
             //画图
-            NSLog(@"str=%@",str);
+            [self drawImage:str];
         } falid:^(NSString *errorMsg) {
             
         }];
@@ -68,7 +67,7 @@
          [dict setValue:[self getCode] forKey:@"areaCode"];
         [[requestServiceHelper defaultService]getEssProvinceNum:dict url:GET_ESS_PROVINCE_3GNUM sucess:^(NSArray *str) {
             //画图
-            NSLog(@"str=%@",str);
+            [self drawImage:str];
         } falid:^(NSString *errorMsg) {
             
         }];
@@ -85,7 +84,7 @@
          [dict setValue:[self getCode] forKey:@"areaCode"];
         [[requestServiceHelper defaultService]getEssProvinceNum:dict url:GET_ESS_PROVINCE_FOURSNUM sucess:^(NSArray *str) {
             //画图
-            NSLog(@"str=%@",str);
+            [self drawImage:str];
         } falid:^(NSString *errorMsg) {
             
         }];
@@ -102,7 +101,7 @@
          [dict setValue:[self getCode] forKey:@"areaCode"];
         [[requestServiceHelper defaultService]getEssProvinceNum:dict url:GET_ESS_PROVINCE_FOURSNUM sucess:^(NSArray *str) {
             //画图
-            NSLog(@"str=%@",str);
+            [self drawImage:str];
         } falid:^(NSString *errorMsg) {
             
         }];
@@ -117,7 +116,7 @@
          [dict setValue:[self getCode] forKey:@"areaCode"];
         [[requestServiceHelper defaultService]getEssProvinceNum:dict url:GET_ESS_PROVINCE_FOURSNUM sucess:^(NSArray *str) {
             //画图
-            NSLog(@"str=%@",str);
+            [self drawImage:str];
         } falid:^(NSString *errorMsg) {
             
         }];
@@ -132,7 +131,7 @@
          [dict setValue:[self getCode] forKey:@"areaCode"];
         [[requestServiceHelper defaultService]getEssProvinceNum:dict url:GET_ESS_PROVINCE_FIVENUM sucess:^(NSArray *str) {
             //画图
-            NSLog(@"str=%@",str);
+            [self drawImage:str];
         } falid:^(NSString *errorMsg) {
             
         }];
@@ -147,7 +146,7 @@
          [dict setValue:[self getCode] forKey:@"areaCode"];
         [[requestServiceHelper defaultService]getEssProvinceNum:dict url:GET_ESS_PROVINCE_FIVENUM sucess:^(NSArray *str) {
             //画图
-            NSLog(@"str=%@",str);
+            [self drawImage:str];
         } falid:^(NSString *errorMsg) {
             
         }];
@@ -162,7 +161,7 @@
          [dict setValue:[self getCode] forKey:@"areaCode"];
         [[requestServiceHelper defaultService]getEssProvinceNum:dict url:GET_ESS_PROVINCE_FIVENUM sucess:^(NSArray *str) {
             //画图
-            NSLog(@"str=%@",str);
+            [self drawImage:str];
         } falid:^(NSString *errorMsg) {
             
         }];
@@ -248,38 +247,54 @@
 -(void)drawImage : (NSArray *)array
 {
    
-    int sum=[self numTotal:array];
-    NSMutableArray *muArray=[self ratio:array total:sum];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Province" ofType:@"plist"];
+    NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:path];
     
-    //test
-    NSMutableArray *aaaaa=[NSMutableArray arrayWithObjects:@"5",@"10",@"20",@"30",@"40",@"70", nil];
-    for (int i =0; i<[aaaaa count]; i++) {
-        UIImage *image=[UIImage imageNamed:@"new_area_bg_bg.png"];
-        NSLog(@"11111=%@",NSStringFromCGSize(image.size));
-       UIImage *newImage= [image stretchableImageWithLeftCapWidth:70 topCapHeight:35];
-        UIImageView *imageview=[[UIImageView alloc]initWithFrame:CGRectMake(10, i*50, image.size.width+[[aaaaa objectAtIndex:i] floatValue], image.size.height)];
-        imageview.image=newImage;
-        [self.myScrollView addSubview:imageview];
+    NSMutableArray *valueArray=[NSMutableArray arrayWithCapacity:[array count]];
+    NSMutableArray *keysArray=[NSMutableArray arrayWithCapacity:[array count]];
+        for (int i=0; i<[array count]; i++) {
+            NSString *str=[[array objectAtIndex:i]objectForKey:@"value"];
+            NSString *key=[[array objectAtIndex:i]objectForKey:@"code"];
+            NSString *value= [dict objectForKey:key];
+            [valueArray addObject:str];
+            [keysArray addObject:value];
     }
     
-//    for (int i=0; i<[aaaaa count]; i++) {
-//        UIImage *leftImage= [UIImage imageNamed:@"left_area"];
-//        NSLog(@"ri=%@",NSStringFromCGSize(leftImage.size));
-//        UIImageView *leftImageView=[[UIImageView alloc]initWithFrame:CGRectMake(10, i*(53+5), leftImage.size.width, 38)];
-//        leftImageView.image=leftImage;
-//        
-//        
-//        UIImage *rightImage=[UIImage imageNamed:@"right_area"];
-//        NSLog(@"ri=%@",NSStringFromCGSize(rightImage.size));
-//        UIImage *newRightImage=[rightImage resizableImageWithCapInsets:UIEdgeInsetsMake(1, 1, 1, 3)];
-//        UIImageView *rightImageView=[[UIImageView alloc]initWithFrame:CGRectMake(10+leftImageView.frame.size.width, i*(53+4), [[aaaaa objectAtIndex:i] floatValue], rightImage.size.height-8)];
-////        [rightImageView setBackgroundColor:[UIColor redColor]];
-//        rightImageView.image=newRightImage;
-//        [self.myScrollView addSubview:leftImageView];
-//        [self.myScrollView addSubview:rightImageView];
-//    }
+    //算总和
+    int sum=[self numTotal:valueArray];
+    //算比例
+    NSMutableArray *muArray=[self ratio:valueArray total:sum];
+    
+    for (int i=0; i<[muArray count]; i++) {
+        UIImage *leftImage= [UIImage imageNamed:@"left_area.png"];
+        UIImageView *leftImageView=[[UIImageView alloc]initWithFrame:CGRectMake(10, i*(leftImage.size.height+5), leftImage.size.width, leftImage.size.height)];
+        leftImageView.image=leftImage;
+        
+        UILabel *textLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, leftImageView.frame.size.width, leftImageView.frame.size.height)];
+        [textLabel setTextColor:[UIColor blueColor]];
+        [textLabel setTextAlignment:NSTextAlignmentCenter];
+        textLabel.adjustsFontSizeToFitWidth=YES;
+        [textLabel setBackgroundColor:[UIColor clearColor]];
+        textLabel.text=[keysArray objectAtIndex:i];
+        
+        UIImage *rightImage=[UIImage imageNamed:@"right_area.png"];
+        UIImage *newRightImage=[rightImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 5)];
+        UIImageView *rightImageView=[[UIImageView alloc]initWithFrame:CGRectMake(10+leftImageView.frame.size.width, i*(leftImage.size.height+5), [[muArray objectAtIndex:i] floatValue], rightImage.size.height)];
+        rightImageView.image=newRightImage;
+        
+        
+        UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(rightImageView.frame.origin.x+rightImageView.frame.size.width, i*(leftImage.size.height+5), 320-(rightImageView.frame.origin.x+rightImageView.frame.size.width), leftImage.size.height)];
+        [label setBackgroundColor:[UIColor clearColor]];
+        [label setTextColor:[UIColor whiteColor]];
+        label.text=[Utility changeTohu:[valueArray objectAtIndex:i]];
+        
+        [leftImageView addSubview:textLabel];
+        [self.myScrollView addSubview:leftImageView];
+        [self.myScrollView addSubview:rightImageView];
+        [self.myScrollView addSubview:label];
+    }
 }
--(NSMutableArray *)ratio :(NSArray *)dataArray total:(int)num
+-(NSMutableArray *)ratio :(NSMutableArray *)dataArray total:(int)num
 {
     float new=0;
     NSMutableArray *array=[NSMutableArray arrayWithCapacity:[dataArray count]];
@@ -296,7 +311,7 @@
     }
     return array;
 }
--(int)numTotal : (NSArray *)array
+-(int)numTotal : (NSMutableArray *)array
 {
     int sum=0;
     for (int i=0; i<[array count]; i++) {

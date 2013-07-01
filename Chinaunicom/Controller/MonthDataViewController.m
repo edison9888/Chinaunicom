@@ -9,6 +9,7 @@
 #import "MonthDataViewController.h"
 #import "requestServiceHelper.h"
 #import "Utility.h"
+#import "TimeViewController.h"
 @interface MonthDataViewController ()
 
 @end
@@ -96,6 +97,23 @@
 -(IBAction)popToHigherLevel:(id)sender
 {
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (IBAction)pressMapButton:(id)sender {
+    TimeViewController *time=[[TimeViewController alloc]initWithNibName:@"TimeViewController" bundle:nil];
+    if ([_str isEqualToString:@"ESS合约计划月数据趋势图"]) {
+        time.title=@"301";
+    }else if ([_str isEqualToString:@"ECS交易额月数据趋势图"])
+    {
+        time.title=@"302";
+    }else if ([_str isEqualToString:@"ECS商城订单月数据趋势图"])
+    {
+        time.title=@"303";
+    }else if ([_str isEqualToString:@"ECS用户发展月数据趋势图"])
+    {
+        time.title=@"304";
+    }
+    [self.navigationController pushViewController:time animated:YES];
 }
 - (void)didReceiveMemoryWarning
 {

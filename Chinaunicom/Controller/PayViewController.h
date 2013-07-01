@@ -27,8 +27,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *localTimeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *blueDian;
 
+
 - (IBAction)pressTodayButton:(id)sender;
 - (IBAction)pressAvgButton:(id)sender;
 - (IBAction)pressYesterdayButton:(id)sender;
 -(IBAction)popToHigherLevel:(id)sender;
+- (IBAction)pressMapButton:(id)sender;
 @end
