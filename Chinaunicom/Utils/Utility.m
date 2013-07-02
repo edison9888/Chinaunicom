@@ -61,39 +61,39 @@ static Utility *shareSource = nil;
 
 
 //字符串转16进制颜色
-+ (UIColor *) colorWithHexString: (NSString *) stringToConvert
-{
-    NSString *cString = [[stringToConvert stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];//字符串处理
-    //例子，stringToConvert #ffffff
-    if ([cString length] < 6)
-        return 0xffffff;//如果非十六进制，返回白色
-    if ([cString hasPrefix:@"#"])
-        cString = [cString substringFromIndex:1];//去掉头
-    if ([cString length] != 6)//去头非十六进制，返回白色
-        return 0xffffff;
-    //分别取RGB的值
-    NSRange range;
-    range.location = 0;
-    range.length = 2;
-    NSString *rString = [cString substringWithRange:range];
-    
-    range.location = 2;
-    NSString *gString = [cString substringWithRange:range];
-    
-    range.location = 4;
-    NSString *bString = [cString substringWithRange:range];
-    
-    unsigned int r, g, b;
-    //NSScanner把扫描出的制定的字符串转换成Int类型
-    [[NSScanner scannerWithString:rString] scanHexInt:&r];
-    [[NSScanner scannerWithString:gString] scanHexInt:&g];
-    [[NSScanner scannerWithString:bString] scanHexInt:&b];
-    //转换为UIColor
-    return [UIColor colorWithRed:((float) r / 255.0f)
-                           green:((float) g / 255.0f)
-                            blue:((float) b / 255.0f)
-                           alpha:1.0f];
-}
+//+ (UIColor *) colorWithHexString: (NSString *) stringToConvert
+//{
+//    NSString *cString = [[stringToConvert stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];//字符串处理
+//    //例子，stringToConvert #ffffff
+//    if ([cString length] < 6)
+//        return 0xffffff;//如果非十六进制，返回白色
+//    if ([cString hasPrefix:@"#"])
+//        cString = [cString substringFromIndex:1];//去掉头
+//    if ([cString length] != 6)//去头非十六进制，返回白色
+//        return 0xffffff;
+//    //分别取RGB的值
+//    NSRange range;
+//    range.location = 0;
+//    range.length = 2;
+//    NSString *rString = [cString substringWithRange:range];
+//    
+//    range.location = 2;
+//    NSString *gString = [cString substringWithRange:range];
+//    
+//    range.location = 4;
+//    NSString *bString = [cString substringWithRange:range];
+//    
+//    unsigned int r, g, b;
+//    //NSScanner把扫描出的制定的字符串转换成Int类型
+//    [[NSScanner scannerWithString:rString] scanHexInt:&r];
+//    [[NSScanner scannerWithString:gString] scanHexInt:&g];
+//    [[NSScanner scannerWithString:bString] scanHexInt:&b];
+//    //转换为UIColor
+//    return [UIColor colorWithRed:((float) r / 255.0f)
+//                           green:((float) g / 255.0f)
+//                            blue:((float) b / 255.0f)
+//                           alpha:1.0f];
+//}
 
 //文件路径格式化
 +(NSString *)getFilePath:(NSString *)filename{
@@ -169,7 +169,7 @@ static Utility *shareSource = nil;
     }
 }
 
-
+//转换成单位万元
 +(NSString *)changeToyuan :(NSString *)num
 {
     NSString *str=[NSString stringWithFormat:@"%@",num];
@@ -185,6 +185,7 @@ static Utility *shareSource = nil;
     }
     return str;
 }
+//转换成单位户
 +(NSString *)changeTohu :(NSString *)num
 {
     NSString *str=[NSString stringWithFormat:@"%@",num];
@@ -199,6 +200,7 @@ static Utility *shareSource = nil;
     }
     return str;
 }
+//转换成单位万
 +(NSString *)changeToWan :(NSString *)num
 {
     NSString *str=[NSString stringWithFormat:@"%@",num];
@@ -222,4 +224,47 @@ static Utility *shareSource = nil;
     return date;
 }
 
+//找最大值
+-(float )maxNum : (NSMutableArray *)array
+{
+    float big=0.0;
+    if ([array count]!=0) {
+        
+        big=[[array objectAtIndex:0] floatValue];
+        for (int i=0; i<[array count]; i++) {
+            if (big<[[array objectAtIndex:i] floatValue]) {
+                big=[[array objectAtIndex:i]floatValue];
+            }
+        }
+    }
+    return big;
+    
+}
+//最大值+10%
+-(float)bigNumAdd :(NSMutableArray *)array
+{
+    float big=[self maxNum:array];
+    float newBig=big * 0.1 + big;
+    return newBig;
+}
+
+//计算比例
++(NSMutableArray *)calculatePercentage :(NSMutableArray *)array height:(float)height
+{
+    float bigNum=[[[self alloc]init] bigNumAdd:array];
+    float newNum=0;
+    NSMutableArray *muArray=[NSMutableArray arrayWithCapacity:[array count]];
+    //每个数 除以 最大值+10% 乘以 图片的高度
+    for (int i=0; i<[array count]; i++) {
+        float num=[[array objectAtIndex:i] floatValue];
+        if (num!=0) {
+            newNum=num/bigNum * height;
+        }else
+        {
+            newNum=0;
+        }
+        [muArray addObject:[NSNumber numberWithFloat:newNum]];
+    }
+    return muArray;
+}
 @end

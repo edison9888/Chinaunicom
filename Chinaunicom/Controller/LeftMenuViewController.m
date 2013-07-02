@@ -105,7 +105,7 @@ static const NSTimeInterval kWobbleTime = 0.07;
     
     //创建navbar
     UINavigationBar *nav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320  , 44)];
-    [nav setBackgroundImage:[UIImage imageNamed:@"title.png"] forBarMetrics:UIBarMetricsDefault];
+    [nav setBackgroundImage:[UIImage imageNamed:@"title@2x.png"] forBarMetrics:UIBarMetricsDefault];
     //电商头条
     UIImageView *imageView=[[UIImageView alloc] initWithFrame:CGRectMake(10, 8, 30, 30)];
     [imageView setImage:[UIImage imageNamed:@"leftTop_navg"]];
@@ -739,7 +739,7 @@ static const NSTimeInterval kWobbleTime = 0.07;
     self.view.userInteractionEnabled=NO;
     
     
-    [[requestServiceHelper defaultService]opreateReportType:url paramter:dictionary sucess:^(BOOL *isSucess) {
+    [[requestServiceHelper defaultService]opreateReportType:url paramter:dictionary sucess:^(BOOL isSucess) {
         
         [self hideLoadingActivityView];
         

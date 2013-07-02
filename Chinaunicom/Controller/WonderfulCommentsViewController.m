@@ -327,7 +327,7 @@
     [self hideLoadingActivityView];
     self.recodAlert.hidden=YES;
 //    [self sendComments];
-       NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(myThreadMainMethod) userInfo:nil repeats:NO];
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(myThreadMainMethod) userInfo:nil repeats:NO];
 }
 
 -(void)myThreadMainMethod{

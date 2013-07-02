@@ -29,7 +29,7 @@
 {
     [super viewDidLoad];
 #warning 替换图片
-    [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"title.png"] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"title@2x.png"] forBarMetrics:UIBarMetricsDefault];
      UIImageView *_zdLine = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.navigationBar.frame.size.height-1, self.navigationBar.frame.size.width, 2)];
     _zdLine.image=[UIImage imageNamed:@"img_global_line_"];
     [self.navigationBar addSubview:_zdLine];

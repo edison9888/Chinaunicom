@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>010</key>
+	<string>内蒙古</string>
 	<key>061</key>
 	<string>香港</string>
 	<key>097</key>

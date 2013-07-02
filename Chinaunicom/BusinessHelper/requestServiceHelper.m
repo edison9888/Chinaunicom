@@ -59,7 +59,7 @@ static requestServiceHelper *requestService;
     
 }
 //添加和删除报告类型
--(void)opreateReportType:(NSString *)url paramter:(NSMutableDictionary *)dictionary sucess:(void (^)(BOOL *))sucess falid:(void (^)(NSString *))faild
+-(void)opreateReportType:(NSString *)url paramter:(NSMutableDictionary *)dictionary sucess:(void (^)(BOOL isSucess))sucess falid:(void (^)(NSString *))faild
 {
     [HttpRequestHelper asyncGetRequest:url parameter:dictionary requestComplete:^(NSString *responseStr) {
         if([responseStr isEqualToString:@"success"])

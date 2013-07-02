@@ -18,15 +18,15 @@
 +(Utility*)Singleton;
 
 //显示自定义警告框
-+(void)showCustomAlert:(NSString*)msg;
+//+(void)showCustomAlert:(NSString*)msg;
 //自定义导航左边的返回按钮
-+(void)updateNavBackButton:(UINavigationItem*)customNavigationItem Seletor:(SEL)seletor Delegate:(id)delegate;
+//+(void)updateNavBackButton:(UINavigationItem*)customNavigationItem Seletor:(SEL)seletor Delegate:(id)delegate;
 //自定义导航右边按钮
-+(void)CustomNaRightButton:(UINavigationItem*)customNavigationItem Seletor:(SEL)seletor Delegate:(id)delegate ImageString:(NSString *)imageString;
+//+(void)CustomNaRightButton:(UINavigationItem*)customNavigationItem Seletor:(SEL)seletor Delegate:(id)delegate ImageString:(NSString *)imageString;
 //自定义导航右边按钮 更多
-+(void)CustomNaRightButton:(UINavigationItem*)customNavigationItem Seletor:(SEL)seletor Delegate:(id)delegate ImageString:(NSString *)imageString highlightImageString:(NSString *)hstring aWidth:(NSString *)awidth aHeight:(NSString *)aheight;
+//+(void)CustomNaRightButton:(UINavigationItem*)customNavigationItem Seletor:(SEL)seletor Delegate:(id)delegate ImageString:(NSString *)imageString highlightImageString:(NSString *)hstring aWidth:(NSString *)awidth aHeight:(NSString *)aheight;
 //字符串转16进制颜色
-+ (UIColor *) colorWithHexString: (NSString *) stringToConvert;
+//+ (UIColor *) colorWithHexString: (NSString *) stringToConvert;
 
 //文件路径格式化
 +(NSString *)getFilePath:(NSString *)filename;
@@ -46,4 +46,6 @@
 +(NSString *)changeToWan :(NSString *)num;
 //获取当天日期
 +(NSString *)getTodayDate;
+//计算比例
++(NSMutableArray *)calculatePercentage :(NSMutableArray *)array height:(float)height;
 @end

@@ -41,7 +41,9 @@
 -(void) getAllReportType:(NSString *)userid sucess:(void(^)(NSArray *array))sucess falid:(void(^)(NSString *errorMsg))faild;
 
 //添加和删除分类
--(void) opreateReportType:(NSString *)url paramter:(NSMutableDictionary *)dictionary sucess:(void(^)(BOOL *isSucess))sucess falid:(void(^)(NSString *errorMsg))faild;
+-(void) opreateReportType:(NSString *)url paramter:(NSMutableDictionary *)dictionary sucess:(void(^)(BOOL isSucess))sucess falid:(void(^)(NSString *errorMsg))faild;
+
+
 //获取审核列表
 - (void)getAduitingList:(NSMutableDictionary *)dictionary sucess:(void (^) (NSMutableArray *reportDictionary,NSInteger result))sucess falid:(void (^) (NSString *errorMsg))faild;
 /**********************************************************************************/
