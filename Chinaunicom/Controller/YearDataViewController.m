@@ -70,8 +70,9 @@
             NSString *value= [nsdict objectForKey:[muArray objectAtIndex:i]];
             [yearDataArray addObject:value];
         }
-        int sum=[self yearTotal:yearDataArray];
-        NSMutableArray *yearMuArray=[self ratio:yearDataArray total:sum];
+        NSMutableArray *yearMuArray=[Utility calculatePercentage:yearDataArray height:200];
+//       [] int sum=[self yearTotal:yearDataArray];
+//        NSMutableArray *yearMuArray=[self ratio:yearDataArray total:sum];
         [self drawView:yearMuArray];
         self.yearNumLabel.text=@"123.5";
         
@@ -147,11 +148,15 @@
 {
     UIImage *image = [UIImage imageNamed:@"new_ess_tu.png"];
     for (int i = 0 ; i<[array count];i++) {
-        float y=[[array objectAtIndex:i]floatValue];
-        UIView *newView=[[UIView alloc]initWithFrame:CGRectMake(7*(i*3.77 +1), 191-y, image.size.width-8, y)];
-        [newView setBackgroundColor:[UIColor colorWithPatternImage:image]];
-        newView.transform = CGAffineTransformRotate(newView.transform, 3.14);
-        [self.bgImageView addSubview:newView];
+        @autoreleasepool {
+            float y=[[array objectAtIndex:i]floatValue];
+            //7*(i*3.77 +1)
+            //i*(22+5)+7
+            UIView *newView=[[UIView alloc]initWithFrame:CGRectMake(7*(i*3.8 +1), 191-y, image.size.width-8, y)];
+            [newView setBackgroundColor:[UIColor colorWithPatternImage:image]];
+            newView.transform = CGAffineTransformRotate(newView.transform, 3.14);
+            [self.bgImageView addSubview:newView];
+        }
     }
 
 }

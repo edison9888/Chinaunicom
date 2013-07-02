@@ -252,72 +252,54 @@
     
     NSMutableArray *valueArray=[NSMutableArray arrayWithCapacity:[array count]];
     NSMutableArray *keysArray=[NSMutableArray arrayWithCapacity:[array count]];
-        for (int i=0; i<[array count]; i++) {
+    for (int i=0; i<[array count]; i++) {
+        @autoreleasepool {
             NSString *str=[[array objectAtIndex:i]objectForKey:@"value"];
             NSString *key=[[array objectAtIndex:i]objectForKey:@"code"];
             NSString *value= [dict objectForKey:key];
             [valueArray addObject:str];
             [keysArray addObject:value];
+        }
+
     }
     
-    //算总和
-    int sum=[self numTotal:valueArray];
-    //算比例
-    NSMutableArray *muArray=[self ratio:valueArray total:sum];
+    NSMutableArray *muArray=[Utility calculatePercentage:valueArray height:200.0];
     
+    UIImage *leftImage= [UIImage imageNamed:@"left_area.png"];
+    UIImage *rightImage=[UIImage imageNamed:@"right_area.png"];
     for (int i=0; i<[muArray count]; i++) {
-        UIImage *leftImage= [UIImage imageNamed:@"left_area.png"];
-        UIImageView *leftImageView=[[UIImageView alloc]initWithFrame:CGRectMake(10, i*(leftImage.size.height+5), leftImage.size.width, leftImage.size.height)];
-        leftImageView.image=leftImage;
-        
-        UILabel *textLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, leftImageView.frame.size.width, leftImageView.frame.size.height)];
-        [textLabel setTextColor:[UIColor blueColor]];
-        [textLabel setTextAlignment:NSTextAlignmentCenter];
-        textLabel.adjustsFontSizeToFitWidth=YES;
-        [textLabel setBackgroundColor:[UIColor clearColor]];
-        textLabel.text=[keysArray objectAtIndex:i];
-        
-        UIImage *rightImage=[UIImage imageNamed:@"right_area.png"];
-        UIImage *newRightImage=[rightImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 5)];
-        UIImageView *rightImageView=[[UIImageView alloc]initWithFrame:CGRectMake(10+leftImageView.frame.size.width, i*(leftImage.size.height+5), [[muArray objectAtIndex:i] floatValue], rightImage.size.height)];
-        rightImageView.image=newRightImage;
-        
-        
-        UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(rightImageView.frame.origin.x+rightImageView.frame.size.width, i*(leftImage.size.height+5), 320-(rightImageView.frame.origin.x+rightImageView.frame.size.width), leftImage.size.height)];
-        [label setBackgroundColor:[UIColor clearColor]];
-        [label setTextColor:[UIColor whiteColor]];
-        label.text=[Utility changeTohu:[valueArray objectAtIndex:i]];
-        
-        [leftImageView addSubview:textLabel];
-        [self.myScrollView addSubview:leftImageView];
-        [self.myScrollView addSubview:rightImageView];
-        [self.myScrollView addSubview:label];
-    }
-}
--(NSMutableArray *)ratio :(NSMutableArray *)dataArray total:(int)num
-{
-    float new=0;
-    NSMutableArray *array=[NSMutableArray arrayWithCapacity:[dataArray count]];
-    for (int i=0; i<[dataArray count]; i++) {
-        int data = [[dataArray objectAtIndex:i]intValue];
-        if (data==0) {
-            new=0;
-        }else
-        {
-            new =data*300/num;
+        @autoreleasepool {
+            UIImageView *leftImageView=[[UIImageView alloc]initWithFrame:CGRectMake(10, i*(leftImage.size.height+5), leftImage.size.width, leftImage.size.height)];
+            leftImageView.image=leftImage;
+            
+            UILabel *textLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, leftImageView.frame.size.width, leftImageView.frame.size.height)];
+            [textLabel setTextColor:[UIColor blueColor]];
+            [textLabel setTextAlignment:NSTextAlignmentCenter];
+            textLabel.adjustsFontSizeToFitWidth=YES;
+            [textLabel setBackgroundColor:[UIColor clearColor]];
+            textLabel.text=[keysArray objectAtIndex:i];
+            
+            UIImage *newRightImage=[rightImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 5)];
+            UIImageView *rightImageView=[[UIImageView alloc]initWithFrame:CGRectMake(10+leftImageView.frame.size.width, i*(leftImage.size.height+5), [[muArray objectAtIndex:i] floatValue], rightImage.size.height)];
+            rightImageView.image=newRightImage;
+            
+            
+            UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(rightImageView.frame.origin.x+rightImageView.frame.size.width+5, i*(leftImage.size.height+5), 320-(rightImageView.frame.origin.x+rightImageView.frame.size.width), leftImage.size.height)];
+            [label setBackgroundColor:[UIColor clearColor]];
+            [label setTextColor:[UIColor whiteColor]];
+            label.adjustsFontSizeToFitWidth=YES;
+
+            label.text=[Utility changeTohu:[valueArray objectAtIndex:i]];
+            [leftImageView addSubview:textLabel];
+            [self.myScrollView addSubview:leftImageView];
+            [self.myScrollView addSubview:rightImageView];
+            [self.myScrollView addSubview:label];
         }
         
-        [array addObject:[NSString stringWithFormat:@"%f",new]];
     }
-    return array;
-}
--(int)numTotal : (NSMutableArray *)array
-{
-    int sum=0;
-    for (int i=0; i<[array count]; i++) {
-        sum +=[[array objectAtIndex:i] intValue];
-    }
-    return sum;
+    float height=[muArray count]*(leftImage.size.height+5);
+    [self.myScrollView setContentSize:CGSizeMake(320, height)];
+    
 }
 
 @end

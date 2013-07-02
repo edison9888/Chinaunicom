@@ -251,7 +251,7 @@ static Utility *shareSource = nil;
 //计算比例
 +(NSMutableArray *)calculatePercentage :(NSMutableArray *)array height:(float)height
 {
-    float bigNum=[[[self alloc]init] bigNumAdd:array];
+    float bigNum=[[Utility Singleton] bigNumAdd:array];
     float newNum=0;
     NSMutableArray *muArray=[NSMutableArray arrayWithCapacity:[array count]];
     //每个数 除以 最大值+10% 乘以 图片的高度
