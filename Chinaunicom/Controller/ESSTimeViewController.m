@@ -11,7 +11,9 @@
 #import "Utility.h"
 #import "AreaViewController.h"
 @interface ESSTimeViewController ()
-
+{
+    NSTimer *myTimer;
+}
 @end
 
 @implementation ESSTimeViewController
@@ -39,25 +41,76 @@
     }else if ([_titleStr isEqualToString:@"ESS年数据趋势图"]){
         [dict setValue:@"yearData" forKey:@"timeStr"];
     }
-    
-    [[requestServiceHelper defaultService]getESStotleNum:dict sucess:^(NSString *str) {
-        NSString *num=[Utility changeTohu:str];
-        self.numLabel.text=num;
-    } falid:^(NSString *errorMsg) {
-    }];
-    
-    [[requestServiceHelper defaultService]getEssAreaNum:dict sucess:^(NSArray *array) {
-        self.hdLabel.text=[array objectAtIndex:3];
-        self.hnLabel.text=[array objectAtIndex:5];
-        self.hbLabel.text=[array objectAtIndex:0];
-        self.hzLabel.text=[array objectAtIndex:6];
-        self.xbLabel.text=[array objectAtIndex:1];
-        self.xnLabel.text=[array objectAtIndex:2];
-        self.dbLabel.text=[array objectAtIndex:4];
-        [self numForLabel];
-    } falid:^(NSString *errorMsg) {
-        NSLog(@"err=%@",errorMsg);
-    }];
+
+    myTimer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFire:) userInfo:dict repeats:YES];
+//    [myTimer setFireDate:[NSDate distantPast]];
+}
+-(void)timeFire : (NSTimer *)timer
+{
+    if (self.lineImageView.frame.origin.x <106) {
+        [[requestServiceHelper defaultService]getESStotleNum:timer.userInfo sucess:^(NSString *str) {
+            NSString *num=[Utility changeTohu:str];
+            self.numLabel.text=num;
+        } falid:^(NSString *errorMsg) {
+        }];
+        
+        [[requestServiceHelper defaultService]getEssAreaNum:timer.userInfo sucess:^(NSArray *array) {
+            self.hdLabel.text=[array objectAtIndex:3];
+            self.hnLabel.text=[array objectAtIndex:5];
+            self.hbLabel.text=[array objectAtIndex:0];
+            self.hzLabel.text=[array objectAtIndex:6];
+            self.xbLabel.text=[array objectAtIndex:1];
+            self.xnLabel.text=[array objectAtIndex:2];
+            self.dbLabel.text=[array objectAtIndex:4];
+            [self numForLabel];
+        } falid:^(NSString *errorMsg) {
+            NSLog(@"err=%@",errorMsg);
+        }];
+    }else if (self.lineImageView.frame.origin.x >106 && self.lineImageView.frame.origin.x<212)
+    {
+        [[requestServiceHelper defaultService]getESSIphoneFiveNum:timer.userInfo sucess:^(NSString *str) {
+            NSString *num=[Utility changeTohu:str];
+            self.numLabel.text=num;
+        } falid:^(NSString *errorMsg) {
+        }];
+        
+        [[requestServiceHelper defaultService]getEssAreaIphoneFiveNum:timer.userInfo sucess:^(NSArray *array) {
+            self.hdLabel.text=[array objectAtIndex:3];
+            self.hnLabel.text=[array objectAtIndex:5];
+            self.hbLabel.text=[array objectAtIndex:0];
+            self.hzLabel.text=[array objectAtIndex:6];
+            self.xbLabel.text=[array objectAtIndex:1];
+            self.xnLabel.text=[array objectAtIndex:2];
+            self.dbLabel.text=[array objectAtIndex:4];
+            [self numForLabel];
+        } falid:^(NSString *errorMsg) {
+            NSLog(@"err=%@",errorMsg);
+        }];
+
+    }else
+    {
+        [[requestServiceHelper defaultService]getESSIphoneFsNum:timer.userInfo sucess:^(NSString *str) {
+            NSString *num=[Utility changeTohu:str];
+            self.numLabel.text=num;
+        } falid:^(NSString *errorMsg) {
+        }];
+        
+        [[requestServiceHelper defaultService]getEssAreaIphoneFsNum:timer.userInfo sucess:^(NSArray *array) {
+            self.hdLabel.text=[array objectAtIndex:3];
+            self.hnLabel.text=[array objectAtIndex:5];
+            self.hbLabel.text=[array objectAtIndex:0];
+            self.hzLabel.text=[array objectAtIndex:6];
+            self.xbLabel.text=[array objectAtIndex:1];
+            self.xnLabel.text=[array objectAtIndex:2];
+            self.dbLabel.text=[array objectAtIndex:4];
+            [self numForLabel];
+        } falid:^(NSString *errorMsg) {
+            NSLog(@"err=%@",errorMsg);
+        }];
+
+    }
+
+
 }
 - (void)viewDidLoad
 {
@@ -94,25 +147,27 @@
         [dict setValue:@"yearData" forKey:@"timeStr"];
         self.vpLabel.text=@"3G用户年开户数量 :";
     }
+    [myTimer invalidate];
+    myTimer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFire:) userInfo:dict repeats:YES];
     
-    [[requestServiceHelper defaultService]getESStotleNum:dict sucess:^(NSString *str) {
-        NSString *num=[Utility changeTohu:str];
-        self.numLabel.text=num;
-    } falid:^(NSString *errorMsg) {
-    }];
-    
-    [[requestServiceHelper defaultService]getEssAreaNum:dict sucess:^(NSArray *array) {
-        self.hdLabel.text=[array objectAtIndex:3];
-        self.hnLabel.text=[array objectAtIndex:5];
-        self.hbLabel.text=[array objectAtIndex:0];
-        self.hzLabel.text=[array objectAtIndex:6];
-        self.xbLabel.text=[array objectAtIndex:1];
-        self.xnLabel.text=[array objectAtIndex:2];
-        self.dbLabel.text=[array objectAtIndex:4];
-        [self numForLabel];
-    } falid:^(NSString *errorMsg) {
-        NSLog(@"err=%@",errorMsg);
-    }];
+//    [[requestServiceHelper defaultService]getESStotleNum:dict sucess:^(NSString *str) {
+//        NSString *num=[Utility changeTohu:str];
+//        self.numLabel.text=num;
+//    } falid:^(NSString *errorMsg) {
+//    }];
+//    
+//    [[requestServiceHelper defaultService]getEssAreaNum:dict sucess:^(NSArray *array) {
+//        self.hdLabel.text=[array objectAtIndex:3];
+//        self.hnLabel.text=[array objectAtIndex:5];
+//        self.hbLabel.text=[array objectAtIndex:0];
+//        self.hzLabel.text=[array objectAtIndex:6];
+//        self.xbLabel.text=[array objectAtIndex:1];
+//        self.xnLabel.text=[array objectAtIndex:2];
+//        self.dbLabel.text=[array objectAtIndex:4];
+//        [self numForLabel];
+//    } falid:^(NSString *errorMsg) {
+//        NSLog(@"err=%@",errorMsg);
+//    }];
 }
 
 - (IBAction)pressIphoneFiveButton:(UIButton *)sender {
@@ -131,24 +186,26 @@
         [dict setValue:@"yearData" forKey:@"timeStr"];
          self.vpLabel.text=@"iPhone5年开户数量 :";
     }
-    [[requestServiceHelper defaultService]getESSIphoneFiveNum:dict sucess:^(NSString *str) {
-        NSString *num=[Utility changeTohu:str];
-        self.numLabel.text=num;
-    } falid:^(NSString *errorMsg) {
-    }];
-    
-    [[requestServiceHelper defaultService]getEssAreaIphoneFiveNum:dict sucess:^(NSArray *array) {
-        self.hdLabel.text=[array objectAtIndex:3];
-        self.hnLabel.text=[array objectAtIndex:5];
-        self.hbLabel.text=[array objectAtIndex:0];
-        self.hzLabel.text=[array objectAtIndex:6];
-        self.xbLabel.text=[array objectAtIndex:1];
-        self.xnLabel.text=[array objectAtIndex:2];
-        self.dbLabel.text=[array objectAtIndex:4];
-        [self numForLabel];
-    } falid:^(NSString *errorMsg) {
-        NSLog(@"err=%@",errorMsg);
-    }];
+    [myTimer invalidate];
+    myTimer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFire:) userInfo:dict repeats:YES];
+//    [[requestServiceHelper defaultService]getESSIphoneFiveNum:dict sucess:^(NSString *str) {
+//        NSString *num=[Utility changeTohu:str];
+//        self.numLabel.text=num;
+//    } falid:^(NSString *errorMsg) {
+//    }];
+//    
+//    [[requestServiceHelper defaultService]getEssAreaIphoneFiveNum:dict sucess:^(NSArray *array) {
+//        self.hdLabel.text=[array objectAtIndex:3];
+//        self.hnLabel.text=[array objectAtIndex:5];
+//        self.hbLabel.text=[array objectAtIndex:0];
+//        self.hzLabel.text=[array objectAtIndex:6];
+//        self.xbLabel.text=[array objectAtIndex:1];
+//        self.xnLabel.text=[array objectAtIndex:2];
+//        self.dbLabel.text=[array objectAtIndex:4];
+//        [self numForLabel];
+//    } falid:^(NSString *errorMsg) {
+//        NSLog(@"err=%@",errorMsg);
+//    }];
 }
 
 - (IBAction)pressIphoneFour:(UIButton *)sender {
@@ -167,24 +224,26 @@
         [dict setValue:@"yearData" forKey:@"timeStr"];
         self.vpLabel.text=@"iPhone4S年开户数量 :";
     }
-    [[requestServiceHelper defaultService]getESSIphoneFsNum:dict sucess:^(NSString *str) {
-        NSString *num=[Utility changeTohu:str];
-        self.numLabel.text=num;
-    } falid:^(NSString *errorMsg) {
-    }];
-    
-    [[requestServiceHelper defaultService]getEssAreaIphoneFsNum:dict sucess:^(NSArray *array) {
-        self.hdLabel.text=[array objectAtIndex:3];
-        self.hnLabel.text=[array objectAtIndex:5];
-        self.hbLabel.text=[array objectAtIndex:0];
-        self.hzLabel.text=[array objectAtIndex:6];
-        self.xbLabel.text=[array objectAtIndex:1];
-        self.xnLabel.text=[array objectAtIndex:2];
-        self.dbLabel.text=[array objectAtIndex:4];
-        [self numForLabel];
-    } falid:^(NSString *errorMsg) {
-        NSLog(@"err=%@",errorMsg);
-    }];
+    [myTimer invalidate];
+    myTimer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFire:) userInfo:dict repeats:YES];
+//    [[requestServiceHelper defaultService]getESSIphoneFsNum:dict sucess:^(NSString *str) {
+//        NSString *num=[Utility changeTohu:str];
+//        self.numLabel.text=num;
+//    } falid:^(NSString *errorMsg) {
+//    }];
+//    
+//    [[requestServiceHelper defaultService]getEssAreaIphoneFsNum:dict sucess:^(NSArray *array) {
+//        self.hdLabel.text=[array objectAtIndex:3];
+//        self.hnLabel.text=[array objectAtIndex:5];
+//        self.hbLabel.text=[array objectAtIndex:0];
+//        self.hzLabel.text=[array objectAtIndex:6];
+//        self.xbLabel.text=[array objectAtIndex:1];
+//        self.xnLabel.text=[array objectAtIndex:2];
+//        self.dbLabel.text=[array objectAtIndex:4];
+//        [self numForLabel];
+//    } falid:^(NSString *errorMsg) {
+//        NSLog(@"err=%@",errorMsg);
+//    }];
 }
 
 -(void)isInTheRect : (UIButton *)bt
@@ -221,7 +280,7 @@
 //}
 -(void)numForLabel
 {
-    NSArray *array=[NSArray arrayWithObjects:
+    NSMutableArray *array=[NSMutableArray arrayWithObjects:
                      self.hdLabel.text,
                      self.hnLabel.text,
                      self.hbLabel.text,
@@ -230,9 +289,11 @@
                      self.xnLabel.text,
                      self.dbLabel.text,
                      nil] ;
-    int a[]={[self.hdLabel.text intValue],[self.hnLabel.text intValue],[self.hbLabel.text intValue],[self.hzLabel.text intValue],[self.xbLabel.text intValue],[self.xnLabel.text intValue],[self.dbLabel.text intValue]};
-    int num = totalsum(a, 7);
-    NSMutableArray *muArray = [self ratio:array total:num];
+//    int a[]={[self.hdLabel.text intValue],[self.hnLabel.text intValue],[self.hbLabel.text intValue],[self.hzLabel.text intValue],[self.xbLabel.text intValue],[self.xnLabel.text intValue],[self.dbLabel.text intValue]};
+//    int num = totalsum(a, 7);
+//    NSMutableArray *muArray = [self ratio:array total:num];
+    
+    NSMutableArray *muArray=[Utility calculatePercentage:array height:200];
     
     self.hdLabel.text=[Utility changeToWan:self.hdLabel.text];
     self.hnLabel.text=[Utility changeToWan:self.hnLabel.text];
@@ -247,11 +308,14 @@
     }
     UIImage *image = [UIImage imageNamed:@"new_ess_tu.png"];
     for (int i = 0 ; i<[muArray count];i++) {
-        float y=[[muArray objectAtIndex:i]floatValue];
-        UIView *newView=[[UIView alloc]initWithFrame:CGRectMake(16*(i*2.69 +1), 202-y, image.size.width, y)];
-        [newView setBackgroundColor:[UIColor colorWithPatternImage:image]];
-        newView.transform = CGAffineTransformRotate(newView.transform, 3.14);
-        [self.bgImageView addSubview:newView];
+        @autoreleasepool {
+            float y=[[muArray objectAtIndex:i]floatValue];
+            //16*(i*2.75 +1)
+            UIView *newView=[[UIView alloc]initWithFrame:CGRectMake(i*(22+21)+17, 202-y, image.size.width, y)];
+            [newView setBackgroundColor:[UIColor colorWithPatternImage:image]];
+            newView.transform = CGAffineTransformRotate(newView.transform, 3.14);
+            [self.bgImageView addSubview:newView];
+        }
     }
 }
 -(IBAction)back:(id)sender
@@ -260,6 +324,7 @@
 }
 -(IBAction)pressAreaButton:(UIButton *)sender
 {
+//    [myTimer invalidate];
     AreaViewController *area=[[AreaViewController alloc]initWithNibName:@"AreaViewController" bundle:nil];
     if (sender.tag==101) {
         area.title=@"华东地区";
@@ -306,30 +371,35 @@
     [self setTitleLabel:nil];
     [super viewDidUnload];
 }
--(NSMutableArray *)ratio :(NSArray *)dataArray total:(int)num
+-(void)viewWillDisappear:(BOOL)animated
 {
-    float new=0;
-    NSMutableArray *array=[NSMutableArray arrayWithCapacity:[dataArray count]];
-    for (int i=0; i<[dataArray count]; i++) {
-        int data = [[dataArray objectAtIndex:i]intValue];
-        if (data==0) {
-            new=0;
-        }else
-        {
-           new =data*190/num;
-        }
-        
-        [array addObject:[NSString stringWithFormat:@"%f",new]];
-    }
-    return array;
+    [myTimer invalidate];
+//    [myTimer setFireDate:[NSDate distantFuture]];
 }
-int totalsum( int* a, int n )
-{
-    int sum = 0;
-    int i;
-    for ( i = 0; i < n; ++i )
-        sum += a[i];
-    return sum ;
-}
+//-(NSMutableArray *)ratio :(NSArray *)dataArray total:(int)num
+//{
+//    float new=0;
+//    NSMutableArray *array=[NSMutableArray arrayWithCapacity:[dataArray count]];
+//    for (int i=0; i<[dataArray count]; i++) {
+//        int data = [[dataArray objectAtIndex:i]intValue];
+//        if (data==0) {
+//            new=0;
+//        }else
+//        {
+//           new =data*190/num;
+//        }
+//        
+//        [array addObject:[NSString stringWithFormat:@"%f",new]];
+//    }
+//    return array;
+//}
+//int totalsum( int* a, int n )
+//{
+//    int sum = 0;
+//    int i;
+//    for ( i = 0; i < n; ++i )
+//        sum += a[i];
+//    return sum ;
+//}
 
 @end
