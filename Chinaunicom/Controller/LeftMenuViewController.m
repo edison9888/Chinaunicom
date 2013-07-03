@@ -57,7 +57,7 @@ static const NSTimeInterval kWobbleTime = 0.07;
     
     firshTouch=YES;
     //背景图片
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg"]];
+    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
 	
 	scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 44, 265, 410)];
 //	scrollView.alwaysBounceVertical = YES;
@@ -107,27 +107,30 @@ static const NSTimeInterval kWobbleTime = 0.07;
     UINavigationBar *nav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320  , 44)];
     [nav setBackgroundImage:[UIImage imageNamed:@"title@2x.png"] forBarMetrics:UIBarMetricsDefault];
     //电商头条
-    UIImageView *imageView=[[UIImageView alloc] initWithFrame:CGRectMake(10, 8, 30, 30)];
-    [imageView setImage:[UIImage imageNamed:@"leftTop_navg"]];
+    UIImage *leftTopImage=[UIImage imageNamed:@"leftTop_navg.png"];
+    UIImageView *imageView=[[UIImageView alloc] initWithFrame:CGRectMake(10, 8, leftTopImage.size.width, leftTopImage.size.height)];
+    [imageView setImage:leftTopImage];
     [nav addSubview:imageView];
     
     UIButton* personalButton= [UIButton buttonWithType:UIButtonTypeCustom];
-    personalButton.frame = CGRectMake(25, 8, 100, 30);
-    [personalButton setTitle:@"电商头条" forState:UIControlStateNormal];
+    personalButton.frame = CGRectMake(25, 12, 100, 20);
+    [personalButton setTitle:@"手机门户" forState:UIControlStateNormal];
     [personalButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     //[personalButton setTag:1];
     [personalButton addTarget:self action:@selector(doDone:) forControlEvents:UIControlEventTouchUpInside];
     [nav addSubview:personalButton];
     
     /*分割线*/
-    UIImageView *imageViewTopDiv=[[UIImageView alloc] initWithFrame:CGRectMake(205, 0, 30, 44)];
-    [imageViewTopDiv setImage:[UIImage imageNamed:@"topDividingLine"]];
+    UIImage *lineImage=[UIImage imageNamed:@"new_line"];
+    UIImageView *imageViewTopDiv=[[UIImageView alloc] initWithFrame:CGRectMake(220, 5, 2, 34)];
+    [imageViewTopDiv setImage:lineImage];
     [nav addSubview:imageViewTopDiv];
     
     //编辑
     UIButton* editButton= [UIButton buttonWithType:UIButtonTypeCustom];
-    editButton.frame = CGRectMake(230, 8, 30, 30);
-    [editButton setBackgroundImage:[UIImage imageNamed:@"main_edit"] forState:UIControlStateNormal];
+    UIImage *editImage=[UIImage imageNamed:@"main_edit.png"];
+    editButton.frame = CGRectMake(240, 8, editImage.size.width, editImage.size.height);
+    [editButton setBackgroundImage:editImage forState:UIControlStateNormal];
     [editButton setTitle:@"编辑" forState:UIControlStateNormal];
     [editButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [editButton setTag:1];
@@ -135,7 +138,7 @@ static const NSTimeInterval kWobbleTime = 0.07;
     [nav addSubview:editButton];
     //完成
     UIButton* doneButton= [UIButton buttonWithType:UIButtonTypeCustom];
-    doneButton.frame = CGRectMake(230, 8, 40, 30);
+    doneButton.frame = CGRectMake(230, 12, 40,20);
     [doneButton setTitle:@"完成" forState:UIControlStateNormal];
     [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [doneButton setTag:2];

@@ -24,7 +24,7 @@
         self.userId  = [decoder decodeObjectForKey:@"userId"];
         self.account  = [decoder decodeObjectForKey:@"account"];
         self.name  = [decoder decodeObjectForKey:@"name"];
-          self.icon  = [decoder decodeObjectForKey:@"icon"];
+        self.icon  = [decoder decodeObjectForKey:@"icon"];
     }
     return  self;
 }

@@ -30,7 +30,7 @@
     [super viewDidLoad];
     
     //背景图片
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg"]];
+    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     
     
     [self initMainPageMenu:pageNumber];

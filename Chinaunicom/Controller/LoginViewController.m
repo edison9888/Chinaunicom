@@ -46,7 +46,7 @@
 -(void) initLayout{
     
     //背景图片
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg"]];
+    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     //修改placeholder颜色
     [self.userNameTextField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
     [self.passWordTextField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
@@ -258,6 +258,7 @@
     [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"title@2x.png"] forBarMetrics:UIBarMetricsDefault];
     
     UINavigationController * navigationController2 = [[UINavigationController alloc] initWithRootViewController:rightSideDrawerViewController];
+    [navigationController2.navigationBar setBackgroundImage:[UIImage imageNamed:@"title@2x.png"] forBarMetrics:UIBarMetricsDefault];
     
     MMDrawerController * drawerController = [[MMDrawerController alloc]
                                              initWithCenterViewController:navigationController

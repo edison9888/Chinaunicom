@@ -38,7 +38,7 @@
 #pragma mark - initLayout
 -(void)initLayout
 {
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg"]];
+    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
        //返回按钮
     UIButton* backButton= [UIButton buttonWithType:UIButtonTypeCustom];
     backButton.frame = CGRectMake(0, 0, 32, 32);
@@ -162,10 +162,10 @@
 
 -(void)back
 {
-    RightMenuViewController *right=[[RightMenuViewController alloc] init];
-    BaseNavigationController *nav=[[BaseNavigationController alloc] initWithRootViewController:right];
-    AppDelegate *myDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [myDelegate.revealSideViewController pushViewController:nav onDirection:PPRevealSideDirectionRight withOffset:50 animated:YES forceToPopPush:YES completion:nil];
+//    RightMenuViewController *right=[[RightMenuViewController alloc] init];
+//    BaseNavigationController *nav=[[BaseNavigationController alloc] initWithRootViewController:right];
+//    AppDelegate *myDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
+//    [myDelegate.revealSideViewController pushViewController:nav onDirection:PPRevealSideDirectionRight withOffset:50 animated:YES forceToPopPush:YES completion:nil];
 //     [self.navigationController popViewControllerAnimated:YES];
 }
 

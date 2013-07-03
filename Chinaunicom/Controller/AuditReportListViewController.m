@@ -111,10 +111,10 @@
 
 -(void)back
 {
-    RightMenuViewController *right=[[RightMenuViewController alloc] init];
-    BaseNavigationController *nav=[[BaseNavigationController alloc] initWithRootViewController:right];
-    AppDelegate *myDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [myDelegate.revealSideViewController pushViewController:nav onDirection:PPRevealSideDirectionRight withOffset:50 animated:YES forceToPopPush:YES completion:nil];
+//    RightMenuViewController *right=[[RightMenuViewController alloc] init];
+//    BaseNavigationController *nav=[[BaseNavigationController alloc] initWithRootViewController:right];
+//    AppDelegate *myDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
+//    [myDelegate.revealSideViewController pushViewController:nav onDirection:PPRevealSideDirectionRight withOffset:50 animated:YES forceToPopPush:YES completion:nil];
     //[self.navigationController popViewControllerAnimated:YES];
 }
 

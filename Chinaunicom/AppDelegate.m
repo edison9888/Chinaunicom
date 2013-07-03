@@ -14,7 +14,7 @@
 #import "HttpRequestHelper.h"
 @implementation AppDelegate
 
-@synthesize revealSideViewController = _revealSideViewController;
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

@@ -51,7 +51,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">bg@2x.png</string>
+							<string key="NSResourceName">bg.png</string>
 						</object>
 					</object>
 					<object class="IBUIImageView" id="261736010">
@@ -81,7 +81,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">line.png</string>
+							<string key="NSResourceName">new_line.png</string>
 						</object>
 					</object>
 					<object class="IBUIButton" id="364724447">
@@ -128,6 +128,7 @@
 						<string key="NSFrame">{{100, 0}, {120, 44}}</string>
 						<reference key="NSSuperview" ref="201457220"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="180761645"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -156,6 +157,7 @@
 						<string key="NSFrame">{{0, 52}, {320, 408}}</string>
 						<reference key="NSSuperview" ref="201457220"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
@@ -479,22 +481,6 @@
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
 							</object>
-							<object class="IBNSLayoutConstraint" id="179645823">
-								<reference key="firstItem" ref="1004757475"/>
-								<int key="firstAttribute">6</int>
-								<int key="relation">0</int>
-								<reference key="secondItem" ref="201457220"/>
-								<int key="secondAttribute">6</int>
-								<float key="multiplier">1</float>
-								<object class="IBLayoutConstant" key="constant">
-									<double key="value">0.0</double>
-								</object>
-								<float key="priority">1000</float>
-								<reference key="containingView" ref="201457220"/>
-								<int key="scoringType">8</int>
-								<float key="scoringTypeFloat">29</float>
-								<int key="contentType">3</int>
-							</object>
 							<object class="IBNSLayoutConstraint" id="827507178">
 								<reference key="firstItem" ref="261736010"/>
 								<int key="firstAttribute">6</int>
@@ -580,11 +566,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">8</int>
 						<reference key="object" ref="1004757475"/>
-						<reference key="parent" ref="201457220"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">9</int>
-						<reference key="object" ref="179645823"/>
 						<reference key="parent" ref="201457220"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -774,7 +755,6 @@
 					<reference ref="202118580"/>
 					<reference ref="257402738"/>
 					<reference ref="827507178"/>
-					<reference ref="179645823"/>
 					<reference ref="817582248"/>
 					<reference ref="405243802"/>
 					<reference ref="744968626"/>
@@ -811,7 +791,6 @@
 				<boolean value="NO" key="7.IBViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<boolean value="NO" key="8.IBViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
-				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
@@ -866,9 +845,9 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="bg@2x.png">{640, 1008}</string>
-			<string key="line.png">{2, 88}</string>
+			<string key="bg.png">{320, 504}</string>
 			<string key="new_arraw.png">{12, 20}</string>
+			<string key="new_line.png">{2, 88}</string>
 			<string key="title@2x.png">{640, 44}</string>
 		</dictionary>
 		<bool key="IBDocument.UseAutolayout">YES</bool>

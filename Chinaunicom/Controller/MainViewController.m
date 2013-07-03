@@ -65,33 +65,35 @@
 {
     //多菜单按钮
     UIButton* listButton= [UIButton buttonWithType:UIButtonTypeCustom];
-    listButton.frame = CGRectMake(0, 0, 32, 32);
-    [listButton setBackgroundImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];
+    UIImage *listImage=[UIImage imageNamed:@"menu.png"];
+    listButton.frame = CGRectMake(0, 0, listImage.size.width, listImage.size.height);
+    [listButton setBackgroundImage:listImage forState:UIControlStateNormal];
     [listButton addTarget:self action:@selector(showLeft) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* leftItem= [[UIBarButtonItem alloc] initWithCustomView:listButton];
     self.navigationItem.leftBarButtonItem = leftItem;
     /*分割线1*/
-    UIImageView *imageViewTopDiv1=[[UIImageView alloc] initWithFrame:CGRectMake(30, -10, 30, 63)];
-    [imageViewTopDiv1 setImage:[UIImage imageNamed:@"topDividingLine"]];
+    UIImageView *imageViewTopDiv1=[[UIImageView alloc] initWithFrame:CGRectMake(50, 0, 2, 44)];
+    [imageViewTopDiv1 setImage:[UIImage imageNamed:@"new_line.png"]];
     [imageViewTopDiv1 setTag:101];
     [self.navigationController.navigationBar addSubview:imageViewTopDiv1];
     
     //个人中心按钮
     UIButton* personalButton= [UIButton buttonWithType:UIButtonTypeCustom];
-    personalButton.frame = CGRectMake(0, 0, 32, 32);
-    [personalButton setBackgroundImage:[UIImage imageNamed:@"user"] forState:UIControlStateNormal];
+    UIImage *userImage=[UIImage imageNamed:@"user.png"];
+    personalButton.frame = CGRectMake(0, 0, userImage.size.width, userImage.size.height);
+    [personalButton setBackgroundImage:userImage forState:UIControlStateNormal];
     [personalButton addTarget:self action:@selector(showRight) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem* rightItem= [[UIBarButtonItem alloc] initWithCustomView:personalButton];
     self.navigationItem.rightBarButtonItem=rightItem;
     
     /*分割线2*/
-    UIImageView *imageViewTopDiv2=[[UIImageView alloc] initWithFrame:CGRectMake(260, -10, 30, 63)];
-    [imageViewTopDiv2 setImage:[UIImage imageNamed:@"topDividingLine"]];
+    UIImageView *imageViewTopDiv2=[[UIImageView alloc] initWithFrame:CGRectMake(270, 0, 2, 44)];
+    [imageViewTopDiv2 setImage:[UIImage imageNamed:@"new_line"]];
     [imageViewTopDiv2 setTag:102];
     [self.navigationController.navigationBar addSubview:imageViewTopDiv2];
     
     //背景图片
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"listbg"]];
+    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     //搜索
     [self.mySearch setBackgroundImage:[UIImage imageNamed:@"searchbg"]];
     [self.mySearch setDelegate:self];

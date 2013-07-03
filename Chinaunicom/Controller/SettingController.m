@@ -25,7 +25,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-         self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg"]];
+         self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     }
     return self;
 }
@@ -88,10 +88,10 @@
 
 -(void)back
 {
-    RightMenuViewController *right=[[RightMenuViewController alloc] init];
-    BaseNavigationController *nav=[[BaseNavigationController alloc] initWithRootViewController:right];
-    AppDelegate *myDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [myDelegate.revealSideViewController pushViewController:nav onDirection:PPRevealSideDirectionRight withOffset:50 animated:YES forceToPopPush:YES completion:nil];
+//    RightMenuViewController *right=[[RightMenuViewController alloc] init];
+//    BaseNavigationController *nav=[[BaseNavigationController alloc] initWithRootViewController:right];
+//    AppDelegate *myDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
+//    [myDelegate.revealSideViewController pushViewController:nav onDirection:PPRevealSideDirectionRight withOffset:50 animated:YES forceToPopPush:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -109,11 +109,11 @@
 }
 
 - (IBAction)quit:(id)sender {
-    LoginViewController *loginCtrl=[[LoginViewController alloc] init];
-    BaseNavigationController *baseNav=[[BaseNavigationController alloc] initWithRootViewController:loginCtrl];
-    AppDelegate *myDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
-    myDelegate.revealSideViewController = [[PPRevealSideViewController alloc] initWithRootViewController:baseNav];
-    [[UIApplication sharedApplication] keyWindow].rootViewController= myDelegate.revealSideViewController;
+//    LoginViewController *loginCtrl=[[LoginViewController alloc] init];
+//    BaseNavigationController *baseNav=[[BaseNavigationController alloc] initWithRootViewController:loginCtrl];
+//    AppDelegate *myDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
+//    myDelegate.revealSideViewController = [[PPRevealSideViewController alloc] initWithRootViewController:baseNav];
+//    [[UIApplication sharedApplication] keyWindow].rootViewController= myDelegate.revealSideViewController;
     
 //    LoginViewController *loginCtrl=[[LoginViewController alloc] init];
 //    BaseNavigationController *baseNav=[[BaseNavigationController alloc] initWithRootViewController:loginCtrl];

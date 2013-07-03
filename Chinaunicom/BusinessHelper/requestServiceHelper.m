@@ -225,7 +225,7 @@ static requestServiceHelper *requestService;
 }
 
 #pragma mark - 获取我的评论列表
--(void)getMyCommentsWithParamter:(NSMutableDictionary *)dictionary sucess:(void (^) (NSMutableDictionary *commentDictionary))sucess falid:(void (^) (NSString *errorMsg))faild{
+-(void)getMyCommentsWithParamter:(NSMutableDictionary *)dictionary sucess:(void (^) (NSArray *commentDictionary))sucess falid:(void (^) (NSString *errorMsg))faild{
     
     [HttpRequestHelper asyncGetRequest:getMyCommentsList parameter:dictionary requestComplete:^(NSString *responseStr) {
         NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
@@ -233,15 +233,15 @@ static requestServiceHelper *requestService;
         
         NSArray *reportArray=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingMutableLeaves) error:nil];
         
-        NSMutableDictionary *reportDic=[[NSMutableDictionary alloc] initWithObjects:[reportArray objectAtIndex:1] forKeys:[reportArray objectAtIndex:1]];
+//        NSMutableDictionary *reportDic=[[NSMutableDictionary alloc] initWithObjects:[reportArray objectAtIndex:1] forKeys:[reportArray objectAtIndex:1]];
 
-        if ([dictionary count]>0) {
+        if (reportArray) {
             
-            sucess(reportDic);
+            sucess(reportArray);
             
         }else{
             
-            faild(responseStr);
+            faild(nil);
         }
         
         

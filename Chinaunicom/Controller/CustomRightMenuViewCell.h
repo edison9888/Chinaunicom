@@ -7,21 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "../Utils/CommonHelper.h"
+
 
 @interface CustomRightMenuViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIView *topView;
-@property (weak, nonatomic) IBOutlet UIView *bottomView;
-
-@property (weak, nonatomic) IBOutlet UIImageView *userImage;
-@property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *commentLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dateTimeLabel;
-//
-@property (weak, nonatomic) IBOutlet UILabel *formContextLabel;
-@property (weak, nonatomic) IBOutlet UILabel *comeFromLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *messageImage;
-@property (weak, nonatomic) IBOutlet UILabel *totalMessageLabel;
-
-
+@property (nonatomic,strong) UIImageView *topBgImageView;
+@property (nonatomic,strong) UIImageView *bottomBgImageView;
+@property (nonatomic,strong) UIImageView *headImageView;
+@property (nonatomic,strong) UILabel *nameLabel;
+@property (nonatomic,strong) UIButton *soundButton;
+@property (nonatomic,strong) UILabel *contentLabel;
+@property (nonatomic,strong) UILabel *timeLabel;
+@property (nonatomic,strong) UILabel *newsLabel;
+@property (nonatomic,strong) UILabel *pinglunLabel;
+@property (nonatomic,strong) UIImageView *messageImageView;
+@property (nonatomic,strong) UILabel *numLabel;
 @end

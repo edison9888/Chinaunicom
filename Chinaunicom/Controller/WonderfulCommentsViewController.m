@@ -171,16 +171,11 @@
     cell.contextLabel.text=[[dataArray objectAtIndex:indexPath.row] objectForKey:@"commentContent"];
     NSString *pcipath=[ImageUrl stringByAppendingString:[[[dataArray objectAtIndex:indexPath.row] objectForKey:@"icon"] stringByReplacingOccurrencesOfString:@"\\" withString:@"/"]];
     NSString *soundpath=[[dataArray objectAtIndex:indexPath.row] objectForKey:@"audioPath"];
-    if(soundpath!=NULL&&![soundpath isEqualToString:@""])
+    if(soundpath!=nil&&![soundpath isEqualToString:@""])
     {
-        cell.play.hidden=YES;
+        cell.play.hidden=NO;
         [cell.play setTag:1000+indexPath.row];
         [cell.play addTarget:self action:@selector(playSoundFile:) forControlEvents:UIControlEventTouchUpInside];
-              //下载
-        NSMutableDictionary *dir=[[NSMutableDictionary alloc]init];
-        [dir setValue:cell.play forKey:@"btn"];
-        [dir setValue:soundpath forKey:@"file"];
-       [NSThread detachNewThreadSelector:@selector(downloadSoundFile:) toTarget:self withObject:dir];
     }
     else{
         cell.play.hidden=YES;
@@ -195,26 +190,33 @@
 -(void)downloadSoundFile:(NSMutableDictionary *)dir
 {
     
+//    NSString *pcipath=[ImageUrl stringByAppendingString:[dir objectForKey:@"file"] objectForKey:@"icon"] stringByReplacingOccurrencesOfString:@"\\" withString:@"/"]];
+    
+    
+    
+    
     NSURL *baseUrl = [NSURL URLWithString:[ImageUrl stringByAppendingString:[dir objectForKey:@"file"]]];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:baseUrl];
-    BOOL isExsit = [Utility checkFileExsit:[dir objectForKey:@"file"] Dir:@"SpeechSoundDir"];
-       NSArray *fArray = [[dir objectForKey:@"file"] componentsSeparatedByString:@"/"];
+//    BOOL isExsit = [Utility checkFileExsit:[dir objectForKey:@"file"] Dir:@"SpeechSoundDir"];
+    NSArray *fArray = [[dir objectForKey:@"file"] componentsSeparatedByString:@"/"];
     NSString *fileName=[fArray lastObject];
-        UIButton *b = [dir objectForKey:@"btn"];
-    if (isExsit) {
-    
-              b.hidden=NO;
-    }
+//        UIButton *b = [dir objectForKey:@"btn"];
+//    if (isExsit) {
+//    
+//              b.hidden=NO;
+//    }
     [request setDownloadDestinationPath:[Utility getFilePath:fileName Dir:@"SpeechSoundDir"]];
     [request setCompletionBlock:^{
-            BOOL exit = [Utility checkFileExsit:fileName Dir:@"SpeechSoundDir"];
-            if (exit) {
-                //UIButton *btn = (UIButton*)[self.view viewWithTag:[k intValue]];
-                b.hidden=NO;
-            }
-            else{
-                b.hidden=YES;
-            }
+//            BOOL exit = [Utility checkFileExsit:fileName Dir:@"SpeechSoundDir"];
+//            if (exit) {
+//                //UIButton *btn = (UIButton*)[self.view viewWithTag:[k intValue]];
+//                b.hidden=NO;
+//            }
+//            else{
+//                b.hidden=YES;
+//            }
+        [self showLoadingActivityViewWithString:@"正在播放..."];
+        [recoderAndPlayer SpeechAMR2WAV:fileName];
         
     }];
     [request setFailedBlock:^{
@@ -333,8 +335,8 @@
 -(void)myThreadMainMethod{
     [self sendComments];
 }
--(IBAction)playSoundFile:(id)sender{
-    [self showLoadingActivityViewWithString:@"正在播放..."];
+-(void)playSoundFile:(id)sender{
+    
     self.view.userInteractionEnabled=NO;
     int index=[sender tag]-1000;
     NSString *soundpath=[[dataArray objectAtIndex:index] objectForKey:@"audioPath"];
@@ -343,10 +345,16 @@
     //检查目录下是否存在此文件
     BOOL isExsit = [Utility checkFileExsit:fileName Dir:@"SpeechSoundDir"];
     if (isExsit) {
+        [self showLoadingActivityViewWithString:@"正在播放..."];
         [recoderAndPlayer SpeechAMR2WAV:fileName];
     }
     else{
-        [self hideLoadingActivityView];
+        //下载
+        NSMutableDictionary *dir=[[NSMutableDictionary alloc]init];
+        [dir setValue:soundpath forKey:@"file"];
+        
+//            NSString *soundpath=[[dataArray objectAtIndex:indexPath.row] objectForKey:@"audioPath"];
+        [NSThread detachNewThreadSelector:@selector(downloadSoundFile:) toTarget:self withObject:dir];
         self.view.userInteractionEnabled=YES;
     }
 

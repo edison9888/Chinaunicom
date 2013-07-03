@@ -51,7 +51,7 @@
     
     UIView* _blockerView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 200, 60)];
     _blockerView.backgroundColor = [UIColor colorWithWhite: 0.0 alpha: 0.8];
-    _blockerView.center = CGPointMake(self.view.bounds.size.width / 2, self.view.bounds.size.height / 2);
+    _blockerView.center = CGPointMake(self.view.bounds.size.width / 2, self.view.bounds.size.height / 2-50);
     _blockerView.alpha = 0.0;
     _blockerView.clipsToBounds = YES;
     _blockerView.tag=KEY_LOAD;

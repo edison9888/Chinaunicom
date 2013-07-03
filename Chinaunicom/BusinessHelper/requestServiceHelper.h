@@ -30,7 +30,7 @@
                               uploadKey:(NSString*)uploadKey Progress:(id)myProgress
                                  sucess:(void (^) (NSString *state))sucess falid:(void (^) (NSString *errorMsg))faild;
 //获取我的评论列表
--(void)getMyCommentsWithParamter:(NSMutableDictionary *)dictionary sucess:(void (^) (NSMutableDictionary *commentDictionary))sucess falid:(void (^) (NSString *errorMsg))faild;
+-(void)getMyCommentsWithParamter:(NSMutableDictionary *)dictionary sucess:(void (^) (NSArray *commentDictionary))sucess falid:(void (^) (NSString *errorMsg))faild;
 //收藏，赞，踩
 -(void) favoriteZanCai:(NSString *)url paramter:(NSMutableDictionary *)dictionary sucess:(void (^)(NSString *msg))sucess falid:(void(^)(NSString *errorMsg))faild;
 //收藏列表
