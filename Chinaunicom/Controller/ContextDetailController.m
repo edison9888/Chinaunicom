@@ -42,7 +42,7 @@
 #pragma mark - initDataSource
 -(void)initDataSource
 {
-    [self dismissKeyboard];
+//    [self dismissKeyboard];
     isHasFav=false;
     [self showLoadingActivityViewWithString:@"正在加载..."];
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
@@ -217,8 +217,7 @@
 #pragma mark - viewWillAppear
 - (void) viewWillAppear:(BOOL)animated
 {
-    //隐藏导航栏
-    [self.navigationController.navigationBar setHidden:YES];
+
 }
 //返回
 -(void)back

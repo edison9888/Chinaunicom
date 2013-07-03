@@ -129,7 +129,7 @@
     [dictionary setValue: [NSString stringWithFormat:@"%d",page] forKey:@"index"];
     [dictionary setValue: [NSString stringWithFormat:@"%d",pagesize] forKey:@"pageNumber"];
     
-    if(self.reportid==NULL|| [self.reportid isEqualToString:@"0"]||[self.reportid isEqualToString:@""])
+    if(self.reportid==nil|| [self.reportid isEqualToString:@"0"]||[self.reportid isEqualToString:@""])
     {
         url=AllReportPath;
         
@@ -349,7 +349,7 @@
 {
 //    NSLog(@"title:%@",[[self.dataSource objectAtIndex:indexPath.row] objectForKey:@"reportTitle"]);
     NSString *reportId = [[self.dataSource objectAtIndex:indexPath.row] objectForKey:@"reportId"];
-      ContextDetailController *contextDetailCtrl=[[ContextDetailController alloc] init];
+      ContextDetailController *contextDetailCtrl=[[ContextDetailController alloc] initWithNibName:@"ContextDetailController" bundle:nil];
     Report *_report=[[Report alloc] init];
     _report.reportId=reportId;
     contextDetailCtrl.myReport=_report;

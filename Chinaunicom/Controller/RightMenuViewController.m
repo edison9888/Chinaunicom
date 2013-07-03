@@ -17,6 +17,7 @@
 
 #import "ASIHTTPRequest.h"
 #import "Utility.h"
+#import "UIViewController+MMDrawerController.h"
 @interface RightMenuViewController ()
 
 @end
@@ -254,27 +255,31 @@
     if ([btn tag]==2) {
         AuditReportListViewController *auditCtrl=[[AuditReportListViewController alloc] initWithNibName:@"AuditedReportListViewController" bundle:Nil];
         auditCtrl.title=@"已审核";
+//        [self.navigationController pushViewController:auditCtrl animated:YES];
+        [self.mm_drawerController.navigationController pushViewController:auditCtrl animated:YES];
+//        [self.mm_drawerController toggleDrawerSide:MMDrawerSideRight animated:YES completion:^(BOOL finished) {
+//            
+//            
+//        }];
 //        BaseNavigationController *nav=[[BaseNavigationController alloc] initWithRootViewController:auditCtrl];
 //        AppDelegate *myDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
 //        [myDelegate.revealSideViewController pushViewController:nav onDirection:PPRevealSideOptionsBounceAnimations withOffset:0 animated:YES forceToPopPush:YES completion:nil];
 
-    }
-    //收藏
-    if ([btn tag]==4) {
-        FavoriteListViewController *favCtrl=[[FavoriteListViewController alloc] init];
+    }else if ([btn tag]==4) {
+        FavoriteListViewController *favCtrl=[[FavoriteListViewController alloc] initWithNibName:@"FavoriteListViewController" bundle:nil];
         favCtrl.title=@"收藏";
+        [self.navigationController pushViewController:favCtrl animated:YES];
 //        BaseNavigationController *nav=[[BaseNavigationController alloc] initWithRootViewController:favCtrl];
 //        AppDelegate *myDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
 //        [myDelegate.revealSideViewController pushViewController:nav onDirection:PPRevealSideOptionsBounceAnimations withOffset:0 animated:NO forceToPopPush:YES completion:nil];
 //        [self.navigationController pushViewController:favCtrl animated:YES];
         
-    }
-    //设置
-    else if([btn tag]==5){
+    }else if([btn tag]==5){
         
 //        [btn setBackgroundImage:[UIImage imageNamed:@"grzy_Setting"] forState:UIControlStateNormal];
         SettingController *setCtrl=[[SettingController alloc] init];
         setCtrl.title=@"设置";
+        [self.navigationController pushViewController:setCtrl animated:YES];
 //        BaseNavigationController *nav=[[BaseNavigationController alloc] initWithRootViewController:setCtrl];
 //        AppDelegate *myDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
 //        [myDelegate.revealSideViewController pushViewController:nav onDirection:PPRevealSideOptionsBounceAnimations withOffset:0 animated:YES forceToPopPush:YES completion:nil];

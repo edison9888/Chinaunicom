@@ -24,9 +24,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *comFromContextLabel;
 @property (weak, nonatomic) IBOutlet UILabel *comFromLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateTimeLabel;
-@property (strong, nonatomic) IBOutlet UITextView *contentDetailLabel;
-@property(strong,nonatomic)UILabel *totalLabel;
-@property(strong,nonatomic)UIButton *favButton;
+@property (weak, nonatomic) IBOutlet UITextView *contentDetailLabel;
+@property (strong,nonatomic)UILabel *totalLabel;
+@property (strong,nonatomic)UIButton *favButton;
 @property (strong, nonatomic) Report *myReport;
 @property (strong, nonatomic) ReportDetail *myReportDetail;
 @property (weak, nonatomic) IBOutlet UIScrollView *scorollview;
