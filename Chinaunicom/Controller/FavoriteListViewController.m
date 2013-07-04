@@ -135,7 +135,7 @@
     ContextDetailController *contextDetailCtrl=[[ContextDetailController alloc] init];
     Report *_report=[[Report alloc] init];
     _report.reportId=reportId;
-    contextDetailCtrl.myReport=_report;
+//    contextDetailCtrl.myReport=_report;
     [self.navigationController pushViewController:contextDetailCtrl animated:YES];
 }
 

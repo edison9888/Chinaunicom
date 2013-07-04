@@ -271,36 +271,36 @@
     cell = [[[NSBundle mainBundle] loadNibNamed:@"CustomMainViewCell" owner:self options:nil]lastObject];
     //            cell = [array objectAtIndex:0];
     //    }
-    [self initCustomTableCell:cell IndexPath:indexPath];
+//    [self initCustomTableCell:cell IndexPath:indexPath];
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 90;//此处返回cell的高度
 }
-#pragma mark - Table view data source
--(void)initCustomTableCell:(CustomMainViewCell*)cell IndexPath:(NSIndexPath *)indexPath
-{
-    //内容摘要
-    if (cell.contextLabel==nil) {
-        cell.contextLabel=[[UILabel alloc] initWithFrame:CGRectMake(14, 5, 180, 49)];
-        cell.contextLabel.text=[[self.dataSource objectAtIndex:indexPath.row] objectForKey:@"title"];
-        //[cell.contextLabel setTextAlignment:NSTextAlignmentLeft];
-        [cell.contextLabel setTextAlignment:NSTextAlignmentLeft];
-        [cell.contextLabel setBackgroundColor:[UIColor clearColor]];
-        [cell.contextLabel setNumberOfLines:2];
-        [cell addSubview:cell.contextLabel];
-    }
-    //评论
-    if (cell.countLabel==nil) {
-        cell.countLabel=[[UILabel alloc] init];
-        [cell.countLabel setFrame:CGRectMake(160, 60, 160, 21)];
-        cell.countLabel.text=[[self.dataSource objectAtIndex:indexPath.row ] objectForKey:@"published"];
-        [cell.countLabel setBackgroundColor:[UIColor clearColor]];
-        [cell.countLabel setTextColor:[CommonHelper hexStringToColor:@"#8D8D8E"]];
-        [cell addSubview:cell.countLabel];
-    }
-}
+//#pragma mark - Table view data source
+//-(void)initCustomTableCell:(CustomMainViewCell*)cell IndexPath:(NSIndexPath *)indexPath
+//{
+//    //内容摘要
+//    if (cell.contextLabel==nil) {
+//        cell.contextLabel=[[UILabel alloc] initWithFrame:CGRectMake(14, 5, 180, 49)];
+//        cell.contextLabel.text=[[self.dataSource objectAtIndex:indexPath.row] objectForKey:@"title"];
+//        //[cell.contextLabel setTextAlignment:NSTextAlignmentLeft];
+//        [cell.contextLabel setTextAlignment:NSTextAlignmentLeft];
+//        [cell.contextLabel setBackgroundColor:[UIColor clearColor]];
+//        [cell.contextLabel setNumberOfLines:2];
+//        [cell addSubview:cell.contextLabel];
+//    }
+//    //评论
+//    if (cell.countLabel==nil) {
+//        cell.countLabel=[[UILabel alloc] init];
+//        [cell.countLabel setFrame:CGRectMake(160, 60, 160, 21)];
+//        cell.countLabel.text=[[self.dataSource objectAtIndex:indexPath.row ] objectForKey:@"published"];
+//        [cell.countLabel setBackgroundColor:[UIColor clearColor]];
+//        [cell.countLabel setTextColor:[CommonHelper hexStringToColor:@"#8D8D8E"]];
+//        [cell addSubview:cell.countLabel];
+//    }
+//}
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -317,7 +317,7 @@
         ContextDetailController *contextDetailCtrl=[[ContextDetailController alloc] init];
         Report *_report=[[Report alloc] init];
         _report.reportId=reportId;
-        contextDetailCtrl.myReport=_report;
+//        contextDetailCtrl.myReport=_report;
         [self.navigationController pushViewController:contextDetailCtrl animated:YES];
 
     }

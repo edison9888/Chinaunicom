@@ -52,7 +52,7 @@
     NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
     [dictionary setValue: userid forKey:@"userId"];
     
-    [[requestServiceHelper defaultService] getReportDetail:dictionary sucess:^(ReportDetail *reportDetail) {
+    [[requestServiceHelper defaultService] getReportDetail:dictionary sucess:^(NSDictionary *reportDetail) {
         [self hideLoadingActivityView];
         self.myReportDetail=reportDetail;
         self.reporttitle.text=self.myReportDetail.reportTitle;
@@ -129,7 +129,7 @@
 -(void)initLayout
 {
     
-    [self.topview setBackgroundColor:[CommonHelper hexStringToColor:@"#0E5DBF"]];
+//    [self.topview setBackgroundColor:[CommonHelper hexStringToColor:@"#0E5DBF"]];
     [self.reporttitle setTextColor:[UIColor whiteColor]];
     [self.reportdate setTextColor:[UIColor whiteColor]];
     [self.scrollview setShowsVerticalScrollIndicator:NO];

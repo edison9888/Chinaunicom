@@ -164,7 +164,10 @@
 }
 
 #pragma mark - Table view data source
-
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
  - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
  {
  
@@ -196,7 +199,7 @@
          [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
      }
      UIFont *font = [UIFont systemFontOfSize:17.0f];
-     NSLog(@"self.dc=%@",self.dictionayData);
+//     NSLog(@"self.dc=%@",self.dictionayData);
      NSString *nameStr=[[self.dictionayData objectAtIndex:indexPath.row]objectForKey:@"commentPerson"];
      CGSize nameSize=[nameStr sizeWithFont:font forWidth:200 lineBreakMode:NSLineBreakByCharWrapping];
      cell.nameLabel.frame=CGRectMake(60, 5, nameSize.width, nameSize.height);
@@ -257,22 +260,11 @@
         auditCtrl.title=@"已审核";
 //        [self.navigationController pushViewController:auditCtrl animated:YES];
         [self.mm_drawerController.navigationController pushViewController:auditCtrl animated:YES];
-//        [self.mm_drawerController toggleDrawerSide:MMDrawerSideRight animated:YES completion:^(BOOL finished) {
-//            
-//            
-//        }];
-//        BaseNavigationController *nav=[[BaseNavigationController alloc] initWithRootViewController:auditCtrl];
-//        AppDelegate *myDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
-//        [myDelegate.revealSideViewController pushViewController:nav onDirection:PPRevealSideOptionsBounceAnimations withOffset:0 animated:YES forceToPopPush:YES completion:nil];
 
     }else if ([btn tag]==4) {
         FavoriteListViewController *favCtrl=[[FavoriteListViewController alloc] initWithNibName:@"FavoriteListViewController" bundle:nil];
         favCtrl.title=@"收藏";
         [self.navigationController pushViewController:favCtrl animated:YES];
-//        BaseNavigationController *nav=[[BaseNavigationController alloc] initWithRootViewController:favCtrl];
-//        AppDelegate *myDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
-//        [myDelegate.revealSideViewController pushViewController:nav onDirection:PPRevealSideOptionsBounceAnimations withOffset:0 animated:NO forceToPopPush:YES completion:nil];
-//        [self.navigationController pushViewController:favCtrl animated:YES];
         
     }else if([btn tag]==5){
         
@@ -280,20 +272,14 @@
         SettingController *setCtrl=[[SettingController alloc] init];
         setCtrl.title=@"设置";
         [self.navigationController pushViewController:setCtrl animated:YES];
-//        BaseNavigationController *nav=[[BaseNavigationController alloc] initWithRootViewController:setCtrl];
-//        AppDelegate *myDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
-//        [myDelegate.revealSideViewController pushViewController:nav onDirection:PPRevealSideOptionsBounceAnimations withOffset:0 animated:YES forceToPopPush:YES completion:nil];
+
     }
         
     
 }
 -(void)downloadSoundFile:(NSMutableDictionary *)dir
 {
-    
     //    NSString *pcipath=[ImageUrl stringByAppendingString:[dir objectForKey:@"file"] objectForKey:@"icon"] stringByReplacingOccurrencesOfString:@"\\" withString:@"/"]];
-    
-    
-    
     
     NSURL *baseUrl = [NSURL URLWithString:[ImageUrl stringByAppendingString:[dir objectForKey:@"file"]]];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:baseUrl];
@@ -343,7 +329,6 @@
         NSMutableDictionary *dir=[[NSMutableDictionary alloc]init];
         [dir setValue:soundpath forKey:@"file"];
         [NSThread detachNewThreadSelector:@selector(downloadSoundFile:) toTarget:self withObject:dir];
-
     }
     
 }

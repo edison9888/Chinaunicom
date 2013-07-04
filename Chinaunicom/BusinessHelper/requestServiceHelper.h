@@ -20,7 +20,7 @@
 //获取报告列表
 - (void)getReportList:(NSString *)url parmeter:(NSMutableDictionary *)dictionary sucess:(void (^) (NSMutableArray *reportDictionary,NSInteger result))sucess falid:(void (^) (NSString *errorMsg))faild;
 //获取报告详细内容
-- (void)getReportDetail:(NSMutableDictionary *)dictionary sucess:(void (^) (ReportDetail *reportDetail))sucess falid:(void (^) (NSString *errorMsg))faild;
+- (void)getReportDetail:(NSMutableDictionary *)dictionary sucess:(void (^) (NSDictionary *reportDetail))sucess falid:(void (^) (NSString *errorMsg))faild;
 //获取评论列表
 -(void)getCommentsWithParamter:(NSMutableDictionary *)dictionary sucess:(void (^) (NSMutableArray *commentDictionary))sucess falid:(void (^) (NSString *errorMsg))faild;
 //发表评论

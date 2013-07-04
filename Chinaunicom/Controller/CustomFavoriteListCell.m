@@ -24,7 +24,7 @@
     [super setSelected:selected animated:animated];
 
 
-    [self.dateTimeLabel setTextColor:[CommonHelper hexStringToColor:@"#848484"]];
+//    [self.dateTimeLabel setTextColor:[CommonHelper hexStringToColor:@"#848484"]];
 }
 
 @end

@@ -29,6 +29,5 @@
 @property(nonatomic,strong) NSString *reportid;
 @property (strong, nonatomic) Report *myReport;
 @property (nonatomic,assign) BOOL isfirst;
--(void)initCustomTableCell:(CustomMainViewCell*)cell IndexPath:(NSIndexPath *)indexPath ;
 
 @end

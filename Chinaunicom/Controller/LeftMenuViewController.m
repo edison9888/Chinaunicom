@@ -8,7 +8,7 @@
 
 #import "LeftMenuViewController.h"
 #import "SysConfig.h"
-//#import "CommonHelper.h"
+#import "CommonHelper.h"
 #import "requestServiceHelper.h"
 #import "User.h"
 #import "JKCustomAlert.h"

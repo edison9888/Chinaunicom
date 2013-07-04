@@ -19,16 +19,21 @@
     BOOL isHasFav;
     int y;
 }
-@property (weak, nonatomic) IBOutlet UINavigationBar *bottomBar;
-@property (weak, nonatomic) IBOutlet UIView *topView;
-@property (weak, nonatomic) IBOutlet UILabel *comFromContextLabel;
-@property (weak, nonatomic) IBOutlet UILabel *comFromLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dateTimeLabel;
-@property (weak, nonatomic) IBOutlet UITextView *contentDetailLabel;
-@property (strong,nonatomic)UILabel *totalLabel;
+
+@property (nonatomic,strong) NSString *reportId;
+@property (weak, nonatomic) IBOutlet UIView *bottomView;
+
+
+
+//@property (weak, nonatomic) IBOutlet UIView *topView;
+//@property (weak, nonatomic) IBOutlet UILabel *comFromContextLabel;
+//@property (weak, nonatomic) IBOutlet UILabel *comFromLabel;
+//@property (weak, nonatomic) IBOutlet UILabel *dateTimeLabel;
+//@property (weak, nonatomic) IBOutlet UITextView *contentDetailLabel;
+
 @property (strong,nonatomic)UIButton *favButton;
-@property (strong, nonatomic) Report *myReport;
 @property (strong, nonatomic) ReportDetail *myReportDetail;
-@property (weak, nonatomic) IBOutlet UIScrollView *scorollview;
+//@property (weak, nonatomic) IBOutlet UIScrollView *scorollview;
+
 - (IBAction)viewComment:(id)sender;
 @end

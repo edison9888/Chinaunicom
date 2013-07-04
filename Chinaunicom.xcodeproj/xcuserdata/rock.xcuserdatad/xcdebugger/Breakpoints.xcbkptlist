@@ -34,12 +34,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Chinaunicom/Controller/RightMenuViewController.m"
-         timestampString = "394540031.075217"
+         timestampString = "394613919.666492"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "345"
-         endingLineNumber = "345"
-         landmarkName = "-playingFinishWithBBS:"
+         startingLineNumber = "331"
+         endingLineNumber = "331"
+         landmarkName = "-playSoundFile:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

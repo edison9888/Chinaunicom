@@ -14,23 +14,36 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-
+        
+        _bgImageView = [[UIImageView alloc]init];
+        _bgImageView.image=[UIImage imageNamed:@"cell_bg.png"];
+        [self.contentView addSubview:_bgImageView];
+        
+        _titleLabel=[[UILabel alloc]init];
+        [_titleLabel setBackgroundColor:[UIColor clearColor]];
+        [_titleLabel setLineBreakMode:NSLineBreakByCharWrapping];
+        [_titleLabel setNumberOfLines:0];
+        [self.contentView addSubview:_titleLabel];
+        
+        _qitaImageView=[[UIImageView alloc]init];
+        [self.contentView addSubview:_qitaImageView];
+        
+        _pinlunLabel=[[UILabel alloc]init];
+        [_pinlunLabel sizeToFit];
+        [_pinlunLabel setBackgroundColor:[UIColor clearColor]];
+        [_pinlunLabel setTextColor:[UIColor lightGrayColor]];
+        [self.contentView addSubview:_pinlunLabel];
+        
+        _tupianImageView=[[UIImageView alloc]init];
+        [_tupianImageView setBackgroundColor:[UIColor clearColor]];
+        [self.contentView addSubview:_tupianImageView];
+        
     }
     return self;
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-    
-    //
-//    [self.countLabel setTextColor:[CommonHelper hexStringToColor:@"#8D8D8E"]];
-//    [self.commentsLabel setTextColor:[CommonHelper hexStringToColor:@"#8D8D8E"]];
-//    
-
-    [self.myView setBackgroundColor:[CommonHelper hexStringToColor:@"#B4CBDB"]];
-    [self setBackgroundColor:[UIColor clearColor]];
-    [self.myView setAlpha:0.85];
-    
 }
 
 

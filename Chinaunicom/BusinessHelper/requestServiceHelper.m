@@ -130,24 +130,24 @@ static requestServiceHelper *requestService;
     }];
 }
 #pragma mark - 获取报告详细内容
-- (void)getReportDetail:(NSMutableDictionary *)dictionary sucess:(void (^) (ReportDetail *reportDetail))sucess falid:(void (^) (NSString *errorMsg))faild{
+- (void)getReportDetail:(NSMutableDictionary *)dictionary sucess:(void (^) (NSDictionary *reportDetail))sucess falid:(void (^) (NSString *errorMsg))faild{
     [HttpRequestHelper asyncGetRequest:ReportDetails parameter:dictionary requestComplete:^(NSString *responseStr) {
         
         NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
         NSDictionary *dictionary=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
         
-        if ([dictionary count]>0) {
+        if (dictionary) {
             
-            ReportDetail *_reportDetail=[[ReportDetail alloc] init];
-            _reportDetail.reportTitle=[dictionary objectForKey:@"title"];
-            _reportDetail.reportContent=[dictionary objectForKey:@"reportContent"];
-            _reportDetail.published=[dictionary objectForKey:@"published"];
-            _reportDetail.size=[dictionary objectForKey:@"size"];
-            _reportDetail.fromtype=[dictionary objectForKey:@"reportType"];
-            _reportDetail.isFav=[dictionary objectForKey:@"isFav"];
-            _reportDetail.picPath=[dictionary objectForKey:@"picPath"];
-             _reportDetail.favId=[dictionary objectForKey:@"favId"];
-            sucess(_reportDetail);
+//            ReportDetail *_reportDetail=[[ReportDetail alloc] init];
+//            _reportDetail.reportTitle=[dictionary objectForKey:@"title"];
+//            _reportDetail.reportContent=[dictionary objectForKey:@"reportContent"];
+//            _reportDetail.published=[dictionary objectForKey:@"published"];
+//            _reportDetail.size=[dictionary objectForKey:@"size"];
+//            _reportDetail.fromtype=[dictionary objectForKey:@"reportType"];
+//            _reportDetail.isFav=[dictionary objectForKey:@"isFav"];
+//            _reportDetail.picPath=[dictionary objectForKey:@"picPath"];
+//             _reportDetail.favId=[dictionary objectForKey:@"favId"];
+            sucess(dictionary);
         }else{
             
             faild(responseStr);
@@ -155,8 +155,6 @@ static requestServiceHelper *requestService;
         
         
     }requestFailed:^(NSString *errorMsg) {
-        
-        //NSLog(@"%@",errorMsg);
         faild(errorMsg);
         
     }];

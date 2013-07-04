@@ -16,7 +16,6 @@
 //
 
 #import <UIKit/UIKit.h>
-
 #define k_PULL_STATE_NORMAL         0     //  状态标识：下拉可以刷新/上拖加载更多
 #define k_PULL_STATE_DOWN           1     //  状态标识：释放可以刷新
 #define k_PULL_STATE_LOAD           2     //  状态标识：正在加载
