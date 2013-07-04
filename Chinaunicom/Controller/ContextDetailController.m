@@ -7,23 +7,23 @@
 //
 
 #import "ContextDetailController.h"
-#import "requestServiceHelper.h"
-#import "SysConfig.h"
-//#import "Report.h"
-//#import "User.h"
-#import "ReportDetail.h"
+#import "User.h"
 #import "HttpRequestHelper.h"
 #import "CommonHelper.h"
+//#import "WonderfulCommentsViewController.h"
+#import "GoodCommentsViewController.h"
 @interface ContextDetailController ()
 {
     UILabel *_totalLabel;
     UIView *_topview;
     UIScrollView *_bottomScrollview;
+    NSString *favString;
+    UIButton *commentsButton;
+    UIButton *favButton;
 }
 @end
 
 @implementation ContextDetailController
-@synthesize favButton;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -58,42 +58,40 @@
     //返回按钮
     UIImage *backImage=[UIImage imageNamed:@"new_arraw.png"];
     UIButton* backButton= [UIButton buttonWithType:UIButtonTypeCustom];
-    backButton.frame = CGRectMake(20, (44-backImage.size.height)/2, backImage.size.width, backImage.size.height);
-    [backButton setBackgroundImage:backImage forState:UIControlStateNormal];
+    backButton.frame = CGRectMake(0, 0, 57, 44);
+    [backButton setImage:backImage forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomView addSubview:backButton];
     
     /*分割线1*/
-    UIImageView *imageViewBottomDiv1=[[UIImageView alloc] initWithFrame:CGRectMake(60, 0, 2, 44)];
+    UIImageView *imageViewBottomDiv1=[[UIImageView alloc] initWithFrame:CGRectMake(50, 0, 2, 44)];
     [imageViewBottomDiv1 setImage:[UIImage imageNamed:@"new_line.png"]];
     [self.bottomView addSubview:imageViewBottomDiv1];
     
     /*分割线2*/
-    UIImageView *imageViewBottomDiv2=[[UIImageView alloc] initWithFrame:CGRectMake(260, 0, 2, 44)];
+    UIImageView *imageViewBottomDiv2=[[UIImageView alloc] initWithFrame:CGRectMake(265, 0, 2, 44)];
     [imageViewBottomDiv2 setImage:[UIImage imageNamed:@"new_line.png"]];
     [self.bottomView addSubview:imageViewBottomDiv2];
     
     //收藏
     UIImage *starImage=[UIImage imageNamed:@"Star.png"];
     favButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    favButton.frame=CGRectMake(276, (44-starImage.size.height)/2, starImage.size.width, starImage.size.height);
-    [favButton setBackgroundImage:starImage forState:UIControlStateNormal];
-    [favButton addTarget:self action:@selector(collect) forControlEvents:UIControlEventTouchUpInside];
+    favButton.frame=CGRectMake(265, 0, 57, 44);
+    [favButton setImage:starImage forState:UIControlStateNormal];
+#warning 替换收藏图片
+    [favButton setImage:[UIImage imageNamed:@"love.png"] forState:UIControlStateSelected];
+    [favButton addTarget:self action:@selector(collect:) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomView addSubview:favButton];
     
     //查看精彩评论
-    UIButton *commentsButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    commentsButton.frame=CGRectMake(60, 8, 115, 32);
+    commentsButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    commentsButton.frame=CGRectMake(50, 8, 210, 32);
     [commentsButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [commentsButton setTitle:@"查看精彩评论" forState:UIControlStateNormal];
+    [commentsButton.titleLabel setTextColor:[UIColor whiteColor]];
+    [commentsButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [commentsButton setTitle:[NSString stringWithFormat:@"查看精彩评论 共0条"] forState:UIControlStateNormal];
     [commentsButton addTarget:self action:@selector(viewComment:) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomView addSubview:commentsButton];
-    
-    //共多少条评论
-    _totalLabel=[[UILabel alloc] initWithFrame:CGRectMake(185, 13, 70, 21)];
-    _totalLabel.text=@"共0条";
-    [_totalLabel setBackgroundColor:[UIColor clearColor]];
-    [self.bottomView addSubview:_totalLabel];
 
 }
 
@@ -157,6 +155,14 @@
         [_bottomScrollview setFrame:CGRectMake(0, _topview.frame.size.height, 320, self.view.frame.size.height-44-_topview.frame.size.height)];
         [_bottomScrollview setContentSize:CGSizeMake(320, 20+commentSize.height+10)];
         
+        BOOL isFav=[[reportDetail objectForKey:@"isFav"] boolValue];
+        if (isFav) {
+            [favButton setSelected:YES];
+        }
+        
+        NSNumber *pinlunNUm=[reportDetail objectForKey:@"size"];
+        [commentsButton setTitle:[NSString stringWithFormat:@"查看精彩评论 共%@条",pinlunNUm] forState:UIControlStateNormal];
+        
         NSString *picPath=[reportDetail objectForKey:@"picPath"];
         if (picPath !=nil) {
             NSArray *array=[picPath componentsSeparatedByString:@","];
@@ -192,20 +198,7 @@
 //        }
 
 }
-#pragma mark - initDataSource
-//-(void)initDataSource
-//{
-//    [self dismissKeyboard];
-//    isHasFav=false;
-//    [self showLoadingActivityViewWithString:@"正在加载..."];
-//    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-//    [dictionary setValue: self.myReport.reportId forKey:@"reportId"];
-    
-//    NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
-//    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
-//    NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
-//    [dictionary setValue: userid forKey:@"userId"];
-//}
+
 -(void)compearImage :(NSString *) picpath{
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     UIImage *cachedImage = [manager imageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:picpath]]];
@@ -256,82 +249,70 @@
     return newImage;
 }
 
-#pragma mark - viewWillAppear
-
 //返回
 -(void)back
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
--(void)collect
+-(void)collect :(UIButton *)sender
 {
-    if(!isHasFav){
+#warning 收藏接口有问题
+    if (!sender.selected) {
+        
         NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
         User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
         NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
-        //
-        NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-        
-        [dictionary setValue: userid forKey:@"userId"];
 
-        [self showLoadingActivityViewWithString:@"正在收藏"];
+        NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+        [dictionary setValue: userid forKey:@"userId"];
+        [dictionary setValue:self.reportId forKey:@"reportId"];
+//        [self showLoadingActivityViewWithString:@"正在收藏"];
         [[requestServiceHelper defaultService]favoriteZanCai:AddFavoriteList paramter: dictionary sucess:^(NSString *state) {
-            [self hideLoadingActivityView];
-//                [self showAlertViewWithString:@"收藏成功" setDelegate:nil setTag:0];
-          [ALToastView toastInView:self.view withText:@"收藏成功"];
-                isHasFav=true;
-                self.myReportDetail.favId=state;
-                [favButton setBackgroundImage:[UIImage imageNamed:@"favorites@2x"] forState:UIControlStateNormal];
+            favString=state;
+//            [self hideLoadingActivityView];
+//            [ALToastView toastInView:self.view withText:@"收藏成功"];
+            sender.selected=YES;
         } falid:^(NSString *errorMsg) {
-              [ALToastView toastInView:self.view withText:@"收藏失败"];
+//            [self hideLoadingActivityView];
+//            [ALToastView toastInView:self.view withText:@"收藏失败"];
+            sender.selected=NO;
         }];
         
     }
     else{
         NSMutableDictionary *dir=[[NSMutableDictionary alloc] init];
-        [dir setValue:self.myReportDetail.favId  forKey:@"favoriteId"];
-        [self showLoadingActivityViewWithString:@"正在取消收藏..."];
+        [dir setValue:favString  forKey:@"favoriteId"];
+//        [self showLoadingActivityViewWithString:@"正在取消收藏..."];
         [HttpRequestHelper asyncGetRequest:delShoucang parameter:dir requestComplete:^(NSString *responseStr) {
-            [self hideLoadingActivityView];
+//            [self hideLoadingActivityView];
             if([responseStr isEqualToString:@"success"])
             {
-                   [ALToastView toastInView:self.view withText:@"取消收藏成功"];
-                isHasFav=false;
-                    [favButton setBackgroundImage:[UIImage imageNamed:@"grzy_Star"] forState:UIControlStateNormal];
+//                [ALToastView toastInView:self.view withText:@"取消收藏成功"];
+                sender.selected=NO;
             }
         } requestFailed:^(NSString *errorMsg) {
-            [ALToastView toastInView:self.view withText:@"取消收藏失败"];
-            [self hideLoadingActivityView];
+//            [self hideLoadingActivityView];
+//            [ALToastView toastInView:self.view withText:@"取消收藏失败"];
+            sender.selected=YES;
+            
         }];
 
     }
 }
 
-
-- (void)dismissKeyboard {
-//    [self.contentDetailLabel resignFirstResponder];
-   
-}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)viewComment:(id)sender {
-    //    if(![self.totalLabel.text isEqualToString:@"共0条"])
-    //    {
-    WonderfulCommentsViewController *wonderfulCtrl=[[WonderfulCommentsViewController alloc] init];
-//    wonderfulCtrl.myReport =    self.myReport;
-    [self.navigationController pushViewController:wonderfulCtrl animated:YES];
-    //}
-    //    else{
-    //        UIAlertView *coll=[[UIAlertView alloc] initWithTitle:@""
-    //                                                     message:@"暂无评论"
-    //                                                    delegate:self
-    //                                           cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    //        [coll show];
-    //    }
+- (void)viewComment:(id)sender {
+    if ([commentsButton.titleLabel.text isEqualToString:@"查看精彩评论 共0条"]) {
+        [MBHUDView hudWithBody:@"没有评论" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
+    }else{
+        GoodCommentsViewController *wonderfulCtrl=[[GoodCommentsViewController alloc] init];
+        wonderfulCtrl.reportId=self.reportId;
+        [self.navigationController pushViewController:wonderfulCtrl animated:YES];
+    }
 }
 - (void)viewDidUnload {
 

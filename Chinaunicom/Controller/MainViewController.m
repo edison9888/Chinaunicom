@@ -6,32 +6,27 @@
 //  Copyright (c) 2013年 Chinaunicom. All rights reserved.
 //
 
-#import "MainViewController.h"
-#import "SysConfig.h"
-#import "requestServiceHelper.h"
-#import "Report.h"
 #import "User.h"
 #import "UIImageView+WebCache.h"
-#import "UIViewController+MMDrawerController.h"
-#import "LeftMenuViewController.h"
 #import "CellImageView.h"
-#define KEY_LOAD 201316
-#define AnnimationTime 0.5
-
+#import "MainViewController.h"
+#import "UIViewController+MMDrawerController.h"
+#import "CustomMainViewCell.h"
+#import "requestServiceHelper.h"
+#import "ContextDetailController.h"
+#import "GTMBase64.h"
 @interface MainViewController ()
 
 @end
 
 @implementation MainViewController
 
-@synthesize myTableView,page,totalresult,pagesize,df;
-
--(void)pushToMainPage:(int)tag title:(NSString *)str
-{
-    self.title =str;
-    self.reportid=[NSString stringWithFormat:@"%d",tag];
-    [self initDataSource];
-}
+//-(void)pushToMainPage:(int)tag title:(NSString *)str
+//{
+//    self.title =str;
+//    self.reportid=[NSString stringWithFormat:@"%d",tag];
+//    [self initDataSource];
+//}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -47,20 +42,32 @@
 {
     [super viewDidLoad];
     
-    self.dataSource = [[NSMutableArray alloc] init];
-   LeftMenuViewController *viewc= (LeftMenuViewController *)self.mm_drawerController.leftDrawerViewController;
-    viewc.leftMenudelegate=self;
+    dataSource = [[NSMutableArray alloc] init];
     //初始化tableview
     [self initParmeter];
+    //初始化导航条 和 搜索框
     [self initView];
+    //请求全部数据列表
     [self initDataSource];
-    for (UIView *view in self.mySearch.subviews){
-        if ([view isKindOfClass: [UITextField class]]) {
-             df = (UITextField *)view;
-            df.delegate = self;
-            break;
-        }
-    }
+    
+    NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
+    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
+    [self getReportType:[NSString stringWithFormat:@"%d",[user.userId intValue]]];
+
+}
+//获取我已关注的菜单分类
+-(void)getReportType:(NSString*)userId
+{
+    
+    [[requestServiceHelper defaultService] getMyMenuReportType:userId sucess:^(NSArray *array) {
+        
+        [[NSUserDefaults standardUserDefaults] setObject:array forKey:KEY_LEFTMENU_INFO];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+    } falid:^(NSString *errorMsg) {
+        
+    }];
+    
 }
 -(void)initView
 {
@@ -96,75 +103,58 @@
     //背景图片
     self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     //搜索
-    [self.mySearch setBackgroundImage:[UIImage imageNamed:@"searchbg"]];
+    [self.mySearch setBackgroundImage:[UIImage imageNamed:@"searchbg.png"]];
     [self.mySearch setDelegate:self];
-    if (self.myTableView) {
-        [self.myTableView setBackgroundView:nil];
-        [self.myTableView setBackgroundColor:[UIColor clearColor]];
-    }
-    //去掉分割线
-    [self.myTableView setSeparatorColor:[UIColor clearColor]];
 
 }
 -(void) initParmeter{
     myTableView =  [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 44, 320, 412+(iPhone5?88:0))];
     [myTableView setDelegate:self];
     [myTableView setDataSource:self];
-    [self.view addSubview:self.myTableView];
+    [myTableView setBackgroundView:nil];
+    [myTableView setBackgroundColor:[UIColor clearColor]];
+    //去掉分割线
+    [myTableView setSeparatorColor:[UIColor clearColor]];
+    [self.view addSubview:myTableView];
     myTableView.tableFooterView.hidden=YES;
     page=1;
     totalresult=0;
     pagesize=10;
-    self.isfirst=YES;
+    isfirst=YES;
 }
 
 -(void)initDataSource
 {
-   
-    NSString *url=ReportPath;
-    
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     [dictionary setValue: [NSString stringWithFormat:@"%d",page] forKey:@"index"];
     [dictionary setValue: [NSString stringWithFormat:@"%d",pagesize] forKey:@"pageNumber"];
     
-    if(self.reportid==nil|| [self.reportid isEqualToString:@"0"]||[self.reportid isEqualToString:@""])
-    {
-        url=AllReportPath;
+    NSString  *url=AllReportPath;
         
-        NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
-        User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
+    NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
+    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
         
-        NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
-        [dictionary setValue: userid forKey:@"userId"];
-    }
-    else
-    {
-        [dictionary setValue:self.reportid forKey:@"repTypeId"];
-        url=ReportPath;
-    }
+    NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
+    [dictionary setValue: userid forKey:@"userId"];
    
     [self getreportList:url parmeter:dictionary];
 }
 //获取报告列表
 -(void)getreportList:(NSString *)url parmeter:(NSMutableDictionary *)dictionary
 {
-    
-    [self showLoadingActivityViewWithString:@"数据加载中"];
+    //测试
     [[requestServiceHelper defaultService]getReportList:url parmeter:dictionary sucess:^(NSMutableArray *reportDictionary, NSInteger result) {
         totalresult =result;
-         myTableView.tableFooterView.hidden=NO;
-        [self hideLoadingActivityView];
+        [myTableView.footerView setHidden:NO];
         if (totalresult > 0) {
             
             if (page == 1) {
-                [self.dataSource removeAllObjects];
+                [dataSource removeAllObjects];
             }
             
-            [self.dataSource addObjectsFromArray:reportDictionary];
+            [dataSource addObjectsFromArray:reportDictionary];
             
-            [myTableView reloadData:YES];
         }else {
-            [myTableView reloadData:NO];
             return;
         }
         
@@ -172,7 +162,7 @@
 
         
     } falid:^(NSString *errorMsg) {
-        [self hideLoadingActivityView];
+        
     }];
     
     
@@ -201,17 +191,17 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return [self.dataSource count];
+    return [dataSource count];
     
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"aaaaaa=%@",self.dataSource);
+    NSLog(@"aaaaaa=%@",dataSource);
     UIImage *image=[UIImage imageNamed:@"qitalei.png"];
-    NSString *titleStr=[[self.dataSource objectAtIndex:indexPath.row]objectForKey:@"reportTitle"];
+    NSString *titleStr=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"reportTitle"];
     CGSize titleSize;
-    if ([[self.dataSource objectAtIndex:indexPath.row]objectForKey:@"picPath"]!=nil) {
-        NSString * path=[[self.dataSource objectAtIndex:indexPath.row]objectForKey:@"picPath"];
+    if ([[dataSource objectAtIndex:indexPath.row]objectForKey:@"picPath"]!=nil) {
+        NSString * path=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"picPath"];
         NSArray *imageArray=[path componentsSeparatedByString:@","];
         if ([imageArray count]>1) {
             titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
@@ -227,7 +217,6 @@
         titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
         return 10+titleSize.height+5 +image.size.height+5;
     }
-    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -250,12 +239,12 @@
 }
 -(void)tableView:(UITableView *)tableView willDisplayCell:(CustomMainViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *titleStr=[[self.dataSource objectAtIndex:indexPath.row]objectForKey:@"reportTitle"];
+    NSString *titleStr=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"reportTitle"];
     CGSize titleSize;
-    NSString * path=[[self.dataSource objectAtIndex:indexPath.row]objectForKey:@"picPath"];
+    NSString * path=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"picPath"];
     NSArray *imageArray=[path componentsSeparatedByString:@","];
     
-    if ([[self.dataSource objectAtIndex:indexPath.row]objectForKey:@"picPath"]!=nil) {
+    if ([[dataSource objectAtIndex:indexPath.row]objectForKey:@"picPath"]!=nil) {
         
         if ([imageArray count]>1) {
             titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
@@ -265,8 +254,18 @@
                 
                 CellImageView *imageView=[[CellImageView alloc]initWithFrame:CGRectMake((i+1)*15+i*80, 10+titleSize.height+5+40, 80, 60)];
                 NSString *picPath=[[imageArray objectAtIndex:i]stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
+//                NSData *data = [picPath dataUsingEncoding: NSUTF8StringEncoding];
+//                                NSStringEncoding gbkEncoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+                NSString *test=[ImageUrl stringByAppendingString:picPath];
+//                NSString *result=[[NSString alloc]initWithData:respData encoding:NSUnicodeStringEncoding];
+//                NSString *content=[test stringByAddingPercentEscapesUsingEncoding:CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingDOSChineseSimplif)];
+                NSString * encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                                                               (CFStringRef)test,
+                                                                                               NULL,
+                                                                                               NULL,
+                                                                                               kCFStringEncodingUTF8));
 
-                [imageView setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:picPath]]];
+                [imageView setImageWithURL:[NSURL URLWithString:encodedString]];
                 [cell.contentView addSubview:imageView];
             }
             
@@ -276,8 +275,9 @@
             cell.pinlunLabel.frame=CGRectMake(15+100, 10+titleSize.height+5+5, 70, 20);
             NSString *picPath=[[imageArray objectAtIndex:0]stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
             cell.tupianImageView.frame=CGRectMake(220, 7, 80, 60);
-            
-            [cell.tupianImageView setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:picPath ]]];
+            NSData *data = [picPath dataUsingEncoding: NSUTF8StringEncoding];
+            NSString *content=[[NSString alloc]initWithData:data encoding:1];
+            [cell.tupianImageView setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:content ]]];
         }
         
     }else
@@ -289,7 +289,7 @@
     }
     cell.titleLabel.frame=CGRectMake(15, 10, titleSize.width, titleSize.height);
     cell.titleLabel.text=titleStr;
-    NSString *type=[[self.dataSource objectAtIndex:indexPath.row]objectForKey:@"reportType"];
+    NSString *type=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"reportType"];
     UIImage *tupianImage=nil;
     if ([type isEqualToString:@"12"]){
         
@@ -307,10 +307,10 @@
     cell.qitaImageView.image=tupianImage;
     cell.qitaImageView.frame=CGRectMake(15, 10+cell.titleLabel.frame.size.height+5, tupianImage.size.width, tupianImage.size.height);
     
-    NSString *commentNum=[[self.dataSource objectAtIndex:indexPath.row]objectForKey:@"commentsNumber"];
+    NSString *commentNum=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"commentsNumber"];
     cell.pinlunLabel.text=[NSString stringWithFormat:@"评论 %@",commentNum];
     
-    if ([[self.dataSource objectAtIndex:indexPath.row]objectForKey:@"picPath"]!=nil) {
+    if ([[dataSource objectAtIndex:indexPath.row]objectForKey:@"picPath"]!=nil) {
         if ([imageArray count]>1) {
             cell.bgImageView.frame=CGRectMake(3, 3, 320-6, cell.qitaImageView.frame.origin.y+cell.qitaImageView.frame.size.height+5+80);
         }else
@@ -329,7 +329,7 @@
     }else
     {
         
-        NSString *str=[[self.dataSource objectAtIndex:indexPath.row]objectForKey:@"reportId"];
+        NSString *str=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"reportId"];
         ContextDetailController *contextDetailCtrl=[[ContextDetailController alloc] initWithNibName:@"ContextDetailController" bundle:nil];
         contextDetailCtrl.reportId=str;
         [self.navigationController pushViewController:contextDetailCtrl animated:YES];
@@ -396,21 +396,36 @@
 }
 -(void)upDataAgain{
     page = 1;
-    [self initDataSource];
+    if (isSearchBar) {
+        [self searchBarMoreInfo];
+    }else
+    {
+        [self initDataSource];
+    }
+    
 }
 -(void)moreInfor{
-    page = [self.dataSource count]/pagesize + 1;
-    [self initDataSource];
+    page = [dataSource count]/pagesize + 1;
+    if (isSearchBar) {
+        [self searchBarMoreInfo];
+    }else
+    {
+        [self initDataSource];
+    }
+
 }
 -(void)isOver
 {
-    
-    if (self.dataSource.count >= totalresult) {
+    if (dataSource.count >= totalresult) {
         [myTableView reloadData:YES];
+    }else
+    {
+        [myTableView reloadData:NO];
     }
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
+    isSearchBar=YES;
     page=1;
     NSMutableDictionary *dir=[[NSMutableDictionary alloc]init];
     NSData *data = [[self.mySearch text] dataUsingEncoding: NSUTF8StringEncoding];
@@ -421,10 +436,15 @@
     [self getreportList:SearchReport parmeter:dir];
     [self dismissKeyboard];
 }
--(BOOL)textFieldShouldClear:(UITextField *)textField
+-(void)searchBarMoreInfo
 {
-    [self dismissKeyboard];
-    df.text=@"";
-    return NO;
+    NSMutableDictionary *dir=[[NSMutableDictionary alloc]init];
+    NSData *data = [[self.mySearch text] dataUsingEncoding: NSUTF8StringEncoding];
+    NSString *content=[[NSString alloc]initWithData:data encoding:1];
+    [dir setValue: [NSString stringWithFormat:@"%d",page] forKey:@"index"];
+    [dir setValue: [NSString stringWithFormat:@"%d",pagesize] forKey:@"pageNumber"];
+    [dir setValue: content forKey:@"title"];
+    [self getreportList:SearchReport parmeter:dir];
 }
+
 @end

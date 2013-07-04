@@ -7,15 +7,11 @@
 //
 
 #import "LoginViewController.h"
-#import "SysConfig.h"
 #import "User.h"
-#import "requestServiceHelper.h"
-#import "ASIHTTPRequest.h"
-#import "TKAlertCenter.h"
-#import "Reachability.h"
 #import "MMDrawerController.h"
 #import "LeftMenuViewController.h"
 #import "RightMenuViewController.h"
+#import "MainViewController.h"
 @interface LoginViewController ()
 {
     BOOL isOff;
@@ -28,7 +24,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
         self.title=@"登录";
      
     }
@@ -134,18 +129,16 @@
 
     
     if ([username isEqualToString:@""] || username==nil ) {
-        
-        [self showAlertViewWithString:@"帐号不能为空" setDelegate:nil setTag:0];
+        [MBHUDView hudWithBody:@"请输入帐号" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
         return;
     }
     
     if ([password isEqualToString:@""] || password == nil) {
-        [self showAlertViewWithString:@"密码不能为空" setDelegate:nil setTag:0];
+        [MBHUDView hudWithBody:@"请输入密码" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
         return;
     }
+    [MBHUDView hudWithBody:@"登录中..." type:MBAlertViewHUDTypeActivityIndicator hidesAfter:0 show:YES];
     
-    [self showLoadingActivityViewWithString:@"登录中..."];
-    self.view.userInteractionEnabled=NO;
     
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     [dictionary setValue:username forKey:@"userName"];
@@ -158,17 +151,15 @@
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:user];
         [self.userDefault setObject:data forKey:KEY_USER_INFO];
         [self setField:self.userNameTextField forKey:KEY_USER_NAME];
-        //
-        [self getReportType:[NSString stringWithFormat:@"%d",[user.userId intValue]]];
         
-        NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString* documentsDirectory = [paths objectAtIndex:0];
-        // Now we get the full path to the file
-        NSString* fullPathToFile = [documentsDirectory stringByAppendingPathComponent:@"temphead.jpg"];
-        NSFileManager *fm = [NSFileManager defaultManager];
-        if([fm fileExistsAtPath:fullPathToFile]){
-            [fm removeItemAtPath:fullPathToFile error:Nil];
-        }
+//        NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//        NSString* documentsDirectory = [paths objectAtIndex:0];
+//        // Now we get the full path to the file
+//        NSString* fullPathToFile = [documentsDirectory stringByAppendingPathComponent:@"temphead.jpg"];
+//        NSFileManager *fm = [NSFileManager defaultManager];
+//        if([fm fileExistsAtPath:fullPathToFile]){
+//            [fm removeItemAtPath:fullPathToFile error:Nil];
+//        }
         //保存密码
         if ([[self.userDefault objectForKey:KEY_REMEMBER_PWD] boolValue]) {
             [self setField:self.passWordTextField forKey:KEY_USER_PWD];
@@ -177,12 +168,13 @@
             [self.userDefault setObject:@"" forKey:KEY_USER_PWD];
             [self.userDefault synchronize];
         }
-        self.view.userInteractionEnabled = YES;
+        [MBHUDView dismissCurrentHUD];
+        MMDrawerController *drawerController= [self makeNewframeWork];
+        [self.navigationController pushViewController:drawerController animated:YES];
         
     } falid:^(NSString *errorMsg) {
-        self.view.userInteractionEnabled = YES;
-            [self hideLoadingActivityView];
-        [[TKAlertCenter defaultCenter] postAlertWithMessage:errorMsg];
+        [MBHUDView dismissCurrentHUD];
+        [MBHUDView hudWithBody:@"登陆失败" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
     }];
 
 
@@ -218,27 +210,7 @@
 }
 
 
-//获取我已关注的菜单分类
--(void)getReportType:(NSString*)userId
-{
-    
-    [[requestServiceHelper defaultService] getMyMenuReportType:userId sucess:^(NSArray *array) {
-        
-        [self hideLoadingActivityView];
-        [self.userDefault setObject:array forKey:KEY_LEFTMENU_INFO];
-        [self.userDefault synchronize];
-        
-        MMDrawerController *drawerController= [self makeNewframeWork];
-//        MainViewController *safeDetailCtrl=[[MainViewController alloc] init];
-        [self.navigationController pushViewController:drawerController animated:YES];
-    
-    } falid:^(NSString *errorMsg) {
-        
-        [self hideLoadingActivityView];
-        
-    }];
-    
-}
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesBegan:touches withEvent:event];

@@ -13,7 +13,8 @@
 #import "requestServiceHelper.h"
 #import "CustomFavoriteListCell.h"
 #import "HttpRequestHelper.h"
-#import "SysConfig.h"
+#import "Report.h"
+#import "ContextDetailController.h"
 @interface FavoriteListViewController ()
 
 @end

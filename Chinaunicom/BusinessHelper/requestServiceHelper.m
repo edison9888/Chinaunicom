@@ -19,7 +19,7 @@ static requestServiceHelper *requestService;
 + (requestServiceHelper *)defaultService{
     @synchronized(requestService) {
         if (!requestService){
-            requestService = [requestServiceHelper new];
+            requestService = [[requestServiceHelper alloc]init];
         }
     }
     return requestService;
@@ -34,7 +34,7 @@ static requestServiceHelper *requestService;
         
         if ([dictionary count]>0) {
             
-            User *user_=[User new];
+            User *user_=[[User alloc]init];
             
             user_.userId=[dictionary objectForKey:@"userId"];
             user_.account=[dictionary objectForKey:@"account"];

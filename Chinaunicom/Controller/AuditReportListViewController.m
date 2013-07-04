@@ -15,6 +15,7 @@
 #import "User.h"
 #import "requestServiceHelper.h"
 #import "AudiReportDetail.h"
+#import "ContextDetailController.h"
 @interface AuditReportListViewController ()
 
 @end
@@ -265,14 +266,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellWithIdentifier = @"CustomMainViewCell";
-    CustomMainViewCell *cell = (CustomMainViewCell*)[tableView dequeueReusableCellWithIdentifier:CellWithIdentifier];//复用cell
-    //通过XIB将cell添加上去
-    //    if (cell == nil) {
-    cell = [[[NSBundle mainBundle] loadNibNamed:@"CustomMainViewCell" owner:self options:nil]lastObject];
-    //            cell = [array objectAtIndex:0];
-    //    }
-//    [self initCustomTableCell:cell IndexPath:indexPath];
-    return cell;
+//    CustomMainViewCell *cell = (CustomMainViewCell*)[tableView dequeueReusableCellWithIdentifier:CellWithIdentifier];//复用cell
+//    //通过XIB将cell添加上去
+//    //    if (cell == nil) {
+//    cell = [[[NSBundle mainBundle] loadNibNamed:@"CustomMainViewCell" owner:self options:nil]lastObject];
+//    //            cell = [array objectAtIndex:0];
+//    //    }
+////    [self initCustomTableCell:cell IndexPath:indexPath];
+//    return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

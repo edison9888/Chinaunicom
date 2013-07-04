@@ -10,6 +10,7 @@
 #import "SysConfig.h"
 #import "HttpRequestHelper.h"
 #import "GTMBase64.h"
+#import "User.h"
 @interface SendAudiReport ()
 
 @end
@@ -211,7 +212,7 @@
         [fm removeItemAtPath:fullPathToFile error:Nil];
     }
     [HttpRequestHelper asyncGetRequest:sendReport parameter:dictionary requestComplete:^(NSString *responseStr) {
-        [ALToastView toastInView:self.view withText:@"发布成功"];
+        
         [self hideLoadingActivityView];
     } requestFailed:^(NSString *errorMsg) {
         //   <#code#>

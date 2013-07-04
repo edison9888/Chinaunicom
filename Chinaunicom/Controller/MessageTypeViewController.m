@@ -10,7 +10,8 @@
 #import "SendAudiReport.h"
 #import "SysConfig.h"
 #import "requestServiceHelper.h"
-
+#import "AnimationLeftMenuView.h"
+#import "User.h"
 #define IMAGE_GAP 56
 #define MaxTagNumber 999
 

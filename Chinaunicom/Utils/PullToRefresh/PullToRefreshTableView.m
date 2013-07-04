@@ -168,8 +168,9 @@
     if (self) {
         headerView = [[StateView alloc] initWithFrame:CGRectMake(0, -40, frame.size.width, frame.size.height) viewType:k_VIEW_TYPE_HEADER];
         footerView = [[StateView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height) viewType:k_VIEW_TYPE_FOOTER];
-        [self addSubview:headerView];
         [self setTableFooterView:footerView];
+        [self addSubview:headerView];
+        
         
     }
     return self;

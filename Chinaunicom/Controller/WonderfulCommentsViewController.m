@@ -26,7 +26,7 @@
 @end
 
 @implementation WonderfulCommentsViewController
-@synthesize myTableView,dataArray,recoderAndPlayer,myReport;
+@synthesize myTableView,dataArray,recoderAndPlayer;
 
 @synthesize textView=_textView;
 @synthesize inputView = _inputView;
@@ -79,10 +79,10 @@
 
 -(void)fetchData
 {
-    [self showLoadingActivityViewWithString:@"加载数据"];
+
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     //115
-    [dictionary setObject:self.myReport.reportId forKey:@"reportId"];
+    [dictionary setObject:self.reportId forKey:@"reportId"];
     [dictionary setObject:@"10" forKey:@"pageSize"];
     [dictionary setObject:@"1" forKey:@"pageIndex"];
     self.view.userInteractionEnabled=NO;
@@ -90,10 +90,8 @@
         self.dataArray=commentDictionary;
         [self performSelectorOnMainThread:@selector(isOver) withObject:nil waitUntilDone:NO];
         self.view.userInteractionEnabled=YES;
-        [self hideLoadingActivityView];
     } falid:^(NSString *errorMsg) {
         self.view.userInteractionEnabled=YES;
-        [self hideLoadingActivityView];
     }];
 }
 
@@ -101,7 +99,6 @@
 {
     
     [myTableView reloadData];
-    [self hideLoadingActivityView];
     
 }
 
@@ -117,18 +114,6 @@
     
 }
 
-#pragma mark - Rotation control
-- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
-    [[NSNotificationCenter defaultCenter] postNotificationName:UIKeyboardCoViewWillRotateNotification object:nil];
-}
-
-- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
-    [[NSNotificationCenter defaultCenter] postNotificationName:UIKeyboardCoViewDidRotateNotification object:nil];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
-    return YES;
-}
 
 
 #pragma mark - IBActions
@@ -215,7 +200,7 @@
 //            else{
 //                b.hidden=YES;
 //            }
-        [self showLoadingActivityViewWithString:@"正在播放..."];
+//        [self showLoadingActivityViewWithString:@"正在播放..."];
         [recoderAndPlayer SpeechAMR2WAV:fileName];
         
     }];
@@ -320,13 +305,12 @@
 - (IBAction)startRecord:(id)sender {
         [recoderAndPlayer setViewDelegate:self];
         [recoderAndPlayer SpeechRecordStart];
-        [self showLoadingActivityViewWithString:@"正在录音..."];
+//        [self showLoadingActivityViewWithString:@"正在录音..."];
 //     [self.recodAlert bringSubviewToFront:self.view];
 }
 
 - (IBAction)endRecord:(id)sender {
     [recoderAndPlayer SpeechRecordStop];
-    [self hideLoadingActivityView];
     self.recodAlert.hidden=YES;
 //    [self sendComments];
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(myThreadMainMethod) userInfo:nil repeats:NO];
@@ -345,7 +329,7 @@
     //检查目录下是否存在此文件
     BOOL isExsit = [Utility checkFileExsit:fileName Dir:@"SpeechSoundDir"];
     if (isExsit) {
-        [self showLoadingActivityViewWithString:@"正在播放..."];
+//        [self showLoadingActivityViewWithString:@"正在播放..."];
         [recoderAndPlayer SpeechAMR2WAV:fileName];
     }
     else{
@@ -369,14 +353,13 @@
 }
 -(void)playingFinishWithBBS:(BOOL)isFinish
 {
-    [self hideLoadingActivityView];
     self.view.userInteractionEnabled=YES;
 }
 
 - (IBAction)send:(id)sender {
     if ([self.textView.text isEqualToString: @""])
     {
-        [self showAlertViewWithString:@"请输入评论！" setDelegate:nil setTag:0];
+//        [self showAlertViewWithString:@"请输入评论！" setDelegate:nil setTag:0];
         return;
     }
     [self sendComments];
@@ -387,7 +370,7 @@
     User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
     NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-    [dictionary setObject:self.myReport.reportId forKey:@"reportId"];
+    [dictionary setObject:self.reportId forKey:@"reportId"];
     [dictionary setObject:userid forKey:@"userId"];
     [dictionary setObject:self.textView.text forKey:@"content"];
     [dictionary setObject:@"nofile" forKey:@"audioType"];
@@ -401,16 +384,14 @@
         [dictionary setObject:[[NSString alloc] initWithData:[GTMBase64 encodeData:soundData] encoding:NSUTF8StringEncoding] forKey:@"audioStr"];
        
     }
-    [self showLoadingActivityViewWithString:@"正在发布..."];
+//    [self showLoadingActivityViewWithString:@"正在发布..."];
     self.view.userInteractionEnabled = NO;
     [self.textView resignFirstResponder];
     [HttpRequestHelper asyncGetRequest:PublishComment parameter:dictionary requestComplete:^(NSString *responseStr) {
-        [self hideLoadingActivityView];
         [self fetchData];
     } requestFailed:^(NSString *errorMsg) {
         //        <#code#>
         self.view.userInteractionEnabled=YES;
-        [self hideLoadingActivityView];
     }];
 
 }

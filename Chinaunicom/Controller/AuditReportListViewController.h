@@ -7,7 +7,7 @@
 //
 
 #import "BaseViewController.h"
-
+#import "PullToRefreshTableView.h"
 @interface AuditReportListViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate>
 {
     int totalresult;

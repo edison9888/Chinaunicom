@@ -6,9 +6,9 @@
 //  Copyright (c) 2013年 Chinaunicom. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "PullToRefreshTableView.h"
 
-@interface AuditAndNonAuditReportViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate>
+@interface AuditAndNonAuditReportViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 {
     int totalresult;
     int pageSize;

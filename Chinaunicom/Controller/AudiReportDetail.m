@@ -44,7 +44,7 @@
 -(void)initDataSource
 {
     [self dismissKeyboard];
-    [self showLoadingActivityViewWithString:@"正在加载..."];
+//    [self showLoadingActivityViewWithString:@"正在加载..."];
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     [dictionary setValue: self.myReport.reportId forKey:@"reportId"];
     NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
@@ -53,7 +53,7 @@
     [dictionary setValue: userid forKey:@"userId"];
     
     [[requestServiceHelper defaultService] getReportDetail:dictionary sucess:^(NSDictionary *reportDetail) {
-        [self hideLoadingActivityView];
+//        [self hideLoadingActivityView];
         self.myReportDetail=reportDetail;
         self.reporttitle.text=self.myReportDetail.reportTitle;
         self.reportdate.text=[self.myReportDetail.published substringToIndex:10];
@@ -76,7 +76,7 @@
         }
         
     } falid:^(NSString *errorMsg) {
-        [self hideLoadingActivityView];
+//        [self hideLoadingActivityView];
     }];
 }
 -(void)compearImage :(NSString *) picpath{
@@ -195,7 +195,7 @@
 }
 
 -(IBAction)sendpassReport:(id)sender{
-    [self showLoadingActivityViewWithString:@"提交审核..."];
+//    [self showLoadingActivityViewWithString:@"提交审核..."];
     NSMutableDictionary *dictionary=[[NSMutableDictionary alloc]init];
     NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
     User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
@@ -204,11 +204,11 @@
     [dictionary setObject:self.myReport.reportId forKey:@"reportId"];
     [HttpRequestHelper asyncGetRequest:passReport parameter:dictionary requestComplete:^(NSString *responseStr) {
     
-        [self hideLoadingActivityView];
-        [ALToastView toastInView:self.view withText:@"审核成功"];
+//        [self hideLoadingActivityView];
+//        [ALToastView toastInView:self.view withText:@"审核成功"];
     } requestFailed:^(NSString *errorMsg) {
-        [ALToastView toastInView:self.view withText:@"审核失败"];
-        [self hideLoadingActivityView];
+//        [ALToastView toastInView:self.view withText:@"审核失败"];
+//        [self hideLoadingActivityView];
     }];
 }
 -(IBAction)backReport:(id)sender{
@@ -221,7 +221,7 @@
     if(buttonIndex==1)
     {
           UITextField *tf=[alertView textFieldAtIndex:0];
-        [self showLoadingActivityViewWithString:@"退回稿件..."];
+//        [self showLoadingActivityViewWithString:@"退回稿件..."];
         NSMutableDictionary *dictionary=[[NSMutableDictionary alloc]init];
         NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
         User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
@@ -230,11 +230,11 @@
         [dictionary setObject:self.myReport.reportId forKey:@"reportId"];
         [dictionary setObject:tf.text forKey:@"backReason"];
         [HttpRequestHelper asyncGetRequest:backReportUrl parameter:dictionary requestComplete:^(NSString *responseStr) {
-            [ALToastView toastInView:self.view withText:@"退回成功"];
-            [self hideLoadingActivityView];
+//            [ALToastView toastInView:self.view withText:@"退回成功"];
+//            [self hideLoadingActivityView];
         } requestFailed:^(NSString *errorMsg) {
-            [ALToastView toastInView:self.view withText:@"退回失败"];
-            [self hideLoadingActivityView];
+//            [ALToastView toastInView:self.view withText:@"退回失败"];
+//            [self hideLoadingActivityView];
         }];
     }
     

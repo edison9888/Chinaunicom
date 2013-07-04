@@ -7,27 +7,26 @@
 //
 
 
-#import "CustomMainViewCell.h"
-#import "ContextDetailController.h"
-#import "RightMenuViewController.h"
-#import "PullToRefreshTableView.h"
-@class Report;
 
-@interface MainViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate,LeftMenuViewControllerDelegate,UISearchBarDelegate,UITextFieldDelegate>
+#import "PullToRefreshTableView.h"
+
+@interface MainViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UITextFieldDelegate>
 {
     CGFloat _offset;
-    
+    NSInteger page;
+    NSInteger pagesize;
+    NSInteger totalresult;
+    NSString *reportid;
+    NSMutableArray *dataSource;
+    BOOL isfirst;
+    PullToRefreshTableView *myTableView;
+    BOOL isSearchBar;
 }
 
-@property (nonatomic, strong) NSMutableArray *dataSource;
-@property (nonatomic, retain) PullToRefreshTableView *myTableView;
-@property (weak, nonatomic) IBOutlet UISearchBar *mySearch;
-@property (weak, nonatomic)  UITextField *df;
-@property (nonatomic,assign) NSInteger page;
-@property (nonatomic,assign) NSInteger pagesize;
-@property (nonatomic,assign) NSInteger totalresult;
-@property(nonatomic,strong) NSString *reportid;
-@property (strong, nonatomic) Report *myReport;
-@property (nonatomic,assign) BOOL isfirst;
+@property (weak, nonatomic)   IBOutlet UISearchBar *mySearch;
+
+
+//@property (strong, nonatomic) Report *myReport;
+
 
 @end

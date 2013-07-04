@@ -94,11 +94,11 @@
     [dictionary setValue: [NSString stringWithFormat:@"%d",pageSize] forKey:@"pageSize"];
     [dictionary setValue: [NSString stringWithFormat:@"1"] forKey:@"status"];
     [dictionary setValue: userid forKey:@"userId"];
-    [self showLoadingActivityViewWithString:@"数据加载中"];
+//    [self showLoadingActivityViewWithString:@"数据加载中"];
     [[requestServiceHelper defaultService] getAduitingList:dictionary sucess:^(NSMutableArray *reportDictionary, NSInteger result) {
         totalresult =result;
         myTableView.tableFooterView.hidden=NO;
-        [self hideLoadingActivityView];
+//        [self hideLoadingActivityView];
         if (totalresult > 0) {
             //self.count.text=[[@"有" stringByAppendingString:[NSString stringWithFormat:@"%d",totalresult]] stringByAppendingString:@"条已审核消息"];
             if (self.dataSource.count >=totalresult) {
@@ -122,7 +122,7 @@
         
         
     } falid:^(NSString *errorMsg) {
-        [self hideLoadingActivityView];
+//        [self hideLoadingActivityView];
     }];
     
 
@@ -166,14 +166,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellWithIdentifier = @"CustomMainViewCell";
-    CustomMainViewCell *cell = (CustomMainViewCell*)[tableView dequeueReusableCellWithIdentifier:CellWithIdentifier];//复用cell
+//    CustomMainViewCell *cell = (CustomMainViewCell*)[tableView dequeueReusableCellWithIdentifier:CellWithIdentifier];//复用cell
     //通过XIB将cell添加上去
     //    if (cell == nil) {
-    cell = [[[NSBundle mainBundle] loadNibNamed:@"CustomMainViewCell" owner:self options:nil]lastObject];
+//    cell = [[[NSBundle mainBundle] loadNibNamed:@"CustomMainViewCell" owner:self options:nil]lastObject];
     //            cell = [array objectAtIndex:0];
     //    }
 //    [self initCustomTableCell:cell IndexPath:indexPath];
-    return cell;
+//    return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

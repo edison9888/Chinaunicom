@@ -41,6 +41,14 @@
     }
     return self;
 }
+-(void)prepareForReuse
+{
+    [super prepareForReuse];
+    _titleLabel.text=@"";
+    _qitaImageView.image=nil;
+    _pinlunLabel.text=@"";
+    _tupianImageView.image=nil;
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];

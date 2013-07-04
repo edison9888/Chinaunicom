@@ -6,9 +6,10 @@
 //  Copyright (c) 2013年 Chinaunicom. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "SDWebImageManager.h"
 #import "ReportDetail.h"
-@interface AudiReportDetail : BaseViewController<SDWebImageManagerDelegate,UIAlertViewDelegate>
+#import "Report.h"
+@interface AudiReportDetail : UIViewController<SDWebImageManagerDelegate,UIAlertViewDelegate>
 {
     int y;
 }
