@@ -65,43 +65,18 @@
     
     dataArray = [[NSMutableArray alloc] init];
     self.recodAlert.hidden=YES;
-    [self fetchData];
     _isText = YES;
     _talkButton.hidden = YES;
     _textView.layer.borderWidth = 1;
     _textView.layer.cornerRadius = 5;
     _textview.delegate=self;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-
     
-}
-
--(void)fetchData
-{
-
-    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-    //115
-    [dictionary setObject:self.reportId forKey:@"reportId"];
-    [dictionary setObject:@"10" forKey:@"pageSize"];
-    [dictionary setObject:@"1" forKey:@"pageIndex"];
-    self.view.userInteractionEnabled=NO;
-    [[requestServiceHelper defaultService] getCommentsWithParamter:dictionary sucess:^(NSMutableArray *commentDictionary) {
-        self.dataArray=commentDictionary;
-        [self performSelectorOnMainThread:@selector(isOver) withObject:nil waitUntilDone:NO];
-        self.view.userInteractionEnabled=YES;
-    } falid:^(NSString *errorMsg) {
-        self.view.userInteractionEnabled=YES;
-    }];
 }
 
 -(void)isOver
 {
-    
     [myTableView reloadData];
-    
 }
-
 -(void)viewWillAppear:(BOOL)animated
 {
     [recoderAndPlayer stopPlaying];
@@ -114,72 +89,10 @@
     
 }
 
-
-
-#pragma mark - IBActions
-- (IBAction)backgroundTouchDown:(id)sender {
-    //[self.texField resignFirstResponder];
-
-}
-
-
-
-#pragma mark - Table view data source
-
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    //NSLog(@"da ------------ %@",dataArray);
-    return [self.dataArray count];
-    
-}
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 96;//此处返回cell的高度
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *simpleTableIdentifier = @"CustomWonderfulCommentsCell";
-    
-    CustomWonderfulCommentsCell *cell = (CustomWonderfulCommentsCell*)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];//复用cell
-    
-    if (cell == nil) {
-        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"CustomWonderfulCommentsCell" owner:self options:nil];//加载自定义cell的xib文件
-        cell = [array objectAtIndex:0];
-    }
-    cell.userNameLabel.text=[[dataArray objectAtIndex:indexPath.row] objectForKey:@"nickName"];
-    cell.contextLabel.text=[[dataArray objectAtIndex:indexPath.row] objectForKey:@"commentContent"];
-    NSString *pcipath=[ImageUrl stringByAppendingString:[[[dataArray objectAtIndex:indexPath.row] objectForKey:@"icon"] stringByReplacingOccurrencesOfString:@"\\" withString:@"/"]];
-    NSString *soundpath=[[dataArray objectAtIndex:indexPath.row] objectForKey:@"audioPath"];
-    if(soundpath!=nil&&![soundpath isEqualToString:@""])
-    {
-        cell.play.hidden=NO;
-        [cell.play setTag:1000+indexPath.row];
-        [cell.play addTarget:self action:@selector(playSoundFile:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    else{
-        cell.play.hidden=YES;
-    }
-    NSURL *tturl=[NSURL URLWithString:pcipath];
-    [cell.headPic setImageWithURL:tturl] ;
-    cell.dateTimeLabel.text=[[dataArray objectAtIndex:indexPath.row] objectForKey:@"commentDate"];
-    //[cell.image addTarget:self action:@selector(zan) forControlEvents:UIControlEventTouchUpInside];
-    return cell;
-    
-}
 -(void)downloadSoundFile:(NSMutableDictionary *)dir
 {
     
 //    NSString *pcipath=[ImageUrl stringByAppendingString:[dir objectForKey:@"file"] objectForKey:@"icon"] stringByReplacingOccurrencesOfString:@"\\" withString:@"/"]];
-    
-    
-    
-    
     NSURL *baseUrl = [NSURL URLWithString:[ImageUrl stringByAppendingString:[dir objectForKey:@"file"]]];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:baseUrl];
 //    BOOL isExsit = [Utility checkFileExsit:[dir objectForKey:@"file"] Dir:@"SpeechSoundDir"];
@@ -213,95 +126,7 @@
 
 }
 
-- (void)keyboardWillShow:(NSNotification *)notification
-{
-    if (nil == self.view.superview)
-        return;
-    /*
-     Reduce the size of the text view so that it's not obscured by the keyboard.
-     Animate the resize so that it's in sync with the appearance of the keyboard.
-     */
-    
-    NSDictionary *userInfo = [notification userInfo];
-    
-    // Get the origin of the keyboard when it's displayed.
-    NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    
-    // Get the top of the keyboard as the y coordinate of its origin in self's view's coordinate system. The bottom of the text view's frame should align with the top of the keyboard's final position.
-    CGRect keyboardRect = [aValue CGRectValue];
-    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
-    
-    CGFloat keyboardHeight = keyboardRect.size.height;
-    
-    // Get the duration of the animation.
-    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSTimeInterval animationDuration;
-    [animationDurationValue getValue: &animationDuration];
-    
-    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration: animationDuration];
-    
-    if ([_textView isFirstResponder])
-    {
-        _theTableView.frame = CGRectMake(_theTableViewOriFrame.origin.x, _theTableViewOriFrame.origin.y, _theTableViewOriFrame.size.width, _theTableViewOriFrame.size.height - keyboardHeight);
-        
-        _inputView.frame = CGRectMake(_inputViewOriFrame.origin.x, _inputViewOriFrame.origin.y-keyboardHeight, _inputViewOriFrame.size.width,_inputViewOriFrame.size.height);
-    }
 
-    
-    [UIView commitAnimations];
-
-}
-- (void)keyboardWillHide:(NSNotification *)notification
-{
-    if (nil == self.view.superview)
-        return;
-    NSDictionary* userInfo = [notification userInfo];
-    
-    /*
-     Restore the size of the text view (fill self's view).
-     Animate the resize so that it's in sync with the disappearance of the keyboard.
-     */
-    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSTimeInterval animationDuration;
-    [animationDurationValue getValue:&animationDuration];
-    
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:animationDuration];
-    
-    if ([_textView isFirstResponder])
-    {
-        _theTableView.frame = _theTableViewOriFrame;
-        _inputView.frame = _inputViewOriFrame;
-    }
-    
-    [UIView commitAnimations];
-    
-    
-}
-
-
--(void)back
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)viewDidUnload {
-    [self setMyTableView:nil];
-    [self setInputView:nil];
-    [self setTalkbutton:nil];
-    [self setTheTableView:nil];
-    [self setTextView:nil];
-    [self setTalkbutton:nil];
-    [super viewDidUnload];
-}
 - (IBAction)startRecord:(id)sender {
         [recoderAndPlayer setViewDelegate:self];
         [recoderAndPlayer SpeechRecordStart];
@@ -311,7 +136,6 @@
 
 - (IBAction)endRecord:(id)sender {
     [recoderAndPlayer SpeechRecordStop];
-    self.recodAlert.hidden=YES;
 //    [self sendComments];
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(myThreadMainMethod) userInfo:nil repeats:NO];
 }
@@ -388,7 +212,7 @@
     self.view.userInteractionEnabled = NO;
     [self.textView resignFirstResponder];
     [HttpRequestHelper asyncGetRequest:PublishComment parameter:dictionary requestComplete:^(NSString *responseStr) {
-        [self fetchData];
+      
     } requestFailed:^(NSString *errorMsg) {
         //        <#code#>
         self.view.userInteractionEnabled=YES;

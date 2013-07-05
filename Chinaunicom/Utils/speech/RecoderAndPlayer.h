@@ -46,5 +46,5 @@
 -(void)SpeechRecordStart;
 -(void)SpeechRecordStop;
 -(void)SpeechAMR2WAV:(NSString *)amrFile;
--(void) stopPlaying;
+-(void)stopPlaying;
 @end

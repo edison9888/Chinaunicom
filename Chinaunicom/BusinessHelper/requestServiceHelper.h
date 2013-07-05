@@ -22,7 +22,7 @@
 //获取报告详细内容
 - (void)getReportDetail:(NSMutableDictionary *)dictionary sucess:(void (^) (NSDictionary *reportDetail))sucess falid:(void (^) (NSString *errorMsg))faild;
 //获取评论列表
--(void)getCommentsWithParamter:(NSMutableDictionary *)dictionary sucess:(void (^) (NSMutableArray *commentDictionary))sucess falid:(void (^) (NSString *errorMsg))faild;
+-(void)getCommentsWithParamter:(NSMutableDictionary *)dictionary sucess:(void (^) (NSMutableArray *commentDictionary,NSInteger num))sucess falid:(void (^) (NSString *errorMsg))faild;
 //发表评论
 -(void)PublishCommentsWithParamter:(NSMutableDictionary *)dictionary sucess:(void (^) (NSString *state))sucess falid:(void (^) (NSString *errorMsg))faild;
 //发表带语音的评论

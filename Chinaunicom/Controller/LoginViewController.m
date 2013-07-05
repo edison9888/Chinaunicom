@@ -239,6 +239,7 @@
     [drawerController setMaximumRightDrawerWidth:280.0];
     [drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
     [drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
+    
     return drawerController;
 }
 @end

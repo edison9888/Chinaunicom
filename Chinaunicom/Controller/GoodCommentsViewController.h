@@ -6,11 +6,15 @@
 //  Copyright (c) 2013年 Chinaunicom. All rights reserved.
 //
 #import "PullingRefreshTableView.h"
-@interface GoodCommentsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,PullingRefreshTableViewDelegate>
+#import "UIInputToolbar.h"
+#import "RecoderAndPlayer.h"
+@interface GoodCommentsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,PullingRefreshTableViewDelegate,UIInputToolbarDelegate,ViewControllerDelegate>
 {
     PullingRefreshTableView *_tableview;
+    UIInputToolbar *inputToolbar;
     BOOL refreshing;
     NSInteger page;
+    RecoderAndPlayer *recoderAndPlayer;
 }
 @property (nonatomic,copy)NSString *reportId;
 @end

@@ -15,6 +15,7 @@
 #import "requestServiceHelper.h"
 #import "ContextDetailController.h"
 #import "GTMBase64.h"
+#import "NSString+NSString_Extended.h"
 @interface MainViewController ()
 
 @end
@@ -254,18 +255,9 @@
                 
                 CellImageView *imageView=[[CellImageView alloc]initWithFrame:CGRectMake((i+1)*15+i*80, 10+titleSize.height+5+40, 80, 60)];
                 NSString *picPath=[[imageArray objectAtIndex:i]stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
-//                NSData *data = [picPath dataUsingEncoding: NSUTF8StringEncoding];
-//                                NSStringEncoding gbkEncoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
                 NSString *test=[ImageUrl stringByAppendingString:picPath];
-//                NSString *result=[[NSString alloc]initWithData:respData encoding:NSUnicodeStringEncoding];
-//                NSString *content=[test stringByAddingPercentEscapesUsingEncoding:CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingDOSChineseSimplif)];
-                NSString * encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                                                               (CFStringRef)test,
-                                                                                               NULL,
-                                                                                               NULL,
-                                                                                               kCFStringEncodingUTF8));
-
-                [imageView setImageWithURL:[NSURL URLWithString:encodedString]];
+                NSString *sUrl = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)test, nil, nil, kCFStringEncodingUTF8));
+                [imageView setImageWithURL:[NSURL URLWithString:sUrl]];
                 [cell.contentView addSubview:imageView];
             }
             
@@ -296,10 +288,10 @@
         tupianImage=[UIImage imageNamed:@"anquanlei.png"];
         
     }else if ([type isEqualToString:@"14"]) {
-        tupianImage=[UIImage imageNamed:@"weihulei.png"];
+        tupianImage=[UIImage imageNamed:@"fenxilei.png"];
     }
     else if([type isEqualToString:@"13"]){
-        tupianImage=[UIImage imageNamed:@"fenxilei.png"];
+        tupianImage=[UIImage imageNamed:@"weihulei.png"];
     }
     else{
         tupianImage=[UIImage imageNamed:@"qitalei.png"];
@@ -341,10 +333,12 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
 }
 
 #pragma mark - Button Handlers

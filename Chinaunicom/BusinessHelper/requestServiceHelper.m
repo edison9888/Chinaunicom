@@ -160,17 +160,17 @@ static requestServiceHelper *requestService;
     }];
 }
 #pragma mark - 获取评论列表
--(void)getCommentsWithParamter:(NSMutableDictionary *)dictionary sucess:(void (^) (NSMutableArray *commentDictionary))sucess falid:(void (^) (NSString *errorMsg))faild{
+-(void)getCommentsWithParamter:(NSMutableDictionary *)dictionary sucess:(void (^) (NSMutableArray *commentDictionary,NSInteger num))sucess falid:(void (^) (NSString *errorMsg))faild{
 
     [HttpRequestHelper asyncGetRequest:CommentList parameter:dictionary requestComplete:^(NSString *responseStr) {
         
         NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
         NSMutableArray *dictionary=[[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingMutableLeaves) error:nil] objectForKey:@"commentList"];
-        
+        NSString *str=[[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingMutableLeaves) error:nil] objectForKey:@"totalNum"];
         
         if ([dictionary count]>0) {
             
-            sucess(dictionary);
+            sucess(dictionary,[str integerValue]);
          
         }else{
             

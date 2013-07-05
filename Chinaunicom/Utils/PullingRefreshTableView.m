@@ -36,14 +36,14 @@
     if (self) {
         self.atTop = top;
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		self.backgroundColor = [UIColor clearColor];
+		self.backgroundColor = [UIColor whiteColor];
 //        self.backgroundColor = [UIColor clearColor];
         UIFont *ft = [UIFont systemFontOfSize:12.f];
         _stateLabel = [[UILabel alloc] init ];
         _stateLabel.font = ft;
-        _stateLabel.textColor = [UIColor whiteColor];
+        _stateLabel.textColor = [UIColor blackColor];
         _stateLabel.textAlignment = UITextAlignmentCenter;
-        _stateLabel.backgroundColor = [UIColor blackColor];
+        _stateLabel.backgroundColor = [UIColor clearColor];
         _stateLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         _stateLabel.text = NSLocalizedString(@"下拉刷新", @"");
         [self addSubview:_stateLabel];
@@ -52,7 +52,7 @@
         _dateLabel.font = ft;
         _dateLabel.textColor = [UIColor whiteColor];
         _dateLabel.textAlignment = UITextAlignmentCenter;
-        _dateLabel.backgroundColor = [UIColor blackColor];
+        _dateLabel.backgroundColor = [UIColor clearColor];
         _dateLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 //        _dateLabel.text = NSLocalizedString(@"最后更新", @"");
         [self addSubview:_dateLabel];
@@ -483,5 +483,8 @@
 //        self.contentOffset = offset;
     }
 }
-
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.superview endEditing:YES];
+}
 @end

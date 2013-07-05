@@ -12,6 +12,7 @@
 #import "CommonHelper.h"
 //#import "WonderfulCommentsViewController.h"
 #import "GoodCommentsViewController.h"
+#import "UIViewController+MMDrawerController.h"
 @interface ContextDetailController ()
 {
     UILabel *_totalLabel;
@@ -36,6 +37,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
 }
 - (void)viewDidLoad
 {
@@ -78,8 +80,8 @@
     favButton=[UIButton buttonWithType:UIButtonTypeCustom];
     favButton.frame=CGRectMake(265, 0, 57, 44);
     [favButton setImage:starImage forState:UIControlStateNormal];
-#warning 替换收藏图片
-    [favButton setImage:[UIImage imageNamed:@"love.png"] forState:UIControlStateSelected];
+    
+    [favButton setImage:[UIImage imageNamed:@"favorites.png"] forState:UIControlStateSelected];
     [favButton addTarget:self action:@selector(collect:) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomView addSubview:favButton];
     
@@ -97,9 +99,12 @@
 
 -(void)getTheData
 {
-    NSMutableDictionary *dictionary=[NSMutableDictionary dictionaryWithObject:self.reportId forKey:@"reportId"];
+    NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
+    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
+    NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
+    NSMutableDictionary *dictionary=[NSMutableDictionary dictionaryWithObjectsAndKeys:self.reportId,@"reportId",userid,@"userId", nil];
+    
     [[requestServiceHelper defaultService]getReportDetail:dictionary sucess:^(NSDictionary *reportDetail) {
-        NSLog(@"report=%@",reportDetail);
         NSString *titleStr=[reportDetail objectForKey:@"title"];
         CGSize titleSize=[titleStr sizeWithFont:[UIFont boldSystemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
         UILabel *titleLabel=[[UILabel alloc]initWithFrame:CGRectMake(20, 20, 280, titleSize.height)];
@@ -117,10 +122,10 @@
             typeName=@"安全类";
             
         }else if ([comeStr isEqualToString:@"14"]) {
-            typeName=@"维护类";
+            typeName=@"分析类";
         }
         else if([comeStr isEqualToString:@"13"]){
-            typeName=@"分析类";
+            typeName=@"维护类";
         }
         else{
             typeName=@"其他";
@@ -143,13 +148,14 @@
         
         _topview.frame=CGRectMake(0, 0, 320, timeLabel.frame.origin.y+timeLabel.frame.size.height+20);
         
-        NSString *commentStr=[reportDetail objectForKey:@"reportContent"];
+        NSString *commentStr=[[reportDetail objectForKey:@"reportContent"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         CGSize commentSize=[commentStr sizeWithFont:[UIFont systemFontOfSize:17.0] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
         UILabel *commentLabel=[[UILabel alloc]initWithFrame:CGRectMake(20, 20, 280, commentSize.height)];
         [commentLabel setLineBreakMode:NSLineBreakByCharWrapping];
         [commentLabel setNumberOfLines:0];
         [commentLabel setBackgroundColor:[UIColor clearColor]];
-        commentLabel.text=comeStr;
+        
+        commentLabel.text=commentStr;
         
         [_bottomScrollview addSubview:commentLabel];
         [_bottomScrollview setFrame:CGRectMake(0, _topview.frame.size.height, 320, self.view.frame.size.height-44-_topview.frame.size.height)];
@@ -159,6 +165,7 @@
         if (isFav) {
             [favButton setSelected:YES];
         }
+        favString=[reportDetail objectForKey:@"favId"];
         
         NSNumber *pinlunNUm=[reportDetail objectForKey:@"size"];
         [commentsButton setTitle:[NSString stringWithFormat:@"查看精彩评论 共%@条",pinlunNUm] forState:UIControlStateNormal];
@@ -256,45 +263,43 @@
 }
 -(void)collect :(UIButton *)sender
 {
-#warning 收藏接口有问题
+    NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
+    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
+    NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
     if (!sender.selected) {
-        
-        NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
-        User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
-        NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
-
         NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-        [dictionary setValue: userid forKey:@"userId"];
         [dictionary setValue:self.reportId forKey:@"reportId"];
-//        [self showLoadingActivityViewWithString:@"正在收藏"];
+        [dictionary setValue: userid forKey:@"userId"];
+        
         [[requestServiceHelper defaultService]favoriteZanCai:AddFavoriteList paramter: dictionary sucess:^(NSString *state) {
+            MBHUDView *hub=[[MBHUDView alloc]init];
+            UIImage *image=[UIImage imageNamed:@"delte.png"];
+            hub.size=image.size;
+            hub.backgroundColor=[UIColor colorWithPatternImage:image];
+            hub.iconLabel.text=@"收藏成功";
+            hub.iconLabel.textColor=[UIColor whiteColor];
+            hub.hudHideDelay=1.0f;
+            [hub addToDisplayQueue];
             favString=state;
-//            [self hideLoadingActivityView];
-//            [ALToastView toastInView:self.view withText:@"收藏成功"];
+    
             sender.selected=YES;
         } falid:^(NSString *errorMsg) {
-//            [self hideLoadingActivityView];
-//            [ALToastView toastInView:self.view withText:@"收藏失败"];
             sender.selected=NO;
         }];
         
     }
     else{
+
         NSMutableDictionary *dir=[[NSMutableDictionary alloc] init];
         [dir setValue:favString  forKey:@"favoriteId"];
-//        [self showLoadingActivityViewWithString:@"正在取消收藏..."];
+        [dir setValue:userid forKey:@"userId"];
         [HttpRequestHelper asyncGetRequest:delShoucang parameter:dir requestComplete:^(NSString *responseStr) {
-//            [self hideLoadingActivityView];
             if([responseStr isEqualToString:@"success"])
             {
-//                [ALToastView toastInView:self.view withText:@"取消收藏成功"];
                 sender.selected=NO;
             }
         } requestFailed:^(NSString *errorMsg) {
-//            [self hideLoadingActivityView];
-//            [ALToastView toastInView:self.view withText:@"取消收藏失败"];
             sender.selected=YES;
-            
         }];
 
     }

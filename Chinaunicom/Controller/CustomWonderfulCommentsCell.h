@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface CustomWonderfulCommentsCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *headPic;
-
-@property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
-@property (weak, nonatomic) IBOutlet UIButton *play;
-
-@property (weak, nonatomic) IBOutlet UILabel *contextLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dateTimeLabel;
+@property (nonatomic,strong) UIImageView *bgImageView;
+@property (nonatomic,strong) UILabel *nameLabel;
+@property (nonatomic,strong) UILabel *timeLabel;
+@property (nonatomic,strong) UILabel *commentLabel;
+@property (nonatomic,strong) UIButton *soundButton;
+@property (nonatomic,strong) UIImageView *headImageView;
+@property (nonatomic,strong) UIImageView *realHead;
 @end
