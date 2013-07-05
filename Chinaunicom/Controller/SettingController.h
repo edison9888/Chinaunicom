@@ -6,9 +6,8 @@
 //  Copyright (c) 2013年 Chinaunicom. All rights reserved.
 //
 
-#import "BaseViewController.h"
 #import "DCRoundSwitch.h"
-@interface SettingController : BaseViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UINavigationControllerDelegate>
+@interface SettingController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UINavigationControllerDelegate>
 @property(nonatomic,retain) UIImage *tempHead;
 
 

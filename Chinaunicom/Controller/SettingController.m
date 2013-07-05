@@ -161,7 +161,6 @@
     [dictionary setObject:userid forKey:@"userId"];
     [dictionary setObject:@"jpg" forKey:@"picType"];
     [dictionary setObject:[[NSString alloc] initWithData:[GTMBase64 encodeData:imageData] encoding:NSUTF8StringEncoding] forKey:@"imageStr"];
-    [self showLoadingActivityViewWithString:@"正在上传..."];
               [self dismissModalViewControllerAnimated:YES];
 //    [HttpRequestHelper asyncPostRequest:userPhoto parameter:dictionary filename:@"jpg" fileData:    } requestFailed:^(NSString *errorMsg) {
 //        //<#code#>
@@ -174,7 +173,6 @@
             self.tempHead = [self imageWithImageSimple:image scaledToSize:CGSizeMake(128.0, 228.0)];
             self.icon.image = self.tempHead;
         [self saveImage:image WithName:@"temphead.jpg"];
-            [self hideLoadingActivityView];
 
     } requestFailed:^(NSString *errorMsg) {
      //   <#code#>
@@ -187,7 +185,6 @@
 -(void)uploadHeadImgFinish:(id)sender
 {
     NSLog(@"上传成功");
-    [self hideLoadingActivityView];
 }
 
 -(void)uploadHeadImgError:(id)sender

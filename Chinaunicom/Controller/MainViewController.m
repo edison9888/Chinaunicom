@@ -15,7 +15,7 @@
 #import "requestServiceHelper.h"
 #import "ContextDetailController.h"
 #import "GTMBase64.h"
-#import "NSString+NSString_Extended.h"
+
 @interface MainViewController ()
 
 @end
@@ -197,7 +197,6 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"aaaaaa=%@",dataSource);
     UIImage *image=[UIImage imageNamed:@"qitalei.png"];
     NSString *titleStr=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"reportTitle"];
     CGSize titleSize;

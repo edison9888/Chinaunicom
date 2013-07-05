@@ -7,25 +7,25 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Chinaunicom/Controller/RightMenuViewController.m"
-         timestampString = "394548504.924608"
+         filePath = "Chinaunicom/Controller/GoodCommentsViewController.m"
+         timestampString = "394732825.565103"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "330"
-         endingLineNumber = "330"
-         landmarkName = "-playSoundFile:"
+         startingLineNumber = "335"
+         endingLineNumber = "335"
+         landmarkName = "-playingFinishWithBBS:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Chinaunicom/Controller/RightMenuViewController.m"
-         timestampString = "394548504.924608"
+         filePath = "Chinaunicom/Controller/GoodCommentsViewController.m"
+         timestampString = "394732825.565103"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "298"
-         endingLineNumber = "298"
+         startingLineNumber = "270"
+         endingLineNumber = "270"
          landmarkName = "-downloadSoundFile:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -33,12 +33,12 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Chinaunicom/Controller/RightMenuViewController.m"
-         timestampString = "394548504.924608"
+         filePath = "Chinaunicom/Controller/GoodCommentsViewController.m"
+         timestampString = "394732825.565103"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "318"
-         endingLineNumber = "318"
+         startingLineNumber = "307"
+         endingLineNumber = "307"
          landmarkName = "-playSoundFile:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -46,13 +46,52 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Chinaunicom/Controller/RightMenuViewController.m"
-         timestampString = "394548504.924608"
+         filePath = "Chinaunicom/Utils/Utility.m"
+         timestampString = "394732890.024929"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "339"
-         endingLineNumber = "339"
-         landmarkName = "-didReceiveMemoryWarning"
+         startingLineNumber = "137"
+         endingLineNumber = "137"
+         landmarkName = "+checkFileExsit:Dir:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Chinaunicom/Controller/GoodCommentsViewController.m"
+         timestampString = "394732978.05239"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "274"
+         endingLineNumber = "274"
+         landmarkName = "-downloadSoundFile:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Chinaunicom/Controller/GoodCommentsViewController.m"
+         timestampString = "394733052.885073"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "295"
+         endingLineNumber = "295"
+         landmarkName = "-downloadSoundFile:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Chinaunicom/Controller/GoodCommentsViewController.m"
+         timestampString = "394733053.843582"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "300"
+         endingLineNumber = "300"
+         landmarkName = "-downloadSoundFile:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

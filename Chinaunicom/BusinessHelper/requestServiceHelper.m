@@ -265,29 +265,17 @@ static requestServiceHelper *requestService;
     [HttpRequestHelper asyncGetRequest:getMyFavoriteList parameter:dictionary requestComplete:^(NSString *responseStr) {
         
         NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
-        //NSMutableDictionary *dictionary=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
         
         NSMutableArray *reportArray=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingMutableLeaves) error:nil];
-        
         NSMutableArray *reportDic=[[NSMutableArray alloc] initWithArray:[reportArray objectAtIndex:1]];
-//        NSLog(@"%@",responseStr);
         if ([dictionary count]>0) {
-            
             sucess(reportDic);
-            
         }else{
-            
             faild(responseStr);
         }
-        
-        
     }requestFailed:^(NSString *errorMsg) {
-        
         faild(errorMsg);
-        
     }];
-    
-
 }
 //获取审核列表
 -(void) getAduitingList:(NSMutableDictionary *)dictionary sucess:(void (^)(NSMutableArray *, NSInteger))sucess falid:(void (^)(NSString *))faild

@@ -199,7 +199,6 @@
     [dictionary setObject:@"1" forKey:@"status"];
      [dictionary setObject:self.reportcontent.text forKey:@"content"];
     [dictionary setObject:self.reportTypeId forKey:@"reportTypeId"];
-      [self showLoadingActivityViewWithString:@"正在发布..."];
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString* documentsDirectory = [paths objectAtIndex:0];
     NSString* fullPathToFile = [documentsDirectory stringByAppendingPathComponent:@"temp.jpg"];
@@ -213,10 +212,7 @@
     }
     [HttpRequestHelper asyncGetRequest:sendReport parameter:dictionary requestComplete:^(NSString *responseStr) {
         
-        [self hideLoadingActivityView];
     } requestFailed:^(NSString *errorMsg) {
-        //   <#code#>
-        [self hideLoadingActivityView];
        
     }];
 }

@@ -11,6 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreAudio/CoreAudioTypes.h>
 #import <AudioToolbox/AudioToolbox.h>
+
 #define SpeechMaxTime 60
 
 @protocol ViewControllerDelegate <NSObject>
@@ -25,7 +26,7 @@
 
 @end
 
-@interface RecoderAndPlayer : NSObject <AVAudioRecorderDelegate,AVAudioPlayerDelegate,UIAlertViewDelegate>
+@interface RecoderAndPlayer : NSObject <AVAudioRecorderDelegate,AVAudioPlayerDelegate>
 {
     AVAudioRecorder *recorder;
     AVAudioPlayer *player;
@@ -46,5 +47,5 @@
 -(void)SpeechRecordStart;
 -(void)SpeechRecordStop;
 -(void)SpeechAMR2WAV:(NSString *)amrFile;
--(void)stopPlaying;
+-(void) stopPlaying;
 @end

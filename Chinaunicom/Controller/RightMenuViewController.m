@@ -5,21 +5,23 @@
 //  Created by  on 13-5-7.
 //  Copyright (c) 2013年 Chinaunicom. All rights reserved.
 //
-
 #import "RightMenuViewController.h"
-#import "AuditReportListViewController.h"
-#import "FavoriteListViewController.h"
-#import "SettingController.h"
-#import "requestServiceHelper.h"
 #import "User.h"
-#import "SysConfig.h"
+#import "CustomRightMenuViewCell.h"
+#import "AuditReportListViewController.h"
+#import "SettingController.h"
+#import "FavoriteListViewController.h"
 #import "UIImageView+WebCache.h"
-
+#import "UIViewController+MMDrawerController.h"
 #import "ASIHTTPRequest.h"
 #import "Utility.h"
-#import "UIViewController+MMDrawerController.h"
 @interface RightMenuViewController ()
-
+{
+    NSArray *dataSource;
+    NSArray *dictionayData;
+    UITableView *_mytableView;
+    NSURL *iconUrl;
+}
 @end
 
 @implementation RightMenuViewController
@@ -28,6 +30,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        dictionayData=[[NSArray alloc]init];
     }
     return self;
 }
@@ -48,8 +51,9 @@
 {
     //背景图片
     self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"right_background.png"]];
+    NSLog(@"aaaa=%@",[self.navigationController viewControllers]);
+
     UINavigationBar *nav=self.navigationController.navigationBar;
-    
     //个人主页
     UIImage *userHomeImage=[UIImage imageNamed:@"user_home"];
     UIImageView *imageView=[[UIImageView alloc] initWithFrame:CGRectMake(10, 15, userHomeImage.size.width, userHomeImage.size.height)];
@@ -79,7 +83,6 @@
     [nav addSubview:accessButton];
 
     //添加底部navbar
-    //UINavigationBar *bottomBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 416, 320, 44)];
     UIImage *bottomImage=[UIImage imageNamed:@"title@2x.png"];
     UINavigationBar *bottomBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 372, bottomImage.size.width, bottomImage.size.height)];
     [bottomBar setBackgroundImage:bottomImage forBarMetrics:UIBarMetricsDefault];
@@ -121,13 +124,7 @@
     [settingButton addTarget:self action:@selector(doDone:) forControlEvents:UIControlEventTouchUpInside];
 
     [bottomBar addSubview:settingButton];
-    
-}
 
-#pragma  mark - initDataSource
--(void)initDataSource
-{
- 
     _mytableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 5, 320, self.view.frame.size.height-88-5) style:UITableViewStylePlain];
     _mytableView.dataSource=self;
     _mytableView.delegate=self;
@@ -135,30 +132,30 @@
     [_mytableView setBackgroundView:nil];
     [_mytableView setSeparatorColor:[UIColor clearColor]];
     [self.view addSubview:_mytableView];
-    
-   
+}
+
+#pragma  mark - initDataSource
+-(void)initDataSource
+{
     NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
     User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
     NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
     NSString *icon=[user.icon stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
-    iconurl=[NSURL URLWithString:[ImageUrl stringByAppendingString:icon]];
+    iconUrl=[NSURL URLWithString:[ImageUrl stringByAppendingString:icon]];
     
      NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     [dictionary setValue: userid forKey:@"userId"];
     [dictionary setValue: @"1" forKey:@"pageIndex"];
     [dictionary setValue: @"100" forKey:@"pageSize"];
-    [self showLoadingActivityViewWithString:@"正在加载..."];
+
     [[requestServiceHelper defaultService] getMyCommentsWithParamter:dictionary sucess:^(NSArray *commentDictionary) {
         
         if (commentDictionary !=nil) {
-             self.dictionayData=[commentDictionary objectAtIndex:1];
+             dictionayData=[commentDictionary objectAtIndex:1];
             [_mytableView reloadData];
         }
-        
-        [self hideLoadingActivityView];
     } falid:^(NSString *errorMsg) {
-      
-         [self hideLoadingActivityView];
+
     }];
     
 }
@@ -171,7 +168,7 @@
  - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
  {
  
-     return [self.dictionayData count];
+     return [dictionayData count];
  
  }
 
@@ -179,11 +176,11 @@
 {
     //计算评论内容高度
     UIFont *font = [UIFont systemFontOfSize:17.0f];
-    NSString *commentStr=[[self.dictionayData  objectAtIndex:indexPath.row]objectForKey:@"commentContent"];
+    NSString *commentStr=[[dictionayData  objectAtIndex:indexPath.row]objectForKey:@"commentContent"];
     CGSize commentSize=[commentStr sizeWithFont:font constrainedToSize:CGSizeMake(200, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
  
     //计算新闻高度
-    NSString *newsStr=[[self.dictionayData objectAtIndex:indexPath.row]objectForKey:@"reportTitle"];
+    NSString *newsStr=[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"reportTitle"];
     CGSize newsSize=[newsStr sizeWithFont:font constrainedToSize:CGSizeMake(200, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
     return   5+20+5+commentSize.height+5+20+5+5 +newsSize.height +5 +20 +5;
 }
@@ -199,8 +196,7 @@
          [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
      }
      UIFont *font = [UIFont systemFontOfSize:17.0f];
-//     NSLog(@"self.dc=%@",self.dictionayData);
-     NSString *nameStr=[[self.dictionayData objectAtIndex:indexPath.row]objectForKey:@"commentPerson"];
+     NSString *nameStr=[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"commentPerson"];
      CGSize nameSize=[nameStr sizeWithFont:font forWidth:200 lineBreakMode:NSLineBreakByCharWrapping];
      cell.nameLabel.frame=CGRectMake(60, 5, nameSize.width, nameSize.height);
      cell.nameLabel.text=nameStr;
@@ -210,7 +206,9 @@
      [cell.soundButton setTag:100+indexPath.row ];
      [cell.soundButton addTarget:self action:@selector(playSoundFile:) forControlEvents:UIControlEventTouchUpInside];
      
-     NSString *soundPath=[[self.dictionayData objectAtIndex:indexPath.row]objectForKey:@"audiopath"];
+     NSString *soundPath=[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"audiopath"];
+     [cell.soundButton addTarget:self action:@selector(playSoundFile:) forControlEvents:UIControlEventTouchUpInside];
+     cell.soundButton.tag=100+indexPath.row;
      if (![soundPath isEqualToString:@""]  && soundPath !=nil) {
          cell.soundButton.hidden=NO;
      }else
@@ -218,33 +216,33 @@
          cell.soundButton.hidden=YES;
      }
      
-     NSString *commentStr=[[self.dictionayData objectAtIndex:indexPath.row]objectForKey:@"commentContent"];
+     NSString *commentStr=[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"commentContent"];
      cell.contentLabel.text=commentStr;
      CGSize commentSize=[commentStr sizeWithFont:font constrainedToSize:CGSizeMake(200, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
      cell.contentLabel.frame=CGRectMake(60, cell.nameLabel.frame.origin.y+cell.nameLabel.frame.size.height+5, 200, commentSize.height);
-     cell.timeLabel.text=[[self.dictionayData objectAtIndex:indexPath.row]objectForKey:@"commentDate"];
+     cell.timeLabel.text=[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"commentDate"];
      cell.timeLabel.frame=CGRectMake(60, cell.contentLabel.frame.origin.y+cell.contentLabel.frame.size.height+5, 200, 20);
      cell.topBgImageView.frame=CGRectMake(26, 0, 247, cell.timeLabel.frame.origin.y+cell.timeLabel.frame.size.height);
      
-     NSString *newsStr=[[self.dictionayData objectAtIndex:indexPath.row]objectForKey:@"reportTitle"];
+     NSString *newsStr=[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"reportTitle"];
      CGSize newsSize=[newsStr sizeWithFont:font constrainedToSize:CGSizeMake(200, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
      cell.newsLabel.text=newsStr;
      cell.newsLabel.frame=CGRectMake(60, cell.topBgImageView.frame.size.height+5, 200, newsSize.height);
      
-     NSString *str=[[self.dictionayData objectAtIndex:indexPath.row]objectForKey:@"reportType"];
+     NSString *str=[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"reportType"];
      cell.pinglunLabel.text=[NSString stringWithFormat:@"来自 %@",str];
      cell.pinglunLabel.frame=CGRectMake(60, cell.newsLabel.frame.origin.y+cell.newsLabel.frame.size.height +5, 130, 20);
      
      UIImage *image=[UIImage imageNamed:@"com_mes.png"];
      cell.messageImageView.frame=CGRectMake(185, cell.newsLabel.frame.origin.y+cell.newsLabel.frame.size.height +5+5, image.size.width, image.size.height);
   
-     NSString *num=[[self.dictionayData objectAtIndex:indexPath.row]objectForKey:@"commentNumber"];
+     NSString *num=[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"commentNumber"];
      cell.numLabel.text=[NSString stringWithFormat:@"评论 %@",num];
      cell.numLabel.frame=CGRectMake(205, cell.pinglunLabel.frame.origin.y, 60, 20);
      
      cell.bottomBgImageView.frame=CGRectMake(24.5, cell.topBgImageView.frame.size.height, 250.5, 35+newsSize.height);
 
-     [cell.headImageView setImageWithURL:iconurl];
+     [cell.headImageView setImageWithURL:iconUrl];
 
      return cell;
  
@@ -259,64 +257,43 @@
         AuditReportListViewController *auditCtrl=[[AuditReportListViewController alloc] initWithNibName:@"AuditedReportListViewController" bundle:Nil];
         auditCtrl.title=@"已审核";
 //        [self.navigationController pushViewController:auditCtrl animated:YES];
-        [self.mm_drawerController.navigationController pushViewController:auditCtrl animated:YES];
+        
+        [self.mm_drawerController.rightDrawerViewController.navigationController pushViewController:auditCtrl animated:YES];
 
     }else if ([btn tag]==4) {
         FavoriteListViewController *favCtrl=[[FavoriteListViewController alloc] initWithNibName:@"FavoriteListViewController" bundle:nil];
         favCtrl.title=@"收藏";
-        [self.navigationController pushViewController:favCtrl animated:YES];
+        [self.mm_drawerController.rightDrawerViewController.navigationController pushViewController:favCtrl animated:YES];
         
     }else if([btn tag]==5){
         
-//        [btn setBackgroundImage:[UIImage imageNamed:@"grzy_Setting"] forState:UIControlStateNormal];
         SettingController *setCtrl=[[SettingController alloc] init];
         setCtrl.title=@"设置";
-        [self.navigationController pushViewController:setCtrl animated:YES];
+        [self.mm_drawerController.rightDrawerViewController.navigationController pushViewController:setCtrl animated:YES];
 
     }
-        
-    
 }
 -(void)downloadSoundFile:(NSMutableDictionary *)dir
 {
-    //    NSString *pcipath=[ImageUrl stringByAppendingString:[dir objectForKey:@"file"] objectForKey:@"icon"] stringByReplacingOccurrencesOfString:@"\\" withString:@"/"]];
-    
     NSURL *baseUrl = [NSURL URLWithString:[ImageUrl stringByAppendingString:[dir objectForKey:@"file"]]];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:baseUrl];
-    //    BOOL isExsit = [Utility checkFileExsit:[dir objectForKey:@"file"] Dir:@"SpeechSoundDir"];
     NSArray *fArray = [[dir objectForKey:@"file"] componentsSeparatedByString:@"/"];
     NSString *fileName=[fArray lastObject];
-    //        UIButton *b = [dir objectForKey:@"btn"];
-    //    if (isExsit) {
-    //
-    //              b.hidden=NO;
-    //    }
     [request setDownloadDestinationPath:[Utility getFilePath:fileName Dir:@"SpeechSoundDir"]];
     [request setCompletionBlock:^{
-        //            BOOL exit = [Utility checkFileExsit:fileName Dir:@"SpeechSoundDir"];
-        //            if (exit) {
-        //                //UIButton *btn = (UIButton*)[self.view viewWithTag:[k intValue]];
-        //                b.hidden=NO;
-        //            }
-        //            else{
-        //                b.hidden=YES;
-        //            }
         [recoderAndPlayer SpeechAMR2WAV:fileName];
-        
     }];
     [request setFailedBlock:^{
-        
         [request clearDelegatesAndCancel];
-        
     }];
     [request startAsynchronous];
-    
+
 }
 
 -(void)playSoundFile:(UIButton*)sender{
     
     int index=[sender tag]-100;
-    NSString *soundpath=[[self.dictionayData objectAtIndex:index] objectForKey:@"audiopath"];
+    NSString *soundpath=[[dictionayData objectAtIndex:index] objectForKey:@"audiopath"];
     NSArray *fArray = [soundpath componentsSeparatedByString:@"/"];
     NSString *fileName=[fArray lastObject];
     //检查目录下是否存在此文件
@@ -334,7 +311,6 @@
 }
 -(void)playingFinishWithBBS:(BOOL)isFinish
 {
-    NSLog(@"播放成功");
 }
 - (void)didReceiveMemoryWarning
 {

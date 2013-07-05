@@ -6,9 +6,7 @@
 //  Copyright (c) 2013年 Chinaunicom. All rights reserved.
 //
 
-#import "BaseViewController.h"
-
-@interface SendAudiReport : BaseViewController<UIActionSheetDelegate,UINavigationControllerDelegate,
+@interface SendAudiReport : UIViewController<UIActionSheetDelegate,UINavigationControllerDelegate,
                             UIImagePickerControllerDelegate,UITextFieldDelegate,UITextViewDelegate>
 - (IBAction)addimage:(id)sender;
 - (IBAction)sendreport:(id)sender;

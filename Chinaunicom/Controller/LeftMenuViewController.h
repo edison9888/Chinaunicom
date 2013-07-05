@@ -6,16 +6,13 @@
 //  Copyright (c) 2013年 Chinaunicom. All rights reserved.
 //
 
-#import "BaseViewController.h"
-#import "BaseNavigationController.h"
 #import "CustomLeftMenuViewCell.h"
 #import "AnimationLeftMenuView.h"
-#import "ALToastView.h"
 
 
 @protocol LeftMenuViewControllerDelegate;
 
-@interface LeftMenuViewController : BaseViewController<UITableViewDelegate,UITableViewDataSource>
+@interface LeftMenuViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 {
 	NSTimer *shakeViewTimer;
 	BOOL isShake;

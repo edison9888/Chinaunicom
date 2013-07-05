@@ -179,6 +179,8 @@
     cell.timeLabel.text=time;
     
     NSString *audioString=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"audioPath"];
+    [cell.soundButton addTarget:self action:@selector(playSoundFile:) forControlEvents:UIControlEventTouchUpInside];
+    cell.soundButton.tag=1000+indexPath.row;
     if (audioString!=nil && ![audioString isEqualToString:@""]) {
         cell.soundButton.hidden=NO;
     }else
@@ -244,14 +246,10 @@
 }
 -(void)startSpeak
 {
-   //recording
     hub=[[MBHUDView alloc]init];
     UIImage *image=[UIImage imageNamed:@"recording.png"];
     hub.size=image.size;
     hub.backgroundColor=[UIColor colorWithPatternImage:image];
-//    hub.iconLabel.text=@"收藏成功";
-//    hub.iconLabel.textColor=[UIColor whiteColor];
-//    hub.hudHideDelay=1.0f;
     [hub addToDisplayQueue];
     
     [recoderAndPlayer SpeechRecordStart];
@@ -260,52 +258,30 @@
 -(void)endSpeak
 {
     [hub dismiss];
-    NSLog(@"aaaaa=%@",recoderAndPlayer.viewDelegate);
     [recoderAndPlayer SpeechRecordStop];
-    NSLog(@"re=%@",recoderAndPlayer.playpath);
-    NSLog(@"aaaa=%@",recoderAndPlayer.recordAudioName);
     [self sendSoundComment];
 
 }
 
 -(void)downloadSoundFile:(NSMutableDictionary *)dir
 {
-    
-    //    NSString *pcipath=[ImageUrl stringByAppendingString:[dir objectForKey:@"file"] objectForKey:@"icon"] stringByReplacingOccurrencesOfString:@"\\" withString:@"/"]];
     NSURL *baseUrl = [NSURL URLWithString:[ImageUrl stringByAppendingString:[dir objectForKey:@"file"]]];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:baseUrl];
-    //    BOOL isExsit = [Utility checkFileExsit:[dir objectForKey:@"file"] Dir:@"SpeechSoundDir"];
+
     NSArray *fArray = [[dir objectForKey:@"file"] componentsSeparatedByString:@"/"];
     NSString *fileName=[fArray lastObject];
-    //        UIButton *b = [dir objectForKey:@"btn"];
-    //    if (isExsit) {
-    //
-    //              b.hidden=NO;
-    //    }
     [request setDownloadDestinationPath:[Utility getFilePath:fileName Dir:@"SpeechSoundDir"]];
     [request setCompletionBlock:^{
-        //            BOOL exit = [Utility checkFileExsit:fileName Dir:@"SpeechSoundDir"];
-        //            if (exit) {
-        //                //UIButton *btn = (UIButton*)[self.view viewWithTag:[k intValue]];
-        //                b.hidden=NO;
-        //            }
-        //            else{
-        //                b.hidden=YES;
-        //            }
-        //        [self showLoadingActivityViewWithString:@"正在播放..."];
         [recoderAndPlayer SpeechAMR2WAV:fileName];
         
     }];
     [request setFailedBlock:^{
-        
         [request clearDelegatesAndCancel];
-        
     }];
     [request startAsynchronous];
-    
 }
 
--(void)playSoundFile:(id)sender{
+-(void)playSoundFile:(UIButton *)sender{
     
     int index=[sender tag]-1000;
     NSString *soundpath=[[dataSource objectAtIndex:index] objectForKey:@"audioPath"];
@@ -314,17 +290,13 @@
     //检查目录下是否存在此文件
     BOOL isExsit = [Utility checkFileExsit:fileName Dir:@"SpeechSoundDir"];
     if (isExsit) {
-        //        [self showLoadingActivityViewWithString:@"正在播放..."];
         [recoderAndPlayer SpeechAMR2WAV:fileName];
     }
     else{
         //下载
         NSMutableDictionary *dir=[[NSMutableDictionary alloc]init];
         [dir setValue:soundpath forKey:@"file"];
-        
-        //            NSString *soundpath=[[dataArray objectAtIndex:indexPath.row] objectForKey:@"audioPath"];
         [NSThread detachNewThreadSelector:@selector(downloadSoundFile:) toTarget:self withObject:dir];
-        self.view.userInteractionEnabled=YES;
     }
     
 }
@@ -332,14 +304,12 @@
 //录音时间
 -(void)TimePromptAction:(int)sencond
 {
-    NSLog(@"33333");
 }
 -(void)playingFinishWithBBS:(BOOL)isFinish
 {
     NSLog(@"22222");
 }
 -(void)recordAndSendAudioFile:(NSString *)fileName fileSize:(NSString *)fileSize duration:(NSString *)timelength{
-    NSLog(@"aaaaaa=1111111");
 }
 -(void)sendSoundComment
 {
@@ -359,7 +329,6 @@
     [dictionary setObject:[[NSString alloc] initWithData:[GTMBase64 encodeData:soundData] encoding:NSUTF8StringEncoding] forKey:@"audioStr"];
 
     [HttpRequestHelper asyncGetRequest:PublishComment parameter:dictionary requestComplete:^(NSString *responseStr) {
-        
     } requestFailed:^(NSString *errorMsg) {
     }];
     

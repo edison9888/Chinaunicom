@@ -6,9 +6,7 @@
 //  Copyright (c) 2013年 Chinaunicom. All rights reserved.
 //
 
-#import "BaseViewController.h"
-
-@interface LoadingController : BaseViewController
+@interface LoadingController : UIViewController
 @property (weak, nonatomic) IBOutlet UIImageView *loading;
 
 @end

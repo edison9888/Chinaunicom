@@ -144,12 +144,9 @@
     [dictionary setValue: [NSString stringWithFormat:@"%d",pageSize] forKey:@"pageSize"];
     [dictionary setValue: state forKey:@"status"];
     [dictionary setValue: userid forKey:@"userId"];
-    [self showLoadingActivityViewWithString:@"数据加载中"];
     [[requestServiceHelper defaultService] getAduitingList:dictionary sucess:^(NSMutableArray *reportDictionary, NSInteger result) {
         totalresult =result;
         myTableView.tableFooterView.hidden=NO;
-       
-        [self hideLoadingActivityView];
         if (totalresult > 0) {
             NSString *msg=@"";
             if ([state isEqualToString:@"2"]) {
@@ -180,11 +177,7 @@
         
         
     } falid:^(NSString *errorMsg) {
-        [self hideLoadingActivityView];
     }];
-    
-    
-    
 }
 
 

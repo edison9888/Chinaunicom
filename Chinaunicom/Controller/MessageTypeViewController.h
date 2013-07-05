@@ -6,9 +6,8 @@
 //  Copyright (c) 2013年 Chinaunicom. All rights reserved.
 //
 
-#import "BaseViewController.h"
 
-@interface MessageTypeViewController : BaseViewController
+@interface MessageTypeViewController : UIViewController
 
 @property(strong , nonatomic) UITableView *mytableView;
 @property(strong , nonatomic) UIScrollView *scrollView;

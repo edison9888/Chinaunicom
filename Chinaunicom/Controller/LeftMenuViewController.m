@@ -539,7 +539,6 @@ static const NSTimeInterval kWobbleTime = 0.07;
         firshTouch=YES;
         
         //获取我已关注的菜单分
-        [self showLoadingActivityViewWithString:@"保存中..."];
         
         NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
         User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
@@ -558,12 +557,10 @@ static const NSTimeInterval kWobbleTime = 0.07;
             [self initCardsView:tempViewArray];
             //当完成编辑后，使button可触动
             [self disableButonWhenShake:0 isDisable:NO];
-            [self hideLoadingActivityView];
         } falid:^(NSString *errorMsg) {
             //停止
             if (isShake) {
                 [self stopShake];}
-            [self hideLoadingActivityView];
         }];
         
     }
@@ -665,7 +662,6 @@ static const NSTimeInterval kWobbleTime = 0.07;
 
 -(void)opeartReportType{
     
-    [self showLoadingActivityViewWithString:@"正在加载..."];
     NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
     User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
     NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
@@ -689,11 +685,8 @@ static const NSTimeInterval kWobbleTime = 0.07;
         [self initCardsView:viewDataArray];
         [self addDeleteView];
         
-        [self hideLoadingActivityView];
         self.view.userInteractionEnabled=YES;
     } falid:^(NSString *errorMsg) {
-        self.view.userInteractionEnabled=YES;
-        [self hideLoadingActivityView];
     }];
     
 }
@@ -719,8 +712,6 @@ static const NSTimeInterval kWobbleTime = 0.07;
     
     if([url isEqualToString:DeleteReportType]){
         
-        [self showLoadingActivityViewWithString:@"正在删除..."];
-        
         [bottomViewDataArray addObject:[NSString stringWithFormat:@"%d",[reportid intValue]+5]];
         [[NSUserDefaults standardUserDefaults] setObject:bottomViewDataArray forKey:KEY_LEFT_BOTTOM_MENU_INFO];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -728,7 +719,6 @@ static const NSTimeInterval kWobbleTime = 0.07;
         
     }else{
         
-        [self showLoadingActivityViewWithString:@"正在添加..."];
         [bottomViewDataArray removeObjectAtIndex:[bottomViewDataArray indexOfObject:[NSString stringWithFormat:@"%d",[reportid intValue]+5]]];
         
         
@@ -743,17 +733,10 @@ static const NSTimeInterval kWobbleTime = 0.07;
     
     
     [[requestServiceHelper defaultService]opreateReportType:url paramter:dictionary sucess:^(BOOL isSucess) {
-        
-        [self hideLoadingActivityView];
-        
-        self.view.userInteractionEnabled=YES;
-        [ALToastView toastInView:self.view withText:([url isEqualToString:DeleteReportType]?@"删除成功":@"添加成功")];
+//        [ALToastView toastInView:self.view withText:([url isEqualToString:DeleteReportType]?@"删除成功":@"添加成功")];
         
     } falid:^(NSString *errorMsg) {
         
-        self.view.userInteractionEnabled=YES;
-        
-        [self hideLoadingActivityView];
     }];
     
     
@@ -776,23 +759,19 @@ static const NSTimeInterval kWobbleTime = 0.07;
     //
     if ([flag isEqualToString:@"add"]) {
         
-        [self showLoadingActivityViewWithString:@"正在添加..."];
-        
         [bottomViewDataArray addObject:[NSString stringWithFormat:@"%d",tag]];
         [[NSUserDefaults standardUserDefaults] setObject:bottomViewDataArray forKey:KEY_LEFT_BOTTOM_MENU_INFO];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        [self hideLoadingActivityView];
-        [ALToastView toastInView:self.view withText:(@"添加成功")];
+//        [ALToastView toastInView:self.view withText:(@"添加成功")];
         
     }else{
         
-        [self showLoadingActivityViewWithString:@"正在添加..."];
         [bottomViewDataArray removeObjectAtIndex:[bottomViewDataArray indexOfObject:[NSString stringWithFormat:@"%d",tag]]];
         
         [[NSUserDefaults standardUserDefaults] setObject:bottomViewDataArray forKey:KEY_LEFT_BOTTOM_MENU_INFO];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        [self hideLoadingActivityView];
-        [ALToastView toastInView:self.view withText:(@"删除成功")];
+
+//        [ALToastView toastInView:self.view withText:(@"删除成功")];
         
     }
     

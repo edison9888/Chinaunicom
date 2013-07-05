@@ -123,7 +123,6 @@
 
 -(void)opeartReportType{
     
-    [self showLoadingActivityViewWithString:@"正在加载..."];
     NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
     User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
     NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
@@ -139,13 +138,7 @@
         }
         [self initCardsView:viewDataArray];
         
-        [self hideLoadingActivityView];
-        self.view.userInteractionEnabled=YES;
-        
     } falid:^(NSString *errorMsg) {
-        
-        self.view.userInteractionEnabled=YES;
-        [self hideLoadingActivityView];
         
     }];
     

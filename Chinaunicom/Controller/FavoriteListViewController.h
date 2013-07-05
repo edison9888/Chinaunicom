@@ -6,12 +6,10 @@
 //  Copyright (c) 2013年 Chinaunicom. All rights reserved.
 //
 
-#import "BaseViewController.h"
-
-@interface FavoriteListViewController : BaseViewController<UIAlertViewDelegate>
+@interface FavoriteListViewController : UIViewController<UIAlertViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
-    int delIndex;
+
 }
-@property (strong, nonatomic) NSMutableArray *dictionayData;
+- (IBAction)back:(id)sender;
 @property (weak, nonatomic) IBOutlet UITableView *myTabelView;
 @end

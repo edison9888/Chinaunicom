@@ -6,12 +6,6 @@
 //  Copyright (c) 2012年 lsy. All rights reserved.
 //
 
-//公用方法
-#import <Foundation/Foundation.h>
-
-
-#import "BaseViewController.h"
-
 #import "SysConfig.h"
 @interface Utility : NSObject
 //单例
