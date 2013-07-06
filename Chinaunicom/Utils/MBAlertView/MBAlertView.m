@@ -108,9 +108,9 @@ static MBAlertView *currentAlert;
     if (!window)
         window = [[UIApplication sharedApplication].windows objectAtIndex:0];
 
-    if(self.addsToWindow)
+//    if(self.addsToWindow)
         [window addSubview:self.view];
-    else [[[window subviews] objectAtIndex:0] addSubview:self.view];
+//    else [[[window subviews] objectAtIndex:0] addSubview:self.view];
     
     [self performLayoutOfButtons];
     [self centerViews];

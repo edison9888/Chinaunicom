@@ -9,8 +9,10 @@
 
 #import "PullToRefreshTableView.h"
 #import <QuartzCore/QuartzCore.h>
-#define kTextColor [UIColor colorWithRed:87.0/255.0 green:108.0/255.0 blue:137.0/255.0 alpha:1.0]
-#define kPRBGColor [UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1.0]
+//#define kTextColor [UIColor colorWithRed:87.0/255.0 green:108.0/255.0 blue:137.0/255.0 alpha:1.0]
+#define kTextColor [UIColor blackColor]
+//#define kPRBGColor [UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1.0]
+#define kPRBGColor [UIColor whiteColor]
 /**
  *
  * StateView 顶部和底部状态视图
@@ -27,6 +29,7 @@
 @synthesize currentState;
 
 - (id)initWithFrame:(CGRect)frame viewType:(int)type{
+    
     CGFloat width = frame.size.width;
     
     self = [super initWithFrame:CGRectMake(frame.origin.x, frame.origin.y, width, k_STATE_VIEW_HEIGHT)];

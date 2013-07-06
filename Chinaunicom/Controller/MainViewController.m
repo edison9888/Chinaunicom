@@ -22,13 +22,6 @@
 
 @implementation MainViewController
 
-//-(void)pushToMainPage:(int)tag title:(NSString *)str
-//{
-//    self.title =str;
-//    self.reportid=[NSString stringWithFormat:@"%d",tag];
-//    [self initDataSource];
-//}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -121,11 +114,50 @@
     page=1;
     totalresult=0;
     pagesize=10;
-    isfirst=YES;
+//    isfirst=YES;
 }
+-(void)initChangeSource:(int)reid
+{
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+    [dictionary setValue: [NSString stringWithFormat:@"%d",page] forKey:@"index"];
+    [dictionary setValue: [NSString stringWithFormat:@"%d",pagesize] forKey:@"pageNumber"];
+    
+    NSString  *url=ReportPath;
+    
+    if (reid==12)
+    {
+        [dictionary setValue:@"12" forKey:@"repTypeId"];
+    }
+    else if(reid==13)
+    {
+        [dictionary setValue:@"13" forKey:@"repTypeId"];
+    }
+    else if(reid==14)
+    {
+        [dictionary setValue:@"14" forKey:@"repTypeId"];
+    }else
+    {
+        [dictionary setValue:@"15" forKey:@"repTypeId"];
+    }
+    [self getreportList:url parmeter:dictionary];
 
+}
+-(void)reloadSource:(int)num
+{
+    page=1;
+    totalresult=0;
+    pagesize=10;
+    if (num==10) {
+         [self initDataSource];
+    }else
+    {
+        [self initChangeSource:num];
+    }
+   
+}
 -(void)initDataSource
 {
+
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     [dictionary setValue: [NSString stringWithFormat:@"%d",page] forKey:@"index"];
     [dictionary setValue: [NSString stringWithFormat:@"%d",pagesize] forKey:@"pageNumber"];
@@ -134,7 +166,7 @@
         
     NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
     User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
-        
+
     NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
     [dictionary setValue: userid forKey:@"userId"];
    
@@ -154,7 +186,7 @@
             }
             
             [dataSource addObjectsFromArray:reportDictionary];
-            
+            NSLog(@"aaa=%@",dataSource);
         }else {
             return;
         }
@@ -254,9 +286,9 @@
                 
                 CellImageView *imageView=[[CellImageView alloc]initWithFrame:CGRectMake((i+1)*15+i*80, 10+titleSize.height+5+40, 80, 60)];
                 NSString *picPath=[[imageArray objectAtIndex:i]stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
-                NSString *test=[ImageUrl stringByAppendingString:picPath];
-                NSString *sUrl = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)test, nil, nil, kCFStringEncodingUTF8));
-                [imageView setImageWithURL:[NSURL URLWithString:sUrl]];
+                NSData *data = [picPath dataUsingEncoding: NSUTF8StringEncoding];
+                NSString *content=[[NSString alloc]initWithData:data encoding:1];
+                [imageView setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:content]]];
                 [cell.contentView addSubview:imageView];
             }
             

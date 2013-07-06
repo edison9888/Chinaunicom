@@ -18,7 +18,7 @@
 
 //#define kTextColor [UIColor colorWithHexString:@"ececec"]
 //#define kPRBGColor [UIColor colorWithHexString:@"535353"]
-#define kPRAnimationDuration .18f
+#define kPRAnimationDuration .10f
 
 @interface LoadingView () 
 - (void)updateRefreshDate :(NSDate *)date;

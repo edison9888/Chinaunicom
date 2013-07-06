@@ -7,16 +7,14 @@
 //
 
 #import "DCRoundSwitch.h"
-@interface SettingController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UINavigationControllerDelegate>
-@property(nonatomic,retain) UIImage *tempHead;
-
-
+@interface SettingController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@property (weak, nonatomic) IBOutlet UIButton *headButton;
 @property (weak, nonatomic) IBOutlet DCRoundSwitch *message;
 @property (weak, nonatomic) IBOutlet DCRoundSwitch *sound;
-@property (weak, nonatomic) IBOutlet UIButton *quit;
-@property (weak, nonatomic) IBOutlet UIImageView *icon;
+- (IBAction)changePwd:(id)sender;
 - (IBAction)quit:(id)sender;
 - (IBAction)messageChange:(id)sender;
 - (IBAction)soundChange:(id)sender;
 - (IBAction)headChange:(id)sender;
+- (IBAction)back:(id)sender;
 @end

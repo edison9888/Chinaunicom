@@ -30,7 +30,7 @@
         
         _soundButton=[UIButton buttonWithType:UIButtonTypeCustom];
         UIImage *soundImage=[UIImage imageNamed:@"Sound.png"];
-        [_soundButton setBackgroundImage:soundImage forState:UIControlStateNormal];
+        [_soundButton setImage:soundImage forState:UIControlStateNormal];
         [_soundButton setHidden:YES];
         
         [self.contentView addSubview:_soundButton];

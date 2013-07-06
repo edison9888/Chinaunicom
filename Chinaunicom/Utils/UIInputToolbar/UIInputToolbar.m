@@ -84,15 +84,16 @@
     button.titleLabel.font         = [UIFont boldSystemFontOfSize:15.0f];
     button.titleLabel.shadowOffset = CGSizeMake(0, -1);
     button.titleEdgeInsets         = UIEdgeInsetsMake(0, 2, 0, 2);
-    button.contentStretch          = CGRectMake(0.5, 0.5, 0, 0);
-    button.contentMode             = UIViewContentModeScaleToFill;
-    button.frame=CGRectMake(0, 0, buttonImage.size.width, buttonImage.size.height);
-    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [button setBackgroundImage:[UIImage imageNamed:@"recordedit.png"] forState:UIControlStateSelected];
+//    button.contentStretch          = CGRectMake(0.5, 0.5, 0, 0);
+//    button.contentMode             = UIViewContentModeScaleToFill;
+    button.frame=CGRectMake(265, 0, 55, 40);
+    [button setImage:buttonImage forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"recordedit.png"] forState:UIControlStateSelected];
+    [button setBackgroundColor:[UIColor clearColor]];
     [button setTitle:buttonLabel forState:UIControlStateNormal];
     [button addTarget:self action:@selector(inputButtonPressed:) forControlEvents:UIControlEventTouchDown];
-    [button sizeToFit];
-    
+//    [button sizeToFit];
+    [self addSubview:button];
     self.inputButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.inputButton.customView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     /* Disable button initially */
@@ -105,10 +106,10 @@
     [self addSubview:self.textView];
     
     /* Right align the toolbar button */
-    UIBarButtonItem *flexItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
-    
-    NSArray *items = [NSArray arrayWithObjects: flexItem, self.inputButton, nil];
-    [self setItems:items animated:NO];
+//    UIBarButtonItem *flexItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+//    [self addSubview:button];
+//    NSArray *items = [NSArray arrayWithObjects:flexItem, self.inputButton, nil];
+//    [self setItems:items animated:NO];
 }
 
 -(id)initWithFrame:(CGRect)frame

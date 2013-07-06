@@ -7,11 +7,15 @@
 //
 
 #import "FavoriteListViewController.h"
-#import "CustomFavoriteListCell.h"
 #import "User.h"
+#import "ContextDetailController.h"
+#import "CustomFavoriteListCell.h"
+#import "HttpRequestHelper.h"
 @interface FavoriteListViewController ()
 {
     NSMutableArray *dataSoure;
+    CustomFavoriteListCell *currentCell;
+    NSIndexPath *path;
 }
 @end
 
@@ -34,6 +38,7 @@
     [self initLayout];
     [self initDataSource];
 }
+
 #pragma mark - initLayout
 -(void)initLayout
 {
@@ -72,18 +77,18 @@
 {
     NSString *title=[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"reportTitle"];
     CGSize titleSize=[title sizeWithFont:[UIFont systemFontOfSize:17.0] constrainedToSize:CGSizeMake(250, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-    return 8+titleSize.height+5+20+5;
+    return 8+titleSize.height+5+20+5+3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *simpleTableIdentifier = @"CustomFavoriteListCell";
-    NSLog(@"aaa=%@",dataSoure);
     CustomFavoriteListCell *cell = (CustomFavoriteListCell*)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];//复用cell
     
     if (cell == nil) {
         cell= [[CustomFavoriteListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        cell.delegate=self;
     }
     return cell;
     
@@ -92,53 +97,53 @@
 {
     NSString *title=[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"reportTitle"];
     CGSize titleSize=[title sizeWithFont:[UIFont systemFontOfSize:17.0] constrainedToSize:CGSizeMake(250, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-    cell.contentTitleLabel.frame=CGRectMake(10, 8, 250, titleSize.height);
+    cell.contentTitleLabel.frame=CGRectMake(20, 8, 250, titleSize.height);
     cell.contentTitleLabel.text=title;
     
-    cell.dateTimeLabel.frame=CGRectMake(10, 8+cell.contentTitleLabel.frame.size.height+5, 200, 20);
+    cell.dateTimeLabel.frame=CGRectMake(20, 8+cell.contentTitleLabel.frame.size.height+5, 200, 20);
     cell.dateTimeLabel.text=[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"ftime"];
     
     cell.bgImageView.frame=CGRectMake(3, 3, 314, cell.dateTimeLabel.frame.origin.y+cell.dateTimeLabel.frame.size.height+5);
-}
-//
-//-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    
-//    NSString *reportId = [[dictionayData objectAtIndex:indexPath.row]objectForKey:@"reportId"];
-//    
-//    ContextDetailController *contextDetailCtrl=[[ContextDetailController alloc] init];
-//    Report *_report=[[Report alloc] init];
-//    _report.reportId=reportId;
-////    contextDetailCtrl.myReport=_report;
-//    [self.navigationController pushViewController:contextDetailCtrl animated:YES];
-//}
-//
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (editingStyle == UITableViewCellEditingStyleDelete) {
-//        delIndex=indexPath.item;
-//        NSMutableDictionary *dir=[[NSMutableDictionary alloc] init];
-//        NSDictionary *fav=[dictionayData objectAtIndex:delIndex];
-//        [dir setValue:[fav objectForKey:@"favoriteId"] forKey:@"favoriteId"];
-//        [HttpRequestHelper asyncGetRequest:delShoucang parameter:dir requestComplete:^(NSString *responseStr) {
-//            if([responseStr isEqualToString:@"success"])
-//            {
-//                [dictionayData removeObjectAtIndex:delIndex];
-//                [self.myTabelView reloadData];
-//            }
-//        } requestFailed:^(NSString *errorMsg) {
-//        }];
-//    }
-//}
 
--(void)back
+}
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    RightMenuViewController *right=[[RightMenuViewController alloc] init];
-//    BaseNavigationController *nav=[[BaseNavigationController alloc] initWithRootViewController:right];
-//    AppDelegate *myDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
-//    [myDelegate.revealSideViewController pushViewController:nav onDirection:PPRevealSideDirectionRight withOffset:50 animated:YES forceToPopPush:YES completion:nil];
-//     [self.navigationController popViewControllerAnimated:YES];
-}
+    if (currentCell.isUnShow==YES) {
+        currentCell.isUnShow=NO;
+        currentCell.deleteButton.hidden=YES;
+        return;
+    }
+    NSString *str=[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"reportId"];
+    ContextDetailController *contextDetailCtrl=[[ContextDetailController alloc] initWithNibName:@"ContextDetailController" bundle:nil];
+    contextDetailCtrl.reportId=str;
+    [self.navigationController pushViewController:contextDetailCtrl animated:YES];
 
+}
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    currentCell.isUnShow=NO;
+    currentCell.deleteButton.hidden=YES;
+}
+- (void)cellDidReveal:(CustomFavoriteListCell *)cell
+{
+    if(currentCell!=cell){
+        currentCell.isUnShow=NO;
+        currentCell.deleteButton.hidden=YES;
+        currentCell=cell;
+    }
+}
+-(void)cellForIndexPath:(CustomFavoriteListCell *)cell
+{
+    path=[_myTabelView indexPathForCell:cell];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
+                                                    message:@"确认删除"
+                                                   delegate:self
+                                          cancelButtonTitle:@"是"
+                                          otherButtonTitles:@"否", nil];
+    [alert show];
+
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -150,32 +155,28 @@
     [super viewDidUnload];
 }
 
-//-(void)ShowMessage
-//{
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
-//                                                    message:@"确认删除"
-//                                                   delegate:self
-//                                          cancelButtonTitle:@"是"
-//                                          otherButtonTitles:@"否", nil];
-//    [alert show];
-//     alert=nil;
-//}
-//-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-//{
-//    if(buttonIndex==0){
-//    NSMutableDictionary *dir=[[NSMutableDictionary alloc] init];
-//    NSDictionary *fav=[dictionayData objectAtIndex:delIndex];
-//    [dir setValue:[fav objectForKey:@"favoriteId"] forKey:@"favoriteId"];
-//    [HttpRequestHelper asyncGetRequest:delShoucang parameter:dir requestComplete:^(NSString *responseStr) {
-//      if([responseStr isEqualToString:@"success"])
-//      {
-//          [dictionayData removeObjectAtIndex:delIndex];
-//          [self.myTabelView reloadData];
-//      }
-//    } requestFailed:^(NSString *errorMsg) {
-//    }];
-//    }
-//}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex==0){
+        [MBHUDView hudWithBody:@"正在删除" type:MBAlertViewHUDTypeActivityIndicator hidesAfter:0 show:YES];
+        NSMutableDictionary *dir=[[NSMutableDictionary alloc] init];
+        NSDictionary *fav=[dataSoure objectAtIndex:path.row];
+        [dir setValue:[fav objectForKey:@"favoriteId"] forKey:@"favoriteId"];
+        [HttpRequestHelper asyncGetRequest:delShoucang parameter:dir requestComplete:^(NSString *responseStr) {
+            if([responseStr isEqualToString:@"success"])
+            {
+                [MBHUDView dismissCurrentHUD];
+                [MBHUDView hudWithBody:@"删除成功" type:MBAlertViewHUDTypeActivityIndicator hidesAfter:2 show:YES];
+                [dataSoure removeObjectAtIndex:path.row];
+                [_myTabelView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:path, nil] withRowAnimation:UITableViewRowAnimationFade];
+                currentCell.isUnShow=NO;
+            }
+        } requestFailed:^(NSString *errorMsg) {
+            [MBHUDView dismissCurrentHUD];
+            [MBHUDView hudWithBody:@"网络不稳定" type:MBAlertViewHUDTypeDefault hidesAfter:2 show:YES];
+        }];
+    }
+}
 - (IBAction)back:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }

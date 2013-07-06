@@ -31,6 +31,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         dictionayData=[[NSArray alloc]init];
+        recoderAndPlayer=[[RecoderAndPlayer alloc]init];
     }
     return self;
 }
@@ -39,19 +40,18 @@
 {
     [super viewDidLoad];
     [self initLayout];
-    [self initDataSource];
+    
 }
-
-- (void) viewWillAppear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
-
+    [super viewWillAppear:animated];
+    [self initDataSource];
 }
 #pragma  mark - initLayout
 -(void)initLayout
 {
     //背景图片
     self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"right_background.png"]];
-    NSLog(@"aaaa=%@",[self.navigationController viewControllers]);
 
     UINavigationBar *nav=self.navigationController.navigationBar;
     //个人主页
@@ -104,9 +104,10 @@
     UIButton* favoriteButton= [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *favoriteImage=[UIImage imageNamed:@"Star.png"];
     
-    favoriteButton.frame = CGRectMake(180, 15, favoriteImage.size.width, favoriteImage.size.height);
-    [favoriteButton setBackgroundImage:favoriteImage  forState:UIControlStateNormal];
+    favoriteButton.frame = CGRectMake(170, 2, 40, 40);
+    [favoriteButton setImage:favoriteImage  forState:UIControlStateNormal];
     [favoriteButton setTag:4];
+    [favoriteButton setBackgroundColor:[UIColor clearColor]];
     [favoriteButton addTarget:self action:@selector(doDone:) forControlEvents:UIControlEventTouchUpInside];
     [bottomBar addSubview:favoriteButton];
     /*分割线2*/
@@ -118,8 +119,9 @@
     /*设置*/
     UIButton* settingButton= [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *settingImage=[UIImage imageNamed:@"Setting.png"];
-    settingButton.frame = CGRectMake(240, 15, settingImage.size.width,settingImage.size.height);
-    [settingButton setBackgroundImage:settingImage  forState:UIControlStateNormal];
+    settingButton.frame = CGRectMake(230, 2, 40,40);
+    [settingButton setImage:settingImage  forState:UIControlStateNormal];
+    [settingButton setBackgroundColor:[UIColor clearColor]];
     [settingButton setTag:5];
     [settingButton addTarget:self action:@selector(doDone:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -202,7 +204,7 @@
      cell.nameLabel.text=nameStr;
     
      UIImage *soundImage=[UIImage imageNamed:@"Sound.png"];
-     cell.soundButton.frame=CGRectMake(60+nameSize.width+5, 5, soundImage.size.width, soundImage.size.height);
+     cell.soundButton.frame=CGRectMake(60+nameSize.width+5, 5, soundImage.size.width+20, soundImage.size.height);
      [cell.soundButton setTag:100+indexPath.row ];
      [cell.soundButton addTarget:self action:@selector(playSoundFile:) forControlEvents:UIControlEventTouchUpInside];
      
@@ -250,14 +252,11 @@
 
 -(void)doDone:(id)sender
 {
-   
     UIButton *btn=(UIButton*)sender;
     //权限功能
     if ([btn tag]==2) {
         AuditReportListViewController *auditCtrl=[[AuditReportListViewController alloc] initWithNibName:@"AuditedReportListViewController" bundle:Nil];
         auditCtrl.title=@"已审核";
-//        [self.navigationController pushViewController:auditCtrl animated:YES];
-        
         [self.mm_drawerController.rightDrawerViewController.navigationController pushViewController:auditCtrl animated:YES];
 
     }else if ([btn tag]==4) {
@@ -276,21 +275,25 @@
 -(void)downloadSoundFile:(NSMutableDictionary *)dir
 {
     NSURL *baseUrl = [NSURL URLWithString:[ImageUrl stringByAppendingString:[dir objectForKey:@"file"]]];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:baseUrl];
+    __weak ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:baseUrl];
+    
     NSArray *fArray = [[dir objectForKey:@"file"] componentsSeparatedByString:@"/"];
     NSString *fileName=[fArray lastObject];
     [request setDownloadDestinationPath:[Utility getFilePath:fileName Dir:@"SpeechSoundDir"]];
     [request setCompletionBlock:^{
         [recoderAndPlayer SpeechAMR2WAV:fileName];
+        
     }];
     [request setFailedBlock:^{
         [request clearDelegatesAndCancel];
     }];
     [request startAsynchronous];
-
 }
 
--(void)playSoundFile:(UIButton*)sender{
+-(void)playSoundFile:(UIButton *)sender{
+    if (recoderAndPlayer.isPlay) {
+        [recoderAndPlayer stopPlaying];
+    }
     
     int index=[sender tag]-100;
     NSString *soundpath=[[dictionayData objectAtIndex:index] objectForKey:@"audiopath"];
@@ -309,9 +312,42 @@
     }
     
 }
--(void)playingFinishWithBBS:(BOOL)isFinish
-{
-}
+//-(void)downloadSoundFile:(NSMutableDictionary *)dir
+//{
+//    NSURL *baseUrl = [NSURL URLWithString:[ImageUrl stringByAppendingString:[dir objectForKey:@"file"]]];
+//    __weak ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:baseUrl];
+//    NSArray *fArray = [[dir objectForKey:@"file"] componentsSeparatedByString:@"/"];
+//    NSString *fileName=[fArray lastObject];
+//    [request setDownloadDestinationPath:[Utility getFilePath:fileName Dir:@"SpeechSoundDir"]];
+//    [request setCompletionBlock:^{
+//        [recoderAndPlayer SpeechAMR2WAV:fileName];
+//    }];
+//    [request setFailedBlock:^{
+//        [request clearDelegatesAndCancel];
+//    }];
+//    [request startAsynchronous];
+//
+//}
+//
+//-(void)playSoundFile:(UIButton*)sender{
+//    
+//    int index=[sender tag]-100;
+//    NSString *soundpath=[[dictionayData objectAtIndex:index] objectForKey:@"audiopath"];
+//    NSArray *fArray = [soundpath componentsSeparatedByString:@"/"];
+//    NSString *fileName=[fArray lastObject];
+//    //检查目录下是否存在此文件
+//    BOOL isExsit = [Utility checkFileExsit:fileName Dir:@"SpeechSoundDir"];
+//    if (isExsit) {
+//        [recoderAndPlayer SpeechAMR2WAV:fileName];
+//    }
+//    else{
+//        //下载
+//        NSMutableDictionary *dir=[[NSMutableDictionary alloc]init];
+//        [dir setValue:soundpath forKey:@"file"];
+//        [NSThread detachNewThreadSelector:@selector(downloadSoundFile:) toTarget:self withObject:dir];
+//    }
+//    
+//}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

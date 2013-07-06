@@ -42,6 +42,7 @@
 @property (retain,nonatomic) AVAudioPlayer *player;
 @property (retain,nonatomic) NSString *playpath;
 @property (retain,nonatomic) NSString *recordAudioName;
+@property (assign,nonatomic) BOOL isPlay;
 @property int aSeconds;
 @property (assign,nonatomic) id <ViewControllerDelegate> viewDelegate;
 -(void)SpeechRecordStart;

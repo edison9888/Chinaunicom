@@ -311,13 +311,10 @@
 }
 
 - (void)viewComment:(id)sender {
-    if ([commentsButton.titleLabel.text isEqualToString:@"查看精彩评论 共0条"]) {
-        [MBHUDView hudWithBody:@"没有评论" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
-    }else{
+
         GoodCommentsViewController *wonderfulCtrl=[[GoodCommentsViewController alloc] init];
         wonderfulCtrl.reportId=self.reportId;
         [self.navigationController pushViewController:wonderfulCtrl animated:YES];
-    }
 }
 - (void)viewDidUnload {
 

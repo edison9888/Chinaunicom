@@ -24,9 +24,6 @@
 }
 
 @property (weak, nonatomic)   IBOutlet UISearchBar *mySearch;
-
-
-//@property (strong, nonatomic) Report *myReport;
-
+-(void)reloadSource:(int)num;
 
 @end

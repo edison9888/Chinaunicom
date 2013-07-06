@@ -22,7 +22,7 @@
 @synthesize recordAudioName;
 @synthesize viewDelegate;
 @synthesize aSeconds;
-
+@synthesize isPlay;
 
 //录音完成回调方法
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag
@@ -176,6 +176,7 @@
 
 - (void) play
 {
+    isPlay=YES;
 	if (self.player) [self.player play];
     
 }

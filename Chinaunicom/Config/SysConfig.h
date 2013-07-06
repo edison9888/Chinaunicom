@@ -31,9 +31,9 @@
 #define KEY_LEFT_BOTTOM_MENU_INFO @"Left_Bottom_Menu"
 
 #define LoginPath  [SERVERPATH stringByAppendingFormat:@"user/login"]
-//返回所有报告
-#define ReportPath [SERVERPATH stringByAppendingFormat:@"user/getRepListByRepTypeId"]
 //根据类型返回报告
+#define ReportPath [SERVERPATH stringByAppendingFormat:@"user/getRepListByRepTypeId"]
+//返回所有报告
 #define AllReportPath [SERVERPATH stringByAppendingFormat:@"user/getReportList"]
 #define ReportDetails [SERVERPATH stringByAppendingFormat:@"user/getReportById"]
 #define FavShoucang [SERVERPATH stringByAppendingFormat:@"fav/addFav"]

@@ -46,8 +46,9 @@
         
         _soundButton=[UIButton buttonWithType:UIButtonTypeCustom];
         UIImage *soundImage=[UIImage imageNamed:@"Sound.png"];
-        _soundButton.frame=CGRectMake(270, 10, soundImage.size.width, soundImage.size.height);
-        [_soundButton setBackgroundImage:soundImage forState:UIControlStateNormal];
+        _soundButton.frame=CGRectMake(270, 10, 40, 30);
+        [_soundButton setImage:soundImage forState:UIControlStateNormal];
+        [_soundButton setBackgroundColor:[UIColor clearColor]];
         _soundButton.hidden=YES;
         [self.contentView addSubview:_soundButton];
     }

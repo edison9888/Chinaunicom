@@ -7,14 +7,12 @@
 //
 
 #import "LeftMenuViewController.h"
-#import "SysConfig.h"
 #import "CommonHelper.h"
 #import "requestServiceHelper.h"
 #import "User.h"
-#import "JKCustomAlert.h"
 #import "UIViewController+MMDrawerController.h"
 
-
+#import "MainViewController.h"
 #import "ESSTimeViewController.h"
 #import "BussinessDataViewController.h"
 #define IMAGE_GAP 56
@@ -574,12 +572,11 @@ static const NSTimeInterval kWobbleTime = 0.07;
 //    UINavigationController *ct= self.mm_drawerController.centerViewController;
     if (sender.tag<219)
     {
-        if ([_leftMenudelegate respondsToSelector:@selector(pushToMainPage:title:)]) {
             NSString *str=@"";
             int reid=0;
             if (sender.tag==211) {
                 str=@"全部";
-                reid=0;
+                reid=10;
             }else  if (sender.tag==213) {
                 str=@"维护类";
                 reid=13;
@@ -597,45 +594,41 @@ static const NSTimeInterval kWobbleTime = 0.07;
                 str=@"其他";
                 reid=15;
             }
-            
-            [_leftMenudelegate pushToMainPage:reid title:str];
-        }
+        
         [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
+            UINavigationController *nav= (UINavigationController *)self.mm_drawerController.centerViewController;
+            MainViewController *main=(MainViewController *)[nav topViewController];
+            [main reloadSource :reid];
         }];
-
+//        [self.mm_drawerController setCenterViewController:self.mm_drawerController.centerViewController withCloseAnimation:YES completion:^(BOOL a) {
+//            
+//        } ];
+//    -(void)setCenterViewController:(UIViewController *)newCenterViewController withFullCloseAnimation:(BOOL)fullCloseAnimated completion:(void(^)(BOOL))completion;
     }
     else
     {
+        BussinessDataViewController *bd=[[BussinessDataViewController alloc]initWithNibName:@"BussinessDataViewController" bundle:nil];
         if (sender.tag==221)
         {
-            BussinessDataViewController *bd=[[BussinessDataViewController alloc]initWithNibName:@"BussinessDataViewController" bundle:nil];
             bd.name=@"ESS实时看板";
-            [self.navigationController pushViewController:bd animated:YES];
-
         }else if (sender.tag==222)
         {
-            BussinessDataViewController *bd=[[BussinessDataViewController alloc]initWithNibName:@"BussinessDataViewController" bundle:nil];
             bd.name=@"ESS合约计划";
-            [self.navigationController pushViewController:bd animated:YES];
             
         }else if (sender.tag==223)
         {
-            BussinessDataViewController *bd=[[BussinessDataViewController alloc]initWithNibName:@"BussinessDataViewController" bundle:nil];
             bd.name=@"ECS交易额";
-            [self.navigationController pushViewController:bd animated:YES];
             
         }else if (sender.tag==224)
         {
-            BussinessDataViewController *bd=[[BussinessDataViewController alloc]initWithNibName:@"BussinessDataViewController" bundle:nil];
             bd.name=@"ECS商城订单";
-            [self.navigationController pushViewController:bd animated:YES];
             
         }else if (sender.tag==225)
         {
-            BussinessDataViewController *bd=[[BussinessDataViewController alloc]initWithNibName:@"BussinessDataViewController" bundle:nil];
             bd.name=@"ECS用户发展";
-            [self.navigationController pushViewController:bd animated:YES];
+            
         }
+        [self.navigationController pushViewController:bd animated:YES];
     }
    //    [self.mm_drawerController setCenterViewController:self.mm_drawerController.centerViewController withCloseAnimation:YES completion:nil];
 

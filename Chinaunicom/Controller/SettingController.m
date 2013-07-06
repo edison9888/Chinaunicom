@@ -7,13 +7,11 @@
 //
 
 #import "SettingController.h"
-#import "AppDelegate.h"
-#import "LoginViewController.h"
 #import "HttpRequestHelper.h"
-#import "SysConfig.h"
 #import "User.h"
 #import "GTMBase64.h"
-#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
+#import "UIViewController+MMDrawerController.h"
 @interface SettingController ()
 
 @end
@@ -25,56 +23,25 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-         self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     }
     return self;
 }
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
+    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
+    NSString *picpath=[user.icon stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
+    [self.headButton setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:picpath]]];
     [self initLayout];
 }
 
 -(void) initLayout
 {
-    //返回按钮
-    UIButton* backButton= [UIButton buttonWithType:UIButtonTypeCustom];
-    backButton.frame = CGRectMake(0, 0, 32, 32);
-    [backButton setBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backItem=[[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem=backItem;
-    /*分割线1*/
-    UIImageView *imageViewTopDiv1=[[UIImageView alloc] initWithFrame:CGRectMake(40, -10, 30, 63)];
-    [imageViewTopDiv1 setImage:[UIImage imageNamed:@"topDividingLine"]];
-    [imageViewTopDiv1 setTag:101];
-    [self.navigationController.navigationBar addSubview:imageViewTopDiv1];
-    
-//    //返回按钮
-//    UIButton* backButton= [UIButton buttonWithType:UIButtonTypeCustom];
-//    UIImage *image=[UIImage imageNamed:@"left_arrow"];
-//    backButton.frame = CGRectMake(10, 0, 30, 30);
-//    [backButton setBackgroundImage:image forState:UIControlStateNormal];
-//    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *backItem=[[UIBarButtonItem alloc] initWithCustomView:backButton];
-//    self.navigationItem.leftBarButtonItem=backItem;
-    
-    
-    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString* documentsDirectory = [paths objectAtIndex:0];
-    // Now we get the full path to the file
-    NSString* fullPathToFile = [documentsDirectory stringByAppendingPathComponent:@"temphead.jpg"];
-    NSFileManager *fm = [NSFileManager defaultManager];
-    if([fm fileExistsAtPath:fullPathToFile]){
-        [self.icon setImage:[UIImage imageWithContentsOfFile:fullPathToFile]];
-    }else{
-    NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
-    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
-    NSString *picpath=[user.icon stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
-    [self.icon setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:picpath]]];
-    }
-    
     //自定义switch...
     self.message.on=YES;
     self.sound.on=YES;
@@ -86,14 +53,6 @@
     [self.sound addTarget:self action:@selector(soundChange:) forControlEvents:UIControlEventValueChanged];
 }
 
--(void)back
-{
-//    RightMenuViewController *right=[[RightMenuViewController alloc] init];
-//    BaseNavigationController *nav=[[BaseNavigationController alloc] initWithRootViewController:right];
-//    AppDelegate *myDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
-//    [myDelegate.revealSideViewController pushViewController:nav onDirection:PPRevealSideDirectionRight withOffset:50 animated:YES forceToPopPush:YES completion:nil];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -103,24 +62,27 @@
 - (void)viewDidUnload {
     [self setMessage:nil];
     [self setSound:nil];
-    [self setQuit:nil];
-    [self setIcon:nil];
+    [self setHeadButton:nil];
     [super viewDidUnload];
+}
+//修改密码
+//参数:userId(用户ID),oldPassword(原密码),newPassword(新密码)			格式{'userId':'12','oldPassword':'22','newPassword':'a'}
+//访问路径:http://localhost:8080/mobilePortal/restful/UserPrivilegeRe/updatePassword
+//返回值:	成功 'true'
+//失败 'false'
+
+- (IBAction)changePwd:(id)sender {
 }
 
 - (IBAction)quit:(id)sender {
-//    LoginViewController *loginCtrl=[[LoginViewController alloc] init];
-//    BaseNavigationController *baseNav=[[BaseNavigationController alloc] initWithRootViewController:loginCtrl];
-//    AppDelegate *myDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
-//    myDelegate.revealSideViewController = [[PPRevealSideViewController alloc] initWithRootViewController:baseNav];
-//    [[UIApplication sharedApplication] keyWindow].rootViewController= myDelegate.revealSideViewController;
-    
-//    LoginViewController *loginCtrl=[[LoginViewController alloc] init];
-//    BaseNavigationController *baseNav=[[BaseNavigationController alloc] initWithRootViewController:loginCtrl];
-//    AppDelegate *myDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
-//    myDelegate.revealSideViewController = [[PPRevealSideViewController alloc] initWithRootViewController:baseNav];
-//    [[UIApplication sharedApplication] keyWindow].rootViewController= myDelegate.revealSideViewController;
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
+
+- (IBAction)headChange:(id)sender {
+    UIActionSheet *sheet=[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"拍照" otherButtonTitles:@"从手机相册选择", nil];
+    [sheet showInView:self.view];
+}
+
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1) {
         [self pickImageFromAlbum];
@@ -146,11 +108,10 @@
 }
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera)
     {
-        //        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
     }
-    
     //把图片转换成jpg格式
       NSData *imageData = UIImageJPEGRepresentation([info objectForKey:@"UIImagePickerControllerOriginalImage"], 1.0);
     NSMutableDictionary *dictionary=[[NSMutableDictionary alloc]init];
@@ -161,37 +122,26 @@
     [dictionary setObject:userid forKey:@"userId"];
     [dictionary setObject:@"jpg" forKey:@"picType"];
     [dictionary setObject:[[NSString alloc] initWithData:[GTMBase64 encodeData:imageData] encoding:NSUTF8StringEncoding] forKey:@"imageStr"];
-              [self dismissModalViewControllerAnimated:YES];
-//    [HttpRequestHelper asyncPostRequest:userPhoto parameter:dictionary filename:@"jpg" fileData:    } requestFailed:^(NSString *errorMsg) {
-//        //<#code#>
-//        NSLog(@"error %@",errorMsg);
-//    
-//    }];
-    
+    [self dismissModalViewControllerAnimated:YES];
+    [MBHUDView hudWithBody:@"上传中..." type:MBAlertViewHUDTypeActivityIndicator hidesAfter:0 show:YES];
     [HttpRequestHelper asyncGetRequest:userPhoto parameter:dictionary requestComplete:^(NSString *responseStr) {
-            UIImage *image = [UIImage imageWithData:imageData];
-            self.tempHead = [self imageWithImageSimple:image scaledToSize:CGSizeMake(128.0, 228.0)];
-            self.icon.image = self.tempHead;
-        [self saveImage:image WithName:@"temphead.jpg"];
+        if ([responseStr isEqualToString:@"\"true\""]) {
+            [MBHUDView dismissCurrentHUD];
+            [self.headButton setImage:[UIImage imageWithData:imageData] forState:UIControlStateNormal];
+            [MBHUDView hudWithBody:@"上传成功" type:MBAlertViewHUDTypeCheckmark hidesAfter:2.0 show:YES];
+        }else
+        {
+            [MBHUDView dismissCurrentHUD];
+            [MBHUDView hudWithBody:@"上传失败" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
+        }
 
     } requestFailed:^(NSString *errorMsg) {
-     //   <#code#>
-        NSLog(@"error");
+        [MBHUDView dismissCurrentHUD];
+        [MBHUDView hudWithBody:@"网络不稳定" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
     }];
-//     [[EPUploader alloc]initWithURL:[NSURL URLWithString:userPhoto] filePath:imageData delegate:self doneSelector:@selector(uploadHeadImgFinish:) errorSelector:@selector(uploadHeadImgError:)];
 
 }
 
--(void)uploadHeadImgFinish:(id)sender
-{
-    NSLog(@"上传成功");
-}
-
--(void)uploadHeadImgError:(id)sender
-{
-    UIAlertView *alert =[[UIAlertView alloc] initWithTitle:@"提示" message:@"上传头像失败!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-    [alert show];
-}
 - (void)pickImageFromCamera
 {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
@@ -200,7 +150,6 @@
         imagepicker.sourceType = UIImagePickerControllerSourceTypeCamera;
         imagepicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         imagepicker.allowsEditing = NO;
-        
         
         [self presentModalViewController:imagepicker animated:YES];
     }
@@ -232,21 +181,18 @@
 - (IBAction)soundChange:(id)sender {
 }
 
-- (IBAction)headChange:(id)sender {
-    UIActionSheet *sheet=[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"拍照" otherButtonTitles:@"从手机相册选择", nil];
-    [sheet showInView:self.view];
-}
-//保存图片到Document
-- (void)saveImage:(UIImage *)tempImage WithName:(NSString *)imageName
-{
-    NSData* imageData = UIImagePNGRepresentation(tempImage);
-    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString* documentsDirectory = [paths objectAtIndex:0];
-    // Now we get the full path to the file
-    NSString* fullPathToFile = [documentsDirectory stringByAppendingPathComponent:imageName];
-    // and then we write it out
-    [imageData writeToFile:fullPathToFile atomically:NO];
-}
+
+////保存图片到Document
+//- (void)saveImage:(UIImage *)tempImage WithName:(NSString *)imageName
+//{
+//    NSData* imageData = UIImagePNGRepresentation(tempImage);
+//    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString* documentsDirectory = [paths objectAtIndex:0];
+//    // Now we get the full path to the file
+//    NSString* fullPathToFile = [documentsDirectory stringByAppendingPathComponent:imageName];
+//    // and then we write it out
+//    [imageData writeToFile:fullPathToFile atomically:NO];
+//}
 -(UIView *)findView:(UIView *)aView withName:(NSString *)name{
     Class cl = [aView class];
     NSString *desc = [cl description];
@@ -258,7 +204,6 @@
     {
         UIView *subView = [aView.subviews objectAtIndex:i];
         subView = [self findView:subView withName:name];
-        //        NSLog(@"subview = %@",subView);
         if (subView)
             return subView;
     }
@@ -275,10 +220,12 @@
     
 }
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
-    
     [self addSomeElements:viewController];
 }
 
 
 
+- (IBAction)back:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 @end

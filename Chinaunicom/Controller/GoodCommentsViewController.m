@@ -72,7 +72,6 @@
 {
     inputToolbar = [[UIInputToolbar alloc] initWithFrame:CGRectMake(0,self.view.frame.size.height-44, 320, 44)];
     inputToolbar.textView.returnKeyType=UIReturnKeySend;
-//    inputToolbar.textView.delegate = self;
     inputToolbar.delegate=self;
     inputToolbar.textView.placeholder=@"输入评论";
     [self.view addSubview:inputToolbar];
@@ -82,6 +81,7 @@
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
     if (page == 0)
     {
         [_tableview launchRefreshing];
@@ -152,7 +152,6 @@
 {
     static NSString *CellWithIdentifier = @"GoodComment";
     CustomWonderfulCommentsCell *cell = (CustomWonderfulCommentsCell*)[tableView dequeueReusableCellWithIdentifier:CellWithIdentifier];
-    NSLog(@"aaaaa=%@",dataSource);
     if (cell == nil)
     {
         cell=[[CustomWonderfulCommentsCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellWithIdentifier];
@@ -219,13 +218,13 @@
 }
 - (void)keyboardWillShow:(NSNotification *)notification
 {
+    NSDictionary *info = [notification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     /* Move the toolbar to above the keyboard */
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationDuration:0.3];
 	CGRect frame = inputToolbar.frame;
-
-    frame.origin.y = self.view.frame.size.height - frame.size.height - 216;
-
+    frame.origin.y = self.view.frame.size.height - frame.size.height - kbSize.height;
 	inputToolbar.frame = frame;
 	[UIView commitAnimations];
     keyboardIsVisible = YES;
@@ -233,6 +232,7 @@
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
+
     /* Move the toolbar back to bottom of the screen */
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationDuration:0.3];
@@ -251,7 +251,6 @@
     hub.size=image.size;
     hub.backgroundColor=[UIColor colorWithPatternImage:image];
     [hub addToDisplayQueue];
-    
     [recoderAndPlayer SpeechRecordStart];
 
 }
@@ -259,14 +258,13 @@
 {
     [hub dismiss];
     [recoderAndPlayer SpeechRecordStop];
-    [self sendSoundComment];
-
+    
 }
 
 -(void)downloadSoundFile:(NSMutableDictionary *)dir
 {
     NSURL *baseUrl = [NSURL URLWithString:[ImageUrl stringByAppendingString:[dir objectForKey:@"file"]]];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:baseUrl];
+    __weak ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:baseUrl];
 
     NSArray *fArray = [[dir objectForKey:@"file"] componentsSeparatedByString:@"/"];
     NSString *fileName=[fArray lastObject];
@@ -282,6 +280,9 @@
 }
 
 -(void)playSoundFile:(UIButton *)sender{
+    if (recoderAndPlayer.isPlay) {
+        [recoderAndPlayer stopPlaying];
+    }
     
     int index=[sender tag]-1000;
     NSString *soundpath=[[dataSource objectAtIndex:index] objectForKey:@"audioPath"];
@@ -307,9 +308,11 @@
 }
 -(void)playingFinishWithBBS:(BOOL)isFinish
 {
-    NSLog(@"22222");
+
 }
 -(void)recordAndSendAudioFile:(NSString *)fileName fileSize:(NSString *)fileSize duration:(NSString *)timelength{
+//    [self performSelectorInBackground:@selector(sendSoundComment) withObject:nil];
+    [self sendSoundComment];
 }
 -(void)sendSoundComment
 {
@@ -322,17 +325,20 @@
     [dictionary setObject:userid forKey:@"userId"];
     [dictionary setObject:inputToolbar.textView.text forKey:@"content"];
     [dictionary setObject:@"amr" forKey:@"audioType"];
-    [dictionary setObject:@"" forKey:@"audioStr"];
     
     NSString *filePath = [NSString stringWithFormat:@"%@",[[[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"SpeechSoundDir"] stringByAppendingPathComponent:@"alreadyEncoderData.amr"]];
     NSData *soundData = [NSData dataWithContentsOfFile:filePath];
     [dictionary setObject:[[NSString alloc] initWithData:[GTMBase64 encodeData:soundData] encoding:NSUTF8StringEncoding] forKey:@"audioStr"];
 
     [HttpRequestHelper asyncGetRequest:PublishComment parameter:dictionary requestComplete:^(NSString *responseStr) {
+        [self performSelectorOnMainThread:@selector(reTable) withObject:nil waitUntilDone:NO];
     } requestFailed:^(NSString *errorMsg) {
     }];
-    
-
+}
+-(void)reTable
+{
+    refreshing=YES;
+    [self loadData];
 }
 -(void)sendTheComment
 {
@@ -362,6 +368,7 @@
     } requestFailed:^(NSString *errorMsg) {
         [MBHUDView hudWithBody:@"发表失败" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
     }];
+    [_tableview reloadData];
 
 }
 - (void)viewDidLoad
