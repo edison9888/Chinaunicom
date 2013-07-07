@@ -176,11 +176,39 @@
 
 - (void) play
 {
+    [self handleNotification:YES];
     isPlay=YES;
 	if (self.player) [self.player play];
     
 }
+#pragma mark - 监听听筒or扬声器
+- (void) handleNotification:(BOOL)state
+{
+    [[UIDevice currentDevice] setProximityMonitoringEnabled:state]; //建议在播放之前设置yes，播放结束设置NO，这个功能是开启红外感应
+    
+    if(state)//添加监听
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(sensorStateChange:) name:@"UIDeviceProximityStateDidChangeNotification"
+                                                   object:nil];
+    else//移除监听
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UIDeviceProximityStateDidChangeNotification" object:nil];
+}
 
+//处理监听触发事件
+-(void)sensorStateChange:(NSNotificationCenter *)notification;
+{
+    //如果此时手机靠近面部放在耳朵旁，那么声音将通过听筒输出，并将屏幕变暗（省电啊）
+    if ([[UIDevice currentDevice] proximityState] == YES)
+    {
+        NSLog(@"Device is close to user");
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    }
+    else
+    {
+        NSLog(@"Device is not close to user");
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    }
+}
 - (BOOL) prepAudio
 {
 	NSError *error;
@@ -201,6 +229,7 @@
 //播放完成
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
 {
+    [self handleNotification:NO];
     isPlay = NO;
     //播放完成回调
     [viewDelegate playingFinishWithBBS:YES];
@@ -235,7 +264,8 @@
     [timer invalidate];
     [viewDelegate TimePromptAction:self.aSeconds];
 }
-
+//    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
+//NSString *isOpen=[userDefaults objectForKey:@"Sound"];
 -(void)SpeechAMR2WAV:(NSString *)amrFile{
     NSData *amrData = [NSData dataWithContentsOfFile:[DOCUMENTS_FOLDER stringByAppendingPathComponent:amrFile]];
     NSData *wavData = [self decodeAmr:amrData];
@@ -243,9 +273,23 @@
         NSLog(@"wavdata is empty");
         return;
     }
-    [self LoudSpeakerPlay:YES];
+    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
+    NSString *isOpen=[userDefaults objectForKey:@"Sound"];
+    if (isOpen == nil) {
+        [self LoudSpeakerPlay:YES];
+    }else
+    {
+        if ([isOpen isEqualToString:@"open"]) {
+            [self LoudSpeakerPlay:YES];
+        }else
+        {
+            [self LoudSpeakerPlay:NO];
+        }
+    }
+    
     player= [[AVAudioPlayer alloc] initWithData:wavData error:nil];
     [player stop];
+    player.meteringEnabled=YES;
     player.delegate =self;
     [player prepareToPlay];
     [player setVolume:1.0];
@@ -279,7 +323,7 @@
 	//播放的时候设置play ，录音时候设置recorder
 	
 	//return false;
-    UInt32 route;
+//    UInt32 route;
     //OSStatus error;
     UInt32 sessionCategory = kAudioSessionCategory_MediaPlayback;// kAudioSessionCategory_PlayAndRecord;//kAudioSessionCategory_RecordAudio;//kAudioSessionCategory_PlayAndRecord;    // 1
     
@@ -289,8 +333,24 @@
                              &sessionCategory                                            // 4
                              );
     
-    route = bOpen?kAudioSessionOverrideAudioRoute_Speaker:kAudioSessionOverrideAudioRoute_None;
-    AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(route), &route);
+    UInt32 audioRouteOverride = kAudioSessionOverrideAudioRoute_Speaker;
+    AudioSessionSetProperty (kAudioSessionProperty_OverrideAudioRoute,
+                             sizeof (audioRouteOverride),
+                             &audioRouteOverride);
+    
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    if (bOpen) {
+        //默认情况下扬声器播放
+        [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
+        
+    }else
+    {
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    }
+        [audioSession setActive:YES error:nil];
+    
+//    route = bOpen?kAudioSessionOverrideAudioRoute_Speaker:kAudioSessionOverrideAudioRoute_None;
+//    AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(route), &route);
     return true;
 }
 -(void)dealloc{

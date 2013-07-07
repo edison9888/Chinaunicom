@@ -30,6 +30,7 @@
         
         _pinlunLabel=[[UILabel alloc]init];
         [_pinlunLabel sizeToFit];
+        [_pinlunLabel setTextAlignment:NSTextAlignmentRight];
         [_pinlunLabel setBackgroundColor:[UIColor clearColor]];
         [_pinlunLabel setTextColor:[UIColor lightGrayColor]];
         [self.contentView addSubview:_pinlunLabel];

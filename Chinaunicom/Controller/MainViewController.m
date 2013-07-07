@@ -186,7 +186,6 @@
             }
             
             [dataSource addObjectsFromArray:reportDictionary];
-            NSLog(@"aaa=%@",dataSource);
         }else {
             return;
         }

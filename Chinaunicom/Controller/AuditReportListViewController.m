@@ -7,26 +7,30 @@
 //
 
 #import "AuditReportListViewController.h"
-#import "AppDelegate.h"
-#import "RightMenuViewController.h"
-#import "MessageTypeViewController.h"
-#import "AuditAndNonAuditReportViewController.h"
-#import "SysConfig.h"
 #import "User.h"
-#import "requestServiceHelper.h"
-#import "AudiReportDetail.h"
+#import "CustomMainViewCell.h"
+#import "CellImageView.h"
+#import "UIImageView+WebCache.h"
 #import "ContextDetailController.h"
+#import "AudiReportDetail.h"
 @interface AuditReportListViewController ()
-
+{
+    NSMutableArray *dataSoure;
+    int page;
+    int pageSize;
+    NSString *state;
+    BOOL refreshing;
+}
 @end
 
 @implementation AuditReportListViewController
-@synthesize myTableView,state;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
+        dataSoure=[[NSMutableArray alloc]init];
+        pageSize=10;
+        state=@"2";
     }
     return self;
 }
@@ -34,103 +38,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self initParmeter];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]]];
+    if (page == 0)
+    {
+        [self.myTableView launchRefreshing];
+    }
     [self initLayout];
     [self initDataSource];
-    
 }
-
 -(void)initLayout
 {
-    
-    //返回按钮
-    UIButton* backButton= [UIButton buttonWithType:UIButtonTypeCustom];
-    backButton.frame = CGRectMake(0, 0, 32, 32);
-    [backButton setBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backItem=[[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem=backItem;
-    
-    /*分割线1*/
-    UIImageView *imageViewTopDiv1=[[UIImageView alloc] initWithFrame:CGRectMake(40, -10, 30, 63)];
-    [imageViewTopDiv1 setImage:[UIImage imageNamed:@"topDividingLine"]];
-    [imageViewTopDiv1 setTag:101];
-    [self.navigationController.navigationBar addSubview:imageViewTopDiv1];
-    
-    //添加底部navbar
-    UINavigationBar *bottomBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 372, 320, 44)];
-    [bottomBar setBackgroundImage:[UIImage imageNamed:@"bottomNav"] forBarMetrics:UIBarMetricsDefault];
-    [self.view addSubview:bottomBar];
-    
-    //为nabar添加对应的items
-    /*发布消息*/
-    UIButton* messageButton= [UIButton buttonWithType:UIButtonTypeCustom];
-    messageButton.frame = CGRectMake(20, 3, 80, 40);
-    [messageButton setTitle:@"发布消息" forState:UIControlStateNormal];
-    [messageButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [messageButton addTarget:self action:@selector(doDone:) forControlEvents:UIControlEventTouchUpInside];
-    [messageButton setTag:1];
-    //[messageButton addTarget:self action:@selector(doDone:) forControlEvents:UIControlEventTouchUpInside];
-    [bottomBar addSubview:messageButton];
-    /*分割线1*/
-    UIImageView *imageViewBottomDiv1=[[UIImageView alloc] initWithFrame:CGRectMake(105, 0, 30, 44)];
-    [imageViewBottomDiv1 setImage:[UIImage imageNamed:@"dividingLine"]];
-    [bottomBar addSubview:imageViewBottomDiv1];
-    
-    /*待审核*/
-    UIButton* nonAuditButton= [UIButton buttonWithType:UIButtonTypeCustom];
-    nonAuditButton.frame = CGRectMake(133, 3, 80, 40);
-    [nonAuditButton setTitle:@"待审核" forState:UIControlStateNormal];
-    [nonAuditButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [nonAuditButton setTag:2];
-    [nonAuditButton addTarget:self action:@selector(doDone:) forControlEvents:UIControlEventTouchUpInside];
-    [bottomBar addSubview:nonAuditButton];
-    /*分割线2*/
-    UIImageView *imageViewBottomDiv2=[[UIImageView alloc] initWithFrame:CGRectMake(210, 0, 30, 44)];
-    [imageViewBottomDiv2 setImage:[UIImage imageNamed:@"dividingLine"]];
-    [bottomBar addSubview:imageViewBottomDiv2];
-    
-    /*已审核*/
-    UIButton* auditedButton= [UIButton buttonWithType:UIButtonTypeCustom];
-    auditedButton.frame = CGRectMake(230, 3, 80,40);
-    [auditedButton setTitle:@"已审核" forState:UIControlStateNormal];
-    [auditedButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [auditedButton setTag:3];
-    [auditedButton addTarget:self action:@selector(doDone:) forControlEvents:UIControlEventTouchUpInside];
-    [bottomBar addSubview:auditedButton];
-    
-}
-
-- (void) viewWillAppear:(BOOL)animated
-{
-    //显示导航栏
-     [self.navigationController.navigationBar setHidden:NO];
-//    [self upDataAgain];
-}
-
-
-
--(void)back
-{
-//    RightMenuViewController *right=[[RightMenuViewController alloc] init];
-//    BaseNavigationController *nav=[[BaseNavigationController alloc] initWithRootViewController:right];
-//    AppDelegate *myDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
-//    [myDelegate.revealSideViewController pushViewController:nav onDirection:PPRevealSideDirectionRight withOffset:50 animated:YES forceToPopPush:YES completion:nil];
-    //[self.navigationController popViewControllerAnimated:YES];
-}
-
--(void) initParmeter{
-    myTableView =  [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 44, 320, 372+(iPhone5?88:0))];
-    self.dataSource = [[NSMutableArray alloc] init];
-    [myTableView setDelegate:self];
-    [myTableView setDataSource:self];
-    [self.view addSubview:self.myTableView];
-    myTableView.tableFooterView.hidden=YES;
-    page=1;
-    totalresult=0;
-    pageSize=10;
-    state=@"2";
-    //    isfirst=YES;
+    [self.senHeButton setSelected:YES];
+    self.myTableView.pullingDelegate=self;
+    [self.myTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [self.myTableView setSeparatorColor:[UIColor clearColor]];
+    [self.myTableView setBackgroundColor:[UIColor clearColor]];
+    [self.myTableView setBackgroundView:nil];
+    self.myTableView.sectionHeaderHeight=44.0f;
 }
 
 //初始化数据
@@ -145,98 +69,69 @@
     [dictionary setValue: state forKey:@"status"];
     [dictionary setValue: userid forKey:@"userId"];
     [[requestServiceHelper defaultService] getAduitingList:dictionary sucess:^(NSMutableArray *reportDictionary, NSInteger result) {
-        totalresult =result;
-        myTableView.tableFooterView.hidden=NO;
-        if (totalresult > 0) {
-            NSString *msg=@"";
-            if ([state isEqualToString:@"2"]) {
-                msg=@"条已审核消息";
-            }
-            else{
-                msg=@"条待审核消息";
-            }
-            self.count.text=[[@"有" stringByAppendingString:[NSString stringWithFormat:@"%d",totalresult]] stringByAppendingString:msg];
-            if (self.dataSource.count >=totalresult) {
-                [myTableView reloadData:YES];
-                return;
-            }
-            
-            if (page == 1) {
-                [self.dataSource removeAllObjects];
-            }
-            
-            [self.dataSource addObjectsFromArray:reportDictionary];
-            
-            [myTableView reloadData:NO];
-        }else {
-            [myTableView reloadData:NO];
-            return;
+        
+        if (page==1) {
+            [dataSoure removeAllObjects];
         }
-        
-        [self performSelectorOnMainThread:@selector(isOver) withObject:nil waitUntilDone:NO];
-        
+        [dataSoure addObjectsFromArray:reportDictionary];
+        if ([dataSoure count]==result) {
+            [self.myTableView tableViewDidFinishedLoading];
+            self.myTableView.reachedTheEnd  = YES;
+            [self.myTableView reloadData];
+        }else
+        {
+            [self.myTableView tableViewDidFinishedLoading];
+            self.myTableView.reachedTheEnd  = NO;
+            [self.myTableView reloadData];
+        }    
         
     } falid:^(NSString *errorMsg) {
+        [self.myTableView tableViewDidFinishedLoading];
+        self.myTableView.reachedTheEnd  = YES;
     }];
 }
-
-
--(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+//判断是刷新还是加载更多
+- (void)loadData
 {
-    NSInteger returnKey = [myTableView tableViewDidEndDragging];
-    if (returnKey != k_RETURN_DO_NOTHING) {
-        switch (returnKey) {
-            case k_RETURN_REFRESH:{
-                [self upDataAgain];
-            }break;
-            case k_RETURN_LOADMORE:{
-                [self moreInfor];
-            }break;
-            default:break;
-        }
+    page++;
+    if (refreshing)
+    {
+        page = 1;
+        refreshing = NO;
+        [self initDataSource];
     }
+    else
+    {
+        [self initDataSource];
+    }
+}
+
+#pragma mark - PullingRefreshTableViewDelegate
+- (void)pullingTableViewDidStartRefreshing:(PullingRefreshTableView *)tableView
+{
+    refreshing = YES;
+    [self performSelector:@selector(loadData) withObject:nil afterDelay:1.f];
+}
+
+- (NSDate *)pullingTableViewRefreshingFinishedDate{
+    NSDate *date=[NSDate date];
+    return date;
+}
+
+- (void)pullingTableViewDidStartLoading:(PullingRefreshTableView *)tableView
+{
+    [self performSelector:@selector(loadData) withObject:nil afterDelay:1.f];
+}
+
+#pragma mark - Scroll
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self.myTableView tableViewDidScroll:scrollView];
     
 }
--(void)upDataAgain{
-    page = 1;
-    [self initDataSource];
-}
--(void)moreInfor{
-    page = [self.dataSource count]/pageSize + 1;
-    [self initDataSource];
-}
 
-
-
-
-
--(void)doDone:(id)sender
-{
-    UIButton *btn=(UIButton*)sender;
-    if([btn tag]==1){
-        
-        MessageTypeViewController *mesCtr=[[MessageTypeViewController alloc] init];
-        [self.navigationController pushViewController:mesCtr animated:YES];
-    }
-    //待审核
-    if ([btn tag]==2) {
-        self.title=@"待审核";
-        state=@"1";
-        page=1;
-        [self.dataSource removeAllObjects];
-        totalresult=0;
-         [myTableView reloadData:YES];
-        [self initDataSource];
-    }
-    if ([btn tag]==3) {
-        self.title=@"已审核";
-        state=@"2";
-        [self.dataSource removeAllObjects];
-         [myTableView reloadData:YES];
-        page=1;
-        totalresult=0;
-        [self initDataSource];
-    }
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    [self.myTableView tableViewDidEndDragging:scrollView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -244,86 +139,195 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *headView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+    [headView setBackgroundColor:[UIColor darkGrayColor]];
+    UILabel *titleLabel=[[UILabel alloc]initWithFrame:CGRectMake(10, 5, 300, 34)];
+    [titleLabel setBackgroundColor:[UIColor clearColor]];
+    [titleLabel setTextColor:[UIColor whiteColor]];
+    if ([state isEqualToString:@"1"]) {
+        [titleLabel setText:[NSString stringWithFormat:@"有%d已审核信息",[dataSoure count]]];
+    }else
+    {
+        [titleLabel setText:[NSString stringWithFormat:@"有%d条待ß审核信息",[dataSoure count]]];
+    }
+    
+    [headView addSubview:titleLabel];
+    return headView;
+}
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
-    return [self.dataSource count];
-    
-}
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellWithIdentifier = @"CustomMainViewCell";
-//    CustomMainViewCell *cell = (CustomMainViewCell*)[tableView dequeueReusableCellWithIdentifier:CellWithIdentifier];//复用cell
-//    //通过XIB将cell添加上去
-//    //    if (cell == nil) {
-//    cell = [[[NSBundle mainBundle] loadNibNamed:@"CustomMainViewCell" owner:self options:nil]lastObject];
-//    //            cell = [array objectAtIndex:0];
-//    //    }
-////    [self initCustomTableCell:cell IndexPath:indexPath];
-//    return cell;
+    return [dataSoure count];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 90;//此处返回cell的高度
+    UIImage *image=[UIImage imageNamed:@"qitalei.png"];
+    NSString *titleStr=[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"title"];
+    CGSize titleSize;
+    if ([[dataSoure objectAtIndex:indexPath.row]objectForKey:@"picPath"]!=nil) {
+        NSString * path=[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"picPath"];
+        NSArray *imageArray=[path componentsSeparatedByString:@","];
+        if ([imageArray count]>1) {
+            titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
+            return 10+titleSize.height+5 +image.size.height+5 + 80;
+        }else
+        {
+            titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(190, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
+            return 10+titleSize.height+5 +image.size.height+5;
+        }
+        
+    }else
+    {
+        titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
+        return 10+titleSize.height+5 +image.size.height+5;
+    }
 }
-//#pragma mark - Table view data source
-//-(void)initCustomTableCell:(CustomMainViewCell*)cell IndexPath:(NSIndexPath *)indexPath
-//{
-//    //内容摘要
-//    if (cell.contextLabel==nil) {
-//        cell.contextLabel=[[UILabel alloc] initWithFrame:CGRectMake(14, 5, 180, 49)];
-//        cell.contextLabel.text=[[self.dataSource objectAtIndex:indexPath.row] objectForKey:@"title"];
-//        //[cell.contextLabel setTextAlignment:NSTextAlignmentLeft];
-//        [cell.contextLabel setTextAlignment:NSTextAlignmentLeft];
-//        [cell.contextLabel setBackgroundColor:[UIColor clearColor]];
-//        [cell.contextLabel setNumberOfLines:2];
-//        [cell addSubview:cell.contextLabel];
-//    }
-//    //评论
-//    if (cell.countLabel==nil) {
-//        cell.countLabel=[[UILabel alloc] init];
-//        [cell.countLabel setFrame:CGRectMake(160, 60, 160, 21)];
-//        cell.countLabel.text=[[self.dataSource objectAtIndex:indexPath.row ] objectForKey:@"published"];
-//        [cell.countLabel setBackgroundColor:[UIColor clearColor]];
-//        [cell.countLabel setTextColor:[CommonHelper hexStringToColor:@"#8D8D8E"]];
-//        [cell addSubview:cell.countLabel];
-//    }
-//}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    static NSString *CellWithIdentifier = @"CustomMainViewCell";
+    CustomMainViewCell *cell = (CustomMainViewCell*)[tableView dequeueReusableCellWithIdentifier:CellWithIdentifier];//复用cell
+    
+    if (cell == nil) {
+        cell=[[CustomMainViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellWithIdentifier];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    }
+    for (UIView *view in [cell.contentView subviews]) {
+        if ([view isMemberOfClass:[CellImageView class]]) {
+            [view removeFromSuperview];
+        }
+        
+    }
+    return cell;
+}
+-(void)tableView:(UITableView *)tableView willDisplayCell:(CustomMainViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *titleStr=[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"title"];
+    CGSize titleSize;
+    NSString * path=[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"picPath"];
+    NSArray *imageArray=[path componentsSeparatedByString:@","];
+    
+    if ([[dataSoure objectAtIndex:indexPath.row]objectForKey:@"picPath"]!=nil) {
+        
+        if ([imageArray count]>1) {
+            titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
+            cell.pinlunLabel.frame=CGRectMake(320-3-70, 10+titleSize.height+5+10, 70, 20);
+            
+            for (int i=0; i<[imageArray count]; i++) {
+                
+                CellImageView *imageView=[[CellImageView alloc]initWithFrame:CGRectMake((i+1)*15+i*80, 10+titleSize.height+5+40, 80, 60)];
+                NSString *picPath=[[imageArray objectAtIndex:i]stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
+                NSData *data = [picPath dataUsingEncoding: NSUTF8StringEncoding];
+                NSString *content=[[NSString alloc]initWithData:data encoding:1];
+                [imageView setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:content]]];
+                [cell.contentView addSubview:imageView];
+            }
+            
+        }else
+        {
+            titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(190, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
+            cell.pinlunLabel.frame=CGRectMake(15+100, 10+titleSize.height+5+5, 70, 20);
+            NSString *picPath=[[imageArray objectAtIndex:0]stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
+            cell.tupianImageView.frame=CGRectMake(220, 7, 80, 60);
+            NSData *data = [picPath dataUsingEncoding: NSUTF8StringEncoding];
+            NSString *content=[[NSString alloc]initWithData:data encoding:1];
+            [cell.tupianImageView setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:content ]]];
+        }
+        
+    }else
+    {
+        titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
+        cell.pinlunLabel.frame=CGRectMake(320-3-150, 10+titleSize.height+5+10, 150, 20);
+        cell.tupianImageView.frame=CGRectMake(0, 0, 0, 0);
+        cell.tupianImageView.image=nil;
+    }
+    cell.titleLabel.frame=CGRectMake(15, 10, titleSize.width, titleSize.height);
+    cell.titleLabel.text=titleStr;
+    NSString *type=[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"reportTypeId"];
+    UIImage *tupianImage=nil;
+    if ([type isEqualToString:@"12"]){
+        
+        tupianImage=[UIImage imageNamed:@"anquanlei.png"];
+        
+    }else if ([type isEqualToString:@"14"]) {
+        tupianImage=[UIImage imageNamed:@"fenxilei.png"];
+    }
+    else if([type isEqualToString:@"13"]){
+        tupianImage=[UIImage imageNamed:@"weihulei.png"];
+    }
+    else{
+        tupianImage=[UIImage imageNamed:@"qitalei.png"];
+    }
+    cell.qitaImageView.image=tupianImage;
+    cell.qitaImageView.frame=CGRectMake(15, 10+cell.titleLabel.frame.size.height+5, tupianImage.size.width, tupianImage.size.height);
+    
+    NSString *commentNum=[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"published"];
+    cell.pinlunLabel.text=commentNum;
+    
+    if ([[dataSoure objectAtIndex:indexPath.row]objectForKey:@"picPath"]!=nil) {
+        if ([imageArray count]>1) {
+            cell.bgImageView.frame=CGRectMake(3, 3, 320-6, cell.qitaImageView.frame.origin.y+cell.qitaImageView.frame.size.height+5+80);
+        }else
+        {
+            cell.bgImageView.frame=CGRectMake(3, 3, 320-6, cell.qitaImageView.frame.origin.y+cell.qitaImageView.frame.size.height+5);
+        }
+        
+    }else{
+        cell.bgImageView.frame=CGRectMake(3, 3, 320-6, cell.qitaImageView.frame.origin.y+cell.qitaImageView.frame.size.height+5);
+    }
+}
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSString *reportId = [[dataSoure objectAtIndex:indexPath.row] objectForKey:@"reportId"];
     if ([state isEqualToString:@"1"]) {
-        NSString *reportId = [[self.dataSource objectAtIndex:indexPath.row] objectForKey:@"reportId"];
-        AudiReportDetail *contextDetailCtrl=[[AudiReportDetail alloc] init];
-        Report *_report=[[Report alloc] init];
-        _report.reportId=reportId;
-        contextDetailCtrl.myReport=_report;
-        [self.navigationController pushViewController:contextDetailCtrl animated:YES];
+        AudiReportDetail *audireport=[[AudiReportDetail alloc] initWithNibName:@"AudiReportDetail" bundle:nil];
+        audireport.reportId=reportId;
+        [self.navigationController pushViewController:audireport animated:YES];
     }
     else{
-        NSString *reportId = [[self.dataSource objectAtIndex:indexPath.row] objectForKey:@"reportId"];
-        ContextDetailController *contextDetailCtrl=[[ContextDetailController alloc] init];
-        Report *_report=[[Report alloc] init];
-        _report.reportId=reportId;
-//        contextDetailCtrl.myReport=_report;
+
+        ContextDetailController *contextDetailCtrl=[[ContextDetailController alloc] initWithNibName:@"ContextDetailController" bundle:nil];
+        contextDetailCtrl.reportId=reportId;
         [self.navigationController pushViewController:contextDetailCtrl animated:YES];
-
-    }
-    
-}
-
--(void)isOver
-{
-    
-    if (self.dataSource.count >= totalresult) {
-        [myTableView reloadData:YES];
     }
 }
 
+- (void)viewDidUnload {
+    [self setTitleLabel:nil];
+    [self setMyTableView:nil];
+    [self setSenHeButton:nil];
+    [self setPassButton:nil];
+    [super viewDidUnload];
+}
+- (IBAction)auditNews:(UIButton *)sender {
+    [self.passButton setSelected:NO];
+    [self.senHeButton setSelected:NO];
+    [sender setSelected:YES];
+}
+- (IBAction)pressPassButton:(UIButton *)sender {
+    [self.senHeButton setSelected:NO];
+    [sender setSelected:YES];
+    self.titleLabel.text=@"已审核";
+    state=@"1";
+    [self.myTableView launchRefreshing];
+}
+
+- (IBAction)pressSenHeButton:(UIButton *)sender {
+    [self.passButton setSelected:NO];
+    [sender setSelected:YES];
+    self.titleLabel.text=@"待审核";
+    state=@"2";
+    [self.myTableView launchRefreshing];
+}
+
+- (IBAction)back:(UIButton *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 @end

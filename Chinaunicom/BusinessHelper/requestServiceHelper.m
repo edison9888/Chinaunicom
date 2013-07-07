@@ -137,23 +137,11 @@ static requestServiceHelper *requestService;
         NSDictionary *dictionary=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
         
         if (dictionary) {
-            
-//            ReportDetail *_reportDetail=[[ReportDetail alloc] init];
-//            _reportDetail.reportTitle=[dictionary objectForKey:@"title"];
-//            _reportDetail.reportContent=[dictionary objectForKey:@"reportContent"];
-//            _reportDetail.published=[dictionary objectForKey:@"published"];
-//            _reportDetail.size=[dictionary objectForKey:@"size"];
-//            _reportDetail.fromtype=[dictionary objectForKey:@"reportType"];
-//            _reportDetail.isFav=[dictionary objectForKey:@"isFav"];
-//            _reportDetail.picPath=[dictionary objectForKey:@"picPath"];
-//             _reportDetail.favId=[dictionary objectForKey:@"favId"];
             sucess(dictionary);
         }else{
             
             faild(responseStr);
         }
-        
-        
     }requestFailed:^(NSString *errorMsg) {
         faild(errorMsg);
         
@@ -287,9 +275,7 @@ static requestServiceHelper *requestService;
         NSString *total=[[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingMutableLeaves) error:nil] objectForKey:@"number"];
         
         if ([reportArray count]>0) {
-            
             sucess(reportArray,[total integerValue]);
-            
         }
         else{
             faild(responseStr);

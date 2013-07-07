@@ -65,7 +65,7 @@
     [pressButton setBackgroundImage:newImage forState:UIControlStateNormal];
     [pressButton setTitle:@"按住说话" forState:UIControlStateNormal];
     pressButton.titleLabel.textAlignment=NSTextAlignmentCenter;
-    [pressButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [pressButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [pressButton addTarget:self action:@selector(pressSound:) forControlEvents:UIControlEventTouchDown];
     [pressButton addTarget:self action:@selector(upSound:) forControlEvents:UIControlEventTouchUpInside];
     pressButton.frame=CGRectMake(7, 9, 256, 26);
@@ -76,10 +76,9 @@
     
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
 //    self.tintColor = [UIColor lightGrayColor];
-    
+
     /* Create custom send button*/
     UIImage *buttonImage = [UIImage imageNamed:@"record.png"];
-//        buttonImage          = [buttonImage stretchableImageWithLeftCapWidth:floorf(buttonImage.size.width/2) topCapHeight:floorf(buttonImage.size.height/2)];
     UIButton *button               = [UIButton buttonWithType:UIButtonTypeCustom];
     button.titleLabel.font         = [UIFont boldSystemFontOfSize:15.0f];
     button.titleLabel.shadowOffset = CGSizeMake(0, -1);

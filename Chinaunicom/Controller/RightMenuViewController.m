@@ -266,7 +266,7 @@
         
     }else if([btn tag]==5){
         
-        SettingController *setCtrl=[[SettingController alloc] init];
+        SettingController *setCtrl=[[SettingController alloc] initWithNibName:@"SettingController" bundle:nil];
         setCtrl.title=@"设置";
         [self.mm_drawerController.rightDrawerViewController.navigationController pushViewController:setCtrl animated:YES];
 
@@ -310,48 +310,17 @@
         [dir setValue:soundpath forKey:@"file"];
         [NSThread detachNewThreadSelector:@selector(downloadSoundFile:) toTarget:self withObject:dir];
     }
-    
 }
-//-(void)downloadSoundFile:(NSMutableDictionary *)dir
-//{
-//    NSURL *baseUrl = [NSURL URLWithString:[ImageUrl stringByAppendingString:[dir objectForKey:@"file"]]];
-//    __weak ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:baseUrl];
-//    NSArray *fArray = [[dir objectForKey:@"file"] componentsSeparatedByString:@"/"];
-//    NSString *fileName=[fArray lastObject];
-//    [request setDownloadDestinationPath:[Utility getFilePath:fileName Dir:@"SpeechSoundDir"]];
-//    [request setCompletionBlock:^{
-//        [recoderAndPlayer SpeechAMR2WAV:fileName];
-//    }];
-//    [request setFailedBlock:^{
-//        [request clearDelegatesAndCancel];
-//    }];
-//    [request startAsynchronous];
-//
-//}
-//
-//-(void)playSoundFile:(UIButton*)sender{
-//    
-//    int index=[sender tag]-100;
-//    NSString *soundpath=[[dictionayData objectAtIndex:index] objectForKey:@"audiopath"];
-//    NSArray *fArray = [soundpath componentsSeparatedByString:@"/"];
-//    NSString *fileName=[fArray lastObject];
-//    //检查目录下是否存在此文件
-//    BOOL isExsit = [Utility checkFileExsit:fileName Dir:@"SpeechSoundDir"];
-//    if (isExsit) {
-//        [recoderAndPlayer SpeechAMR2WAV:fileName];
-//    }
-//    else{
-//        //下载
-//        NSMutableDictionary *dir=[[NSMutableDictionary alloc]init];
-//        [dir setValue:soundpath forKey:@"file"];
-//        [NSThread detachNewThreadSelector:@selector(downloadSoundFile:) toTarget:self withObject:dir];
-//    }
-//    
-//}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    if ([recoderAndPlayer isPlay]) {
+        [recoderAndPlayer stopPlaying];
+    }
+}
 @end

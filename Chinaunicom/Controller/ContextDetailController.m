@@ -10,7 +10,6 @@
 #import "User.h"
 #import "HttpRequestHelper.h"
 #import "CommonHelper.h"
-//#import "WonderfulCommentsViewController.h"
 #import "GoodCommentsViewController.h"
 #import "UIViewController+MMDrawerController.h"
 @interface ContextDetailController ()
@@ -181,28 +180,8 @@
                 }
             }
         }
-
-        
     } falid:^(NSString *errorMsg) {
     }];
-//        if ([type isEqualToString:@"65"]){
-//            typeName=@"安全类";
-//        }else if ([type isEqualToString:@"18"]) {
-//            typeName=@"分析类";
-//        }
-//        else if([type isEqualToString:@"17"]){
-//            typeName=@"维护类";
-//        }
-//        else if([type isEqualToString:@"214"]){
-//            typeName=@"应用类";
-//        }
-//        else if([type isEqualToString:@"16"])
-//        {
-//            typeName=@"应用类";
-//        }
-//        else{
-//            typeName=@"其他";
-//        }
 
 }
 

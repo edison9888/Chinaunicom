@@ -86,8 +86,6 @@
     {
         [_tableview launchRefreshing];
     }
-    [_tableview tableViewDidFinishedLoading];
-    [_tableview reloadData];
 }
 -(void)getReportList
 {
@@ -187,13 +185,12 @@
         cell.soundButton.hidden=YES;
     }
     cell.bgImageView.frame=CGRectMake(3, 3, 314, cell.timeLabel.frame.size.height+cell.timeLabel.frame.origin.y+10);
-    
 }
 #pragma mark - PullingRefreshTableViewDelegate
 - (void)pullingTableViewDidStartRefreshing:(PullingRefreshTableView *)tableView
 {
     refreshing = YES;
-    [self performSelector:@selector(loadData) withObject:nil afterDelay:1.f];
+    [self performSelector:@selector(loadData) withObject:nil afterDelay:0];
 }
 
 - (NSDate *)pullingTableViewRefreshingFinishedDate{
@@ -337,8 +334,8 @@
 }
 -(void)reTable
 {
-    refreshing=YES;
-    [self loadData];
+    refreshing = YES;
+    [self performSelector:@selector(loadData) withObject:nil afterDelay:1.f];
 }
 -(void)sendTheComment
 {
@@ -360,6 +357,7 @@
         NSLog(@"responseStr=%@",responseStr);
         if ([responseStr isEqualToString:@"success"]) {
             [MBHUDView hudWithBody:@"发表成功" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
+            [self performSelectorOnMainThread:@selector(reTable) withObject:nil waitUntilDone:NO];
         }else
         {
             [MBHUDView hudWithBody:@"发表失败" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
@@ -381,6 +379,10 @@
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    if (recoderAndPlayer.isPlay) {
+        [recoderAndPlayer stopPlaying];
+        recoderAndPlayer=nil;
+    }
 }
 -(void)back
 {

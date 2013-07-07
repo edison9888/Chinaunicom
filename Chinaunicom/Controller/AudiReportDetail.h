@@ -7,20 +7,19 @@
 //
 
 #import "SDWebImageManager.h"
-#import "ReportDetail.h"
-#import "Report.h"
+
 @interface AudiReportDetail : UIViewController<SDWebImageManagerDelegate,UIAlertViewDelegate>
 {
-    int y;
+    
 }
-@property (weak, nonatomic) IBOutlet UILabel *reporttitle;
-@property (weak, nonatomic) IBOutlet UILabel *reportdate;
-@property (strong, nonatomic) Report *myReport;
-@property (strong, nonatomic) IBOutlet UITextView *contentDetailLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollview;
-@property (weak, nonatomic) IBOutlet UIView *topview;
-@property (weak, nonatomic) IBOutlet UINavigationBar *bottomBar;
-@property (strong, nonatomic) ReportDetail *myReportDetail;
+
+@property (nonatomic,strong)NSString *reportId;
+- (IBAction)editReport:(UIButton *)sender;
+- (IBAction)back:(id)sender;
+- (IBAction)backFile:(UIButton *)sender;
+- (IBAction)passFile:(UIButton *)sender;
+
 
 
 @end

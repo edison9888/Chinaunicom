@@ -6,15 +6,19 @@
 //  Copyright (c) 2013年 Chinaunicom. All rights reserved.
 //
 
-#import "PullToRefreshTableView.h"
-@interface AuditReportListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+#import "PullingRefreshTableView.h"
+@interface AuditReportListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,PullingRefreshTableViewDelegate>
 {
-    int totalresult;
-    int pageSize;
-    int page;
 }
-@property(nonatomic,strong) NSString *state;;
-@property (weak, nonatomic) IBOutlet UILabel *count;
-@property (nonatomic, strong) NSMutableArray *dataSource;
-@property (nonatomic, retain) PullToRefreshTableView *myTableView;
+
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet PullingRefreshTableView *myTableView;
+@property (weak, nonatomic) IBOutlet UIButton *senHeButton;
+@property (weak, nonatomic) IBOutlet UIButton *passButton;
+- (IBAction)auditNews:(UIButton *)sender;
+- (IBAction)pressPassButton:(UIButton *)sender;
+- (IBAction)pressSenHeButton:(UIButton *)sender;
+- (IBAction)back:(UIButton *)sender;
+
+
 @end

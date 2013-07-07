@@ -37,6 +37,10 @@
     User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
     NSString *picpath=[user.icon stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
     [self.headButton setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:picpath]]];
+    
+
+//    [userDefaults setObject:number forKey:KEY_REMEMBER_PWD];
+//    [userDefaults synchronize];
     [self initLayout];
 }
 
@@ -44,9 +48,23 @@
 {
     //自定义switch...
     self.message.on=YES;
-    self.sound.on=YES;
+    
     self.message.onText=@"声音";
     self.message.offText=@"震动";
+    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
+    NSString *isOpen=[userDefaults objectForKey:@"Sound"];
+    if (isOpen==nil) {
+        self.sound.on=NO;
+    }else
+    {
+        if ([isOpen isEqualToString:@"open"]) {
+            self.sound.on=YES;
+        }else
+        {
+            self.sound.on=NO;
+        }
+    }
+
     self.sound.onText=@"开";
     self.sound.offText=@"关";
     [self.message addTarget:self action:@selector(messageChange:) forControlEvents:UIControlEventValueChanged];
@@ -175,10 +193,20 @@
 }
 
 - (IBAction)messageChange:(id)sender {
-   
+    
 }
 
-- (IBAction)soundChange:(id)sender {
+- (IBAction)soundChange:(DCRoundSwitch *)sender {
+    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
+    if(sender.isOn)
+    {
+        [userDefaults setObject:@"close" forKey:@"Sound"];
+        
+    }else {
+        [userDefaults setObject:@"open" forKey:@"Sound"];
+    }
+    [userDefaults synchronize];
+//    [mySwitch setOn:!setting animated:YES];//设置开关状态
 }
 
 

@@ -25,11 +25,23 @@
 
     [self setImage:placeholder forState:UIControlStateNormal];
 
-    if (url)
-    {
-        [manager downloadWithURL:url delegate:self];
+    UIImage *cachedImage = nil;
+    if (url) {
+        cachedImage = [manager imageWithURL:url];
     }
-}
+    
+    if (cachedImage) {
+        [self setImage:cachedImage forState:UIControlStateNormal];
+    }
+    else {
+        if (placeholder) {
+            [self setImage:placeholder forState:UIControlStateNormal];
+        }
+        
+        if (url) {
+            [manager downloadWithURL:url delegate:self];
+        }
+    }}
 
 - (void)cancelCurrentImageLoad
 {

@@ -29,9 +29,22 @@
 
     self.image = placeholder;
 
-    if (url)
-    {
-        [manager downloadWithURL:url delegate:self options:options];
+    UIImage *cachedImage = nil;
+    if (url) {
+        cachedImage = [manager imageWithURL:url];
+    }
+    
+    if (cachedImage) {
+        [self setImage:cachedImage];
+    }
+    else {
+        if (placeholder) {
+            [self setImage:placeholder];
+        }
+        
+        if (url) {
+            [manager downloadWithURL:url delegate:self options:options];
+        }
     }
 }
 
