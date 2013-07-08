@@ -38,9 +38,9 @@
         [self.contentView addSubview:_picImageView];
         
         _deleteButton=[UIButton buttonWithType:UIButtonTypeCustom];
-        [_deleteButton setImage:[UIImage imageNamed:@"close.png"] forState:UIControlStateNormal];
+        [_deleteButton setImage:[UIImage imageNamed:@"deleteBt.png"] forState:UIControlStateNormal];
         _deleteButton.frame=CGRectMake(280, 30, 30, 30);
-        [_deleteButton setBackgroundColor:[UIColor redColor]];
+        [_deleteButton setBackgroundColor:[UIColor clearColor]];
         [_deleteButton addTarget:self action:@selector(deleteThisRow:) forControlEvents:UIControlEventTouchUpInside];
 //        if (_isShow) {
 //            _deleteButton.hidden=NO;

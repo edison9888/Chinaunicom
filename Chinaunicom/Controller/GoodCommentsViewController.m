@@ -313,7 +313,14 @@
 }
 -(void)recordAndSendAudioFile:(NSString *)fileName fileSize:(NSString *)fileSize duration:(NSString *)timelength{
 //    [self performSelectorInBackground:@selector(sendSoundComment) withObject:nil];
-    [self sendSoundComment];
+    NSLog(@"aaaaa=%@",timelength);
+    if ([timelength intValue]<1) {
+        [MBHUDView hudWithBody:@"录音时间太短" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
+    }else
+    {
+        [self sendSoundComment];
+    }
+    
 }
 -(void)sendSoundComment
 {

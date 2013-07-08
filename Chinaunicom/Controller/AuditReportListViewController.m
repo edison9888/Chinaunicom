@@ -31,7 +31,7 @@
     if (self) {
         dataSoure=[[NSMutableArray alloc]init];
         pageSize=10;
-        state=@"2";
+        state=@"1";
     }
     return self;
 }
@@ -72,10 +72,10 @@
     [dictionary setValue: userid forKey:@"userId"];
     [[requestServiceHelper defaultService] getAduitingList:dictionary sucess:^(NSMutableArray *reportDictionary, NSInteger result) {
         if ([state isEqualToString:@"1"]) {
-            [_headLabel setText:[NSString stringWithFormat:@"有%d已审核信息",result]];
+            [_headLabel setText:[NSString stringWithFormat:@"有%d待审核信息",result]];
         }else
         {
-            [_headLabel setText:[NSString stringWithFormat:@"有%d条待审核信息",result]];
+            [_headLabel setText:[NSString stringWithFormat:@"有%d已审核信息",result]];
         }
 
         if (page==1) {
@@ -279,7 +279,7 @@
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *reportId = [[dataSoure objectAtIndex:indexPath.row] objectForKey:@"reportId"];
-    if ([state isEqualToString:@"2"]) {
+    if ([state isEqualToString:@"1"]) {
         AudiReportDetail *audireport=[[AudiReportDetail alloc] initWithNibName:@"AudiReportDetail" bundle:nil];
         audireport.reportId=reportId;
         [self.navigationController pushViewController:audireport animated:YES];
@@ -305,7 +305,6 @@
     [sender setSelected:YES];
     
     PubliceMessageViewConttoller *pubMessage = [[PubliceMessageViewConttoller alloc]initWithNibName:@"PubliceMessageViewConttoller" bundle:nil];
-    
     [self presentViewController:pubMessage animated:YES completion:nil];
     
 }
@@ -313,7 +312,7 @@
     [self.senHeButton setSelected:NO];
     [sender setSelected:YES];
     self.titleLabel.text=@"已审核";
-    state=@"1";
+    state=@"2";
     [self.myTableView launchRefreshing];
 }
 
@@ -321,7 +320,7 @@
     [self.passButton setSelected:NO];
     [sender setSelected:YES];
     self.titleLabel.text=@"待审核";
-    state=@"2";
+    state=@"1";
     [self.myTableView launchRefreshing];
 }
 

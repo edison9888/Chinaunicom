@@ -36,9 +36,20 @@
     NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
     User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
     NSString *picpath=[user.icon stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
-    [self.headButton setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:picpath]]];
     
-
+//    NSString *urlStr=[ImageUrl stringByAppendingString:picpath];
+//    NSURL *url=[NSURL URLWithString:urlStr];
+//    NSData *data=[GTMBase64 decodeData:[NSData dataWithContentsOfURL:url]];
+//    NSString *strssss=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+//    NSURL *aaaa=[NSURL URLWithString:strssss];
+//    NSString * encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+//                                                                                   (CFStringRef)url,
+//                                                                                   NULL,
+//                                                                                   NULL,
+//                                                                                   kCFStringEncodingUTF8));
+//    [self.headButton setImageWithURL:[NSURL URLWithString:@"http://www.sinaimg.cn/blog/qing/image/qingzujian/sou031805.jpg"]];
+//    [self.headButton setImageWithURL:[NSURL URLWithString:picpath]];
+    [self.headButton setImageWithURL:[NSURL URLWithString:picpath] forState:UIControlStateNormal];
 //    [userDefaults setObject:number forKey:KEY_REMEMBER_PWD];
 //    [userDefaults synchronize];
     [self initLayout];
@@ -113,7 +124,7 @@
 }
 - (void)pickImageFromAlbum
 {
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]){
         //检查是否有相机
         UIImagePickerController *imagepicker = [[UIImagePickerController alloc] init];
         imagepicker.delegate = self;
@@ -139,6 +150,7 @@
     NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
     [dictionary setObject:userid forKey:@"userId"];
     [dictionary setObject:@"jpg" forKey:@"picType"];
+    NSLog(@"aaaaaa=%@",[[NSString alloc] initWithData:[GTMBase64 encodeData:imageData] encoding:NSUTF8StringEncoding] );
     [dictionary setObject:[[NSString alloc] initWithData:[GTMBase64 encodeData:imageData] encoding:NSUTF8StringEncoding] forKey:@"imageStr"];
     [self dismissModalViewControllerAnimated:YES];
     [MBHUDView hudWithBody:@"上传中..." type:MBAlertViewHUDTypeActivityIndicator hidesAfter:0 show:YES];
@@ -250,8 +262,6 @@
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
     [self addSomeElements:viewController];
 }
-
-
 
 - (IBAction)back:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];

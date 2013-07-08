@@ -115,23 +115,39 @@
     }];
 }
 -(void)compearImage :(NSString *) picpath{
-    SDWebImageManager *manager = [SDWebImageManager sharedManager];
-    UIImage *cachedImage = [manager imageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:picpath]]]; // 将需要缓存的图片加载进来
-    if (cachedImage) {
-        // 如果Cache命中，则直接利用缓存的图片进行有关操
-        UIImageView *contextImage=[[UIImageView alloc] init];
-        UIImage *newImage=[self imageWithImageSimple:cachedImage  scaledToSize:CGSizeMake(280, cachedImage.size.height/cachedImage.size.width*280)];
-        [contextImage setImage:newImage];
-        [contextImage setFrame:CGRectMake(20, self.scrollview.contentSize.height, 280,newImage.size.height)];
+//    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+//    UIImage *cachedImage = [manager imageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:picpath]]]; // 将需要缓存的图片加载进来
+//    if (cachedImage) {
+//        // 如果Cache命中，则直接利用缓存的图片进行有关操
+//        UIImageView *contextImage=[[UIImageView alloc] init];
+//        UIImage *newImage=[self imageWithImageSimple:cachedImage  scaledToSize:CGSizeMake(280, cachedImage.size.height/cachedImage.size.width*280)];
+//        [contextImage setImage:newImage];
+//        [contextImage setFrame:CGRectMake(20, self.scrollview.contentSize.height, 280,newImage.size.height)];
+//        
+//        [self.scrollview addSubview:contextImage];
+//        self.scrollview.contentSize=CGSizeMake(320, self.scrollview.contentSize.height+newImage.size.height+10);
+//        
+//    } else {
+//        // 如果Cache没有命中，则去下载指定网络位置的图片，并且给出一个委托方法
+//        
+//        [manager downloadWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:picpath]] delegate:self];
+//    }
+    [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:picpath]] options:0 progress:^(NSUInteger receivedSize, long long expectedSize) {
         
-        [self.scrollview addSubview:contextImage];
-        self.scrollview.contentSize=CGSizeMake(320, self.scrollview.contentSize.height+newImage.size.height+10);
-        
-    } else {
-        // 如果Cache没有命中，则去下载指定网络位置的图片，并且给出一个委托方法
-        
-        [manager downloadWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:picpath]] delegate:self];
-    }
+    } completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+        // 将需要缓存的图片加载进来
+        if (image) {
+            // 如果Cache命中，则直接利用缓存的图片进行有关操
+            UIImageView *contextImage=[[UIImageView alloc] init];
+            UIImage *newImage=[self imageWithImageSimple:image  scaledToSize:CGSizeMake(280, image.size.height/image.size.width*280)];
+            [contextImage setImage:image];
+            [contextImage setFrame:CGRectMake(20, self.scrollview.contentSize.height, 280,image.size.height)];
+            
+            [self.scrollview addSubview:contextImage];
+            self.scrollview.contentSize=CGSizeMake(320, self.scrollview.contentSize.height+newImage.size.height+10);
+            
+        }
+    }];
 }
 // 当下载完成后，调用回调方法，使下载的图片显示
 - (void)webImageManager:(SDWebImageManager *)imageManager didFinishWithImage:(UIImage *)image {

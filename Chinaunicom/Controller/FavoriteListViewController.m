@@ -166,7 +166,7 @@
             if([responseStr isEqualToString:@"success"])
             {
                 [MBHUDView dismissCurrentHUD];
-                [MBHUDView hudWithBody:@"删除成功" type:MBAlertViewHUDTypeActivityIndicator hidesAfter:2 show:YES];
+                [MBHUDView hudWithBody:@"删除成功" type:MBAlertViewHUDTypeDefault hidesAfter:2 show:YES];
                 [dataSoure removeObjectAtIndex:path.row];
                 [_myTabelView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:path, nil] withRowAnimation:UITableViewRowAnimationFade];
                 currentCell.isUnShow=NO;

@@ -7,7 +7,7 @@
 //
 
 #import "SDWebImageManager.h"
-
+#import "UIImageView+WebCache.h"
 @interface AudiReportDetail : UIViewController<SDWebImageManagerDelegate,UIAlertViewDelegate>
 {
     
