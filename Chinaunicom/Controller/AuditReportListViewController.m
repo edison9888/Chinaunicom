@@ -13,6 +13,7 @@
 #import "UIImageView+WebCache.h"
 #import "ContextDetailController.h"
 #import "AudiReportDetail.h"
+#import "PubliceMessageViewConttoller.h"
 @interface AuditReportListViewController ()
 {
     NSMutableArray *dataSoure;
@@ -302,6 +303,11 @@
     [self.passButton setSelected:NO];
     [self.senHeButton setSelected:NO];
     [sender setSelected:YES];
+    
+    PubliceMessageViewConttoller *pubMessage = [[PubliceMessageViewConttoller alloc]initWithNibName:@"PubliceMessageViewConttoller" bundle:nil];
+    
+    [self presentViewController:pubMessage animated:YES completion:nil];
+    
 }
 - (IBAction)pressPassButton:(UIButton *)sender {
     [self.senHeButton setSelected:NO];

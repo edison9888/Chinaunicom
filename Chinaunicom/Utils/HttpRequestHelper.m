@@ -11,7 +11,7 @@
 #import "ASIFormDataRequest.h"
 
 #define UserAgent  @"Chinaunicom 1.0"
-#define TimeOut 30
+#define TimeOut 10
 #define RetryTimes 2
 
 
@@ -28,7 +28,7 @@ typedef enum {
 
 + (ASIHTTPRequest *)requestWithUrl:(NSString *)urlStr{
     
-    NSLog(@"请求地址:%@",urlStr);
+//    NSLog(@"请求地址:%@",urlStr);
     
     ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     [request setUserAgentString:UserAgent];
@@ -41,7 +41,7 @@ typedef enum {
 }
 
 + (ASIFormDataRequest *)formRequestWithUrl:(NSString *)urlStr{
-    NSLog(@"请求地址:%@",urlStr);
+//    NSLog(@"请求地址:%@",urlStr);
     
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     [request setUserAgentString:UserAgent];
@@ -65,9 +65,15 @@ typedef enum {
                            requestComplete:(void (^)(NSString *responseStr))requestComplete
                            requestFailed:(void (^)(NSString *errorMsg))requestFailed{
     
+<<<<<<< HEAD
+     ASIHTTPRequest *_request = [self requestWithUrl:url];
+    __weak ASIHTTPRequest *request = _request;
+    
+=======
     
     ASIHTTPRequest *_request = [self requestWithUrl:url];
     __weak ASIHTTPRequest *request = _request;
+>>>>>>> 2390f6c58e7e122be759eb06956de323ebcca953
     [request setUserAgentString:UserAgent];
     
     //设置请求方式
@@ -113,7 +119,11 @@ typedef enum {
                              requestComplete:(void(^)(NSString *responseStr))complete
                              requestFailed:(void(^)(NSString*errorMsg))failed{
 
+<<<<<<< HEAD
+     ASIFormDataRequest *_request = [self formRequestWithUrl:url];
+=======
     ASIFormDataRequest *_request = [self formRequestWithUrl:url];
+>>>>>>> 2390f6c58e7e122be759eb06956de323ebcca953
     __weak ASIFormDataRequest *request = _request;
     [request setPostFormat:ASIMultipartFormDataPostFormat];
     [request setUserAgentString:UserAgent];
@@ -168,7 +178,11 @@ typedef enum {
                        requestComplete:(void(^)(NSString *responseStr))complete
                        requestFailed:(void(^)(NSString*errorMsg))failed{
     
+<<<<<<< HEAD
+     ASIFormDataRequest *_request = [self formRequestWithUrl:url];
+=======
     ASIFormDataRequest *_request = [self formRequestWithUrl:url];
+>>>>>>> 2390f6c58e7e122be759eb06956de323ebcca953
     __weak ASIFormDataRequest *request = _request;
     [request setPostFormat:ASIMultipartFormDataPostFormat];
     [request setUserAgentString:UserAgent];
