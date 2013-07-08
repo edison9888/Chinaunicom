@@ -178,11 +178,11 @@
 {
     //计算评论内容高度
     UIFont *font = [UIFont systemFontOfSize:17.0f];
-    NSString *commentStr=[[dictionayData  objectAtIndex:indexPath.row]objectForKey:@"commentContent"];
+    NSString *commentStr=[[[dictionayData  objectAtIndex:indexPath.row]objectForKey:@"commentContent"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     CGSize commentSize=[commentStr sizeWithFont:font constrainedToSize:CGSizeMake(200, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
  
     //计算新闻高度
-    NSString *newsStr=[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"reportTitle"];
+    NSString *newsStr=[[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"reportTitle"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     CGSize newsSize=[newsStr sizeWithFont:font constrainedToSize:CGSizeMake(200, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
     return   5+20+5+commentSize.height+5+20+5+5 +newsSize.height +5 +20 +5;
 }
@@ -198,7 +198,7 @@
          [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
      }
      UIFont *font = [UIFont systemFontOfSize:17.0f];
-     NSString *nameStr=[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"commentPerson"];
+     NSString *nameStr=[[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"commentPerson"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
      CGSize nameSize=[nameStr sizeWithFont:font forWidth:200 lineBreakMode:NSLineBreakByCharWrapping];
      cell.nameLabel.frame=CGRectMake(60, 5, nameSize.width, nameSize.height);
      cell.nameLabel.text=nameStr;
@@ -208,7 +208,7 @@
      [cell.soundButton setTag:100+indexPath.row ];
      [cell.soundButton addTarget:self action:@selector(playSoundFile:) forControlEvents:UIControlEventTouchUpInside];
      
-     NSString *soundPath=[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"audiopath"];
+     NSString *soundPath=[[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"audiopath"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
      [cell.soundButton addTarget:self action:@selector(playSoundFile:) forControlEvents:UIControlEventTouchUpInside];
      cell.soundButton.tag=100+indexPath.row;
      if (![soundPath isEqualToString:@""]  && soundPath !=nil) {
@@ -218,27 +218,27 @@
          cell.soundButton.hidden=YES;
      }
      
-     NSString *commentStr=[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"commentContent"];
+     NSString *commentStr=[[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"commentContent"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
      cell.contentLabel.text=commentStr;
      CGSize commentSize=[commentStr sizeWithFont:font constrainedToSize:CGSizeMake(200, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
      cell.contentLabel.frame=CGRectMake(60, cell.nameLabel.frame.origin.y+cell.nameLabel.frame.size.height+5, 200, commentSize.height);
-     cell.timeLabel.text=[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"commentDate"];
+     cell.timeLabel.text=[[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"commentDate"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
      cell.timeLabel.frame=CGRectMake(60, cell.contentLabel.frame.origin.y+cell.contentLabel.frame.size.height+5, 200, 20);
      cell.topBgImageView.frame=CGRectMake(26, 0, 247, cell.timeLabel.frame.origin.y+cell.timeLabel.frame.size.height);
      
-     NSString *newsStr=[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"reportTitle"];
+     NSString *newsStr=[[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"reportTitle"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
      CGSize newsSize=[newsStr sizeWithFont:font constrainedToSize:CGSizeMake(200, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
      cell.newsLabel.text=newsStr;
      cell.newsLabel.frame=CGRectMake(60, cell.topBgImageView.frame.size.height+5, 200, newsSize.height);
      
-     NSString *str=[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"reportType"];
+     NSString *str=[[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"reportType"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
      cell.pinglunLabel.text=[NSString stringWithFormat:@"来自 %@",str];
      cell.pinglunLabel.frame=CGRectMake(60, cell.newsLabel.frame.origin.y+cell.newsLabel.frame.size.height +5, 130, 20);
      
      UIImage *image=[UIImage imageNamed:@"com_mes.png"];
      cell.messageImageView.frame=CGRectMake(185, cell.newsLabel.frame.origin.y+cell.newsLabel.frame.size.height +5+5, image.size.width, image.size.height);
   
-     NSString *num=[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"commentNumber"];
+     NSString *num=[[[dictionayData objectAtIndex:indexPath.row]objectForKey:@"commentNumber"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
      cell.numLabel.text=[NSString stringWithFormat:@"评论 %@",num];
      cell.numLabel.frame=CGRectMake(205, cell.pinglunLabel.frame.origin.y, 60, 20);
      
@@ -277,6 +277,10 @@
     NSURL *baseUrl = [NSURL URLWithString:[ImageUrl stringByAppendingString:[dir objectForKey:@"file"]]];
     ASIHTTPRequest *_request = [ASIHTTPRequest requestWithURL:baseUrl];
     __weak ASIHTTPRequest *request = _request;
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 2390f6c58e7e122be759eb06956de323ebcca953
     NSArray *fArray = [[dir objectForKey:@"file"] componentsSeparatedByString:@"/"];
     NSString *fileName=[fArray lastObject];
     [request setDownloadDestinationPath:[Utility getFilePath:fileName Dir:@"SpeechSoundDir"]];

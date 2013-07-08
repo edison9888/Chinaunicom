@@ -238,6 +238,7 @@
 @synthesize headerOnly = _headerOnly;
 @synthesize headerview=_headerView;
 @synthesize footerview=_footerView;
+
 - (void)dealloc {
     [self removeObserver:self forKeyPath:@"contentSize"];
     [_headerView release];
@@ -483,8 +484,18 @@
 //        self.contentOffset = offset;
     }
 }
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self.superview endEditing:YES];
+    [[self findFirstResponderBeneathView:self.superview] resignFirstResponder];
+    [super touchesEnded:touches withEvent:event];
+}
+- (UIView*)findFirstResponderBeneathView:(UIView*)view {
+    // Search recursively for first responder
+    for ( UIView *childView in view.subviews ) {
+        if ( [childView respondsToSelector:@selector(isFirstResponder)] && [childView isFirstResponder] ) return childView;
+        UIView *result = [self findFirstResponderBeneathView:childView];
+        if ( result ) return result;
+    }
+    return nil;
 }
 @end

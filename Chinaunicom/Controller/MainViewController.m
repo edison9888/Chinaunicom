@@ -229,10 +229,10 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIImage *image=[UIImage imageNamed:@"qitalei.png"];
-    NSString *titleStr=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"reportTitle"];
+    NSString *titleStr=[[[dataSource objectAtIndex:indexPath.row]objectForKey:@"reportTitle"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     CGSize titleSize;
     if ([[dataSource objectAtIndex:indexPath.row]objectForKey:@"picPath"]!=nil) {
-        NSString * path=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"picPath"];
+        NSString * path=[[[dataSource objectAtIndex:indexPath.row]objectForKey:@"picPath"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSArray *imageArray=[path componentsSeparatedByString:@","];
         if ([imageArray count]>1) {
             titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
@@ -279,7 +279,7 @@
         
         if ([imageArray count]>1) {
             titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-            cell.pinlunLabel.frame=CGRectMake(320-3-70, 10+titleSize.height+5+10, 70, 20);
+            cell.pinlunLabel.frame=CGRectMake(320-3-80, 10+titleSize.height+5+10, 70, 20);
             
             for (int i=0; i<[imageArray count]; i++) {
                 
@@ -305,13 +305,13 @@
     }else
     {
         titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-        cell.pinlunLabel.frame=CGRectMake(320-3-70, 10+titleSize.height+5+10, 70, 20);
+        cell.pinlunLabel.frame=CGRectMake(320-3-80, 10+titleSize.height+5+10, 70, 20);
         cell.tupianImageView.frame=CGRectMake(0, 0, 0, 0);
         cell.tupianImageView.image=nil;
     }
     cell.titleLabel.frame=CGRectMake(15, 10, titleSize.width, titleSize.height);
     cell.titleLabel.text=titleStr;
-    NSString *type=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"reportType"];
+    NSString *type=[[[dataSource objectAtIndex:indexPath.row]objectForKey:@"reportType"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     UIImage *tupianImage=nil;
     if ([type isEqualToString:@"12"]){
         
@@ -329,7 +329,7 @@
     cell.qitaImageView.image=tupianImage;
     cell.qitaImageView.frame=CGRectMake(15, 10+cell.titleLabel.frame.size.height+5, tupianImage.size.width, tupianImage.size.height);
     
-    NSString *commentNum=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"commentsNumber"];
+    NSString *commentNum=[[[dataSource objectAtIndex:indexPath.row]objectForKey:@"commentsNumber"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     cell.pinlunLabel.text=[NSString stringWithFormat:@"评论 %@",commentNum];
     
     if ([[dataSource objectAtIndex:indexPath.row]objectForKey:@"picPath"]!=nil) {

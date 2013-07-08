@@ -58,7 +58,15 @@
     [[self findFirstResponderBeneathView:self] resignFirstResponder];
     [super touchesEnded:touches withEvent:event];
 } 
-
+- (UIView*)findFirstResponderBeneathView:(UIView*)view {
+    // Search recursively for first responder
+    for ( UIView *childView in view.subviews ) {
+        if ( [childView respondsToSelector:@selector(isFirstResponder)] && [childView isFirstResponder] ) return childView;
+        UIView *result = [self findFirstResponderBeneathView:childView];
+        if ( result ) return result;
+    }
+    return nil;
+}
 - (void)keyboardWillShow:(NSNotification*)notification {
     _keyboardRect = [[[notification userInfo] objectForKey:_UIKeyboardFrameEndUserInfoKey] CGRectValue];
     _keyboardVisible = YES;
@@ -100,15 +108,7 @@
     [UIView commitAnimations];
 }
 
-- (UIView*)findFirstResponderBeneathView:(UIView*)view {
-    // Search recursively for first responder
-    for ( UIView *childView in view.subviews ) {
-        if ( [childView respondsToSelector:@selector(isFirstResponder)] && [childView isFirstResponder] ) return childView;
-        UIView *result = [self findFirstResponderBeneathView:childView];
-        if ( result ) return result;
-    }
-    return nil;
-}
+
 
 - (UIEdgeInsets)contentInsetForKeyboard {
     UIEdgeInsets newInset = self.contentInset;

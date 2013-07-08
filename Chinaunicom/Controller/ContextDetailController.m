@@ -104,7 +104,7 @@
     NSMutableDictionary *dictionary=[NSMutableDictionary dictionaryWithObjectsAndKeys:self.reportId,@"reportId",userid,@"userId", nil];
     
     [[requestServiceHelper defaultService]getReportDetail:dictionary sucess:^(NSDictionary *reportDetail) {
-        NSString *titleStr=[reportDetail objectForKey:@"title"];
+        NSString *titleStr=[[reportDetail objectForKey:@"title"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         CGSize titleSize=[titleStr sizeWithFont:[UIFont boldSystemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
         UILabel *titleLabel=[[UILabel alloc]initWithFrame:CGRectMake(20, 20, 280, titleSize.height)];
         titleLabel.text=titleStr;
@@ -114,7 +114,7 @@
         [titleLabel setLineBreakMode:NSLineBreakByCharWrapping];
         [_topview addSubview:titleLabel];
         
-        NSString *comeStr=[reportDetail objectForKey:@"reportType"];
+        NSString *comeStr=[[reportDetail objectForKey:@"reportType"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSString *typeName=nil;
         if ([comeStr isEqualToString:@"12"]){
             
@@ -137,7 +137,7 @@
         [comeLabel setFont:[UIFont systemFontOfSize:13.0]];
         [_topview addSubview:comeLabel];
         
-        NSString *timeStr=[reportDetail objectForKey:@"published"];
+        NSString *timeStr=[[reportDetail objectForKey:@"published"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         UILabel *timeLabel=[[UILabel alloc]initWithFrame:CGRectMake(170, comeLabel.frame.origin.y, 130, 20)];
         timeLabel.text=timeStr;
         [timeLabel setTextColor:[UIColor darkGrayColor]];

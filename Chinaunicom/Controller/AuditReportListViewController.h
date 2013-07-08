@@ -10,9 +10,9 @@
 @interface AuditReportListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,PullingRefreshTableViewDelegate>
 {
 }
-
+@property (weak, nonatomic) IBOutlet UILabel *headLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet PullingRefreshTableView *myTableView;
+@property (strong, nonatomic) PullingRefreshTableView *myTableView;
 @property (weak, nonatomic) IBOutlet UIButton *senHeButton;
 @property (weak, nonatomic) IBOutlet UIButton *passButton;
 - (IBAction)auditNews:(UIButton *)sender;
