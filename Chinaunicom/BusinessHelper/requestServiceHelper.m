@@ -6,11 +6,10 @@
 //  Copyright (c) 2013年 Chinaunicom. All rights reserved.
 //
 
-#import "requestServiceHelper.h"
+
 #import "User.h"
 #import "ReportDetail.h"
 #import "HttpRequestHelper.h"
-#import "SysConfig.h"
 
 @implementation requestServiceHelper
 

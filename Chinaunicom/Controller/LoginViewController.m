@@ -151,7 +151,7 @@
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:user];
         [self.userDefault setObject:data forKey:KEY_USER_INFO];
         [self setField:self.userNameTextField forKey:KEY_USER_NAME];
-        
+    
 //        NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 //        NSString* documentsDirectory = [paths objectAtIndex:0];
 //        // Now we get the full path to the file

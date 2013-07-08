@@ -275,8 +275,8 @@
 -(void)downloadSoundFile:(NSMutableDictionary *)dir
 {
     NSURL *baseUrl = [NSURL URLWithString:[ImageUrl stringByAppendingString:[dir objectForKey:@"file"]]];
-    __weak ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:baseUrl];
-    
+    ASIHTTPRequest *_request = [ASIHTTPRequest requestWithURL:baseUrl];
+    __weak ASIHTTPRequest *request = _request;
     NSArray *fArray = [[dir objectForKey:@"file"] componentsSeparatedByString:@"/"];
     NSString *fileName=[fArray lastObject];
     [request setDownloadDestinationPath:[Utility getFilePath:fileName Dir:@"SpeechSoundDir"]];
