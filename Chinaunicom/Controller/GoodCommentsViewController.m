@@ -134,7 +134,7 @@
 #pragma mark - UITableViewDelegate
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *comment=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"commentContent"];
+    NSString *comment=[[[dataSource objectAtIndex:indexPath.row]objectForKey:@"commentContent"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     CGSize commentSize=[comment sizeWithFont:[UIFont systemFontOfSize:17.0] constrainedToSize:CGSizeMake(250, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
     return 10+20+5+commentSize.height+10+20+13;
 }
@@ -161,21 +161,21 @@
 -(void)tableView:(UITableView *)tableView willDisplayCell:(CustomWonderfulCommentsCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSString *icon=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"icon"];
+    NSString *icon=[[[dataSource objectAtIndex:indexPath.row]objectForKey:@"icon"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *iconPath=[icon stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
     [cell.realHead setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:iconPath]]];
     
-    cell.nameLabel.text=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"nickName"];
-    NSString *comment=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"commentContent"];
+    cell.nameLabel.text=[[[dataSource objectAtIndex:indexPath.row]objectForKey:@"nickName"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *comment=[[[dataSource objectAtIndex:indexPath.row]objectForKey:@"commentContent"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     CGSize commentSize=[comment sizeWithFont:[UIFont systemFontOfSize:17.0] constrainedToSize:CGSizeMake(250, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
     cell.commentLabel.frame=CGRectMake(60, 35, 250, commentSize.height);
     cell.commentLabel.text=comment;
     
-    NSString *time=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"commentDate"];
+    NSString *time=[[[dataSource objectAtIndex:indexPath.row]objectForKey:@"commentDate"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     cell.timeLabel.frame=CGRectMake(60, cell.commentLabel.frame.size.height+cell.commentLabel.frame.origin.y+10, 200, 20);
     cell.timeLabel.text=time;
     
-    NSString *audioString=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"audioPath"];
+    NSString *audioString=[[[dataSource objectAtIndex:indexPath.row]objectForKey:@"audioPath"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [cell.soundButton addTarget:self action:@selector(playSoundFile:) forControlEvents:UIControlEventTouchUpInside];
     cell.soundButton.tag=1000+indexPath.row;
     if (audioString!=nil && ![audioString isEqualToString:@""]) {
@@ -186,6 +186,7 @@
     }
     cell.bgImageView.frame=CGRectMake(3, 3, 314, cell.timeLabel.frame.size.height+cell.timeLabel.frame.origin.y+10);
 }
+
 #pragma mark - PullingRefreshTableViewDelegate
 - (void)pullingTableViewDidStartRefreshing:(PullingRefreshTableView *)tableView
 {
@@ -202,7 +203,10 @@
 {
     [self performSelector:@selector(loadData) withObject:nil afterDelay:1.f];
 }
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
 #pragma mark - Scroll
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
@@ -261,8 +265,8 @@
 -(void)downloadSoundFile:(NSMutableDictionary *)dir
 {
     NSURL *baseUrl = [NSURL URLWithString:[ImageUrl stringByAppendingString:[dir objectForKey:@"file"]]];
-    __weak ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:baseUrl];
-
+    ASIHTTPRequest *_request = [ASIHTTPRequest requestWithURL:baseUrl];
+    __weak ASIHTTPRequest *request = _request;
     NSArray *fArray = [[dir objectForKey:@"file"] componentsSeparatedByString:@"/"];
     NSString *fileName=[fArray lastObject];
     [request setDownloadDestinationPath:[Utility getFilePath:fileName Dir:@"SpeechSoundDir"]];

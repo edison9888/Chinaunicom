@@ -75,7 +75,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *title=[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"reportTitle"];
+    NSString *title=[[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"reportTitle"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     CGSize titleSize=[title sizeWithFont:[UIFont systemFontOfSize:17.0] constrainedToSize:CGSizeMake(250, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
     return 8+titleSize.height+5+20+5+3;
 }
@@ -95,13 +95,13 @@
 }
 -(void)tableView:(UITableView *)tableView willDisplayCell:(CustomFavoriteListCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *title=[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"reportTitle"];
+    NSString *title=[[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"reportTitle"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     CGSize titleSize=[title sizeWithFont:[UIFont systemFontOfSize:17.0] constrainedToSize:CGSizeMake(250, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
     cell.contentTitleLabel.frame=CGRectMake(20, 8, 250, titleSize.height);
     cell.contentTitleLabel.text=title;
     
     cell.dateTimeLabel.frame=CGRectMake(20, 8+cell.contentTitleLabel.frame.size.height+5, 200, 20);
-    cell.dateTimeLabel.text=[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"ftime"];
+    cell.dateTimeLabel.text=[[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"ftime"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     cell.bgImageView.frame=CGRectMake(3, 3, 314, cell.dateTimeLabel.frame.origin.y+cell.dateTimeLabel.frame.size.height+5);
 

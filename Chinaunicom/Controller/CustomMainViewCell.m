@@ -29,6 +29,7 @@
         [self.contentView addSubview:_qitaImageView];
         
         _pinlunLabel=[[UILabel alloc]init];
+        [_pinlunLabel setFont:[UIFont systemFontOfSize:14.0]];
         [_pinlunLabel sizeToFit];
         [_pinlunLabel setTextAlignment:NSTextAlignmentRight];
         [_pinlunLabel setBackgroundColor:[UIColor clearColor]];

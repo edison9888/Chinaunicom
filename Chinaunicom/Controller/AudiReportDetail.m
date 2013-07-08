@@ -46,17 +46,17 @@
     
     [[requestServiceHelper defaultService] getReportDetail:dictionary sucess:^(NSDictionary *reportDetail) {
         //标题
-        NSString *titleStr=[reportDetail objectForKey:@"title"];
+        NSString *titleStr=[[reportDetail objectForKey:@"title"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];;
         CGSize titleSize=[titleStr sizeWithFont:[UIFont boldSystemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
         UILabel *titleLabel=[[UILabel alloc]initWithFrame:CGRectMake(20, 20, 280, titleSize.height)];
         titleLabel.text=titleStr;
-        [titleLabel setTextColor:[UIColor whiteColor]];
+        [titleLabel setTextColor:[UIColor blackColor]];
         [titleLabel setBackgroundColor:[UIColor clearColor]];
         [titleLabel setNumberOfLines:0];
         [titleLabel setLineBreakMode:NSLineBreakByCharWrapping];
         [self.scrollview addSubview:titleLabel];
         
-        NSString *comeStr=[reportDetail objectForKey:@"reportType"];
+        NSString *comeStr=[[reportDetail objectForKey:@"reportType"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSString *typeName=nil;
         if ([comeStr isEqualToString:@"12"]){
             
@@ -79,7 +79,7 @@
         [comeLabel setFont:[UIFont systemFontOfSize:13.0]];
         [self.scrollview addSubview:comeLabel];
         
-        NSString *timeStr=[reportDetail objectForKey:@"published"];
+        NSString *timeStr=[[reportDetail objectForKey:@"published"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];;
         UILabel *timeLabel=[[UILabel alloc]initWithFrame:CGRectMake(170, comeLabel.frame.origin.y, 130, 20)];
         timeLabel.text=timeStr;
         [timeLabel setTextColor:[UIColor darkGrayColor]];
@@ -94,8 +94,8 @@
         [commentLabel setNumberOfLines:0];
         [commentLabel setBackgroundColor:[UIColor clearColor]];
         commentLabel.text=commentStr;
-        
         [self.scrollview addSubview:commentLabel];
+        
         [self.scrollview setFrame:CGRectMake(0, 44, 320, self.view.frame.size.height-44-44)];
         [self.scrollview setContentSize:CGSizeMake(320, commentLabel.frame.origin.y+commentLabel.frame.size.height+10)];
         
@@ -163,11 +163,6 @@
     // Return the new image.
     return newImage;
 }
--(IBAction)backReport:(id)sender{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"退回报告" message:@" " delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
-    alert.alertViewStyle=UIAlertViewStylePlainTextInput;
-    [alert show];
-}
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if(buttonIndex==1)
@@ -208,7 +203,7 @@
 }
 
 - (IBAction)backFile:(UIButton *)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"退回报告" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"退回报告原因" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
     alert.alertViewStyle=UIAlertViewStylePlainTextInput;
     [alert show];
 }

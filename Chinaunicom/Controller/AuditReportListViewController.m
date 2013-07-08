@@ -34,27 +34,28 @@
     }
     return self;
 }
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.myTableView launchRefreshing];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]]];
-    if (page == 0)
-    {
-        [self.myTableView launchRefreshing];
-    }
     [self initLayout];
-    [self initDataSource];
 }
 -(void)initLayout
 {
     [self.senHeButton setSelected:YES];
-    self.myTableView.pullingDelegate=self;
+    self.myTableView = [[PullingRefreshTableView alloc]initWithFrame:CGRectMake(0, 88, 320, 460-44-44-44)pullingDelegate:self ];
     [self.myTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.myTableView setSeparatorColor:[UIColor clearColor]];
     [self.myTableView setBackgroundColor:[UIColor clearColor]];
     [self.myTableView setBackgroundView:nil];
-    self.myTableView.sectionHeaderHeight=44.0f;
+    self.myTableView.delegate=self;
+    self.myTableView.dataSource=self;
+    [self.view addSubview:self.myTableView];
 }
 
 //初始化数据
@@ -69,7 +70,13 @@
     [dictionary setValue: state forKey:@"status"];
     [dictionary setValue: userid forKey:@"userId"];
     [[requestServiceHelper defaultService] getAduitingList:dictionary sucess:^(NSMutableArray *reportDictionary, NSInteger result) {
-        
+        if ([state isEqualToString:@"1"]) {
+            [_headLabel setText:[NSString stringWithFormat:@"有%d已审核信息",result]];
+        }else
+        {
+            [_headLabel setText:[NSString stringWithFormat:@"有%d条待审核信息",result]];
+        }
+
         if (page==1) {
             [dataSoure removeAllObjects];
         }
@@ -83,8 +90,8 @@
             [self.myTableView tableViewDidFinishedLoading];
             self.myTableView.reachedTheEnd  = NO;
             [self.myTableView reloadData];
-        }    
-        
+        }
+
     } falid:^(NSString *errorMsg) {
         [self.myTableView tableViewDidFinishedLoading];
         self.myTableView.reachedTheEnd  = YES;
@@ -113,10 +120,10 @@
     [self performSelector:@selector(loadData) withObject:nil afterDelay:1.f];
 }
 
-- (NSDate *)pullingTableViewRefreshingFinishedDate{
-    NSDate *date=[NSDate date];
-    return date;
-}
+//- (NSDate *)pullingTableViewRefreshingFinishedDate{
+//    NSDate *date=[NSDate date];
+//    return date;
+//}
 
 - (void)pullingTableViewDidStartLoading:(PullingRefreshTableView *)tableView
 {
@@ -139,23 +146,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView *headView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
-    [headView setBackgroundColor:[UIColor darkGrayColor]];
-    UILabel *titleLabel=[[UILabel alloc]initWithFrame:CGRectMake(10, 5, 300, 34)];
-    [titleLabel setBackgroundColor:[UIColor clearColor]];
-    [titleLabel setTextColor:[UIColor whiteColor]];
-    if ([state isEqualToString:@"1"]) {
-        [titleLabel setText:[NSString stringWithFormat:@"有%d已审核信息",[dataSoure count]]];
-    }else
-    {
-        [titleLabel setText:[NSString stringWithFormat:@"有%d条待ß审核信息",[dataSoure count]]];
-    }
-    
-    [headView addSubview:titleLabel];
-    return headView;
-}
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -167,24 +158,24 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIImage *image=[UIImage imageNamed:@"qitalei.png"];
-    NSString *titleStr=[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"title"];
+    NSString *titleStr=[[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"title"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     CGSize titleSize;
     if ([[dataSoure objectAtIndex:indexPath.row]objectForKey:@"picPath"]!=nil) {
-        NSString * path=[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"picPath"];
+        NSString * path=[[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"picPath"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSArray *imageArray=[path componentsSeparatedByString:@","];
         if ([imageArray count]>1) {
             titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-            return 10+titleSize.height+5 +image.size.height+5 + 80;
+            return 10+titleSize.height+5 +image.size.height+5 + 80 + 30;
         }else
         {
             titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(190, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-            return 10+titleSize.height+5 +image.size.height+5;
+            return 10+titleSize.height+5 +image.size.height+5 +25;
         }
         
     }else
     {
         titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-        return 10+titleSize.height+5 +image.size.height+5;
+        return 10+titleSize.height+5 +image.size.height+5 +25;
     }
 }
 
@@ -196,7 +187,7 @@
     
     if (cell == nil) {
         cell=[[CustomMainViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellWithIdentifier];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+      [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
     for (UIView *view in [cell.contentView subviews]) {
         if ([view isMemberOfClass:[CellImageView class]]) {
@@ -208,21 +199,21 @@
 }
 -(void)tableView:(UITableView *)tableView willDisplayCell:(CustomMainViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *titleStr=[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"title"];
+    NSString *titleStr=[[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"title"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     CGSize titleSize;
-    NSString * path=[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"picPath"];
+    NSString * path=[[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"picPath"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSArray *imageArray=[path componentsSeparatedByString:@","];
-    
-    if ([[dataSoure objectAtIndex:indexPath.row]objectForKey:@"picPath"]!=nil) {
+     UIImage *aqImage=[UIImage imageNamed:@"anquanlei.png"];
+    if (path!=nil) {
         
         if ([imageArray count]>1) {
             titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-            cell.pinlunLabel.frame=CGRectMake(320-3-70, 10+titleSize.height+5+10, 70, 20);
+            cell.pinlunLabel.frame=CGRectMake(150, 10+titleSize.height+5+30+5+80+5, 160, 20);
             
             for (int i=0; i<[imageArray count]; i++) {
                 
                 CellImageView *imageView=[[CellImageView alloc]initWithFrame:CGRectMake((i+1)*15+i*80, 10+titleSize.height+5+40, 80, 60)];
-                NSString *picPath=[[imageArray objectAtIndex:i]stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
+                NSString *picPath=[[[imageArray objectAtIndex:i]stringByReplacingOccurrencesOfString:@"\\" withString:@"/"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                 NSData *data = [picPath dataUsingEncoding: NSUTF8StringEncoding];
                 NSString *content=[[NSString alloc]initWithData:data encoding:1];
                 [imageView setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:content]]];
@@ -232,18 +223,19 @@
         }else
         {
             titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(190, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-            cell.pinlunLabel.frame=CGRectMake(15+100, 10+titleSize.height+5+5, 70, 20);
-            NSString *picPath=[[imageArray objectAtIndex:0]stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
+            NSString *picPath=[[[imageArray objectAtIndex:0]stringByReplacingOccurrencesOfString:@"\\" withString:@"/"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
             cell.tupianImageView.frame=CGRectMake(220, 7, 80, 60);
             NSData *data = [picPath dataUsingEncoding: NSUTF8StringEncoding];
             NSString *content=[[NSString alloc]initWithData:data encoding:1];
             [cell.tupianImageView setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:content ]]];
+           
+            cell.pinlunLabel.frame=CGRectMake(150, 10+titleSize.height+5+aqImage.size.height+5, 160, 20);
         }
         
     }else
     {
         titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-        cell.pinlunLabel.frame=CGRectMake(320-3-150, 10+titleSize.height+5+10, 150, 20);
+        cell.pinlunLabel.frame=CGRectMake(150, 10+titleSize.height+5+aqImage.size.height+5, 160, 20);
         cell.tupianImageView.frame=CGRectMake(0, 0, 0, 0);
         cell.tupianImageView.image=nil;
     }
@@ -267,26 +259,26 @@
     cell.qitaImageView.image=tupianImage;
     cell.qitaImageView.frame=CGRectMake(15, 10+cell.titleLabel.frame.size.height+5, tupianImage.size.width, tupianImage.size.height);
     
-    NSString *commentNum=[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"published"];
+    NSString *commentNum=[[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"published"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     cell.pinlunLabel.text=commentNum;
     
     if ([[dataSoure objectAtIndex:indexPath.row]objectForKey:@"picPath"]!=nil) {
         if ([imageArray count]>1) {
-            cell.bgImageView.frame=CGRectMake(3, 3, 320-6, cell.qitaImageView.frame.origin.y+cell.qitaImageView.frame.size.height+5+80);
+            cell.bgImageView.frame=CGRectMake(3, 3, 320-6, cell.pinlunLabel.frame.origin.y+cell.pinlunLabel.frame.size.height+5);
         }else
         {
-            cell.bgImageView.frame=CGRectMake(3, 3, 320-6, cell.qitaImageView.frame.origin.y+cell.qitaImageView.frame.size.height+5);
+            cell.bgImageView.frame=CGRectMake(3, 3, 320-6, cell.pinlunLabel.frame.origin.y+cell.pinlunLabel.frame.size.height+5);
         }
         
     }else{
-        cell.bgImageView.frame=CGRectMake(3, 3, 320-6, cell.qitaImageView.frame.origin.y+cell.qitaImageView.frame.size.height+5);
+        cell.bgImageView.frame=CGRectMake(3, 3, 320-6, cell.pinlunLabel.frame.origin.y+cell.pinlunLabel.frame.size.height+5);
     }
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *reportId = [[dataSoure objectAtIndex:indexPath.row] objectForKey:@"reportId"];
-    if ([state isEqualToString:@"1"]) {
+    if ([state isEqualToString:@"2"]) {
         AudiReportDetail *audireport=[[AudiReportDetail alloc] initWithNibName:@"AudiReportDetail" bundle:nil];
         audireport.reportId=reportId;
         [self.navigationController pushViewController:audireport animated:YES];

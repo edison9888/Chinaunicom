@@ -65,7 +65,9 @@ typedef enum {
                            requestComplete:(void (^)(NSString *responseStr))requestComplete
                            requestFailed:(void (^)(NSString *errorMsg))requestFailed{
     
-    __weak ASIHTTPRequest *request = [self requestWithUrl:url];
+    
+    ASIHTTPRequest *_request = [self requestWithUrl:url];
+    __weak ASIHTTPRequest *request = _request;
     [request setUserAgentString:UserAgent];
     
     //设置请求方式
@@ -111,7 +113,8 @@ typedef enum {
                              requestComplete:(void(^)(NSString *responseStr))complete
                              requestFailed:(void(^)(NSString*errorMsg))failed{
 
-    __weak ASIFormDataRequest *request = [self formRequestWithUrl:url];
+    ASIFormDataRequest *_request = [self formRequestWithUrl:url];
+    __weak ASIFormDataRequest *request = _request;
     [request setPostFormat:ASIMultipartFormDataPostFormat];
     [request setUserAgentString:UserAgent];
     [request buildPostBody];
@@ -165,7 +168,8 @@ typedef enum {
                        requestComplete:(void(^)(NSString *responseStr))complete
                        requestFailed:(void(^)(NSString*errorMsg))failed{
     
-    __weak ASIFormDataRequest *request = [self formRequestWithUrl:url];
+    ASIFormDataRequest *_request = [self formRequestWithUrl:url];
+    __weak ASIFormDataRequest *request = _request;
     [request setPostFormat:ASIMultipartFormDataPostFormat];
     [request setUserAgentString:UserAgent];
     [request buildPostBody];
