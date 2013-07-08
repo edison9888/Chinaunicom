@@ -43,26 +43,9 @@
     [self initView];
     //请求全部数据列表
     [self initDataSource];
-    
-    NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
-    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
-    [self getReportType:[NSString stringWithFormat:@"%d",[user.userId intValue]]];
 
 }
-//获取我已关注的菜单分类
--(void)getReportType:(NSString*)userId
-{
-    
-    [[requestServiceHelper defaultService] getMyMenuReportType:userId sucess:^(NSArray *array) {
-        
-        [[NSUserDefaults standardUserDefaults] setObject:array forKey:KEY_LEFTMENU_INFO];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-    } falid:^(NSString *errorMsg) {
-        
-    }];
-    
-}
+
 -(void)initView
 {
     //多菜单按钮

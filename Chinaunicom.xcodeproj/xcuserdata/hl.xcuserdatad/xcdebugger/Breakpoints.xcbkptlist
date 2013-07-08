@@ -7,13 +7,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Chinaunicom/Utils/HttpRequestHelper.m"
-         timestampString = "394912726.969649"
+         filePath = "Chinaunicom/Controller/LeftMenuViewController.m"
+         timestampString = "394995285.059757"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "63"
-         endingLineNumber = "63"
-         landmarkName = "+asyncGetRequest:parameter:requestComplete:requestFailed:"
+         startingLineNumber = "256"
+         endingLineNumber = "256"
+         landmarkName = "-pressAddBt:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

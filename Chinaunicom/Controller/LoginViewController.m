@@ -57,12 +57,6 @@
     self.passWordTextField.leftViewMode = UITextFieldViewModeAlways;
     
     self.userDefault=[NSUserDefaults standardUserDefaults];
-    //NSLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:KEY_REMEMBER_PWD]);
-    
-    //[[NSUserDefaults standardUserDefaults] removeObjectForKey:KEY_LEFTMENU_INFO];
-    //[self.userDefault synchronize];
-   // NSLog(@"left menu: %@",[[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO]);
-  // NSLog(@"left menu: %@",[[NSUserDefaults standardUserDefaults] objectForKey:KEY_LEFTMENU_INFO]);
 }
 
 #pragma mark 该方法为点击虚拟键盘Return，要调用的代理方法：隐藏虚拟键盘
@@ -151,15 +145,7 @@
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:user];
         [self.userDefault setObject:data forKey:KEY_USER_INFO];
         [self setField:self.userNameTextField forKey:KEY_USER_NAME];
-    
-//        NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//        NSString* documentsDirectory = [paths objectAtIndex:0];
-//        // Now we get the full path to the file
-//        NSString* fullPathToFile = [documentsDirectory stringByAppendingPathComponent:@"temphead.jpg"];
-//        NSFileManager *fm = [NSFileManager defaultManager];
-//        if([fm fileExistsAtPath:fullPathToFile]){
-//            [fm removeItemAtPath:fullPathToFile error:Nil];
-//        }
+
         //保存密码
         if ([[self.userDefault objectForKey:KEY_REMEMBER_PWD] boolValue]) {
             [self setField:self.passWordTextField forKey:KEY_USER_PWD];
