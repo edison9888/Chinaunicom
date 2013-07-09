@@ -8,19 +8,11 @@
 
 
 
-#import "PullToRefreshTableView.h"
+#import "PullingRefreshTableView.h"
 
-@interface MainViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UITextFieldDelegate>
+@interface MainViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UITextFieldDelegate,PullingRefreshTableViewDelegate>
 {
-    CGFloat _offset;
-    NSInteger page;
-    NSInteger pagesize;
-    NSInteger totalresult;
-    NSString *reportid;
-    NSMutableArray *dataSource;
-    BOOL isfirst;
-    PullToRefreshTableView *myTableView;
-    BOOL isSearchBar;
+    PullingRefreshTableView *myTableView;
 }
 
 @property (weak, nonatomic)   IBOutlet UISearchBar *mySearch;

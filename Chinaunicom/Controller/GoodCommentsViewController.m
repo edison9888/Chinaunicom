@@ -36,7 +36,6 @@
 }
 -(void)initTopView
 {
-    
     UIView *topView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
     [topView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"title@2x.png"]]];
     UIButton *backButton=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -203,10 +202,6 @@
 {
     [self performSelector:@selector(loadData) withObject:nil afterDelay:1.f];
 }
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-}
 #pragma mark - Scroll
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
@@ -233,14 +228,11 @@
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
-
     /* Move the toolbar back to bottom of the screen */
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationDuration:0.3];
 	CGRect frame = inputToolbar.frame;
-
     frame.origin.y = self.view.frame.size.height - frame.size.height;
-
 	inputToolbar.frame = frame;
 	[UIView commitAnimations];
     keyboardIsVisible = NO;
@@ -253,13 +245,11 @@
     hub.backgroundColor=[UIColor colorWithPatternImage:image];
     [hub addToDisplayQueue];
     [recoderAndPlayer SpeechRecordStart];
-
 }
 -(void)endSpeak
 {
     [hub dismiss];
     [recoderAndPlayer SpeechRecordStop];
-    
 }
 
 -(void)downloadSoundFile:(NSMutableDictionary *)dir
@@ -272,7 +262,6 @@
     [request setDownloadDestinationPath:[Utility getFilePath:fileName Dir:@"SpeechSoundDir"]];
     [request setCompletionBlock:^{
         [recoderAndPlayer SpeechAMR2WAV:fileName];
-        
     }];
     [request setFailedBlock:^{
         [request clearDelegatesAndCancel];
@@ -284,7 +273,6 @@
     if (recoderAndPlayer.isPlay) {
         [recoderAndPlayer stopPlaying];
     }
-    
     int index=[sender tag]-1000;
     NSString *soundpath=[[dataSource objectAtIndex:index] objectForKey:@"audioPath"];
     NSArray *fArray = [soundpath componentsSeparatedByString:@"/"];

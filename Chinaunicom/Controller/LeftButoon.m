@@ -1,14 +1,14 @@
 //
-//  testLabel.m
+//  LeftButoon.m
 //  Chinaunicom
 //
-//  Created by YY on 13-7-8.
+//  Created by rock on 13-7-9.
 //  Copyright (c) 2013年 Chinaunicom. All rights reserved.
 //
 
-#import "testLabel.h"
+#import "LeftButoon.h"
 
-@implementation testLabel
+@implementation LeftButoon
 
 - (id)initWithFrame:(CGRect)frame
 {

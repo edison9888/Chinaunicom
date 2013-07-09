@@ -55,7 +55,6 @@
     [_bottomScrollview setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:_topview];
     [self.view addSubview:_bottomScrollview];
-    
     //返回按钮
     UIImage *backImage=[UIImage imageNamed:@"new_arraw.png"];
     UIButton* backButton= [UIButton buttonWithType:UIButtonTypeCustom];
@@ -79,7 +78,6 @@
     favButton=[UIButton buttonWithType:UIButtonTypeCustom];
     favButton.frame=CGRectMake(265, 0, 57, 44);
     [favButton setImage:starImage forState:UIControlStateNormal];
-    
     [favButton setImage:[UIImage imageNamed:@"favorites.png"] forState:UIControlStateSelected];
     [favButton addTarget:self action:@selector(collect:) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomView addSubview:favButton];

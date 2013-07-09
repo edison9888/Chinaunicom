@@ -96,10 +96,12 @@ static requestServiceHelper *requestService;
     [dir setValue:userid forKey:@"userId"];
     
     [HttpRequestHelper asyncGetRequest:ReportAllType parameter:dir requestComplete:^(NSString *responseStr) {
-        //code
         NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
         NSArray *reportArray=[[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingMutableLeaves) error:nil] objectForKey:@"object"];
-        sucess(reportArray);
+        if (reportArray ) {
+            sucess(reportArray);
+        }
+        
     } requestFailed:^(NSString *errorMsg) {
         faild(errorMsg);
     }];

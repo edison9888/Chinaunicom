@@ -14,19 +14,14 @@
 @property (weak, nonatomic) IBOutlet UIButton *b3;
 @property (weak, nonatomic) IBOutlet UIButton *b4;
 @property (weak, nonatomic) IBOutlet UIButton *b5;
-
-- (IBAction)b1:(UIButton *)sender;
-- (IBAction)b2:(UIButton *)sender;
-- (IBAction)b3:(UIButton *)sender;
-- (IBAction)b4:(UIButton *)sender;
-- (IBAction)b5:(UIButton *)sender;
-- (IBAction)b6:(UIButton *)sender;
-- (IBAction)b7:(UIButton *)sender;
-- (IBAction)b8:(UIButton *)sender;
-- (IBAction)b9:(UIButton *)sender;
-- (IBAction)b10:(UIButton *)sender;
-
+@property (weak, nonatomic) IBOutlet UIButton *b6;
+@property (weak, nonatomic) IBOutlet UIButton *b7;
+@property (weak, nonatomic) IBOutlet UIButton *b8;
+@property (weak, nonatomic) IBOutlet UIButton *b9;
+@property (weak, nonatomic) IBOutlet UIButton *b10;
 @property (weak, nonatomic) IBOutlet UIButton *editButton;
+- (IBAction)pressAll:(UIButton *)sender;
+-(IBAction)pushView:(id)sender;
 - (IBAction)pressEditButton:(UIButton *)sender;
 
 @end

@@ -8,22 +8,22 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Chinaunicom/Controller/LeftMenuViewController.m"
-         timestampString = "394972604.539196"
+         timestampString = "395054925.366548"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "763"
-         endingLineNumber = "763">
+         startingLineNumber = "908"
+         endingLineNumber = "908">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Chinaunicom/Controller/GoodCommentsViewController.m"
-         timestampString = "394961498.938631"
+         timestampString = "395054925.366548"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "314"
-         endingLineNumber = "314"
+         startingLineNumber = "302"
+         endingLineNumber = "302"
          landmarkName = "-recordAndSendAudioFile:fileSize:duration:"
          landmarkType = "5">
       </FileBreakpoint>

@@ -17,7 +17,13 @@
 #import "GTMBase64.h"
 
 @interface MainViewController ()
-
+{
+    int whichNum;
+    int pagesize;
+    NSInteger page;
+    BOOL refreshing;
+    NSMutableArray *dataSource;
+}
 @end
 
 @implementation MainViewController
@@ -28,6 +34,7 @@
     if (self) {
         // Custom initialization
         self.title=@"电商头条";
+        pagesize=10;
     }
     return self;
 }
@@ -43,7 +50,6 @@
     [self initView];
     //请求全部数据列表
     [self initDataSource];
-
 }
 
 -(void)initView
@@ -85,19 +91,18 @@
 
 }
 -(void) initParmeter{
-    myTableView =  [[PullToRefreshTableView alloc] initWithFrame:CGRectMake(0, 44, 320, 412+(iPhone5?88:0))];
+    myTableView =[[PullingRefreshTableView alloc] initWithFrame:CGRectMake(0, 44, 320, self.view.frame.size.height-44-44) pullingDelegate:self];
     [myTableView setDelegate:self];
     [myTableView setDataSource:self];
     [myTableView setBackgroundView:nil];
     [myTableView setBackgroundColor:[UIColor clearColor]];
-    //去掉分割线
     [myTableView setSeparatorColor:[UIColor clearColor]];
+    [myTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.view addSubview:myTableView];
-    myTableView.tableFooterView.hidden=YES;
-    page=1;
-    totalresult=0;
-    pagesize=10;
-//    isfirst=YES;
+    if (page==0) {
+        whichNum=10;
+        [myTableView launchRefreshing];
+    }
 }
 -(void)initChangeSource:(int)reid
 {
@@ -127,16 +132,8 @@
 }
 -(void)reloadSource:(int)num
 {
-    page=1;
-    totalresult=0;
-    pagesize=10;
-    if (num==10) {
-         [self initDataSource];
-    }else
-    {
-        [self initChangeSource:num];
-    }
-   
+     whichNum=num;
+    [myTableView launchRefreshing];
 }
 -(void)initDataSource
 {
@@ -158,26 +155,31 @@
 //获取报告列表
 -(void)getreportList:(NSString *)url parmeter:(NSMutableDictionary *)dictionary
 {
-    //测试
     [[requestServiceHelper defaultService]getReportList:url parmeter:dictionary sucess:^(NSMutableArray *reportDictionary, NSInteger result) {
-        totalresult =result;
-        [myTableView.footerView setHidden:NO];
-        if (totalresult > 0) {
-            
-            if (page == 1) {
-                [dataSource removeAllObjects];
-            }
-            
-            [dataSource addObjectsFromArray:reportDictionary];
-        }else {
-            return;
+        
+        if (page==1) {
+            [dataSource removeAllObjects];
         }
-        
-        [self performSelectorOnMainThread:@selector(isOver) withObject:nil waitUntilDone:NO];
-
-        
+        [dataSource addObjectsFromArray:reportDictionary];
+        if ([dataSource count]==result) {
+            [myTableView reloadData];
+            [myTableView tableViewDidFinishedLoading];
+            myTableView.reachedTheEnd  = YES;
+            
+        }else
+        {
+             [myTableView reloadData];
+            [myTableView tableViewDidFinishedLoading];
+            myTableView.reachedTheEnd  = NO;
+           
+        }
     } falid:^(NSString *errorMsg) {
-        
+        if (page==1) {
+            [dataSource removeAllObjects];
+        }
+         [myTableView reloadData];
+         [myTableView tableViewDidFinishedLoading];
+         myTableView.reachedTheEnd  = YES;
     }];
     
     
@@ -333,7 +335,6 @@
         [self.mySearch resignFirstResponder];
     }else
     {
-        
         NSString *str=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"reportId"];
         ContextDetailController *contextDetailCtrl=[[ContextDetailController alloc] initWithNibName:@"ContextDetailController" bundle:nil];
         contextDetailCtrl.reportId=str;
@@ -357,11 +358,13 @@
 #pragma mark - Button Handlers
 -(void)showLeft
 {
+    [self.view endEditing:YES];
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
 -(void) showRight
 {
+    [self.view endEditing:YES];
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideRight animated:YES completion:nil];
 }
 
@@ -372,76 +375,80 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewDidUnload {
-
-
     [super viewDidUnload];
 }
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
+//判断是刷新还是加载更多
+- (void)loadData
 {
-    [myTableView tableViewDidDragging];
-}
-
--(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    NSInteger returnKey = [myTableView tableViewDidEndDragging];
-    if (returnKey != k_RETURN_DO_NOTHING) {
-        switch (returnKey) {
-            case k_RETURN_REFRESH:{
-                [self upDataAgain];
-            }break;
-            case k_RETURN_LOADMORE:{
-                [self moreInfor];
-            }break;
-            default:break;
+    page++;
+    if (refreshing)
+    {
+        page = 1;
+        refreshing = NO;
+        if (whichNum==10)
+        {
+            [self initDataSource];
+            
+        }else if (whichNum==100)
+        {
+            [self searchBarMoreInfo];
+        }
+        else
+        {
+            [self initChangeSource:whichNum];
         }
     }
-    
-}
--(void)upDataAgain{
-    page = 1;
-    if (isSearchBar) {
-        [self searchBarMoreInfo];
-    }else
+    else
     {
-        [self initDataSource];
+        if (whichNum==10) {
+            
+            [self initDataSource];
+            
+        }else if (whichNum==100)
+        {
+            [self searchBarMoreInfo];
+        }
+        else
+        {
+            [self initChangeSource:whichNum];
+        }
     }
-    
 }
--(void)moreInfor{
-    page = [dataSource count]/pagesize + 1;
-    if (isSearchBar) {
-        [self searchBarMoreInfo];
-    }else
-    {
-        [self initDataSource];
-    }
-
-}
--(void)isOver
+#pragma mark - PullingRefreshTableViewDelegate
+- (void)pullingTableViewDidStartRefreshing:(PullingRefreshTableView *)tableView
 {
-    if (dataSource.count >= totalresult) {
-        [myTableView reloadData:YES];
-    }else
-    {
-        [myTableView reloadData:NO];
-    }
+    refreshing = YES;
+    [self performSelector:@selector(loadData) withObject:nil afterDelay:0];
 }
+
+- (NSDate *)pullingTableViewRefreshingFinishedDate{
+    NSDate *date=[NSDate date];
+    return date;
+}
+
+- (void)pullingTableViewDidStartLoading:(PullingRefreshTableView *)tableView
+{
+    [self performSelector:@selector(loadData) withObject:nil afterDelay:1.f];
+}
+#pragma mark - Scroll
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [myTableView tableViewDidScroll:scrollView];
+    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    [myTableView tableViewDidEndDragging:scrollView];
+}
+
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    isSearchBar=YES;
-    page=1;
-    NSMutableDictionary *dir=[[NSMutableDictionary alloc]init];
-    NSData *data = [[self.mySearch text] dataUsingEncoding: NSUTF8StringEncoding];
-    NSString *content=[[NSString alloc]initWithData:data encoding:1];
-    [dir setValue: [NSString stringWithFormat:@"%d",page] forKey:@"index"];
-    [dir setValue: [NSString stringWithFormat:@"%d",pagesize] forKey:@"pageNumber"];
-    [dir setValue: content forKey:@"title"];
-    [self getreportList:SearchReport parmeter:dir];
+    whichNum=100;
     [self dismissKeyboard];
+    [myTableView launchRefreshing];
 }
 -(void)searchBarMoreInfo
 {
