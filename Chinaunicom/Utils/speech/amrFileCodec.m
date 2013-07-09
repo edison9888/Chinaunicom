@@ -179,7 +179,7 @@ int ReadAMRFrameData(char* fpamr,int pos,int maxLen, unsigned char frameBuffer[]
     int nPos = 0;
 	unsigned char frameHeader; // 帧头
 	
-	memset(frameBuffer, 0, sizeof(frameBuffer));
+	memset(frameBuffer, 0, sizeof(&frameBuffer));
 	
 	// 读帧头
 	// 如果是坏帧(不是标准帧头)，则继续读下一个字节，直到读到标准帧头

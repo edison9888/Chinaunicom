@@ -240,6 +240,7 @@ static requestServiceHelper *requestService;
     
 }
 
+
 #pragma mark - 收藏，赞，踩
 -(void) favoriteZanCai:(NSString *)url paramter:(NSMutableDictionary *)dictionary sucess:(void (^)(NSString *))sucess falid:(void (^)(NSString *))faild{
     [HttpRequestHelper asyncGetRequest:url parameter:dictionary requestComplete:^(NSString *responseStr) {

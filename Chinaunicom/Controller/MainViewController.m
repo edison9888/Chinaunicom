@@ -137,7 +137,7 @@
 }
 -(void)initDataSource
 {
-
+    
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     [dictionary setValue: [NSString stringWithFormat:@"%d",page] forKey:@"index"];
     [dictionary setValue: [NSString stringWithFormat:@"%d",pagesize] forKey:@"pageNumber"];
@@ -156,7 +156,6 @@
 -(void)getreportList:(NSString *)url parmeter:(NSMutableDictionary *)dictionary
 {
     [[requestServiceHelper defaultService]getReportList:url parmeter:dictionary sucess:^(NSMutableArray *reportDictionary, NSInteger result) {
-        
         if (page==1) {
             [dataSource removeAllObjects];
         }
@@ -347,6 +346,7 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+    
     [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
 }
 - (void)viewWillDisappear:(BOOL)animated {

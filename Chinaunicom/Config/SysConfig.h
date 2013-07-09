@@ -67,6 +67,8 @@
 #define getMyFavoriteList [SERVERPATH stringByAppendingFormat:@"fav/getMyFavList"]
 //修改用户头像
 #define userPhoto [SERVERPATH stringByAppendingFormat:@"UserPrivilegeRe/updateHeadPic"]
+//修改密码
+#define userPwd [SERVERPATH stringByAppendingFormat:@"UserPrivilegeRe/updatePassword"]
 //收藏列表
 #define AddFavoriteList [SERVERPATH stringByAppendingFormat:@"fav/addFav"]
 //通过审核

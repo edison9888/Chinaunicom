@@ -268,8 +268,8 @@
         
         SettingController *setCtrl=[[SettingController alloc] initWithNibName:@"SettingController" bundle:nil];
         setCtrl.title=@"设置";
+        setCtrl.Controll=self;
         [self.mm_drawerController.rightDrawerViewController.navigationController pushViewController:setCtrl animated:YES];
-
     }
 }
 -(void)downloadSoundFile:(NSMutableDictionary *)dir

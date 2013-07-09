@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "LoadingController.h"
-#import "MessageTypeViewController.h"
 #import "HttpRequestHelper.h"
 @implementation AppDelegate
 

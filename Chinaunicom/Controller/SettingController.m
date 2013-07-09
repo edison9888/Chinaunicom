@@ -12,6 +12,7 @@
 #import "GTMBase64.h"
 #import "UIButton+WebCache.h"
 #import "UIViewController+MMDrawerController.h"
+#import "ChangePwdViewController.h"
 @interface SettingController ()
 
 @end
@@ -36,22 +37,9 @@
     NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
     User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
     NSString *picpath=[user.icon stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
-    
-//    NSString *urlStr=[ImageUrl stringByAppendingString:picpath];
-//    NSURL *url=[NSURL URLWithString:urlStr];
-//    NSData *data=[GTMBase64 decodeData:[NSData dataWithContentsOfURL:url]];
-//    NSString *strssss=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-//    NSURL *aaaa=[NSURL URLWithString:strssss];
-//    NSString * encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-//                                                                                   (CFStringRef)url,
-//                                                                                   NULL,
-//                                                                                   NULL,
-//                                                                                   kCFStringEncodingUTF8));
-//    [self.headButton setImageWithURL:[NSURL URLWithString:@"http://www.sinaimg.cn/blog/qing/image/qingzujian/sou031805.jpg"]];
-//    [self.headButton setImageWithURL:[NSURL URLWithString:picpath]];
-    [self.headButton setImageWithURL:[NSURL URLWithString:picpath] forState:UIControlStateNormal];
-//    [userDefaults setObject:number forKey:KEY_REMEMBER_PWD];
-//    [userDefaults synchronize];
+    NSString *urlStr=[ImageUrl stringByAppendingString:picpath];
+    NSURL *url=[NSURL URLWithString:urlStr];
+    [self.headButton setImageWithURL:url forState:UIControlStateNormal];
     [self initLayout];
 }
 
@@ -101,6 +89,8 @@
 //失败 'false'
 
 - (IBAction)changePwd:(id)sender {
+    ChangePwdViewController *pwd=[[ChangePwdViewController alloc]initWithNibName:@"ChangePwdViewController" bundle:nil];
+    [self.navigationController pushViewController:pwd animated:YES];
 }
 
 - (IBAction)quit:(id)sender {
@@ -124,54 +114,16 @@
 }
 - (void)pickImageFromAlbum
 {
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]){
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]){
         //检查是否有相机
         UIImagePickerController *imagepicker = [[UIImagePickerController alloc] init];
         imagepicker.delegate = self;
         imagepicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         imagepicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         imagepicker.allowsEditing = NO;
-        
         [self presentModalViewController:imagepicker animated:YES];
     }
 }
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-
-    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera)
-    {
-    }
-    //把图片转换成jpg格式
-      NSData *imageData = UIImageJPEGRepresentation([info objectForKey:@"UIImagePickerControllerOriginalImage"], 1.0);
-    NSMutableDictionary *dictionary=[[NSMutableDictionary alloc]init];
-    
-    NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
-    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
-    NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
-    [dictionary setObject:userid forKey:@"userId"];
-    [dictionary setObject:@"jpg" forKey:@"picType"];
-    NSLog(@"aaaaaa=%@",[[NSString alloc] initWithData:[GTMBase64 encodeData:imageData] encoding:NSUTF8StringEncoding] );
-    [dictionary setObject:[[NSString alloc] initWithData:[GTMBase64 encodeData:imageData] encoding:NSUTF8StringEncoding] forKey:@"imageStr"];
-    [self dismissModalViewControllerAnimated:YES];
-    [MBHUDView hudWithBody:@"上传中..." type:MBAlertViewHUDTypeActivityIndicator hidesAfter:0 show:YES];
-    [HttpRequestHelper asyncGetRequest:userPhoto parameter:dictionary requestComplete:^(NSString *responseStr) {
-        if ([responseStr isEqualToString:@"\"true\""]) {
-            [MBHUDView dismissCurrentHUD];
-            [self.headButton setImage:[UIImage imageWithData:imageData] forState:UIControlStateNormal];
-            [MBHUDView hudWithBody:@"上传成功" type:MBAlertViewHUDTypeCheckmark hidesAfter:2.0 show:YES];
-        }else
-        {
-            [MBHUDView dismissCurrentHUD];
-            [MBHUDView hudWithBody:@"上传失败" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
-        }
-
-    } requestFailed:^(NSString *errorMsg) {
-        [MBHUDView dismissCurrentHUD];
-        [MBHUDView hudWithBody:@"网络不稳定" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
-    }];
-
-}
-
 - (void)pickImageFromCamera
 {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
@@ -183,6 +135,56 @@
         
         [self presentModalViewController:imagepicker animated:YES];
     }
+}
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+
+    //把图片转换成jpg格式
+    UIImage *image= [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera)
+    {
+        //        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+    }
+    [self dismissModalViewControllerAnimated:YES];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        UIImage *theImage = [self imageWithImageSimple:image scaledToSize:CGSizeMake(70.0, 70.0)];
+        NSData *imageData=UIImageJPEGRepresentation(theImage, 1.0);
+        
+        NSMutableDictionary *dictionary=[[NSMutableDictionary alloc]init];
+        NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
+        User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
+        NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
+        [dictionary setObject:userid forKey:@"userId"];
+        [dictionary setObject:@"jpg" forKey:@"picType"];
+        [dictionary setObject:[[NSString alloc] initWithData:[GTMBase64 encodeData:imageData] encoding:NSUTF8StringEncoding] forKey:@"imageStr"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBHUDView hudWithBody:@"上传中..." type:MBAlertViewHUDTypeActivityIndicator hidesAfter:0 show:YES];
+            [HttpRequestHelper asyncGetRequest:userPhoto parameter:dictionary requestComplete:^(NSString *responseStr) {
+                if ([responseStr isEqualToString:@"\"true\""]) {
+                    NSLog(@"aaaa=%@",user);
+                    NSLog(@"bbb=%@",user.icon);
+                    NSLog(@"cccc=%@",user.name);
+                    NSLog(@"dddd=%@",user.userId);
+                    NSLog(@"fff=%@",user.account);
+//                    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:user];
+//                    [self.userDefault setObject:data forKey:KEY_USER_INFO];
+                    [self.headButton setImage:[UIImage imageWithData:imageData] forState:UIControlStateNormal];
+                    [MBHUDView dismissCurrentHUD];
+                    [MBHUDView hudWithBody:@"上传成功" type:MBAlertViewHUDTypeCheckmark hidesAfter:1.0 show:YES];
+                }else
+                {
+                    [MBHUDView dismissCurrentHUD];
+                    [MBHUDView hudWithBody:@"上传失败" type:MBAlertViewHUDTypeExclamationMark hidesAfter:1.0 show:YES];
+                }
+                
+            } requestFailed:^(NSString *errorMsg) {
+                [MBHUDView dismissCurrentHUD];
+                [MBHUDView hudWithBody:@"网络不稳定" type:MBAlertViewHUDTypeExclamationMark hidesAfter:2.0 show:YES];
+            }];
+
+        });
+    });
+   
 }
 //改变图片大小
 - (UIImage*)imageWithImageSimple:(UIImage*)image scaledToSize:(CGSize)newSize
@@ -205,7 +207,7 @@
 }
 
 - (IBAction)messageChange:(id)sender {
-    
+
 }
 
 - (IBAction)soundChange:(DCRoundSwitch *)sender {
@@ -220,8 +222,6 @@
     [userDefaults synchronize];
 //    [mySwitch setOn:!setting animated:YES];//设置开关状态
 }
-
-
 ////保存图片到Document
 //- (void)saveImage:(UIImage *)tempImage WithName:(NSString *)imageName
 //{
@@ -264,6 +264,7 @@
 }
 
 - (IBAction)back:(id)sender {
+    [_Controll viewWillAppear:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 @end

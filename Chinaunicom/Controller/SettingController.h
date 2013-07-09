@@ -7,7 +7,9 @@
 //
 
 #import "DCRoundSwitch.h"
+#import "RightMenuViewController.h"
 @interface SettingController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@property (strong,nonatomic)RightMenuViewController *Controll;
 @property (weak, nonatomic) IBOutlet UIButton *headButton;
 @property (weak, nonatomic) IBOutlet DCRoundSwitch *message;
 @property (weak, nonatomic) IBOutlet DCRoundSwitch *sound;
