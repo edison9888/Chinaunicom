@@ -82,11 +82,6 @@
     [self setHeadButton:nil];
     [super viewDidUnload];
 }
-//修改密码
-//参数:userId(用户ID),oldPassword(原密码),newPassword(新密码)			格式{'userId':'12','oldPassword':'22','newPassword':'a'}
-//访问路径:http://localhost:8080/mobilePortal/restful/UserPrivilegeRe/updatePassword
-//返回值:	成功 'true'
-//失败 'false'
 
 - (IBAction)changePwd:(id)sender {
     ChangePwdViewController *pwd=[[ChangePwdViewController alloc]initWithNibName:@"ChangePwdViewController" bundle:nil];
@@ -220,7 +215,6 @@
         [userDefaults setObject:@"open" forKey:@"Sound"];
     }
     [userDefaults synchronize];
-//    [mySwitch setOn:!setting animated:YES];//设置开关状态
 }
 ////保存图片到Document
 //- (void)saveImage:(UIImage *)tempImage WithName:(NSString *)imageName

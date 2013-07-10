@@ -46,7 +46,7 @@
 #define shoucangNumber [SERVERPATH stringByAppendingFormat:@"fav/favNum"]
 #define caiNumber [SERVERPATH stringByAppendingFormat:@"fav/stepNum"]
 #define zanNumber [SERVERPATH stringByAppendingFormat:@"fav/praNum"]
-#define sendReport [SERVERPATH stringByAppendingFormat:@"user/saveReport"]
+#define sendReport [SERVERPATH stringByAppendingFormat:@"user/saveReport"] //发布报告
 #define getAudiList [SERVERPATH stringByAppendingFormat:@"RepAuditRestful/getRepAuditService"]
 //获取用户的菜单权限
 #define ReportAllType [SERVERPATH stringByAppendingFormat:@"RepTypeRestful/getMyMobilePrivilege"]
@@ -61,6 +61,8 @@
 //发布评论
 #define PublishComment [SERVERPATH stringByAppendingFormat:@"comment/publishComment"]
 /********************************个人主页***********************************************/
+//修改报告
+#define changeReport [SERVERPATH stringByAppendingFormat:@"RepAuditRestful/editRepAudit"]
 //我的评论列表
 #define getMyCommentsList [SERVERPATH stringByAppendingFormat:@"UserPrivilegeRe/getMyComments"]
 //获取收藏列表

@@ -13,7 +13,7 @@
 #import "UIImageView+WebCache.h"
 #import "ContextDetailController.h"
 #import "AudiReportDetail.h"
-#import "PubliceMessageViewConttoller.h"
+#import "ReportTypeViewController.h"
 @interface AuditReportListViewController ()
 {
     NSMutableArray *dataSoure;
@@ -38,6 +38,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [MBHUDView hudWithBody:@"加载中..." type:MBAlertViewHUDTypeDefault hidesAfter:0 show:YES];
     [self.myTableView launchRefreshing];
 }
 - (void)viewDidLoad
@@ -71,6 +72,7 @@
     [dictionary setValue: state forKey:@"status"];
     [dictionary setValue: userid forKey:@"userId"];
     [[requestServiceHelper defaultService] getAduitingList:dictionary sucess:^(NSMutableArray *reportDictionary, NSInteger result) {
+        [MBHUDView dismissCurrentHUD];
         if ([state isEqualToString:@"1"]) {
             [_headLabel setText:[NSString stringWithFormat:@"有%d待审核信息",result]];
         }else
@@ -94,6 +96,7 @@
         }
 
     } falid:^(NSString *errorMsg) {
+        [MBHUDView dismissCurrentHUD];
         [self.myTableView tableViewDidFinishedLoading];
         self.myTableView.reachedTheEnd  = YES;
     }];
@@ -300,15 +303,12 @@
     [super viewDidUnload];
 }
 - (IBAction)auditNews:(UIButton *)sender {
-    [self.passButton setSelected:NO];
-    [self.senHeButton setSelected:NO];
-    [sender setSelected:YES];
-    
-    PubliceMessageViewConttoller *pubMessage = [[PubliceMessageViewConttoller alloc]initWithNibName:@"PubliceMessageViewConttoller" bundle:nil];
-    [self presentViewController:pubMessage animated:YES completion:nil];
+    ReportTypeViewController *pubMessage = [[ReportTypeViewController alloc]initWithNibName:@"ReportTypeViewController" bundle:nil];
+    [self.navigationController pushViewController:pubMessage animated:YES];
     
 }
 - (IBAction)pressPassButton:(UIButton *)sender {
+    [MBHUDView hudWithBody:@"加载中..." type:MBAlertViewHUDTypeDefault hidesAfter:0 show:YES];
     [self.senHeButton setSelected:NO];
     [sender setSelected:YES];
     self.titleLabel.text=@"已审核";
@@ -317,6 +317,7 @@
 }
 
 - (IBAction)pressSenHeButton:(UIButton *)sender {
+    [MBHUDView hudWithBody:@"加载中..." type:MBAlertViewHUDTypeDefault hidesAfter:0 show:YES];
     [self.passButton setSelected:NO];
     [sender setSelected:YES];
     self.titleLabel.text=@"待审核";

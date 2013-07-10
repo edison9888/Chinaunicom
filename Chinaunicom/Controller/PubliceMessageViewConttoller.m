@@ -7,17 +7,19 @@
 //
 
 #import "PubliceMessageViewConttoller.h"
-
+#import "User.h"
+#import "GTMBase64.h"
+#import "HttpRequestHelper.h"
 @interface PubliceMessageViewConttoller (){
-    NSMutableArray *arrimage;
-    UIView *pickimageview;
+    UIImageView *phoneImage;
 }
 
 @property (weak, nonatomic) IBOutlet UITextView *mesagTtextview;
-- (IBAction)back:(id)sender;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollview;
+@property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 - (IBAction)addPic:(UIButton *)sender;
 - (IBAction)sendMessage:(UIButton *)sender;
+- (IBAction)back:(id)sender;
 
 @end
 
@@ -37,54 +39,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    arrimage = [[NSMutableArray alloc]init];
-      
-    // Do any additional setup after loading the view from its nib.
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter]addObserver:self
-                                            selector:@selector(textViewChange)
-                                                name:UITextViewTextDidChangeNotification
-                                              object:nil];
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    //	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-//	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-}
-- (void)keyboardWillShow:(NSNotification *)notification
-{
-    NSDictionary *info = [notification userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    /* Move the toolbar to above the keyboard */
-	[UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationDuration:0.3];
-	CGRect frame = _mesagTtextview.frame;
-    frame.origin.y = self.view.frame.size.height - frame.size.height - kbSize.height;
-	_mesagTtextview.frame = frame;
-	[UIView commitAnimations];
-//    keyboardIsVisible = YES;
-}
-
-- (void)keyboardWillHide:(NSNotification *)notification
-{
-    
-    /* Move the toolbar back to bottom of the screen */
-	[UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationDuration:0.3];
-	CGRect frame = _mesagTtextview.frame;
-    
-    frame.origin.y = self.view.frame.size.height - frame.size.height;
-    
-	_mesagTtextview.frame = frame;
-	[UIView commitAnimations];
-//    keyboardIsVisible = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -96,31 +58,8 @@
 - (void)viewDidUnload {
     [self setMesagTtextview:nil];
     [self setScrollview:nil];
+    [self setTitleTextField:nil];
     [super viewDidUnload];
-}
-
-#pragma mark - notifcation
-- (void)textViewChange{
-    
-    CGRect cg = _mesagTtextview.frame;
-    CGSize size = [_mesagTtextview.text sizeWithFont: [UIFont systemFontOfSize:17] constrainedToSize:_mesagTtextview.frame.size lineBreakMode:UILineBreakModeWordWrap];
-    float textviewhei = size.height;
-    
-    if(textviewhei == 0.0){
-        textviewhei = 19.0;
-    }
-    float fHeight = textviewhei + 17.0;
-    
-    CGSize siz = CGSizeMake(320, fHeight);
-    [_scrollview setContentSize:siz];
-    
-    cg.size.height = fHeight;
-    _mesagTtextview.frame = cg;
-    if(pickimageview){
-        pickimageview.frame=CGRectMake(0, _mesagTtextview.frame.size.height+_mesagTtextview.frame.origin.y+5, 320, pickimageview.frame.size.height);
-    }
-    NSLog(@"textview  is  form  -%@",_mesagTtextview);
-    
 }
 #pragma mark - textviewdelegate
 -(BOOL) textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
@@ -143,14 +82,13 @@
 }
 - (void)pickImageFromAlbum
 {
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]){
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]){
         
         UIImagePickerController *imagepicker = [[UIImagePickerController alloc] init];
         imagepicker.delegate = self;
         imagepicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         imagepicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         imagepicker.allowsEditing = NO;
-        
         [self presentModalViewController:imagepicker animated:YES];
     }
 }
@@ -158,51 +96,16 @@
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-
-    if(!pickimageview){
-        pickimageview = [[UIView alloc]init];
-        [_scrollview addSubview:pickimageview];
-    }
     
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    
-    UIImageView *phoneimage = [[UIImageView alloc]init];
+    phoneImage = [[UIImageView alloc]init];
     UIImage *newImage=[self imageWithImageSimple:image  scaledToSize:CGSizeMake(310, image.size.height/image.size.width*310)];
-    phoneimage.frame = CGRectMake(5, pickimageview.frame.size.height+5, newImage.size.width, newImage.size.height);
-    
-    phoneimage.image = newImage;
-    pickimageview.frame=CGRectMake(0, _mesagTtextview.frame.size.height+_mesagTtextview.frame.origin.y+5, 320, pickimageview.frame.size.height+phoneimage.frame.size.height);
-
-    [pickimageview addSubview:phoneimage];
-    [_scrollview setContentSize:CGSizeMake(320, _scrollview.contentSize.height+pickimageview.frame.size.height)];
-//    //把图片转换成jpg格式
-//    NSData *imageData = UIImageJPEGRepresentation([info objectForKey:@"UIImagePickerControllerOriginalImage"], 1.0);
+    phoneImage.frame = CGRectMake(5, _mesagTtextview.frame.size.height+5, newImage.size.width, newImage.size.height);
+    phoneImage.image = newImage;
+    [_scrollview addSubview:phoneImage];
+    [_scrollview setContentSize:CGSizeMake(320, phoneImage.frame.origin.y+phoneImage.frame.size.height)];
     [picker dismissModalViewControllerAnimated:YES];
-    
-//    NSMutableDictionary *dictionary=[[NSMutableDictionary alloc]init];
-//    NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
-//    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
-//    NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
-//    [dictionary setObject:userid forKey:@"userId"];
-//    [dictionary setObject:@"jpg" forKey:@"picType"];
-//    [dictionary setObject:[[NSString alloc] initWithData:[GTMBase64 encodeData:imageData] encoding:NSUTF8StringEncoding] forKey:@"imageStr"];
-//    [MBHUDView hudWithBody:@"上传中..." type:MBAlertViewHUDTypeActivityIndicator hidesAfter:0 show:YES];
-//    [HttpRequestHelper asyncGetRequest:userPhoto parameter:dictionary requestComplete:^(NSString *responseStr) {
-//        if ([responseStr isEqualToString:@"\"true\""]) {
-//            [MBHUDView dismissCurrentHUD];
-//            [self.headButton setImage:[UIImage imageWithData:imageData] forState:UIControlStateNormal];
-//            [MBHUDView hudWithBody:@"上传成功" type:MBAlertViewHUDTypeCheckmark hidesAfter:2.0 show:YES];
-//        }else
-//        {
-//            [MBHUDView dismissCurrentHUD];
-//            [MBHUDView hudWithBody:@"上传失败" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
-//        }
-//        
-//    } requestFailed:^(NSString *errorMsg) {
-//        [MBHUDView dismissCurrentHUD];
-//        [MBHUDView hudWithBody:@"网络不稳定" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
-//    }];
-    
+
 }
 
 - (void)pickImageFromCamera
@@ -213,7 +116,6 @@
         imagepicker.sourceType = UIImagePickerControllerSourceTypeCamera;
         imagepicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         imagepicker.allowsEditing = NO;
-        
         [self presentModalViewController:imagepicker animated:YES];
     }
 }
@@ -269,7 +171,7 @@
 
 #pragma mark - ibaction
 - (IBAction)back:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)addPic:(UIButton *)sender {
     if ([_mesagTtextview.text length] == 0){
@@ -291,5 +193,39 @@
 }
 
 - (IBAction)sendMessage:(UIButton *)sender {
+    if ([self.titleTextField.text isEqualToString:@""]|| self.titleTextField.text==nil) {
+        [MBHUDView hudWithBody:@"主题不能为空" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
+        return;
+    }
+    //把图片转换成jpg格式
+    NSData *imageData = UIImageJPEGRepresentation(phoneImage.image, 1.0);
+    NSMutableDictionary *dictionary=[[NSMutableDictionary alloc]init];
+    NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
+    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
+    NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
+    [dictionary setObject:userid forKey:@"userId"];
+    [dictionary setObject:@"jpg" forKey:@"picType"];
+    [dictionary setObject:[[NSString alloc] initWithData:[GTMBase64 encodeData:imageData] encoding:NSUTF8StringEncoding] forKey:@"imageStr"];
+    [dictionary setObject:self.titleTextField.text forKey:@"title"];
+    [dictionary setObject:@"summary" forKey:@"summary"];
+    [dictionary setObject:@"1" forKey:@"status"];
+    [dictionary setObject:self.mesagTtextview.text forKey:@"content"];
+    [dictionary setObject:self.reportTypeId forKey:@"reportTypeId"];
+    [MBHUDView hudWithBody:@"发布中..." type:MBAlertViewHUDTypeActivityIndicator hidesAfter:0 show:YES];
+    [HttpRequestHelper asyncGetRequest:sendReport parameter:dictionary requestComplete:^(NSString *responseStr) {
+        
+        [MBHUDView dismissCurrentHUD];
+        [MBHUDView hudWithBody:responseStr type:MBAlertViewHUDTypeCheckmark hidesAfter:1.0 show:YES];
+        
+    } requestFailed:^(NSString *errorMsg) {
+        [MBHUDView dismissCurrentHUD];
+        [MBHUDView hudWithBody:@"网络不稳定" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
+    }];
+
+}
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
 }
 @end

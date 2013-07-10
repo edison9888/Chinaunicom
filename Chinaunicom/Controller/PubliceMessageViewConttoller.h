@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PubliceMessageViewConttoller : UIViewController<UITextViewDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
-
+@interface PubliceMessageViewConttoller : UIViewController<UITextViewDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextFieldDelegate>
+@property (nonatomic ,copy)NSString *reportTypeId;
 
 @end

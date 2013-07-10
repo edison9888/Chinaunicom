@@ -173,9 +173,6 @@
            
         }
     } falid:^(NSString *errorMsg) {
-        if (page==1) {
-            [dataSource removeAllObjects];
-        }
          [myTableView reloadData];
          [myTableView tableViewDidFinishedLoading];
          myTableView.reachedTheEnd  = YES;

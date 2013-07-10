@@ -65,16 +65,15 @@
         NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
 
         NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:userid,@"userId",_oldPwd.text,@"oldPassword",_changePwd.text,@"newPassword", nil];
-        [HttpRequestHelper asyncPostRequest:userPwd parameter:dict requestComplete:^(NSString *responseStr) {
-            if ([responseStr isEqualToString:@"true"]) {
-                [MBHUDView hudWithBody:@"修改成功" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
+        [HttpRequestHelper asyncGetRequest:userPwd parameter:dict requestComplete:^(NSString *responseStr) {
+            if ([responseStr isEqualToString:@"\"true\""]) {
+                    [MBHUDView hudWithBody:@"修改成功" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
             }else
             {
-                [MBHUDView hudWithBody:@"修改失败" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
+                    [MBHUDView hudWithBody:@"修改失败" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
             }
         } requestFailed:^(NSString *errorMsg) {
-            
-                [MBHUDView hudWithBody:@"网络不稳定" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
+            [MBHUDView hudWithBody:@"网络不稳定" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
         }];
     }
     

@@ -12,6 +12,7 @@
 #import "LeftMenuViewController.h"
 #import "RightMenuViewController.h"
 #import "MainViewController.h"
+#import "SDWebImageManager.h"
 @interface LoginViewController ()
 {
     BOOL isOff;
@@ -33,7 +34,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [self initLayout];
 }
 
@@ -64,7 +64,6 @@
 {
     [self.userNameTextField resignFirstResponder];
     [self.passWordTextField resignFirstResponder];
-    
     return YES;
 }
 
@@ -94,7 +93,6 @@
     //btn.selected=!btn.selected;
     
     if ([[self.userDefault objectForKey:KEY_REMEMBER_PWD] boolValue]) {
-
         btn.selected=NO;
     }else{
 
@@ -132,20 +130,31 @@
         return;
     }
     [MBHUDView hudWithBody:@"登录中..." type:MBAlertViewHUDTypeActivityIndicator hidesAfter:0 show:YES];
-    
-    
+
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     [dictionary setValue:username forKey:@"userName"];
     [dictionary setValue:password forKey:@"password"];
  
-    
     [[requestServiceHelper defaultService] loginWithParamter:dictionary sucess:^(User *user) {
+//        if (user.icon!=nil && ![user.icon isEqualToString:@""]) {
+//           NSString *path= [user.icon stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
+//            NSURL *url=[NSURL URLWithString:[ImageUrl stringByAppendingString:path]];
+//            [[SDWebImageManager sharedManager]downloadWithURL:url options:0 progress:^(NSUInteger receivedSize, long long expectedSize) {
+//                NSLog(@"rect=%d,,,size=%lld",receivedSize,expectedSize);
+//            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
+//                NSLog(@"aaaa=%@",image);
+//                NSLog(@"ccccc=%d",cacheType);
+//                NSLog(@"ddddd=%d",finished);
+//
+//            }];
+//        }
+       
 
         //存储用户信息
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:user];
         [self.userDefault setObject:data forKey:KEY_USER_INFO];
         [self setField:self.userNameTextField forKey:KEY_USER_NAME];
-
+        
         //保存密码
         if ([[self.userDefault objectForKey:KEY_REMEMBER_PWD] boolValue]) {
             [self setField:self.passWordTextField forKey:KEY_USER_PWD];

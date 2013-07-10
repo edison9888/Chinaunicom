@@ -10,16 +10,21 @@
 #import "User.h"
 #import "requestServiceHelper.h"
 #import "HttpRequestHelper.h"
+#import "EditViewController.h"
 @interface AudiReportDetail ()
-
+{
+    NSMutableArray *dataArray;
+}
 @end
 
 @implementation AudiReportDetail
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        dataArray=[[NSMutableArray alloc]init];
     }
     return self;
 }
@@ -37,6 +42,7 @@
 }
 -(void)initDataSource
 {
+    [dataArray addObject:self.reportId];
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     [dictionary setValue: self.reportId forKey:@"reportId"];
     NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
@@ -55,6 +61,7 @@
         [titleLabel setNumberOfLines:0];
         [titleLabel setLineBreakMode:NSLineBreakByCharWrapping];
         [self.scrollview addSubview:titleLabel];
+        [dataArray addObject:titleStr];
         
         NSString *comeStr=[[reportDetail objectForKey:@"reportType"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSString *typeName=nil;
@@ -95,11 +102,12 @@
         [commentLabel setBackgroundColor:[UIColor clearColor]];
         commentLabel.text=commentStr;
         [self.scrollview addSubview:commentLabel];
-        
+        [dataArray addObject:commentStr];
         [self.scrollview setFrame:CGRectMake(0, 44, 320, self.view.frame.size.height-44-44)];
         [self.scrollview setContentSize:CGSizeMake(320, commentLabel.frame.origin.y+commentLabel.frame.size.height+10)];
         
         NSString *picPath=[reportDetail objectForKey:@"picPath"];
+        [dataArray addObject:picPath];
         if (picPath !=nil) {
             NSArray *array=[picPath componentsSeparatedByString:@","];
             for (int i=0; i<[array count]; i++) {
@@ -212,6 +220,11 @@
 }
 
 - (IBAction)editReport:(UIButton *)sender {
+    if ([dataArray count]>3) {
+        EditViewController *edit=[[EditViewController alloc]initWithNibName:@"EditViewController" bundle:nil];
+        edit.dataArray=dataArray;
+        [self.navigationController pushViewController:edit animated:YES];
+    }
 }
 
 - (IBAction)back:(id)sender {
