@@ -34,26 +34,16 @@ static requestServiceHelper *requestService;
         if ([dictionary count]>0) {
             
             User *user_=[[User alloc]init];
-            
             user_.userId=[dictionary objectForKey:@"userId"];
             user_.account=[dictionary objectForKey:@"account"];
             user_.name=[dictionary objectForKey:@"name"];
             user_.icon=[dictionary objectForKey:@"icons"];
             sucess(user_);
-            //NSLog(@"%@",dictionary);
-            
-                       
         }else{
-            
             faild(responseStr);
         }
-        
-        
     }requestFailed:^(NSString *errorMsg) {
-        
-        //NSLog(@"%@",errorMsg);
         faild(errorMsg);
-
     }];
     
 }

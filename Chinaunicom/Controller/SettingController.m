@@ -155,6 +155,8 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBHUDView hudWithBody:@"上传中..." type:MBAlertViewHUDTypeActivityIndicator hidesAfter:0 show:YES];
             [HttpRequestHelper asyncGetRequest:userPhoto parameter:dictionary requestComplete:^(NSString *responseStr) {
+//                NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
+//                id dictionary=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
                 if ([responseStr isEqualToString:@"\"true\""]) {
                     NSLog(@"aaaa=%@",user);
                     NSLog(@"bbb=%@",user.icon);

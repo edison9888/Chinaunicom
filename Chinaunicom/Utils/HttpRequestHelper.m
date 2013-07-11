@@ -134,7 +134,6 @@ typedef enum {
             case RequestStatus_OK:
                 
                 complete([request.responseHeaders objectForKey:@"state"]);
-                NSLog(@"%@",request.responseHeaders);
                 break;
             case RequestStatus_ErrorRequest:
                 failed(@"错误的请求");break;

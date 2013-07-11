@@ -280,7 +280,7 @@
             cell.tupianImageView.frame=CGRectMake(220, 7, 80, 60);
             NSData *data = [picPath dataUsingEncoding: NSUTF8StringEncoding];
             NSString *content=[[NSString alloc]initWithData:data encoding:1];
-            [cell.tupianImageView setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:content ]]];
+            [cell.tupianImageView setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:content]]];
         }
         
     }else

@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface MonthDataViewController : UIViewController
+#import "MonthPointImageView.h"
+@interface MonthDataViewController : UIViewController<monthPointDelegate>
 {
     
 }
+@property (weak, nonatomic) IBOutlet MonthPointImageView *monthPointImageView;
 @property (nonatomic,copy)NSString *str;
 @property (nonatomic,weak)IBOutlet UILabel *monthLabel;
 @property (nonatomic,weak)IBOutlet UILabel *monthNumLabel;
@@ -20,4 +21,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *sMonthLabel;
 -(IBAction)popToHigherLevel:(id)sender;
 - (IBAction)pressMapButton:(id)sender;
+@property (weak, nonatomic) IBOutlet UIImageView *bgImageVIew;
 @end

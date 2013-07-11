@@ -6,8 +6,7 @@
 //  Copyright (c) 2013年 Chinaunicom. All rights reserved.
 //
 
-#import "SDWebImageManager.h"
-@interface AudiReportDetail : UIViewController<SDWebImageManagerDelegate,UIAlertViewDelegate>
+@interface AudiReportDetail : UIViewController<UIAlertViewDelegate>
 {
     
 }

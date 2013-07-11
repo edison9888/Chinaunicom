@@ -184,35 +184,21 @@
 }
 
 -(void)compearImage :(NSString *) picpath{
-//    SDWebImageManager *manager = [SDWebImageManager sharedManager];
-//    manager downloadWithURL:<#(NSURL *)#> options:<#(SDWebImageOptions)#> progress:<#^(NSUInteger receivedSize, long long expectedSize)progressBlock#> completed:<#^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)completedBlock#>
-//    UIImage *cachedImage = [manager imageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:picpath]]];
-    [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:picpath]] options:0 progress:^(NSUInteger receivedSize, long long expectedSize) {
+    [[SDWebImageManager sharedManager]downloadWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:picpath]] options:0 progress:^(NSUInteger receivedSize, long long expectedSize) {
         
-    } completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-        // 将需要缓存的图片加载进来
+    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
         if (image) {
-            // 如果Cache命中，则直接利用缓存的图片进行有关操
             UIImageView *contextImage=[[UIImageView alloc] init];
             UIImage *newImage=[self imageWithImageSimple:image  scaledToSize:CGSizeMake(280, image.size.height/image.size.width*280)];
-            [contextImage setImage:image];
-            [contextImage setFrame:CGRectMake(20, _bottomScrollview.contentSize.height, 280,image.size.height)];
+            [contextImage setImage:newImage];
+            [contextImage setFrame:CGRectMake(20, _bottomScrollview.contentSize.height, 280,newImage.size.height)];
             
             [_bottomScrollview addSubview:contextImage];
             _bottomScrollview.contentSize=CGSizeMake(320, _bottomScrollview.contentSize.height+newImage.size.height+10);
             
         }
+
     }];
-}
-// 当下载完成后，调用回调方法，使下载的图片显示
-- (void)webImageManager:(SDWebImageManager *)imageManager didFinishWithImage:(UIImage *)image {
-    // Do something with the downloaded image
-    UIImageView *contextImage=[[UIImageView alloc] init];
-    UIImage *newImage=[self imageWithImageSimple:image  scaledToSize:CGSizeMake(280, image.size.height/image.size.width*280)];
-    [contextImage setImage:newImage];
-    [contextImage setFrame:CGRectMake(20, _bottomScrollview.contentSize.height, 280,newImage.size.height)];
-    [_bottomScrollview addSubview:contextImage];
-    _bottomScrollview.contentSize=CGSizeMake(320, _bottomScrollview.contentSize.height+newImage.size.height+10);
 }
 //改变图片大小
 - (UIImage*)imageWithImageSimple:(UIImage*)image scaledToSize:(CGSize)newSize
@@ -287,9 +273,7 @@
 {
     [super didReceiveMemoryWarning];
 }
-
 - (void)viewComment:(id)sender {
-
         GoodCommentsViewController *wonderfulCtrl=[[GoodCommentsViewController alloc] init];
         wonderfulCtrl.reportId=self.reportId;
         [self.navigationController pushViewController:wonderfulCtrl animated:YES];

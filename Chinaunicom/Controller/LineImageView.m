@@ -117,8 +117,7 @@
         else if (i==24){
             goPoint = CGPointMake(298.5, self.bounds.size.height-p1);
         }
-		CGContextAddLineToPoint(con, goPoint.x, goPoint.y);;
-        
+		CGContextAddLineToPoint(con, goPoint.x, goPoint.y);
 	}
 	CGContextStrokePath(con);
 //    imageView.image=UIGraphicsGetImageFromCurrentImageContext();

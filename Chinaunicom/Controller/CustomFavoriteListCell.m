@@ -42,12 +42,7 @@
         _deleteButton.frame=CGRectMake(280, 30, 30, 30);
         [_deleteButton setBackgroundColor:[UIColor clearColor]];
         [_deleteButton addTarget:self action:@selector(deleteThisRow:) forControlEvents:UIControlEventTouchUpInside];
-//        if (_isShow) {
-//            _deleteButton.hidden=NO;
-//        }else
-//        {
             _deleteButton.hidden=YES;
-//        }
         
         [self.contentView addSubview:_deleteButton];
         
@@ -56,8 +51,6 @@
         //设置滑动方向
         [_swipeRecognizer setDirection:(UISwipeGestureRecognizerDirectionLeft|UISwipeGestureRecognizerDirectionRight)];
         [self addGestureRecognizer:_swipeRecognizer];
-
-//        [self addGestureRecognizer:_panGesture];
         
     }
     return self;

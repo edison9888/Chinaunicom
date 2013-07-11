@@ -71,10 +71,9 @@
             [yearDataArray addObject:value];
         }
         NSMutableArray *yearMuArray=[Utility calculatePercentage:yearDataArray height:200];
-//       [] int sum=[self yearTotal:yearDataArray];
-//        NSMutableArray *yearMuArray=[self ratio:yearDataArray total:sum];
         [self drawView:yearMuArray];
-        self.yearNumLabel.text=@"123.5";
+        NSString *at=[Utility changeToyuan:[muArray objectAtIndex:0]];
+        self.yearNumLabel.text=at;
         
     } falid:^(NSString *errorMsg) {
     }];
@@ -97,13 +96,11 @@
     {
         self.yearNameLable.text=@"ECS用户发展年数据总数";
     }
-    // Do any additional setup after loading the view from its nib.
 }
 -(IBAction)popToHigherLevel:(id)sender
 {
     [self dismissModalViewControllerAnimated:YES];
 }
-
 - (IBAction)pressMapButton:(id)sender {
     TimeViewController *time=[[TimeViewController alloc]initWithNibName:@"TimeViewController" bundle:nil];
     if ([_yearStr isEqualToString:@"ESS合约计划年数据趋势图"]) {
@@ -157,7 +154,6 @@
             [self.bgImageView addSubview:newView];
         }
     }
-
 }
 -(NSMutableArray *)ratio :(NSArray *)dataArray total:(int)num
 {

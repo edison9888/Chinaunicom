@@ -198,6 +198,8 @@
 		DD6E42C21779583100B43DB7 /* DCRoundSwitchKnobLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DD6E42BC1779583100B43DB7 /* DCRoundSwitchKnobLayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DD6E42C31779583100B43DB7 /* DCRoundSwitchOutlineLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DD6E42BE1779583100B43DB7 /* DCRoundSwitchOutlineLayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DD6E42C41779583100B43DB7 /* DCRoundSwitchToggleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DD6E42C01779583100B43DB7 /* DCRoundSwitchToggleLayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DD798E56178E750300292F12 /* MianView.m in Sources */ = {isa = PBXBuildFile; fileRef = DD798E55178E750300292F12 /* MianView.m */; };
+		DD798E59178EAD3200292F12 /* MonthPointImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = DD798E58178EAD3100292F12 /* MonthPointImageView.m */; };
 		DD7BB736177D8F32001DCE5F /* zhengdian.png in Resources */ = {isa = PBXBuildFile; fileRef = DD7BB734177D8F2F001DCE5F /* zhengdian.png */; };
 		DD7BB737177D8F32001DCE5F /* zhengdian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DD7BB735177D8F31001DCE5F /* zhengdian@2x.png */; };
 		DD7D9D681783F48200C87AAD /* top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DD7D9D641783F48100C87AAD /* top@2x.png */; };
@@ -585,6 +587,10 @@
 		DD6E42BE1779583100B43DB7 /* DCRoundSwitchOutlineLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCRoundSwitchOutlineLayer.m; sourceTree = "<group>"; };
 		DD6E42BF1779583100B43DB7 /* DCRoundSwitchToggleLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCRoundSwitchToggleLayer.h; sourceTree = "<group>"; };
 		DD6E42C01779583100B43DB7 /* DCRoundSwitchToggleLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCRoundSwitchToggleLayer.m; sourceTree = "<group>"; };
+		DD798E54178E750300292F12 /* MianView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MianView.h; sourceTree = "<group>"; };
+		DD798E55178E750300292F12 /* MianView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MianView.m; sourceTree = "<group>"; };
+		DD798E57178EAD3100292F12 /* MonthPointImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonthPointImageView.h; sourceTree = "<group>"; };
+		DD798E58178EAD3100292F12 /* MonthPointImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonthPointImageView.m; sourceTree = "<group>"; };
 		DD7BB734177D8F2F001DCE5F /* zhengdian.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhengdian.png; sourceTree = "<group>"; };
 		DD7BB735177D8F31001DCE5F /* zhengdian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhengdian@2x.png"; sourceTree = "<group>"; };
 		DD7D9D641783F48100C87AAD /* top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "top@2x.png"; sourceTree = "<group>"; };
@@ -1071,8 +1077,12 @@
 				66A8BC08177CD37A00D6FF89 /* TimeViewController.m */,
 				66AC0A3D177EC9BD00457132 /* LineImageView.h */,
 				66AC0A3E177EC9BD00457132 /* LineImageView.m */,
+				DD798E54178E750300292F12 /* MianView.h */,
+				DD798E55178E750300292F12 /* MianView.m */,
 				66B87AA8177EE4E90072D0FC /* PointImageView.h */,
 				66B87AA9177EE4E90072D0FC /* PointImageView.m */,
+				DD798E57178EAD3100292F12 /* MonthPointImageView.h */,
+				DD798E58178EAD3100292F12 /* MonthPointImageView.m */,
 				660907ED17802BC300CBAFD2 /* YearPointImageView.h */,
 				660907EE17802BC300CBAFD2 /* YearPointImageView.m */,
 			);
@@ -1807,6 +1817,8 @@
 				DDA86C8B178D1AE2001ED157 /* UIImageView+WebCache.m in Sources */,
 				DDA86C91178D3C5B001ED157 /* EditViewController.m in Sources */,
 				DDA86C96178D4A50001ED157 /* ReportTypeViewController.m in Sources */,
+				DD798E56178E750300292F12 /* MianView.m in Sources */,
+				DD798E59178EAD3200292F12 /* MonthPointImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

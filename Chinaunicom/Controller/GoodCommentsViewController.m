@@ -301,7 +301,6 @@
 }
 -(void)recordAndSendAudioFile:(NSString *)fileName fileSize:(NSString *)fileSize duration:(NSString *)timelength{
 //    [self performSelectorInBackground:@selector(sendSoundComment) withObject:nil];
-    NSLog(@"aaaaa=%@",timelength);
     if ([timelength intValue]<1) {
         [MBHUDView hudWithBody:@"录音时间太短" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
     }else
@@ -353,7 +352,6 @@
     [dictionary setObject:@"nofile" forKey:@"audioType"];
     [dictionary setObject:@"" forKey:@"audioStr"];
     [HttpRequestHelper asyncGetRequest:PublishComment parameter:dictionary requestComplete:^(NSString *responseStr) {
-        NSLog(@"responseStr=%@",responseStr);
         if ([responseStr isEqualToString:@"success"]) {
             [MBHUDView hudWithBody:@"发表成功" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
             [self performSelectorOnMainThread:@selector(reTable) withObject:nil waitUntilDone:NO];
