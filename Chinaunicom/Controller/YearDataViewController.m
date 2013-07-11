@@ -97,7 +97,6 @@
     {
         self.yearNameLable.text=@"ECS用户发展年数据总数";
     }
-
     // Do any additional setup after loading the view from its nib.
 }
 -(IBAction)popToHigherLevel:(id)sender

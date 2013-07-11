@@ -36,8 +36,6 @@
     [super viewDidLoad];
     [self initLayout];
 }
-
-
 -(void) initLayout{
     
     //背景图片
@@ -51,7 +49,7 @@
     UIView *userNamePaddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
     self.userNameTextField.leftView = userNamePaddingView;
     self.userNameTextField.leftViewMode = UITextFieldViewModeAlways;
-    //
+    
     UIView *pwdPaddingUView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
     self.passWordTextField.leftView = pwdPaddingUView;
     self.passWordTextField.leftViewMode = UITextFieldViewModeAlways;
@@ -85,7 +83,6 @@
         self.passWordTextField.text = @"";
        ((UIButton*)[self.view viewWithTag:1]).selected=NO;
     }
-   
 }
 
 - (IBAction)checkbox:(id)sender {
@@ -119,7 +116,6 @@
     NSString *username=self.userNameTextField.text;
     NSString *password=self.passWordTextField.text;
 
-    
     if ([username isEqualToString:@""] || username==nil ) {
         [MBHUDView hudWithBody:@"请输入帐号" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
         return;
@@ -148,8 +144,6 @@
 //
 //            }];
 //        }
-       
-
         //存储用户信息
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:user];
         [self.userDefault setObject:data forKey:KEY_USER_INFO];
@@ -171,8 +165,6 @@
         [MBHUDView dismissCurrentHUD];
         [MBHUDView hudWithBody:@"登陆失败" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
     }];
-
-
 }
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
@@ -203,9 +195,6 @@
         }
     }
 }
-
-
-
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesBegan:touches withEvent:event];

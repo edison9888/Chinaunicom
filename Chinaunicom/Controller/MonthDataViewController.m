@@ -72,8 +72,6 @@
             NSString *changeMoney=[Utility changeToyuan:money];
             self.sMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
         }
-
-        
     } falid:^(NSString *errorMsg) {
     }];
 
@@ -81,14 +79,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if ([_str isEqualToString:@"ECS交易额月数据趋势图"]) {
+    if ([_str isEqualToString:@"ECS交易额月数据趋势图"])
+    {
         self.monthLabel.text=@"ECS交易额月数据总数";
+        
     }else if ([_str isEqualToString:@"ESS合约计划月数据趋势图"])
     {
         self.monthLabel.text=@"ESS合约计划月数据总数";
+        
     }else if ([_str isEqualToString:@"ECS商城订单月数据趋势图"])
     {
         self.monthLabel.text=@"ECS商城订单月数据总数";
+        
     }else if ([_str isEqualToString:@"ECS用户发展月数据趋势图"])
     {
         self.monthLabel.text=@"ECS用户发展月数据总数";
