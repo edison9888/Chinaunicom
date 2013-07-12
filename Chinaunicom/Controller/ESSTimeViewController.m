@@ -64,7 +64,6 @@
             self.dbLabel.text=[array objectAtIndex:4];
             [self numForLabel];
         } falid:^(NSString *errorMsg) {
-            NSLog(@"err=%@",errorMsg);
         }];
     }else if (self.lineImageView.frame.origin.x >106 && self.lineImageView.frame.origin.x<212)
     {
@@ -84,7 +83,6 @@
             self.dbLabel.text=[array objectAtIndex:4];
             [self numForLabel];
         } falid:^(NSString *errorMsg) {
-            NSLog(@"err=%@",errorMsg);
         }];
 
     }else
@@ -105,7 +103,6 @@
             self.dbLabel.text=[array objectAtIndex:4];
             [self numForLabel];
         } falid:^(NSString *errorMsg) {
-            NSLog(@"err=%@",errorMsg);
         }];
 
     }
@@ -115,6 +112,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.hdLabel setAdjustsFontSizeToFitWidth:YES];
+    [self.hnLabel setAdjustsFontSizeToFitWidth:YES];
+    [self.hbLabel setAdjustsFontSizeToFitWidth:YES];
+    [self.hzLabel setAdjustsFontSizeToFitWidth:YES];
+    [self.xbLabel setAdjustsFontSizeToFitWidth:YES];
+    [self.xnLabel setAdjustsFontSizeToFitWidth:YES];
+    [self.dbLabel setAdjustsFontSizeToFitWidth:YES];
     self.titleLabel.text=_titleStr;
     if ([_titleStr isEqualToString:@"ESS实时趋势图"]) {
    

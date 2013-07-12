@@ -12,6 +12,8 @@
 {
     
 }
+@property (weak, nonatomic) IBOutlet UIImageView *bluedian;
+@property (weak, nonatomic) IBOutlet UIImageView *anotherBlue;
 @property (weak, nonatomic) IBOutlet MonthPointImageView *monthPointImageView;
 @property (nonatomic,copy)NSString *str;
 @property (nonatomic,weak)IBOutlet UILabel *monthLabel;

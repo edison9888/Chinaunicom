@@ -217,17 +217,17 @@
         NSArray *imageArray=[path componentsSeparatedByString:@","];
         if ([imageArray count]>1) {
             titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-            return 10+titleSize.height+5 +image.size.height+5 + 80;
+            return 10+titleSize.height+5 +image.size.height+5 + 60+5+3;
         }else
         {
             titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(190, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-            return 10+titleSize.height+5 +image.size.height+5;
+            return 10+titleSize.height+5 +image.size.height+5+3;
         }
 
     }else
     {
         titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-        return 10+titleSize.height+5 +image.size.height+5;
+        return 10+titleSize.height+5 +image.size.height+5+3;
     }
 }
 
@@ -277,7 +277,7 @@
             titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(190, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
             cell.pinlunLabel.frame=CGRectMake(15+100, 10+titleSize.height+5+5, 70, 20);
             NSString *picPath=[[imageArray objectAtIndex:0]stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
-            cell.tupianImageView.frame=CGRectMake(220, 7, 80, 60);
+            cell.tupianImageView.frame=CGRectMake(220, 3, 80, 60);
             NSData *data = [picPath dataUsingEncoding: NSUTF8StringEncoding];
             NSString *content=[[NSString alloc]initWithData:data encoding:1];
             [cell.tupianImageView setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:content]]];
@@ -315,14 +315,14 @@
     
     if ([[dataSource objectAtIndex:indexPath.row]objectForKey:@"picPath"]!=nil) {
         if ([imageArray count]>1) {
-            cell.bgImageView.frame=CGRectMake(3, 3, 320-6, cell.qitaImageView.frame.origin.y+cell.qitaImageView.frame.size.height+5+80);
+            cell.bgImageView.frame=CGRectMake(3, 0, 320-6, cell.qitaImageView.frame.origin.y+cell.qitaImageView.frame.size.height+5+60+5);
         }else
         {
-            cell.bgImageView.frame=CGRectMake(3, 3, 320-6, cell.qitaImageView.frame.origin.y+cell.qitaImageView.frame.size.height+5);
+            cell.bgImageView.frame=CGRectMake(3, 0, 320-6, cell.qitaImageView.frame.origin.y+cell.qitaImageView.frame.size.height+5);
         }
         
     }else{
-        cell.bgImageView.frame=CGRectMake(3, 3, 320-6, cell.qitaImageView.frame.origin.y+cell.qitaImageView.frame.size.height+5);
+        cell.bgImageView.frame=CGRectMake(3, 0, 320-6, cell.qitaImageView.frame.origin.y+cell.qitaImageView.frame.size.height+5);
     }
 }
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

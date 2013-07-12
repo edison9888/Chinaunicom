@@ -13,7 +13,12 @@
 #import "MianView.h"
 #import "CommonHelper.h"
 @interface MonthDataViewController ()
-
+{
+    NSArray *shangMonthArray;
+    NSArray *thisMonthArray;
+    NSDictionary *shangMonthDict;
+    NSDictionary *thisMonthDict;
+}
 @end
 
 @implementation MonthDataViewController
@@ -29,6 +34,7 @@
 //获取月数据
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+
     NSString *url=@"";
     if ([_str isEqualToString:@"ESS合约计划月数据趋势图"])
     {
@@ -43,40 +49,10 @@
     {
         url=GET_GUESS_MONTHDATA;
     }
-    //本月数据
-    NSMutableDictionary *tMonthDict=[NSMutableDictionary dictionaryWithObject:@"currMonth" forKey:@"timeStr"];
-    [[requestServiceHelper defaultService]getEssMonthData:tMonthDict url:url  sucess:^(NSDictionary *nsdict) {
-        
-        NSArray *sortarray=[self sortByKeys:nsdict];
-        NSString *str=[Utility getTodayDate];
-        NSArray *array=[sortarray subarrayWithRange:NSMakeRange(0, [str intValue]-1)];
-        NSString *string=[array objectAtIndex:0];
-        if (string.length==8) {
-           NSString *monthString= [string substringWithRange:NSMakeRange(4, 2)];
-           NSString *dateString= [string substringWithRange:NSMakeRange(6, 2)];
-            NSString *money=[nsdict objectForKey:string];
-            NSString *changeMoney=[Utility changeToyuan:money];
-            self.bMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
-            //本月总数
-            self.monthNumLabel.text=[NSString stringWithFormat:@"%@",changeMoney];
-        }
-        NSMutableArray *muArray=[self ratio:array dict:nsdict];
-//      _yesterdayArray=muArray;
-        MianView *line=[[MianView alloc]initWithFrame:CGRectMake(6, 6, 291, self.bgImageVIew.frame.size.height-17)];
-        line.blueArray=muArray;
-
-        UIColor *lineColor=[CommonHelper hexStringToColor:@"0x005aff"];
-        UIColor *mianColor=[CommonHelper hexStringToColor:@"0x2c70c0"];
-        line.colorArray=[NSArray arrayWithObjects:lineColor,mianColor, nil];
-        [self.bgImageVIew addSubview:line];
-        [self.bgImageVIew bringSubviewToFront:line];
-        
-    } falid:^(NSString *errorMsg) {
-    }];
-    
     //上月数据
     NSMutableDictionary *sMonthDict=[NSMutableDictionary dictionaryWithObject:@"prevMonth" forKey:@"timeStr"];
     [[requestServiceHelper defaultService]getEssMonthData:sMonthDict url:url sucess:^(NSDictionary *nsdict) {
+        shangMonthDict=nsdict;
         NSArray *array=[self sortByKeys:nsdict];
         NSString *string=[array objectAtIndex:0];
         if (string.length==8) {
@@ -87,21 +63,65 @@
             self.sMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
         }
         NSMutableArray *muArray=[self ratio:array dict:nsdict];
-        //        _yesterdayArray=muArray;
-        MianView *line=[[MianView alloc]initWithFrame:CGRectMake(6, 6, 291, self.bgImageVIew.frame.size.height-17)];
+        shangMonthArray=muArray;
+        MianView *line=[[MianView alloc]initWithFrame:CGRectMake(6, 3, 299, self.bgImageVIew.frame.size.height-12)];
         line.blueArray=muArray;
         UIColor *lineColor=[CommonHelper hexStringToColor:@"0x25afff"];
         UIColor *mianColor=[CommonHelper hexStringToColor:@"0x2a91e1"];
         line.colorArray=[NSArray arrayWithObjects:lineColor,mianColor, nil];
         [self.bgImageVIew addSubview:line];
+        [self.bgImageVIew sendSubviewToBack:line];
+        self.anotherBlue.frame=CGRectMake(5, 378-[[muArray objectAtIndex:0] floatValue], self.anotherBlue.frame.size.width, self.anotherBlue.frame.size.height);
+        self.anotherBlue.hidden=NO;
     } falid:^(NSString *errorMsg) {
     }];
 
+    //本月数据
+    NSMutableDictionary *tMonthDict=[NSMutableDictionary dictionaryWithObject:@"currMonth" forKey:@"timeStr"];
+    [[requestServiceHelper defaultService]getEssMonthData:tMonthDict url:url  sucess:^(NSDictionary *nsdict) {
+        thisMonthDict=nsdict;
+        NSArray *sortarray=[self sortByKeys:nsdict];
+        NSString *str=[Utility getTodayDate];
+        NSArray *array=[sortarray subarrayWithRange:NSMakeRange(0, [str intValue]-1)];
+        int total=0;
+        for (int i=0; i<[array count]; i++) {
+            int moneyNum=[[nsdict objectForKey:[array objectAtIndex:i]] intValue];
+            total=total+moneyNum;
+        }
+        NSString *totalMoney=[Utility changeToyuan:[NSString stringWithFormat:@"%d",total]];
+        self.monthNumLabel.text=[NSString stringWithFormat:@"%@",totalMoney];
+        NSString *string=[array objectAtIndex:0];
+        if (string.length==8) {
+           NSString *monthString= [string substringWithRange:NSMakeRange(4, 2)];
+           NSString *dateString= [string substringWithRange:NSMakeRange(6, 2)];
+            NSString *money=[nsdict objectForKey:string];
+            NSString *changeMoney=[Utility changeToyuan:money];
+            self.bMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            //本月总数
+        }
+        NSMutableArray *muArray=[self ratio:array dict:nsdict];
+        thisMonthArray=muArray;
+        MianView *line=[[MianView alloc]initWithFrame:CGRectMake(6, 3, 299, self.bgImageVIew.frame.size.height-12)];
+        line.blueArray=muArray;
+
+        UIColor *lineColor=[CommonHelper hexStringToColor:@"0x005aff"];
+        UIColor *mianColor=[CommonHelper hexStringToColor:@"0x2c70c0"];
+        line.colorArray=[NSArray arrayWithObjects:lineColor,mianColor, nil];
+        [self.bgImageVIew addSubview:line];
+        [self.bgImageVIew bringSubviewToFront:line];
+        self.bluedian.frame=CGRectMake(5, 378-[[muArray objectAtIndex:0] floatValue], self.bluedian.frame.size.width, self.bluedian.frame.size.height);
+        self.bluedian.hidden=NO;
+    } falid:^(NSString *errorMsg) {
+    }];
+    
+    
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.monthPointImageView.myDelegate=self;
+    self.monthPointImageView.blueDian=self.bluedian;
+    self.monthPointImageView.anotherBlue=self.anotherBlue;
     if ([_str isEqualToString:@"ECS交易额月数据趋势图"])
     {
         self.monthLabel.text=@"ECS交易额月数据总数";
@@ -143,7 +163,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewDidUnload {
@@ -152,6 +171,8 @@
     [self setSMonthLabel:nil];
     [self setBgImageVIew:nil];
     [self setMonthPointImageView:nil];
+    [self setAnotherBlue:nil];
+    [self setBluedian:nil];
     [super viewDidUnload];
 }
 //对字典按KEY进行排序
@@ -207,5 +228,43 @@
         }
     }
     return small;
+}
+-(void)showTheData:(float)num num:(int)objcNum
+{
+    if (objcNum>[shangMonthArray count]-1) {
+        
+        self.anotherBlue.hidden=YES;
+    }else
+    {
+        NSArray *array=[self sortByKeys:shangMonthDict];
+        NSString *string=[array objectAtIndex:objcNum];
+        if (string.length==8) {
+            NSString *monthString= [string substringWithRange:NSMakeRange(4, 2)];
+            NSString *dateString= [string substringWithRange:NSMakeRange(6, 2)];
+            NSString *money=[shangMonthDict objectForKey:string];
+            NSString *changeMoney=[Utility changeToyuan:money];
+            self.sMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+        }
+        self.anotherBlue.frame=CGRectMake(num-6, 378-[[shangMonthArray objectAtIndex:objcNum] floatValue], self.bluedian.frame.size.width, self.bluedian.frame.size.height);
+        self.anotherBlue.hidden=NO;
+    }
+    if (objcNum>[thisMonthArray count]-1) {
+        self.bluedian.hidden=YES;
+    }else
+    {
+        NSArray *sortarray=[self sortByKeys:thisMonthDict];
+        NSString *str=[Utility getTodayDate];
+        NSArray *array=[sortarray subarrayWithRange:NSMakeRange(0, [str intValue]-1)];
+        NSString *string=[array objectAtIndex:objcNum];
+        if (string.length==8) {
+            NSString *monthString= [string substringWithRange:NSMakeRange(4, 2)];
+            NSString *dateString= [string substringWithRange:NSMakeRange(6, 2)];
+            NSString *money=[thisMonthDict objectForKey:string];
+            NSString *changeMoney=[Utility changeToyuan:money];
+            self.bMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+        }
+        self.bluedian.frame=CGRectMake(num-6, 378-[[thisMonthArray objectAtIndex:objcNum] floatValue], self.bluedian.frame.size.width, self.bluedian.frame.size.height);
+        self.bluedian.hidden=NO;
+    }
 }
 @end

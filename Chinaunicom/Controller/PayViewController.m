@@ -148,7 +148,6 @@
     henx=16;
     self.pointImageView.myDelegate=self;
     self.pointImageView.blueDianImage=self.blueDian;
-    
 }
 
 - (IBAction)pressTodayButton:(id)sender {

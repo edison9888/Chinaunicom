@@ -269,7 +269,7 @@
     UIImage *rightImage=[UIImage imageNamed:@"right_area.png"];
     for (int i=0; i<[muArray count]; i++) {
         @autoreleasepool {
-            UIImageView *leftImageView=[[UIImageView alloc]initWithFrame:CGRectMake(10, i*(leftImage.size.height+5), leftImage.size.width, leftImage.size.height)];
+            UIImageView *leftImageView=[[UIImageView alloc]initWithFrame:CGRectMake(10, i*(rightImage.size.height+5), leftImage.size.width, rightImage.size.height)];
             leftImageView.image=leftImage;
             
             UILabel *textLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, leftImageView.frame.size.width, leftImageView.frame.size.height)];
@@ -280,11 +280,11 @@
             textLabel.text=[keysArray objectAtIndex:i];
             
             UIImage *newRightImage=[rightImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 5)];
-            UIImageView *rightImageView=[[UIImageView alloc]initWithFrame:CGRectMake(10+leftImageView.frame.size.width, i*(leftImage.size.height+5), [[muArray objectAtIndex:i] floatValue], rightImage.size.height)];
+            UIImageView *rightImageView=[[UIImageView alloc]initWithFrame:CGRectMake(10+leftImageView.frame.size.width, i*(rightImage.size.height+5), [[muArray objectAtIndex:i] floatValue], rightImage.size.height)];
             rightImageView.image=newRightImage;
             
             
-            UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(rightImageView.frame.origin.x+rightImageView.frame.size.width+5, i*(leftImage.size.height+5), 320-(rightImageView.frame.origin.x+rightImageView.frame.size.width), leftImage.size.height)];
+            UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(rightImageView.frame.origin.x+rightImageView.frame.size.width+5, i*(rightImage.size.height+5), 320-(rightImageView.frame.origin.x+rightImageView.frame.size.width), rightImage.size.height)];
             [label setBackgroundColor:[UIColor clearColor]];
             [label setTextColor:[UIColor whiteColor]];
             label.adjustsFontSizeToFitWidth=YES;
