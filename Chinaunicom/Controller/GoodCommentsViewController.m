@@ -33,6 +33,7 @@
     [self initTopView];
     [self initTableView];
     [self initBottomView];
+    
 }
 -(void)initTopView
 {
@@ -261,7 +262,7 @@
     NSString *fileName=[fArray lastObject];
     [request setDownloadDestinationPath:[Utility getFilePath:fileName Dir:@"SpeechSoundDir"]];
     [request setCompletionBlock:^{
-        [recoderAndPlayer SpeechAMR2WAV:fileName];
+//        [recoderAndPlayer SpeechAMR2WAV:fileName];
     }];
     [request setFailedBlock:^{
         [request clearDelegatesAndCancel];
@@ -270,9 +271,9 @@
 }
 
 -(void)playSoundFile:(UIButton *)sender{
-    if (recoderAndPlayer.isPlay) {
-        [recoderAndPlayer stopPlaying];
-    }
+//    if (recoderAndPlayer.isPlay) {
+//        [recoderAndPlayer stopPlaying];
+//    }
     int index=[sender tag]-1000;
     NSString *soundpath=[[dataSource objectAtIndex:index] objectForKey:@"audioPath"];
     NSArray *fArray = [soundpath componentsSeparatedByString:@"/"];
@@ -280,7 +281,7 @@
     //检查目录下是否存在此文件
     BOOL isExsit = [Utility checkFileExsit:fileName Dir:@"SpeechSoundDir"];
     if (isExsit) {
-        [recoderAndPlayer SpeechAMR2WAV:fileName];
+//        [recoderAndPlayer SpeechAMR2WAV:fileName];
     }
     else{
         //下载
@@ -326,14 +327,16 @@
     [dictionary setObject:[[NSString alloc] initWithData:[GTMBase64 encodeData:soundData] encoding:NSUTF8StringEncoding] forKey:@"audioStr"];
 
     [HttpRequestHelper asyncGetRequest:PublishComment parameter:dictionary requestComplete:^(NSString *responseStr) {
-        [self performSelectorOnMainThread:@selector(reTable) withObject:nil waitUntilDone:NO];
+        [MBHUDView hudWithBody:@"发表成功" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
+        [_tableview launchRefreshing];
     } requestFailed:^(NSString *errorMsg) {
     }];
 }
 -(void)reTable
 {
-    refreshing = YES;
-    [self performSelector:@selector(loadData) withObject:nil afterDelay:1.f];
+    
+//    refreshing = YES;
+//    [self performSelector:@selector(loadData) withObject:nil afterDelay:1.f];
 }
 -(void)sendTheComment
 {
@@ -378,7 +381,6 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     if (recoderAndPlayer.isPlay) {
         [recoderAndPlayer stopPlaying];
-        recoderAndPlayer=nil;
     }
 }
 -(void)back

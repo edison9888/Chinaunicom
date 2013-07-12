@@ -47,7 +47,7 @@
         [[requestServiceHelper defaultService]getEssAreaNum:dict sucess:^(NSArray *array) {
             [self getNumForCode:array];
         } falid:^(NSString *errorMsg) {
-            NSLog(@"err=%@",errorMsg);
+            
         }];
          [dict setValue:[self getCode] forKey:@"areaCode"];
         [[requestServiceHelper defaultService]getEssProvinceNum:dict url:GET_ESS_PROVINCE_3GNUM sucess:^(NSArray *str) {
@@ -62,7 +62,7 @@
         [[requestServiceHelper defaultService]getEssAreaNum:dict sucess:^(NSArray *array) {
             [self getNumForCode:array];
         } falid:^(NSString *errorMsg) {
-            NSLog(@"err=%@",errorMsg);
+            
         }];
          [dict setValue:[self getCode] forKey:@"areaCode"];
         [[requestServiceHelper defaultService]getEssProvinceNum:dict url:GET_ESS_PROVINCE_3GNUM sucess:^(NSArray *str) {
@@ -78,7 +78,7 @@
         [[requestServiceHelper defaultService]getEssAreaIphoneFsNum:dict sucess:^(NSArray *array) {
             [self getNumForCode:array];
         } falid:^(NSString *errorMsg) {
-            NSLog(@"err=%@",errorMsg);
+          
         }];
 
          [dict setValue:[self getCode] forKey:@"areaCode"];
@@ -95,7 +95,7 @@
         [[requestServiceHelper defaultService]getEssAreaIphoneFsNum:dict sucess:^(NSArray *array) {
             [self getNumForCode:array];
         } falid:^(NSString *errorMsg) {
-            NSLog(@"err=%@",errorMsg);
+            
         }];
 
          [dict setValue:[self getCode] forKey:@"areaCode"];
@@ -111,7 +111,7 @@
         [[requestServiceHelper defaultService]getEssAreaIphoneFsNum:dict sucess:^(NSArray *array) {
             [self getNumForCode:array];
         } falid:^(NSString *errorMsg) {
-            NSLog(@"err=%@",errorMsg);
+           
         }];
          [dict setValue:[self getCode] forKey:@"areaCode"];
         [[requestServiceHelper defaultService]getEssProvinceNum:dict url:GET_ESS_PROVINCE_FOURSNUM sucess:^(NSArray *str) {
@@ -126,7 +126,7 @@
         [[requestServiceHelper defaultService]getEssAreaIphoneFiveNum:dict sucess:^(NSArray *array) {
             [self getNumForCode:array];
         } falid:^(NSString *errorMsg) {
-            NSLog(@"err=%@",errorMsg);
+            
         }];
          [dict setValue:[self getCode] forKey:@"areaCode"];
         [[requestServiceHelper defaultService]getEssProvinceNum:dict url:GET_ESS_PROVINCE_FIVENUM sucess:^(NSArray *str) {
@@ -141,7 +141,7 @@
         [[requestServiceHelper defaultService]getEssAreaIphoneFiveNum:dict sucess:^(NSArray *array) {
             [self getNumForCode:array];
         } falid:^(NSString *errorMsg) {
-            NSLog(@"err=%@",errorMsg);
+          
         }];
          [dict setValue:[self getCode] forKey:@"areaCode"];
         [[requestServiceHelper defaultService]getEssProvinceNum:dict url:GET_ESS_PROVINCE_FIVENUM sucess:^(NSArray *str) {
@@ -156,7 +156,7 @@
         [[requestServiceHelper defaultService]getEssAreaIphoneFiveNum:dict sucess:^(NSArray *array) {
             [self getNumForCode:array];
         } falid:^(NSString *errorMsg) {
-            NSLog(@"err=%@",errorMsg);
+         
         }];
          [dict setValue:[self getCode] forKey:@"areaCode"];
         [[requestServiceHelper defaultService]getEssProvinceNum:dict url:GET_ESS_PROVINCE_FIVENUM sucess:^(NSArray *str) {

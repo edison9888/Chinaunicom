@@ -101,7 +101,7 @@ static Utility *shareSource = nil;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     if (!documentsDirectory) {
-        NSLog(@"Documents directory not found!");
+//        NSLog(@"Documents directory not found!");
     }
     NSString *imageDir = [documentsDirectory stringByAppendingPathComponent:@"ConfigPic"];
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -120,7 +120,7 @@ static Utility *shareSource = nil;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     if (!documentsDirectory) {
-        NSLog(@"Documents directory not found!");
+//        NSLog(@"Documents directory not found!");
     }
     NSString *imageDir = [documentsDirectory stringByAppendingPathComponent:dir];
     NSFileManager *fileManager = [NSFileManager defaultManager];

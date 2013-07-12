@@ -196,7 +196,7 @@ typedef enum {
     [request setCompletionBlock:^{
         switch (request.responseStatusCode) {
             case RequestStatus_OK:
-                NSLog(@"%@",request.responseHeaders);
+//                NSLog(@"%@",request.responseHeaders);
                   complete([request.responseHeaders objectForKey:@"state"]);
                 break;
             case RequestStatus_ErrorRequest:

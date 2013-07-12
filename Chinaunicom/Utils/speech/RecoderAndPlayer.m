@@ -156,7 +156,7 @@
         aSeconds++;
 //        [viewDelegate TimePromptAction:self.aSeconds];
     }
-    NSLog(@"录音记时%d",aSeconds);
+//    NSLog(@"录音记时%d",aSeconds);
 }
 
 - (BOOL) startAudioSession
@@ -200,12 +200,12 @@
     //如果此时手机靠近面部放在耳朵旁，那么声音将通过听筒输出，并将屏幕变暗（省电啊）
     if ([[UIDevice currentDevice] proximityState] == YES)
     {
-        NSLog(@"Device is close to user");
+//        NSLog(@"Device is close to user");
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
     }
     else
     {
-        NSLog(@"Device is not close to user");
+//        NSLog(@"Device is not close to user");
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     }
 }
@@ -270,7 +270,7 @@
     NSData *amrData = [NSData dataWithContentsOfFile:[DOCUMENTS_FOLDER stringByAppendingPathComponent:amrFile]];
     NSData *wavData = [self decodeAmr:amrData];
     if (!wavData) {
-        NSLog(@"wavdata is empty");
+//        NSLog(@"wavdata is empty");
         return;
     }
     NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];

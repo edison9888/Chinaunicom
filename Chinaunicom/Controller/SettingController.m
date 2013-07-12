@@ -155,23 +155,20 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBHUDView hudWithBody:@"上传中..." type:MBAlertViewHUDTypeActivityIndicator hidesAfter:0 show:YES];
             [HttpRequestHelper asyncGetRequest:userPhoto parameter:dictionary requestComplete:^(NSString *responseStr) {
-//                NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
-//                id dictionary=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-                if ([responseStr isEqualToString:@"\"true\""]) {
-                    NSLog(@"aaaa=%@",user);
-                    NSLog(@"bbb=%@",user.icon);
-                    NSLog(@"cccc=%@",user.name);
-                    NSLog(@"dddd=%@",user.userId);
-                    NSLog(@"fff=%@",user.account);
-//                    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:user];
-//                    [self.userDefault setObject:data forKey:KEY_USER_INFO];
+
+                if ([responseStr isEqualToString:@"\"false\""]) {
+                    [MBHUDView dismissCurrentHUD];
+                    [MBHUDView hudWithBody:@"上传失败" type:MBAlertViewHUDTypeExclamationMark hidesAfter:1.0 show:YES];
+
+                }else
+                {
+                    NSString *newString=[responseStr stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+                    user.icon=[NSString stringWithFormat:@"upload\\%@",newString];
+                    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:user];
+                    [[NSUserDefaults standardUserDefaults] setObject:data forKey:KEY_USER_INFO];
                     [self.headButton setImage:[UIImage imageWithData:imageData] forState:UIControlStateNormal];
                     [MBHUDView dismissCurrentHUD];
                     [MBHUDView hudWithBody:@"上传成功" type:MBAlertViewHUDTypeCheckmark hidesAfter:1.0 show:YES];
-                }else
-                {
-                    [MBHUDView dismissCurrentHUD];
-                    [MBHUDView hudWithBody:@"上传失败" type:MBAlertViewHUDTypeExclamationMark hidesAfter:1.0 show:YES];
                 }
                 
             } requestFailed:^(NSString *errorMsg) {

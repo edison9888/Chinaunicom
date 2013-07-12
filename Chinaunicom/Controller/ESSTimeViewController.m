@@ -170,7 +170,7 @@
 //        self.dbLabel.text=[array objectAtIndex:4];
 //        [self numForLabel];
 //    } falid:^(NSString *errorMsg) {
-//        NSLog(@"err=%@",errorMsg);
+//
 //    }];
 }
 
@@ -208,7 +208,7 @@
 //        self.dbLabel.text=[array objectAtIndex:4];
 //        [self numForLabel];
 //    } falid:^(NSString *errorMsg) {
-//        NSLog(@"err=%@",errorMsg);
+//
 //    }];
 }
 
@@ -246,7 +246,7 @@
 //        self.dbLabel.text=[array objectAtIndex:4];
 //        [self numForLabel];
 //    } falid:^(NSString *errorMsg) {
-//        NSLog(@"err=%@",errorMsg);
+//    
 //    }];
 }
 
