@@ -13,6 +13,7 @@
 #import "UIButton+WebCache.h"
 #import "UIViewController+MMDrawerController.h"
 #import "ChangePwdViewController.h"
+#import "ASIHTTPRequest.h"
 @interface SettingController ()
 
 @end
@@ -30,7 +31,41 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self performSelectorInBackground:@selector(getTheVersion) withObject:nil];
+    //本地版本
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    [self.versionButton setTitle:[NSString stringWithFormat:@"当前版本 %@",version] forState:UIControlStateNormal];
 }
+-(void)getTheVersion
+{
+    NSURL*url=[NSURL URLWithString:@"http://k.webj.cn/ios/1.txt"];
+    __block ASIHTTPRequest*_request =[ASIHTTPRequest requestWithURL:url];
+    __weak ASIHTTPRequest *request = _request;
+    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+    [request setCompletionBlock:^{
+        
+        //服务器版本
+        NSString *responseString =[request responseString];
+        NSData *data = [responseString dataUsingEncoding: NSUTF8StringEncoding];
+        NSDictionary *dictionary=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+        NSString *versonString=[dictionary objectForKey:@"verson"];
+        //本地版本
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        NSString *version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+        if (![version isEqualToString:versonString]) {
+            [self.versionButton setEnabled:YES];
+            [self.versionButton setTitle:[NSString stringWithFormat:@"当前版本%@,可升级至%@",version,versonString] forState:UIControlStateNormal];
+        }else
+        {
+            [self.versionButton setTitle:[NSString stringWithFormat:@"当前版本%@,已是最新",version] forState:UIControlStateNormal];
+        }
+    }];
+    [request setFailedBlock:^{
+    }];
+    [request startAsynchronous];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -41,6 +76,7 @@
     NSURL *url=[NSURL URLWithString:urlStr];
     [self.headButton setImageWithURL:url forState:UIControlStateNormal];
     [self initLayout];
+    
 }
 
 -(void) initLayout
@@ -80,6 +116,7 @@
     [self setMessage:nil];
     [self setSound:nil];
     [self setHeadButton:nil];
+    [self setVersionButton:nil];
     [super viewDidUnload];
 }
 
@@ -208,10 +245,10 @@
     NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
     if(sender.isOn)
     {
-        [userDefaults setObject:@"close" forKey:@"Sound"];
+        [userDefaults setObject:@"open" forKey:@"Sound"];
         
     }else {
-        [userDefaults setObject:@"open" forKey:@"Sound"];
+        [userDefaults setObject:@"close" forKey:@"Sound"];
     }
     [userDefaults synchronize];
 }
@@ -259,5 +296,9 @@
 - (IBAction)back:(id)sender {
     [_Controll viewWillAppear:YES];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)updateVersion:(UIButton *)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://k.webj.cn/ios/index.html"]];
 }
 @end

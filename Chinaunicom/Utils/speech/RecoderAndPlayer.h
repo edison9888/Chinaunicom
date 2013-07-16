@@ -6,8 +6,6 @@
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import <CoreAudio/CoreAudioTypes.h>
 #import <AudioToolbox/AudioToolbox.h>
@@ -30,21 +28,21 @@
 {
     AVAudioRecorder *recorder;
     AVAudioPlayer *player;
-	AVAudioSession *session;
+//	AVAudioSession *session;
 	NSTimer *timer;
     NSString *playpath;
     BOOL isPlay;
-    id <ViewControllerDelegate> viewDelegate;
+    __weak id <ViewControllerDelegate> viewDelegate;
     NSString *recordAudioName;
 }
-@property (retain,nonatomic) AVAudioSession *session;
-@property (retain,nonatomic) AVAudioRecorder *recorder;
-@property (retain,nonatomic) AVAudioPlayer *player;
-@property (retain,nonatomic) NSString *playpath;
-@property (retain,nonatomic) NSString *recordAudioName;
+//@property (strong,nonatomic) AVAudioSession *session;
+//@property (strong,nonatomic) AVAudioRecorder *recorder;
+@property (strong,nonatomic) AVAudioPlayer *player;
+@property (strong,nonatomic) NSString *playpath;
+@property (strong,nonatomic) NSString *recordAudioName;
 @property (assign,nonatomic) BOOL isPlay;
 @property int aSeconds;
-@property (assign,nonatomic) id <ViewControllerDelegate> viewDelegate;
+@property (weak,nonatomic) id <ViewControllerDelegate> viewDelegate;
 -(void)SpeechRecordStart;
 -(void)SpeechRecordStop;
 -(void)SpeechAMR2WAV:(NSString *)amrFile;

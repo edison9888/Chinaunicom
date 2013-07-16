@@ -35,7 +35,7 @@
 {
     sender.selected=!sender.selected;
     if (sender.selected) {
-        [self bringSubviewToFront:pressButton];
+        [self bringSubviewToFront:self.pressButton];
         [self.textView resignFirstResponder];
         
     }else
@@ -59,16 +59,16 @@
 }
 -(void)setupToolbar:(NSString *)buttonLabel
 {
-    pressButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    self.pressButton=[UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *newImage=[UIImage imageNamed:@"textbg.png"];
     newImage=[newImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 12, 0, 12)];
-    [pressButton setBackgroundImage:newImage forState:UIControlStateNormal];
-    [pressButton setTitle:@"按住说话" forState:UIControlStateNormal];
-    pressButton.titleLabel.textAlignment=NSTextAlignmentCenter;
-    [pressButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [pressButton addTarget:self action:@selector(pressSound:) forControlEvents:UIControlEventTouchDown];
-    [pressButton addTarget:self action:@selector(upSound:) forControlEvents:UIControlEventTouchUpInside];
-    pressButton.frame=CGRectMake(7, 9, 256, 26);
+    [self.pressButton setBackgroundImage:newImage forState:UIControlStateNormal];
+    [self.pressButton setTitle:@"按住说话" forState:UIControlStateNormal];
+    self.pressButton.titleLabel.textAlignment=NSTextAlignmentCenter;
+    [self.pressButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [self.pressButton addTarget:self action:@selector(pressSound:) forControlEvents:UIControlEventTouchDown];
+    [self.pressButton addTarget:self action:@selector(upSound:) forControlEvents:UIControlEventTouchUpInside];
+    self.pressButton.frame=CGRectMake(7, 9, 256, 26);
 //    pressButton.contentMode    = UIViewContentModeScaleToFill;
 //    pressButton.contentStretch = CGRectMake(0.5, 0.5, 0, 0);
     [self addSubview:pressButton];
@@ -82,9 +82,9 @@
     UIButton *button               = [UIButton buttonWithType:UIButtonTypeCustom];
     button.titleLabel.font         = [UIFont boldSystemFontOfSize:15.0f];
     button.titleLabel.shadowOffset = CGSizeMake(0, -1);
-    button.titleEdgeInsets         = UIEdgeInsetsMake(0, 2, 0, 2);
+//    button.titleEdgeInsets         = UIEdgeInsetısMake(0, 2, 0, 2);
 //    button.contentStretch          = CGRectMake(0.5, 0.5, 0, 0);
-//    button.contentMode             = UIViewContentModeScaleToFill;
+//    button.contentMode             = UIViewContentModeScaleToFill;ı
     button.frame=CGRectMake(265, 0, 55, 40);
     [button setImage:buttonImage forState:UIControlStateNormal];
     [button setImage:[UIImage imageNamed:@"recordedit.png"] forState:UIControlStateSelected];
@@ -93,14 +93,14 @@
     [button addTarget:self action:@selector(inputButtonPressed:) forControlEvents:UIControlEventTouchDown];
 //    [button sizeToFit];
     [self addSubview:button];
-    self.inputButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-    self.inputButton.customView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+//    self.inputButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+//    self.inputButton.customView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     /* Disable button initially */
 //    self.inputButton.enabled = NO;
 
     /* Create UIExpandingTextView input */
-    self.textView = [[UIExpandingTextView alloc] initWithFrame:CGRectMake(7, 9, 256, 26)];
-    self.textView.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(4.0f, 0.0f, 10.0f, 0.0f);
+    self.textView = [[[UIExpandingTextView alloc] initWithFrame:CGRectMake(7, 9, 256, 26)]autorelease];
+//    textView.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(4.0f, 0.0f, 10.0f, 0.0f);
     self.textView.delegate = self;
     [self addSubview:self.textView];
     
@@ -141,8 +141,7 @@
 
 - (void)dealloc
 {
-    [textView release];
-    [inputButton release];
+
     [super dealloc];
 }
 

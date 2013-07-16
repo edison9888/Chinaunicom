@@ -17,7 +17,7 @@
 #define documentsDirectory [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES) objectAtIndex:0] stringByAppendingPathComponent:@"SpeechSoundDir"]
 @implementation RecoderAndPlayer
 
-@synthesize recorder,session;
+//@synthesize recorder,session;
 @synthesize playpath,player;
 @synthesize recordAudioName;
 @synthesize viewDelegate;
@@ -54,38 +54,14 @@
 {
     double seconds = [[NSDate date] timeIntervalSince1970];
     NSString *mircoSeconds = [[[NSString stringWithFormat:@"%f",seconds] componentsSeparatedByString:@"."] objectAtIndex:0];
-    NSString *fileName = [[NSString alloc] initWithFormat:@"%@.%@",mircoSeconds,@"wav"];
+    NSString *fileName =[NSString stringWithFormat:@"%@.%@",mircoSeconds,@"wav"];
     recordAudioName = fileName;
     return fileName;
 }
 //停止录音
 - (void) stopRecording
 {
-//    NSMutableDictionary *dictionary=[[NSMutableDictionary alloc]init];
-//    NSString *url=@"http://rock.sinaapp.com/app/wificar/version.json";
-//    [HttpRequestHelper asyncGetRequest:url parameter:dictionary requestComplete:^(NSString *responseStr) {
-//        
-//        NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
-//        //NSMutableDictionary *dictionary=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-//        
-//        NSMutableDictionary *result=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingMutableLeaves) error:nil];
-//        bool temp=[result objectForKey:@"isupdate"];
-//        NSLog(@"%@",result);
-//        if(!temp)
-//        {
-//          
-//        }
-//        else{
-//            UIAlertView *coll=[[UIAlertView alloc] initWithTitle:@""
-//                                                    message:@"软件有新版本"
-//                                                    delegate:self
-//                                                    cancelButtonTitle:@"更新" otherButtonTitles:nil];
-//                                     [coll show];
-//        }
-//    } requestFailed:^(NSString *errorMsg) {
-//        
-//    }];
-	[self.recorder stop];
+	[recorder stop];
 }
 
 
@@ -98,7 +74,6 @@
 //录音
 -(BOOL)record
 {
-
 	NSError *error;
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 	[settings setValue: [NSNumber numberWithInt:kAudioFormatLinearPCM] forKey:AVFormatIDKey];
@@ -109,20 +84,23 @@
 	[settings setValue: [NSNumber numberWithBool:NO] forKey:AVLinearPCMIsFloatKey];
     
     NSURL *urlPath = [NSURL fileURLWithPath:FILEPATH];
-	self.recorder = [[[AVAudioRecorder alloc] initWithURL:urlPath settings:settings error:&error] autorelease];
-	if (!self.recorder)
+	recorder = [[AVAudioRecorder alloc] initWithURL:urlPath settings:settings error:&error] ;
+	if (recorder)
 	{
-		return NO;
+        [recorder prepareToRecord];
+        [[AVAudioSession sharedInstance] setActive:YES error:nil];
+        recorder.delegate = self;
+        [recorder record];
+//		return NO;
 	}
-	self.recorder.delegate = self;
-	if (![self.recorder prepareToRecord])
-	{
-		return NO;
-	}
-	if (![self.recorder record])
-	{
-		return NO;
-	}
+//	if (![recorder prepareToRecord])
+//	{
+//		return NO;
+//	}
+//	if (![recorder record])
+//	{
+//		return NO;
+//	}
     [self LoudSpeakerRecorder:YES];
 	return YES;
 }
@@ -143,7 +121,7 @@
     //移除生成的临时文件  recordAudioName
     NSString *tempFile = [documentsDirectory stringByAppendingPathComponent:recordAudioName];
     [fileManager removeItemAtPath:tempFile error:nil];
-    return [[[NSString alloc] initWithFormat:@"%@",fileSize] autorelease];
+    return [[NSString alloc] initWithFormat:@"%@",fileSize] ;
 }
 
 //录音计时
@@ -154,25 +132,25 @@
         [self SpeechRecordStop];
     }else {
         aSeconds++;
-//        [viewDelegate TimePromptAction:self.aSeconds];
+        [viewDelegate TimePromptAction:self.aSeconds];
     }
 //    NSLog(@"录音记时%d",aSeconds);
 }
 
-- (BOOL) startAudioSession
-{
-	NSError *error;
-	self.session = [AVAudioSession sharedInstance];
-	if (![self.session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error])
-	{
-		return NO;
-	}
-	if (![self.session setActive:YES error:&error])
-	{
-		return NO;
-	}
-	return self.session.inputIsAvailable;
-}
+//- (BOOL) startAudioSession
+//{
+//	NSError *error;
+////	session = [AVAudioSession sharedInstance];
+////	if (![self.session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error])
+////	{
+////		return NO;
+////	}
+//	if (![[AVAudioSession sharedInstance] setActive:YES error:&error])
+//	{
+//		return NO;
+//	}
+//	return [AVAudioSession sharedInstance].inputIsAvailable;
+//}
 
 - (void) play
 {
@@ -252,11 +230,12 @@
 -(void)SpeechRecordStart{
     //录制
     isPlay = NO;
-    if ([self startAudioSession]) {
+    
         self.aSeconds=0;
         timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(countTime) userInfo:nil repeats:YES];
+        [timer fire];       
         [self record];
-    }
+    
 }
 //松开录音按钮触发事件
 -(void)SpeechRecordStop{
@@ -314,6 +293,11 @@
     
     route = bOpen?kAudioSessionOverrideAudioRoute_Speaker:kAudioSessionOverrideAudioRoute_None;
     AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(route), &route);
+//    //开启录音和播放同时进行的模式
+//    UInt32 audioCategory = kAudioSessionCategory_PlayAndRecord;
+//    AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(audioCategory), &audioCategory);
+//    UInt32 audioRoute = kAudioSessionOverrideAudioRoute_Speaker;
+//    AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(audioRoute), &audioRoute);
     return true;
 }
 
@@ -345,7 +329,7 @@
         
     }else
     {
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+        [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
     }
         [audioSession setActive:YES error:nil];
     
@@ -353,23 +337,23 @@
 //    AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(route), &route);
     return true;
 }
--(void)dealloc{
-    if ([session retainCount]>0) {
-        [session release];
-    }
-    if ([recorder retainCount]>0) {
-        [recorder stop];
-        [recorder release];
-    }
-    if ([player retainCount]>0) {
-        [player stop];
-        [player release];
-    }
-    [playpath release];
-    if ([recordAudioName retainCount]>0) {
-        [recordAudioName release];
-    }
-    [super dealloc];
-}
+//-(void)dealloc{
+//    if ([session retainCount]>0) {
+//        [session release];
+//    }
+//    if ([recorder retainCount]>0) {
+//        [recorder stop];
+//        [recorder release];
+//    }
+//    if ([player retainCount]>0) {
+//        [player stop];
+//        [player release];
+//    }
+//    [playpath release];
+//    if ([recordAudioName retainCount]>0) {
+//        [recordAudioName release];
+//    }
+//    [super dealloc];
+//}
 
 @end

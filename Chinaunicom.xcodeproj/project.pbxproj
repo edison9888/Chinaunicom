@@ -40,10 +40,10 @@
 		66144B1017886C8200A037B8 /* quit_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 66144B0C17886C8200A037B8 /* quit_press.png */; };
 		6647E98B17870ABE00D21750 /* comment_cell_tip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6647E98917870ABD00D21750 /* comment_cell_tip@2x.png */; };
 		6647E98C17870ABE00D21750 /* comment_cell_tip.png in Resources */ = {isa = PBXBuildFile; fileRef = 6647E98A17870ABE00D21750 /* comment_cell_tip.png */; };
-		6647E99C1787105300D21750 /* amrFileCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 6647E98F1787105300D21750 /* amrFileCodec.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6647E99C1787105300D21750 /* amrFileCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 6647E98F1787105300D21750 /* amrFileCodec.m */; };
 		6647E99D1787105300D21750 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6647E9981787105300D21750 /* libopencore-amrnb.a */; };
 		6647E99E1787105300D21750 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6647E9991787105300D21750 /* libopencore-amrwb.a */; };
-		6647E99F1787105300D21750 /* RecoderAndPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6647E99B1787105300D21750 /* RecoderAndPlayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6647E99F1787105300D21750 /* RecoderAndPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6647E99B1787105300D21750 /* RecoderAndPlayer.m */; };
 		6647E9B7178711AD00D21750 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 6647E9A2178711AD00D21750 /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6647E9B8178711AD00D21750 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 6647E9A5178711AD00D21750 /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6647E9B9178711AD00D21750 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 6647E9A7178711AD00D21750 /* ASIDataDecompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -173,7 +173,6 @@
 		DD1C524E177AD84B0077042C /* ESSTimeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD1C524C177AD8480077042C /* ESSTimeViewController.xib */; };
 		DD1E3564178A89BF00D0AD5F /* login@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DD1E3563178A89BF00D0AD5F /* login@2x.png */; };
 		DD1E3566178A8A5C00D0AD5F /* Createwrite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DD1E3565178A8A5C00D0AD5F /* Createwrite@2x.png */; };
-		DD1E356E178AB38000D0AD5F /* deleteBt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DD1E356D178AB38000D0AD5F /* deleteBt@2x.png */; };
 		DD1E357B178ABF8B00D0AD5F /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD1E357A178ABF8A00D0AD5F /* ImageIO.framework */; };
 		DD1E35AB178AC8C600D0AD5F /* LeftMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD1E35A9178AC8C500D0AD5F /* LeftMenuViewController.m */; };
 		DD1E35AC178AC8C600D0AD5F /* LeftMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD1E35AA178AC8C600D0AD5F /* LeftMenuViewController.xib */; };
@@ -226,7 +225,7 @@
 		DD92562C174DE01200A389A3 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD92562B174DE01200A389A3 /* AudioToolbox.framework */; };
 		DD92562E174DE07A00A389A3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD92562D174DE07A00A389A3 /* AVFoundation.framework */; };
 		DD99D4C81745D10000488A70 /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = DD99D4C71745D10000488A70 /* Report.m */; };
-		DD9B87551764384100C979D3 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = DD9B87541764325100C979D3 /* Utility.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DD9B87551764384100C979D3 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = DD9B87541764325100C979D3 /* Utility.m */; };
 		DDA225AC176EA759007659AA /* AudiReportDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = DDA225AA176EA758007659AA /* AudiReportDetail.m */; };
 		DDA225AD176EA759007659AA /* AudiReportDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDA225AB176EA759007659AA /* AudiReportDetail.xib */; };
 		DDA86C7E178D1AE2001ED157 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DDA86C62178D1AE2001ED157 /* MKAnnotationView+WebCache.m */; };
@@ -300,6 +299,8 @@
 		DDEFAE6017608FA3009F2E21 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = DDEFAE5E17608CB7009F2E21 /* GTMBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DDF43D6E178F946200F6127C /* x_label.png in Resources */ = {isa = PBXBuildFile; fileRef = DDF43D6C178F946200F6127C /* x_label.png */; };
 		DDF43D6F178F946200F6127C /* x_label@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DDF43D6D178F946200F6127C /* x_label@2x.png */; };
+		DDFCF3F21793D7950033B5CF /* main_juxing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DDFCF3F11793D7950033B5CF /* main_juxing@2x.png */; };
+		DDFCF3F41793DA7E0033B5CF /* deleteBt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DDFCF3F31793DA7E0033B5CF /* deleteBt@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -542,7 +543,6 @@
 		DD1C524C177AD8480077042C /* ESSTimeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ESSTimeViewController.xib; path = ../Controller/ESSTimeViewController.xib; sourceTree = "<group>"; };
 		DD1E3563178A89BF00D0AD5F /* login@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login@2x.png"; sourceTree = "<group>"; };
 		DD1E3565178A8A5C00D0AD5F /* Createwrite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Createwrite@2x.png"; sourceTree = "<group>"; };
-		DD1E356D178AB38000D0AD5F /* deleteBt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deleteBt@2x.png"; sourceTree = "<group>"; };
 		DD1E357A178ABF8A00D0AD5F /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		DD1E35A8178AC8C500D0AD5F /* LeftMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuViewController.h; sourceTree = "<group>"; };
 		DD1E35A9178AC8C500D0AD5F /* LeftMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuViewController.m; sourceTree = "<group>"; };
@@ -704,6 +704,8 @@
 		DDEFAE5E17608CB7009F2E21 /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
 		DDF43D6C178F946200F6127C /* x_label.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = x_label.png; sourceTree = "<group>"; };
 		DDF43D6D178F946200F6127C /* x_label@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "x_label@2x.png"; sourceTree = "<group>"; };
+		DDFCF3F11793D7950033B5CF /* main_juxing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main_juxing@2x.png"; sourceTree = "<group>"; };
+		DDFCF3F31793DA7E0033B5CF /* deleteBt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deleteBt@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1169,6 +1171,7 @@
 		DD6E42C6177961B800B43DB7 /* new_resource */ = {
 			isa = PBXGroup;
 			children = (
+				DDFCF3F11793D7950033B5CF /* main_juxing@2x.png */,
 				DDD61995178BD9820086EED0 /* 441@2x.png */,
 				DDD6199A178BD9D30086EED0 /* 442@2x.png */,
 				DDD61997178BD9D30086EED0 /* 443@2x.png */,
@@ -1297,7 +1300,7 @@
 				77DBDF59173EB04D0032B1EA /* searchbg.png */,
 				DD1E3565178A8A5C00D0AD5F /* Createwrite@2x.png */,
 				DD1E3563178A89BF00D0AD5F /* login@2x.png */,
-				DD1E356D178AB38000D0AD5F /* deleteBt@2x.png */,
+				DDFCF3F31793DA7E0033B5CF /* deleteBt@2x.png */,
 				DDD619A6178C014E0086EED0 /* wancheng@2x.png */,
 				DDA86C98178D4CB4001ED157 /* 2@2x.jpg */,
 				DDA86C99178D4CB4001ED157 /* 4@2x.jpg */,
@@ -1642,7 +1645,6 @@
 				6604EE68178998CF0089EA8C /* add_message_bar@2x.png in Resources */,
 				DD1E3564178A89BF00D0AD5F /* login@2x.png in Resources */,
 				DD1E3566178A8A5C00D0AD5F /* Createwrite@2x.png in Resources */,
-				DD1E356E178AB38000D0AD5F /* deleteBt@2x.png in Resources */,
 				DD1E35AC178AC8C600D0AD5F /* LeftMenuViewController.xib in Resources */,
 				DDD61996178BD9820086EED0 /* 441@2x.png in Resources */,
 				DDD6199B178BD9D40086EED0 /* 443@2x.png in Resources */,
@@ -1664,6 +1666,8 @@
 				DDA86CB3178D4EF8001ED157 /* left_quanbu@2x.png in Resources */,
 				DDF43D6E178F946200F6127C /* x_label.png in Resources */,
 				DDF43D6F178F946200F6127C /* x_label@2x.png in Resources */,
+				DDFCF3F21793D7950033B5CF /* main_juxing@2x.png in Resources */,
+				DDFCF3F41793DA7E0033B5CF /* deleteBt@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1796,8 +1800,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Chenlong Zhou (D6J9TYP22S)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chenlong Zhou (D6J9TYP22S)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Chenlong Zhou (JCE92PF6Q2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chenlong Zhou (JCE92PF6Q2)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1812,8 +1816,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "6193D714-98EA-41A0-BC06-C24D38050D9E";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6193D714-98EA-41A0-BC06-C24D38050D9E";
+				PROVISIONING_PROFILE = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1830,8 +1834,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Chenlong Zhou (D6J9TYP22S)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chenlong Zhou (D6J9TYP22S)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Chenlong Zhou (JCE92PF6Q2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chenlong Zhou (JCE92PF6Q2)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1840,8 +1844,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "6193D714-98EA-41A0-BC06-C24D38050D9E";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6193D714-98EA-41A0-BC06-C24D38050D9E";
+				PROVISIONING_PROFILE = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1850,8 +1854,8 @@
 		77292B9817354936004988E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Chenlong Zhou (D6J9TYP22S)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chenlong Zhou (D6J9TYP22S)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Chenlong Zhou (JCE92PF6Q2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chenlong Zhou (JCE92PF6Q2)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1868,8 +1872,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-Objc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6193D714-98EA-41A0-BC06-C24D38050D9E";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6193D714-98EA-41A0-BC06-C24D38050D9E";
+				PROVISIONING_PROFILE = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1878,8 +1882,8 @@
 		77292B9917354936004988E0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Chenlong Zhou (D6J9TYP22S)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chenlong Zhou (D6J9TYP22S)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Chenlong Zhou (JCE92PF6Q2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chenlong Zhou (JCE92PF6Q2)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1896,8 +1900,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-Objc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6193D714-98EA-41A0-BC06-C24D38050D9E";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6193D714-98EA-41A0-BC06-C24D38050D9E";
+				PROVISIONING_PROFILE = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;

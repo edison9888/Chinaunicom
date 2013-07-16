@@ -18,26 +18,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Chinaunicom/Controller/ContextDetailController.m"
-         timestampString = "395315869.476814"
+         filePath = "Chinaunicom/Utils/speech/RecoderAndPlayer.m"
+         timestampString = "395562256.111013"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "224"
-         endingLineNumber = "224"
-         landmarkName = "-back"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Chinaunicom/Controller/ContextDetailController.m"
-         timestampString = "395315870.165664"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "228"
-         endingLineNumber = "228"
-         landmarkName = "-collect:"
+         startingLineNumber = "128"
+         endingLineNumber = "128"
+         landmarkName = "-countTime"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -45,25 +32,64 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Chinaunicom/Utils/speech/RecoderAndPlayer.m"
-         timestampString = "395316505.496486"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "28"
-         endingLineNumber = "28"
-         landmarkName = "-audioRecorderDidFinishRecording:successfully:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Chinaunicom/Utils/speech/RecoderAndPlayer.m"
-         timestampString = "395316594.600534"
+         timestampString = "395562293.7642"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "230"
          endingLineNumber = "230"
-         landmarkName = "-audioPlayerDidFinishPlaying:successfully:"
+         landmarkName = "-SpeechRecordStart"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Chinaunicom/Utils/speech/RecoderAndPlayer.m"
+         timestampString = "395562333.651383"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "75"
+         endingLineNumber = "75"
+         landmarkName = "-record"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Chinaunicom/Utils/HttpRequestHelper.m"
+         timestampString = "395657942.099093"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "63"
+         endingLineNumber = "63"
+         landmarkName = "+asyncGetRequest:parameter:requestComplete:requestFailed:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Chinaunicom/BusinessHelper/requestServiceHelper.m"
+         timestampString = "395657988.535973"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "124"
+         endingLineNumber = "124"
+         landmarkName = "-getReportDetail:sucess:falid:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Chinaunicom/BusinessHelper/requestServiceHelper.m"
+         timestampString = "395658002.974756"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "126"
+         endingLineNumber = "126"
+         landmarkName = "-getReportDetail:sucess:falid:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

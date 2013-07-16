@@ -194,7 +194,6 @@
             [MBHUDView hudWithBody:@"网络不稳定" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
         }];
     }
-    
 }
 
 - (void)viewDidUnload {
@@ -221,6 +220,7 @@
 }
 
 - (IBAction)passFile:(UIButton *)sender {
+    [MBHUDView hudWithBody:@"请稍等..." type:MBAlertViewHUDTypeDefault hidesAfter:0 show:YES];
     NSMutableDictionary *dictionary=[[NSMutableDictionary alloc]init];
     NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
     User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
@@ -229,11 +229,12 @@
     [dictionary setObject:self.reportId forKey:@"reportId"];
     [HttpRequestHelper asyncGetRequest:passReport parameter:dictionary requestComplete:^(NSString *responseStr) {
         if ([responseStr isEqualToString:@"success"]) {
-            [MBHUDView hudWithBody:@"审核成功" type:MBAlertViewHUDTypeCheckmark hidesAfter:2.0 show:YES];
+            [MBHUDView dismissCurrentHUD];
+            [MBHUDView hudWithBody:@"审核成功" type:MBAlertViewHUDTypeCheckmark hidesAfter:1.0 show:YES];
         }
         else
         {
-            [MBHUDView hudWithBody:@"没有审核权限" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
+            [MBHUDView hudWithBody:@"没有审核权限" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
         }
     } requestFailed:^(NSString *errorMsg) {
             [MBHUDView hudWithBody:@"网络不稳定" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];

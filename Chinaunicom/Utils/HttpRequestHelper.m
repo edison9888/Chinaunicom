@@ -31,8 +31,8 @@ typedef enum {
 //    NSLog(@"请求地址:%@",urlStr);
     
     ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-    [request setUserAgentString:UserAgent];
-    
+//    [request setUserAgentString:UserAgent];
+    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
     //设置超时
     [request setTimeOutSeconds:TimeOut];//设置超时时间
     [request setNumberOfTimesToRetryOnTimeout:RetryTimes];//超时重试次数
@@ -67,21 +67,21 @@ typedef enum {
     
     ASIHTTPRequest *_request = [self requestWithUrl:url];
     __weak ASIHTTPRequest *request = _request;
-    [request setUserAgentString:UserAgent];
     
-    //设置请求方式
-    [request setRequestMethod:@"POST"];
-    [request addRequestHeader:@"User-Agent" value:@"ASIHTTPRequest"];
-    [request addRequestHeader:@"Content-Type" value:@"application/json;charset=utf-8"];
+//    //设置请求方式
+//    [request setUserAgentString:UserAgent];
+//    [request setRequestMethod:@"POST"];
+//    [request addRequestHeader:@"User-Agent" value:@"ASIHTTPRequest"];
+//    [request addRequestHeader:@"Content-Type" value:@"application/json;charset=utf-8"];
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     [request appendPostData:[jsonString  dataUsingEncoding:NSUTF8StringEncoding]];
     [request buildPostBody];
     
-    
     //请求成功
     [request setCompletionBlock:^{
+        
         switch (request.responseStatusCode) {
             case RequestStatus_OK:
                 requestComplete(request.responseString);break;

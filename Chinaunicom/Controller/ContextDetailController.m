@@ -86,7 +86,7 @@
     commentsButton=[UIButton buttonWithType:UIButtonTypeCustom];
     commentsButton.frame=CGRectMake(50, 8, 210, 32);
     [commentsButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [commentsButton.titleLabel setTextColor:[UIColor whiteColor]];
+    [commentsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [commentsButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
     [commentsButton setTitle:[NSString stringWithFormat:@"查看精彩评论 共0条"] forState:UIControlStateNormal];
     [commentsButton addTarget:self action:@selector(viewComment:) forControlEvents:UIControlEventTouchUpInside];
@@ -128,7 +128,7 @@
             typeName=@"其他";
         }
         
-        UILabel *comeLabel=[[UILabel alloc]initWithFrame:CGRectMake(90, 20+titleSize.height+10, 70, 20)];
+        UILabel *comeLabel=[[UILabel alloc]initWithFrame:CGRectMake(90, 20+titleSize.height+5, 70, 20)];
         [comeLabel setBackgroundColor:[UIColor clearColor]];
         [comeLabel setTextColor:[UIColor darkGrayColor]];
         comeLabel.text=[NSString stringWithFormat:@"来自%@",typeName];
@@ -143,7 +143,7 @@
         [timeLabel setFont:[UIFont systemFontOfSize:13.0]];
         [_topview addSubview:timeLabel];
         
-        _topview.frame=CGRectMake(0, 0, 320, timeLabel.frame.origin.y+timeLabel.frame.size.height+20);
+        _topview.frame=CGRectMake(0, 0, 320, timeLabel.frame.origin.y+timeLabel.frame.size.height);
         
         NSString *commentStr=[[reportDetail objectForKey:@"reportContent"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         CGSize commentSize=[commentStr sizeWithFont:[UIFont systemFontOfSize:17.0] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
@@ -276,6 +276,7 @@
 - (void)viewComment:(id)sender {
         GoodCommentsViewController *wonderfulCtrl=[[GoodCommentsViewController alloc] init];
         wonderfulCtrl.reportId=self.reportId;
+        wonderfulCtrl.pinglunBt=commentsButton;
         [self.navigationController pushViewController:wonderfulCtrl animated:YES];
 }
 - (void)viewDidUnload {

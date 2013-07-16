@@ -28,8 +28,6 @@
     [super loadView];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]]];
     dataSource=[[NSMutableArray alloc]init];
-    recoderAndPlayer = [[RecoderAndPlayer alloc] init];
-    [recoderAndPlayer setViewDelegate:self];
     [self initTopView];
     [self initTableView];
     [self initBottomView];
@@ -94,7 +92,7 @@
     [dictionary setObject:@"10" forKey:@"pageSize"];
     [dictionary setObject:[NSNumber numberWithInteger:page] forKey:@"pageIndex"];
     [[requestServiceHelper defaultService] getCommentsWithParamter:dictionary sucess:^(NSMutableArray *commentDictionary,NSInteger num) {
-        
+        self.pinglunNum=[NSString stringWithFormat:@"%d",num];
         if (page==1) {
             [dataSource removeAllObjects];
         }
@@ -262,7 +260,7 @@
     NSString *fileName=[fArray lastObject];
     [request setDownloadDestinationPath:[Utility getFilePath:fileName Dir:@"SpeechSoundDir"]];
     [request setCompletionBlock:^{
-//        [recoderAndPlayer SpeechAMR2WAV:fileName];
+        [recoderAndPlayer SpeechAMR2WAV:fileName];
     }];
     [request setFailedBlock:^{
         [request clearDelegatesAndCancel];
@@ -271,9 +269,9 @@
 }
 
 -(void)playSoundFile:(UIButton *)sender{
-//    if (recoderAndPlayer.isPlay) {
-//        [recoderAndPlayer stopPlaying];
-//    }
+    if (recoderAndPlayer.isPlay) {
+        [recoderAndPlayer stopPlaying];
+    }
     int index=[sender tag]-1000;
     NSString *soundpath=[[dataSource objectAtIndex:index] objectForKey:@"audioPath"];
     NSArray *fArray = [soundpath componentsSeparatedByString:@"/"];
@@ -281,7 +279,7 @@
     //检查目录下是否存在此文件
     BOOL isExsit = [Utility checkFileExsit:fileName Dir:@"SpeechSoundDir"];
     if (isExsit) {
-//        [recoderAndPlayer SpeechAMR2WAV:fileName];
+        [recoderAndPlayer SpeechAMR2WAV:fileName];
     }
     else{
         //下载
@@ -302,12 +300,12 @@
 }
 -(void)recordAndSendAudioFile:(NSString *)fileName fileSize:(NSString *)fileSize duration:(NSString *)timelength{
 //    [self performSelectorInBackground:@selector(sendSoundComment) withObject:nil];
-    if ([timelength intValue]<1) {
-        [MBHUDView hudWithBody:@"录音时间太短" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
-    }else
-    {
+//    if ([timelength intValue]<1) {
+//        [MBHUDView hudWithBody:@"录音时间太短" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
+//    }else
+//    {
         [self sendSoundComment];
-    }
+//    }
     
 }
 -(void)sendSoundComment
@@ -330,6 +328,7 @@
         [MBHUDView hudWithBody:@"发表成功" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
         [_tableview launchRefreshing];
     } requestFailed:^(NSString *errorMsg) {
+        [MBHUDView hudWithBody:@"发表失败" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
     }];
 }
 -(void)reTable
@@ -358,6 +357,7 @@
         if ([responseStr isEqualToString:@"success"]) {
             [MBHUDView hudWithBody:@"发表成功" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
             [self performSelectorOnMainThread:@selector(reTable) withObject:nil waitUntilDone:NO];
+            [_tableview launchRefreshing];
         }else
         {
             [MBHUDView hudWithBody:@"发表失败" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
@@ -366,17 +366,21 @@
     } requestFailed:^(NSString *errorMsg) {
         [MBHUDView hudWithBody:@"发表失败" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
     }];
-    [_tableview reloadData];
 
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    recoderAndPlayer = [[RecoderAndPlayer alloc] init];
+    [recoderAndPlayer setViewDelegate:self];
 	// Do any additional setup after loading the view.
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    if (self.pinglunNum!=nil) {
+        [self.pinglunBt setTitle:[NSString stringWithFormat:@"查看精彩评论 共%@条",self.pinglunNum] forState:UIControlStateNormal];
+    }
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     if (recoderAndPlayer.isPlay) {

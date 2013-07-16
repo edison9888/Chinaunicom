@@ -42,24 +42,6 @@ static Utility *shareSource = nil;
     return self;
 }
 
-- (id)retain
-{
-    return self;
-}
-
-- (unsigned)retainCount
-{
-    return UINT_MAX;  //denotes an object that cannot be released
-}
-
-
-- (id)autorelease
-{
-    return self;
-}
-
-
-
 //字符串转16进制颜色
 //+ (UIColor *) colorWithHexString: (NSString *) stringToConvert
 //{
@@ -221,6 +203,7 @@ static Utility *shareSource = nil;
     NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"dd"];
     NSString *date = [formatter stringFromDate:[NSDate date]];
+    
     return date;
 }
 

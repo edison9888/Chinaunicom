@@ -14,9 +14,8 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        
         _bgImageView = [[UIImageView alloc]init];
-        _bgImageView.image=[UIImage imageNamed:@"cell_bg.png"];
+        _bgImageView.image=[UIImage imageNamed:@"main_juxing.png"];
         [self.contentView addSubview:_bgImageView];
         
         _titleLabel=[[UILabel alloc]init];

@@ -13,6 +13,8 @@
 #import "RightMenuViewController.h"
 #import "MainViewController.h"
 #import "SDWebImageManager.h"
+#import "HttpRequestHelper.h"
+#import "ASIHTTPRequest.h"
 @interface LoginViewController ()
 {
     BOOL isOff;
@@ -26,7 +28,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title=@"登录";
-     
     }
     return self;
 }
@@ -34,8 +35,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     [self initLayout];
+    
 }
+
 -(void) initLayout{
     
     //背景图片

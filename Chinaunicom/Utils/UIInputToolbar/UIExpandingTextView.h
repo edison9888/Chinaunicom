@@ -70,7 +70,7 @@
     UILabel *placeholderLabel;
 }
 
-@property (nonatomic, retain) UITextView *internalTextView;
+@property (nonatomic, retain) UIExpandingTextViewInternal *internalTextView;
 
 @property int maximumNumberOfLines;
 @property int minimumNumberOfLines;

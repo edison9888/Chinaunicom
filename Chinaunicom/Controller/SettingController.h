@@ -9,6 +9,7 @@
 #import "DCRoundSwitch.h"
 #import "RightMenuViewController.h"
 @interface SettingController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@property (weak, nonatomic) IBOutlet UIButton *versionButton;
 @property (strong,nonatomic)RightMenuViewController *Controll;
 @property (weak, nonatomic) IBOutlet UIButton *headButton;
 @property (weak, nonatomic) IBOutlet DCRoundSwitch *message;
@@ -19,4 +20,5 @@
 - (IBAction)soundChange:(id)sender;
 - (IBAction)headChange:(id)sender;
 - (IBAction)back:(id)sender;
+- (IBAction)updateVersion:(UIButton *)sender;
 @end

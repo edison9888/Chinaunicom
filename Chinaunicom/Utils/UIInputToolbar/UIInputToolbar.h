@@ -43,7 +43,7 @@
 }
 
 - (void)drawRect:(CGRect)rect;
-@property (nonatomic,strong) UIButton *pressButton;
+@property (nonatomic, retain) UIButton *pressButton;
 @property (nonatomic, retain) UIExpandingTextView *textView;
 @property (nonatomic, retain) UIBarButtonItem *inputButton;
 @property (assign) NSObject<UIInputToolbarDelegate> *delegate;
