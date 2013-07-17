@@ -183,6 +183,7 @@
         [dictionary setObject:self.reportId forKey:@"reportId"];
         [dictionary setObject:tf.text forKey:@"backReason"];
         [HttpRequestHelper asyncGetRequest:backReportUrl parameter:dictionary requestComplete:^(NSString *responseStr) {
+            [MBHUDView dismissCurrentHUD];
             if ([responseStr isEqualToString:@"success"]) {
                 [MBHUDView hudWithBody:@"退回成功" type:MBAlertViewHUDTypeCheckmark hidesAfter:2.0 show:YES];
             }
@@ -220,6 +221,7 @@
 }
 
 - (IBAction)passFile:(UIButton *)sender {
+    [MBHUDView dismissCurrentHUD];
     [MBHUDView hudWithBody:@"请稍等..." type:MBAlertViewHUDTypeDefault hidesAfter:0 show:YES];
     NSMutableDictionary *dictionary=[[NSMutableDictionary alloc]init];
     NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
@@ -234,9 +236,11 @@
         }
         else
         {
+            [MBHUDView dismissCurrentHUD];
             [MBHUDView hudWithBody:@"没有审核权限" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
         }
     } requestFailed:^(NSString *errorMsg) {
+            [MBHUDView dismissCurrentHUD];
             [MBHUDView hudWithBody:@"网络不稳定" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
     }];
 

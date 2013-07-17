@@ -96,6 +96,22 @@
            NSString *dateString= [string substringWithRange:NSMakeRange(6, 2)];
             NSString *money=[nsdict objectForKey:string];
             NSString *changeMoney=[Utility changeToyuan:money];
+            if ([_str isEqualToString:@"ECS交易额月数据趋势图"])
+            {
+                self.monthLabel.text=[NSString stringWithFormat:@"ECS交易额%d月数据总数",[monthString intValue]];
+                
+            }else if ([_str isEqualToString:@"ESS合约计划月数据趋势图"])
+            {
+                self.monthLabel.text=[NSString stringWithFormat:@"ESS合约计划%d月数据总数",[monthString intValue]];
+                
+            }else if ([_str isEqualToString:@"ECS商城订单月数据趋势图"])
+            {
+                self.monthLabel.text=[NSString stringWithFormat:@"ECS商城订单%d月数据总数",[monthString intValue]];
+                
+            }else if ([_str isEqualToString:@"ECS用户发展月数据趋势图"])
+            {
+                self.monthLabel.text=[NSString stringWithFormat:@"ECS用户发展%d月数据总数",[monthString intValue]];
+            }
             self.bMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
             //本月总数
         }
@@ -122,22 +138,6 @@
     self.monthPointImageView.myDelegate=self;
     self.monthPointImageView.blueDian=self.bluedian;
     self.monthPointImageView.anotherBlue=self.anotherBlue;
-    if ([_str isEqualToString:@"ECS交易额月数据趋势图"])
-    {
-        self.monthLabel.text=@"ECS交易额月数据总数";
-        
-    }else if ([_str isEqualToString:@"ESS合约计划月数据趋势图"])
-    {
-        self.monthLabel.text=@"ESS合约计划月数据总数";
-        
-    }else if ([_str isEqualToString:@"ECS商城订单月数据趋势图"])
-    {
-        self.monthLabel.text=@"ECS商城订单月数据总数";
-        
-    }else if ([_str isEqualToString:@"ECS用户发展月数据趋势图"])
-    {
-        self.monthLabel.text=@"ECS用户发展月数据总数";
-    }
 }
 -(IBAction)popToHigherLevel:(id)sender
 {

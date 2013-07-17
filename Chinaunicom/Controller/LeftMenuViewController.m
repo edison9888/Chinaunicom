@@ -282,6 +282,7 @@
         /********************************************下面按钮******************************************/
     }else
     {
+        [MBHUDView dismissCurrentHUD];
         [MBHUDView hudWithBody:@"请稍等..." type:MBAlertViewHUDTypeDefault hidesAfter:0 show:YES];
         /********************************************上面按钮******************************************/
         [_b1 setEnabled:YES];
@@ -321,7 +322,7 @@
 }
 -(void)pressAddBt:(LeftButoon *)sender
 {
-    
+    [MBHUDView dismissCurrentHUD];
     [MBHUDView hudWithBody:@"请求中..." type:MBAlertViewHUDTypeDefault hidesAfter:0 show:YES];
     sender.selected=!sender.selected;
     NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
@@ -333,8 +334,7 @@
     if (sender.GuangZhu==YES) {
 
         [[requestServiceHelper defaultService]opreateReportType:DeleteReportType paramter:dictionary sucess:^(BOOL isSucess) {
-            [MBHUDView dismissCurrentHUD];
-            [MBHUDView hudWithBody:@"删除成功" type:MBAlertViewHUDTypeDefault hidesAfter:0.5 show:YES];
+
             sender.GuangZhu=NO;
             for (UIView *view in sender.subviews) {
                 if ([view isKindOfClass:[UIImageView class]]&& view.tag==100) {
@@ -342,10 +342,11 @@
                     [imageview setImage:[UIImage imageNamed:@"plus.png"]];
                 }
             }
+            [MBHUDView dismissCurrentHUD];
+            [MBHUDView hudWithBody:@"删除成功" type:MBAlertViewHUDTypeDefault hidesAfter:0.5 show:YES];
         } falid:^(NSString *errorMsg) {
             [MBHUDView dismissCurrentHUD];
         }];
-
     }else
     {
         [[requestServiceHelper defaultService]opreateReportType:AddReportType paramter:dictionary sucess:^(BOOL isSucess) {
@@ -365,7 +366,7 @@
 }
 -(void)pressBottomAddBt:(BottomButton *)sender
 {
-    
+    [MBHUDView dismissCurrentHUD];
     [MBHUDView hudWithBody:@"请求中..." type:MBAlertViewHUDTypeDefault hidesAfter:0 show:YES];
     sender.selected=!sender.selected;
     NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
@@ -377,8 +378,6 @@
     if (sender.GuangZhu==YES) {
         
         [[requestServiceHelper defaultService]opreateReportType:DeleteReportType paramter:dictionary sucess:^(BOOL isSucess) {
-            [MBHUDView dismissCurrentHUD];
-            [MBHUDView hudWithBody:@"删除成功" type:MBAlertViewHUDTypeDefault hidesAfter:0.5 show:YES];
             sender.GuangZhu=NO;
             for (UIView *view in sender.subviews) {
                 if ([view isKindOfClass:[UIImageView class]]&& view.tag==100) {
@@ -386,6 +385,8 @@
                     [imageview setImage:[UIImage imageNamed:@"plus.png"]];
                 }
             }
+            [MBHUDView dismissCurrentHUD];
+            [MBHUDView hudWithBody:@"删除成功" type:MBAlertViewHUDTypeDefault hidesAfter:0.5 show:YES];
         } falid:^(NSString *errorMsg) {
             [MBHUDView dismissCurrentHUD];
         }];
@@ -393,8 +394,6 @@
     }else
     {
         [[requestServiceHelper defaultService]opreateReportType:AddReportType paramter:dictionary sucess:^(BOOL isSucess) {
-            [MBHUDView dismissCurrentHUD];
-            [MBHUDView hudWithBody:@"添加成功" type:MBAlertViewHUDTypeDefault hidesAfter:0.5 show:YES];
             sender.GuangZhu=YES;
             for (UIView *view in sender.subviews) {
                 if ([view isKindOfClass:[UIImageView class]]&& view.tag==100) {
@@ -402,6 +401,8 @@
                     [imageview setImage:[UIImage imageNamed:@"delete.png"]];
                 }
             }
+            [MBHUDView dismissCurrentHUD];
+            [MBHUDView hudWithBody:@"添加成功" type:MBAlertViewHUDTypeDefault hidesAfter:0.5 show:YES];
         } falid:^(NSString *errorMsg) {
             [MBHUDView dismissCurrentHUD];
         }];

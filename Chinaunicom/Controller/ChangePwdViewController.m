@@ -47,6 +47,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)savePwd:(UIButton *)sender {
+    [MBHUDView dismissCurrentHUD];
     if ([_changePwd.text isEqualToString:@""]||_changePwd.text==nil) {
         [MBHUDView hudWithBody:@"新密码不能为空" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
     }else if([_oldPwd.text isEqualToString:@""]||_oldPwd.text==nil)
@@ -66,6 +67,7 @@
 
         NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:userid,@"userId",_oldPwd.text,@"oldPassword",_changePwd.text,@"newPassword", nil];
         [HttpRequestHelper asyncGetRequest:userPwd parameter:dict requestComplete:^(NSString *responseStr) {
+            [MBHUDView dismissCurrentHUD];
             if ([responseStr isEqualToString:@"\"true\""]) {
                     [MBHUDView hudWithBody:@"修改成功" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
             }else
@@ -73,6 +75,7 @@
                     [MBHUDView hudWithBody:@"修改失败" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
             }
         } requestFailed:^(NSString *errorMsg) {
+            [MBHUDView dismissCurrentHUD];
             [MBHUDView hudWithBody:@"网络不稳定" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
         }];
     }

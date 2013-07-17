@@ -12,6 +12,8 @@
 {
     
 }
+@property (weak, nonatomic) IBOutlet UIImageView *backImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *qianImageView;
 @property (nonatomic,weak)IBOutlet UILabel *nameLabel;
 @property (nonatomic,weak)IBOutlet UILabel *moneyLabel;
 @property (nonatomic,weak)IBOutlet UIView *bottomView;

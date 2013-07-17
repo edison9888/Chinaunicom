@@ -193,6 +193,7 @@
 }
 
 - (IBAction)sendMessage:(UIButton *)sender {
+    [MBHUDView dismissCurrentHUD];
     if ([self.titleTextField.text isEqualToString:@""]|| self.titleTextField.text==nil) {
         [MBHUDView hudWithBody:@"主题不能为空" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
         return;

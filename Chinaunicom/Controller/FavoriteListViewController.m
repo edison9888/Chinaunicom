@@ -158,6 +158,7 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if(buttonIndex==0){
+        [MBHUDView dismissCurrentHUD];
         [MBHUDView hudWithBody:@"正在删除" type:MBAlertViewHUDTypeActivityIndicator hidesAfter:0 show:YES];
         NSMutableDictionary *dir=[[NSMutableDictionary alloc] init];
         NSDictionary *fav=[dataSoure objectAtIndex:path.row];

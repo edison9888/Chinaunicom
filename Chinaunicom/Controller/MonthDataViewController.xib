@@ -182,6 +182,7 @@
 						<reference key="IBUITextColor" ref="991820737"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
+						<float key="IBUIMinimumScaleFactor">0.5</float>
 						<object class="IBUIFontDescription" key="IBUIFontDescription" id="691389423">
 							<int key="type">1</int>
 							<double key="pointSize">17</double>
@@ -191,7 +192,6 @@
 							<double key="NSSize">17</double>
 							<int key="NSfFlags">16</int>
 						</object>
-						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 					</object>
 					<object class="IBUILabel" id="67639221">
 						<reference key="NSNextResponder" ref="191373211"/>

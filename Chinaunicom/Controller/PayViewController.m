@@ -35,16 +35,16 @@
 {
     NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObject:@"today" forKey:@"timeStr"];
     NSString *url=@"";
-    if ([_str isEqualToString:@"ESS合约计划实时趋势图"])
+    if ([_str isEqualToString:@"ESS合约计划整点趋势图"])
     {
         url=GET_ESS_HOURTREND;
-    }else if ([_str isEqualToString:@"ECS交易额实时趋势图"])
+    }else if ([_str isEqualToString:@"ECS交易额整点趋势图"])
     {
         url=GET_ECS_HOURTREND;
-    }else if ([_str isEqualToString:@"ECS商城订单实时趋势图"])
+    }else if ([_str isEqualToString:@"ECS商城订单整点趋势图"])
     {
         url=GET_STORE_HOURTREND;
-    }else if ([_str isEqualToString:@"ECS用户发展实时趋势图"])
+    }else if ([_str isEqualToString:@"ECS用户发展整点趋势图"])
     {
         url=GET_GUESS_HOURTREND;
     }
@@ -73,16 +73,16 @@
     //昨日数据
     NSMutableDictionary *ytDict=[NSMutableDictionary dictionaryWithObject:@"yesterday" forKey:@"timeStr"];
     NSString *url=@"";
-    if ([_str isEqualToString:@"ESS合约计划实时趋势图"])
+    if ([_str isEqualToString:@"ESS合约计划整点趋势图"])
     {
         url=GET_ESS_HOURTREND;
-    }else if ([_str isEqualToString:@"ECS交易额实时趋势图"])
+    }else if ([_str isEqualToString:@"ECS交易额整点趋势图"])
     {
         url=GET_ECS_HOURTREND;
-    }else if ([_str isEqualToString:@"ECS商城订单实时趋势图"])
+    }else if ([_str isEqualToString:@"ECS商城订单整点趋势图"])
     {
         url=GET_STORE_HOURTREND;
-    }else if ([_str isEqualToString:@"ECS用户发展实时趋势图"])
+    }else if ([_str isEqualToString:@"ECS用户发展整点趋势图"])
     {
         url=GET_GUESS_HOURTREND;
     }
@@ -107,16 +107,16 @@
     //均值数据
     NSMutableDictionary *avgDict=[NSMutableDictionary dictionaryWithObject:@"avg" forKey:@"timeStr"];
     NSString *url=@"";
-    if ([_str isEqualToString:@"ESS合约计划实时趋势图"])
+    if ([_str isEqualToString:@"ESS合约计划整点趋势图"])
     {
         url=GET_ESS_HOURTREND;
-    }else if ([_str isEqualToString:@"ECS交易额实时趋势图"])
+    }else if ([_str isEqualToString:@"ECS交易额整点趋势图"])
     {
         url=GET_ECS_HOURTREND;
-    }else if ([_str isEqualToString:@"ECS商城订单实时趋势图"])
+    }else if ([_str isEqualToString:@"ECS商城订单整点趋势图"])
     {
         url=GET_STORE_HOURTREND;
-    }else if ([_str isEqualToString:@"ECS用户发展实时趋势图"])
+    }else if ([_str isEqualToString:@"ECS用户发展整点趋势图"])
     {
         url=GET_GUESS_HOURTREND;
     }
@@ -191,16 +191,16 @@
 - (IBAction)pressMapButton:(id)sender {
     
     TimeViewController *time=[[TimeViewController alloc]initWithNibName:@"TimeViewController" bundle:nil];
-    if ([_str isEqualToString:@"ESS合约计划实时趋势图"])
+    if ([_str isEqualToString:@"ESS合约计划整点趋势图"])
     {
         time.title=@"201";
-    }else if ([_str isEqualToString:@"ECS交易额实时趋势图"])
+    }else if ([_str isEqualToString:@"ECS交易额整点趋势图"])
     {
         time.title=@"202";
-    }else if ([_str isEqualToString:@"ECS商城订单实时趋势图"])
+    }else if ([_str isEqualToString:@"ECS商城订单整点趋势图"])
     {
         time.title=@"203";
-    }else if ([_str isEqualToString:@"ECS用户发展实时趋势图"])
+    }else if ([_str isEqualToString:@"ECS用户发展整点趋势图"])
     {
         time.title=@"204";
     }

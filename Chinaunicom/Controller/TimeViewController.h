@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface TimeViewController : UIViewController
+
+
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *myScrollView;
 -(IBAction)popToHigherLevel:(id)sender;
 @end

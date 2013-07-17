@@ -68,20 +68,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.nameLabel.text=_name;
-    
     if ([_name isEqualToString:@"ESS实时看板"]) {
-        [self.payButton setTitle:@"ESS实时趋势图" forState:UIControlStateNormal];
+        [self.payButton setTitle:@"ESS实时数据趋势图" forState:UIControlStateNormal];
         [self.monthButton setTitle:@"ESS月数据趋势图" forState:UIControlStateNormal];
         [self.yearButton setTitle:@"ESS年数据趋势图" forState:UIControlStateNormal];
     }else {
-        [self.payButton setTitle:[NSString stringWithFormat:@"%@实时趋势图",_name] forState:UIControlStateNormal];
+        [self.payButton setTitle:[NSString stringWithFormat:@"%@整点趋势图",_name] forState:UIControlStateNormal];
         [self.monthButton setTitle:[NSString stringWithFormat:@"%@月数据趋势图",_name] forState:UIControlStateNormal];
         [self.yearButton setTitle:[NSString stringWithFormat:@"%@年数据趋势图",_name] forState:UIControlStateNormal];
+        if ([_name isEqualToString:@"ECS用户发展"]) {
+            self.qianImageView.hidden=YES;
+            self.backImageView.hidden=NO;
+            [self.payButton setHidden:YES];
+        }
     }
-
-    
 }
 -(IBAction)pressPayButton:(UIButton *)sender
 {
@@ -183,6 +184,8 @@
 //}
 -(void)viewDidUnload
 {
+    [self setBackImageView:nil];
+    [self setQianImageView:nil];
     [super viewDidUnload];
 }
 - (void)didReceiveMemoryWarning

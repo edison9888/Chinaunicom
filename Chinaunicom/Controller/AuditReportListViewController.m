@@ -308,6 +308,7 @@
     
 }
 - (IBAction)pressPassButton:(UIButton *)sender {
+    [MBHUDView dismissCurrentHUD];
     [MBHUDView hudWithBody:@"加载中..." type:MBAlertViewHUDTypeDefault hidesAfter:0 show:YES];
     [self.senHeButton setSelected:NO];
     [sender setSelected:YES];
@@ -317,6 +318,7 @@
 }
 
 - (IBAction)pressSenHeButton:(UIButton *)sender {
+    [MBHUDView dismissCurrentHUD];
     [MBHUDView hudWithBody:@"加载中..." type:MBAlertViewHUDTypeDefault hidesAfter:0 show:YES];
     [self.passButton setSelected:NO];
     [sender setSelected:YES];

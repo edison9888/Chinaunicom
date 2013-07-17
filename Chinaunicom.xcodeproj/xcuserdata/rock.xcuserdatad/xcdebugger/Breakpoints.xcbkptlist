@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Chinaunicom/Controller/LeftMenuViewController.m"
-         timestampString = "395054925.366548"
+         timestampString = "395738870.817103"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "908"
-         endingLineNumber = "908">
+         startingLineNumber = "909"
+         endingLineNumber = "909">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -51,32 +51,6 @@
          startingLineNumber = "75"
          endingLineNumber = "75"
          landmarkName = "-record"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Chinaunicom/BusinessHelper/requestServiceHelper.m"
-         timestampString = "395657988.535973"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "124"
-         endingLineNumber = "124"
-         landmarkName = "-getReportDetail:sucess:falid:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Chinaunicom/BusinessHelper/requestServiceHelper.m"
-         timestampString = "395658002.974756"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "126"
-         endingLineNumber = "126"
-         landmarkName = "-getReportDetail:sucess:falid:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
