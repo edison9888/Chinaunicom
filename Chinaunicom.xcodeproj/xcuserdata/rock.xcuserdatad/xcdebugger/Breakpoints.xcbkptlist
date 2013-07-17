@@ -57,19 +57,6 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Chinaunicom/Utils/HttpRequestHelper.m"
-         timestampString = "395657942.099093"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "63"
-         endingLineNumber = "63"
-         landmarkName = "+asyncGetRequest:parameter:requestComplete:requestFailed:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "Chinaunicom/BusinessHelper/requestServiceHelper.m"
          timestampString = "395657988.535973"
          startingColumnNumber = "9223372036854775807"

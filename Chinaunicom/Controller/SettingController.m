@@ -54,7 +54,7 @@
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         NSString *version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
         if (![version isEqualToString:versonString]) {
-            [self.versionButton setEnabled:YES];
+            [self.versionButton setUserInteractionEnabled:YES];
             [self.versionButton setTitle:[NSString stringWithFormat:@"当前版本%@,可升级至%@",version,versonString] forState:UIControlStateNormal];
         }else
         {
