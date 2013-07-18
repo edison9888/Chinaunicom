@@ -12,7 +12,7 @@
 
 //定义接口服务器域名
 #ifndef SERVERDOMAIN
-#define SERVERDOMAIN @"http://123.125.96.171:8080/"
+#define SERVERDOMAIN @"http://123.125.96.185:8088/"
 #endif
 
 //定义接口服务器地址
