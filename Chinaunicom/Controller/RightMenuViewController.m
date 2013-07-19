@@ -30,16 +30,22 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        dictionayData=[[NSArray alloc]init];
-        recoderAndPlayer=[[RecoderAndPlayer alloc]init];
+
     }
     return self;
 }
+-(void)loadView
+{
+    [super loadView];
+    [self initLayout];
 
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self initLayout];
+    dictionayData=[[NSArray alloc]init];
+    recoderAndPlayer=[[RecoderAndPlayer alloc]init];
+    
     
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -51,8 +57,12 @@
 -(void)initLayout
 {
     //背景图片
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"right_background.png"]];
-
+    UIImageView *backImageView=[[UIImageView alloc]initWithFrame:self.view.bounds];
+    NSString *textEg=[[NSBundle mainBundle]pathForResource:@"right_background" ofType:@".png"];
+    backImageView.image=[UIImage imageWithContentsOfFile:textEg];
+    [self.view addSubview:backImageView];
+//    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"right_background.png"]];
+    
     UINavigationBar *nav=self.navigationController.navigationBar;
     //个人主页
     UIImage *userHomeImage=[UIImage imageNamed:@"user_home"];
@@ -84,8 +94,9 @@
 
     //添加底部navbar
     UIImage *bottomImage=[UIImage imageNamed:@"title@2x.png"];
-    UINavigationBar *bottomBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 372, bottomImage.size.width, bottomImage.size.height)];
-    [bottomBar setBackgroundImage:bottomImage forBarMetrics:UIBarMetricsDefault];
+    UIToolbar *bottomBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-88, 320, 44)];
+//    [bottomBar setBackgroundImage:bottomImage forBarMetrics:UIBarMetricsDefault];
+    [bottomBar setBackgroundImage:bottomImage forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
     [self.view addSubview:bottomBar];
     //为nabar添加对应的items
     /*消息*/
@@ -169,9 +180,7 @@
 }
  - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
  {
- 
      return [dictionayData count];
- 
  }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

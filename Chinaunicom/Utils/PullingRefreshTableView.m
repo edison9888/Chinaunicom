@@ -298,13 +298,7 @@
     float h = self.frame.size.height;
     float y = self.contentOffset.y + h;
     y = y > self.contentSize.height ? self.contentSize.height : y;
-    
-//    [UIView animateWithDuration:.4 animations:^{
-//        self.contentOffset = CGPointMake(0, y);
-//    }];
-//    NSIndexPath *ip = [NSIndexPath indexPathForRow:_bottomRow inSection:0];
-//    [self scrollToRowAtIndexPath:ip atScrollPosition:UITableViewScrollPositionTop animated:YES];
-//    
+        
     [UIView animateWithDuration:.7f 
                           delay:0
                         options:UIViewAnimationOptionCurveEaseOut 
@@ -344,14 +338,10 @@
 
 - (void)tableViewDidEndDragging:(UIScrollView *)scrollView {
 
-//    CGPoint offset = scrollView.contentOffset;
-//    CGSize size = scrollView.frame.size;
-//    CGSize contentSize = scrollView.contentSize;
     if (_headerView.state == kPRStateLoading || _footerView.state == kPRStateLoading) {
         return;
     }
     if (_headerView.state == kPRStatePulling) {
-//    if (offset.y < -kPROffsetY) {
         _isFooterInAction = NO;
         _headerView.state = kPRStateLoading;
         
@@ -362,7 +352,6 @@
             [_pullingDelegate pullingTableViewDidStartRefreshing:self];
         }
     } else if (_footerView.state == kPRStatePulling) {
-//    } else  if (offset.y + size.height - contentSize.height > kPROffsetY){
         if (self.reachedTheEnd || self.headerOnly) {
             return;
         }
@@ -392,15 +381,7 @@
             date = [_pullingDelegate pullingTableViewRefreshingFinishedDate];
         }
         [_headerView updateRefreshDate:date];
-//        [UIView animateWithDuration:kPRAnimationDuration*2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-//            self.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-//        } completion:^(BOOL bl){
-//            if (msg != nil && ![msg isEqualToString:@""]) {
-//                [self flashMessage:msg];
-//            }
-//        }];
     }
-    //    if (_footerView.state == kPRStateLoading) {
     else if (_footerView.loading) {
         _footerView.loading = NO;
         [_footerView setState:kPRStateNormal animated:NO];
@@ -409,14 +390,7 @@
             date = [_pullingDelegate pullingTableViewRefreshingFinishedDate];
         }
         [_footerView updateRefreshDate:date];
-        
-//        [UIView animateWithDuration:kPRAnimationDuration animations:^{
-//            self.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-//        } completion:^(BOOL bl){
-//            if (msg != nil && ![msg isEqualToString:@""]) {
-//                [self flashMessage:msg];
-//            }
-//        }];
+    
     }
            [UIView animateWithDuration:kPRAnimationDuration*2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                 self.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
@@ -492,9 +466,11 @@
 - (UIView*)findFirstResponderBeneathView:(UIView*)view {
     // Search recursively for first responder
     for ( UIView *childView in view.subviews ) {
-        if ( [childView respondsToSelector:@selector(isFirstResponder)] && [childView isFirstResponder] ) return childView;
-        UIView *result = [self findFirstResponderBeneathView:childView];
-        if ( result ) return result;
+        if (![childView isKindOfClass:[UISearchBar class]]) {
+            if ( [childView respondsToSelector:@selector(isFirstResponder)] && [childView isFirstResponder] ) return childView;
+            UIView *result = [self findFirstResponderBeneathView:childView];
+            if ( result ) return result;
+        }
     }
     return nil;
 }

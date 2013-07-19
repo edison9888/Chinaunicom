@@ -1344,10 +1344,10 @@
 			children = (
 				43784C5B17448DD500ECCCA7 /* AuditReportListViewController.h */,
 				43784C5C17448DD500ECCCA7 /* AuditReportListViewController.m */,
-				DDA86C93178D4A4E001ED157 /* ReportTypeViewController.h */,
-				DDA86C94178D4A4F001ED157 /* ReportTypeViewController.m */,
 				DDA225A9176EA758007659AA /* AudiReportDetail.h */,
 				DDA225AA176EA758007659AA /* AudiReportDetail.m */,
+				DDA86C93178D4A4E001ED157 /* ReportTypeViewController.h */,
+				DDA86C94178D4A4F001ED157 /* ReportTypeViewController.m */,
 				66C9802517898ADB00A45CE7 /* PubliceMessageViewConttoller.h */,
 				66C9802617898ADB00A45CE7 /* PubliceMessageViewConttoller.m */,
 				DDA86C8E178D3C5B001ED157 /* EditViewController.h */,

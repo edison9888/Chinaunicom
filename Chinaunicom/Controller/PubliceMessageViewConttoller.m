@@ -96,7 +96,6 @@
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     phoneImage = [[UIImageView alloc]init];
     UIImage *newImage=[self imageWithImageSimple:image  scaledToSize:CGSizeMake(310, image.size.height/image.size.width*310)];

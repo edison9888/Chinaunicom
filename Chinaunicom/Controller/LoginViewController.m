@@ -43,7 +43,8 @@
 -(void) initLayout{
     
     //背景图片
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+  
+//    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     //修改placeholder颜色
     [self.userNameTextField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
     [self.passWordTextField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
@@ -195,7 +196,7 @@
 
 -(MMDrawerController *)makeNewframeWork
 {
-    LeftMenuViewController * leftSideDrawerViewController = [[LeftMenuViewController alloc] init];
+    LeftMenuViewController * leftSideDrawerViewController = [[LeftMenuViewController alloc] initWithNibName:@"LeftMenuViewController" bundle:nil];
     
     MainViewController * centerViewController = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
     
