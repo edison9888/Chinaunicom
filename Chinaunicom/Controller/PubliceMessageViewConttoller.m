@@ -96,7 +96,6 @@
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     phoneImage = [[UIImageView alloc]init];
     UIImage *newImage=[self imageWithImageSimple:image  scaledToSize:CGSizeMake(310, image.size.height/image.size.width*310)];
@@ -193,6 +192,7 @@
 }
 
 - (IBAction)sendMessage:(UIButton *)sender {
+    [MBHUDView dismissCurrentHUD];
     if ([self.titleTextField.text isEqualToString:@""]|| self.titleTextField.text==nil) {
         [MBHUDView hudWithBody:@"主题不能为空" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
         return;

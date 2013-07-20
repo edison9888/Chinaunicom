@@ -104,7 +104,7 @@
         commentLabel.text=commentStr;
         [self.scrollview addSubview:commentLabel];
         [dataArray addObject:commentStr];
-        [self.scrollview setFrame:CGRectMake(0, 44, 320, self.view.frame.size.height-44-44)];
+//        [self.scrollview setFrame:CGRectMake(0, 44, 320, self.view.frame.size.height-44-44)];
         [self.scrollview setContentSize:CGSizeMake(320, commentLabel.frame.origin.y+commentLabel.frame.size.height+10)];
         
         NSString *picPath=[reportDetail objectForKey:@"picPath"];
@@ -133,7 +133,7 @@
             UIImageView *contextImage=[[UIImageView alloc] init];
             UIImage *newImage=[self imageWithImageSimple:image  scaledToSize:CGSizeMake(280, image.size.height/image.size.width*280)];
             [contextImage setImage:image];
-            [contextImage setFrame:CGRectMake(20, self.scrollview.contentSize.height, 280,image.size.height)];
+            [contextImage setFrame:CGRectMake(20, self.scrollview.contentSize.height, 280,newImage.size.height)];
             
             [self.scrollview addSubview:contextImage];
             self.scrollview.contentSize=CGSizeMake(320, self.scrollview.contentSize.height+newImage.size.height+10);
@@ -148,7 +148,7 @@
     [contextImage setImage:newImage];
     [contextImage setFrame:CGRectMake(20, self.scrollview.contentSize.height, 280,newImage.size.height)];
     [self.scrollview addSubview:contextImage];
-    self.scrollview.contentSize=CGSizeMake(320, self.scrollview.contentSize.height+newImage.size.height+10);
+    self.scrollview.contentSize=CGSizeMake(320, self.scrollview.contentSize.height+newImage.size.height+1000);
 
 }
 //改变图片大小
@@ -183,6 +183,7 @@
         [dictionary setObject:self.reportId forKey:@"reportId"];
         [dictionary setObject:tf.text forKey:@"backReason"];
         [HttpRequestHelper asyncGetRequest:backReportUrl parameter:dictionary requestComplete:^(NSString *responseStr) {
+            [MBHUDView dismissCurrentHUD];
             if ([responseStr isEqualToString:@"success"]) {
                 [MBHUDView hudWithBody:@"退回成功" type:MBAlertViewHUDTypeCheckmark hidesAfter:2.0 show:YES];
             }
@@ -220,6 +221,7 @@
 }
 
 - (IBAction)passFile:(UIButton *)sender {
+    [MBHUDView dismissCurrentHUD];
     [MBHUDView hudWithBody:@"请稍等..." type:MBAlertViewHUDTypeDefault hidesAfter:0 show:YES];
     NSMutableDictionary *dictionary=[[NSMutableDictionary alloc]init];
     NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
@@ -234,9 +236,11 @@
         }
         else
         {
+            [MBHUDView dismissCurrentHUD];
             [MBHUDView hudWithBody:@"没有审核权限" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
         }
     } requestFailed:^(NSString *errorMsg) {
+            [MBHUDView dismissCurrentHUD];
             [MBHUDView hudWithBody:@"网络不稳定" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
     }];
 

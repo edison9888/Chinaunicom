@@ -54,7 +54,7 @@
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         NSString *version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
         if (![version isEqualToString:versonString]) {
-            [self.versionButton setEnabled:YES];
+            [self.versionButton setUserInteractionEnabled:YES];
             [self.versionButton setTitle:[NSString stringWithFormat:@"当前版本%@,可升级至%@",version,versonString] forState:UIControlStateNormal];
         }else
         {
@@ -190,6 +190,7 @@
         [dictionary setObject:@"jpg" forKey:@"picType"];
         [dictionary setObject:[[NSString alloc] initWithData:[GTMBase64 encodeData:imageData] encoding:NSUTF8StringEncoding] forKey:@"imageStr"];
         dispatch_async(dispatch_get_main_queue(), ^{
+            [MBHUDView dismissCurrentHUD];
             [MBHUDView hudWithBody:@"上传中..." type:MBAlertViewHUDTypeActivityIndicator hidesAfter:0 show:YES];
             [HttpRequestHelper asyncGetRequest:userPhoto parameter:dictionary requestComplete:^(NSString *responseStr) {
 

@@ -32,17 +32,19 @@
     
     //获取ESS实时3G用户发展总数
      NSMutableDictionary *dict= [NSMutableDictionary dictionary];
-    if ([_titleStr isEqualToString:@"ESS实时趋势图"]) {
+    if ([_titleStr isEqualToString:@"ESS实时数据趋势图"]) {
         [dict setValue:@"currData" forKey:@"timeStr"];
-
+        myTimer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFire:) userInfo:dict repeats:YES];
+        [myTimer fire];
     }else if ([_titleStr isEqualToString:@"ESS月数据趋势图"]){
         [dict setValue:@"monthData" forKey:@"timeStr"];
-       
+       myTimer=[NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(timeFire:) userInfo:dict repeats:NO];
     }else if ([_titleStr isEqualToString:@"ESS年数据趋势图"]){
         [dict setValue:@"yearData" forKey:@"timeStr"];
+        myTimer=[NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(timeFire:) userInfo:dict repeats:NO];
     }
 
-    myTimer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFire:) userInfo:dict repeats:YES];
+    
 //    [myTimer setFireDate:[NSDate distantPast]];
 }
 -(void)timeFire : (NSTimer *)timer
@@ -120,7 +122,7 @@
     [self.xnLabel setAdjustsFontSizeToFitWidth:YES];
     [self.dbLabel setAdjustsFontSizeToFitWidth:YES];
     self.titleLabel.text=_titleStr;
-    if ([_titleStr isEqualToString:@"ESS实时趋势图"]) {
+    if ([_titleStr isEqualToString:@"ESS实时数据趋势图"]) {
    
         self.vpLabel.text=@"3G用户实时开户数量 :";
         
@@ -137,22 +139,26 @@
 }
 - (IBAction)pressThreeGbutton:(UIButton *)sender {
     [self isInTheRect:sender];
+     [myTimer invalidate];
     //获取ESS实时3G用户发展总数
     NSMutableDictionary *dict= [NSMutableDictionary dictionary];
     if ([_titleStr isEqualToString:@"ESS实时趋势图"]) {
         [dict setValue:@"currData" forKey:@"timeStr"];
         self.vpLabel.text=@"3G用户实时开户数量 :";
+       
+        myTimer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFire:) userInfo:dict repeats:YES];
         
     }else if ([_titleStr isEqualToString:@"ESS月数据趋势图"]){
         [dict setValue:@"monthData" forKey:@"timeStr"];
         self.vpLabel.text=@"3G用户月开户数量 :";
+        myTimer=[NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(timeFire:) userInfo:dict repeats:NO];
         
     }else if ([_titleStr isEqualToString:@"ESS年数据趋势图"]){
         [dict setValue:@"yearData" forKey:@"timeStr"];
         self.vpLabel.text=@"3G用户年开户数量 :";
+        myTimer=[NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(timeFire:) userInfo:dict repeats:NO];
     }
-    [myTimer invalidate];
-    myTimer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFire:) userInfo:dict repeats:YES];
+
     
 //    [[requestServiceHelper defaultService]getESStotleNum:dict sucess:^(NSString *str) {
 //        NSString *num=[Utility changeTohu:str];
@@ -176,22 +182,26 @@
 
 - (IBAction)pressIphoneFiveButton:(UIButton *)sender {
     [self isInTheRect:sender];
+    [myTimer invalidate];
     //获取ESS实时Iphone5用户发展总数
     NSMutableDictionary *dict= [NSMutableDictionary dictionary];
-    if ([_titleStr isEqualToString:@"ESS实时趋势图"]) {
+    if ([_titleStr isEqualToString:@"ESS实时数据趋势图"]) {
         [dict setValue:@"currData" forKey:@"timeStr"];
          self.vpLabel.text=@"iPhone5实时开户数量 :";
+        
+        myTimer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFire:) userInfo:dict repeats:YES];
         
     }else if ([_titleStr isEqualToString:@"ESS月数据趋势图"]){
         [dict setValue:@"monthData" forKey:@"timeStr"];
          self.vpLabel.text=@"iPhone5月开户数量 :";
+         myTimer=[NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(timeFire:) userInfo:dict repeats:NO];
         
     }else if ([_titleStr isEqualToString:@"ESS年数据趋势图"]){
         [dict setValue:@"yearData" forKey:@"timeStr"];
          self.vpLabel.text=@"iPhone5年开户数量 :";
+         myTimer=[NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(timeFire:) userInfo:dict repeats:NO];
     }
-    [myTimer invalidate];
-    myTimer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFire:) userInfo:dict repeats:YES];
+
 //    [[requestServiceHelper defaultService]getESSIphoneFiveNum:dict sucess:^(NSString *str) {
 //        NSString *num=[Utility changeTohu:str];
 //        self.numLabel.text=num;
@@ -214,22 +224,25 @@
 
 - (IBAction)pressIphoneFour:(UIButton *)sender {
     [self isInTheRect:sender];
+    [myTimer invalidate];
     //获取ESS实时iphone4s用户发展总数
     NSMutableDictionary *dict= [NSMutableDictionary dictionary];
-    if ([_titleStr isEqualToString:@"ESS实时趋势图"]) {
+    if ([_titleStr isEqualToString:@"ESS实时数据趋势图"]) {
         [dict setValue:@"currData" forKey:@"timeStr"];
         self.vpLabel.text=@"iPhone4S实时开户数量 :";
+        
+        myTimer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFire:) userInfo:dict repeats:YES];
         
     }else if ([_titleStr isEqualToString:@"ESS月数据趋势图"]){
         [dict setValue:@"monthData" forKey:@"timeStr"];
         self.vpLabel.text=@"iPhone4S月开户数量 :";
-        
+        myTimer=[NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(timeFire:) userInfo:dict repeats:NO];
     }else if ([_titleStr isEqualToString:@"ESS年数据趋势图"]){
         [dict setValue:@"yearData" forKey:@"timeStr"];
         self.vpLabel.text=@"iPhone4S年开户数量 :";
+        myTimer=[NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(timeFire:) userInfo:dict repeats:NO];
     }
-    [myTimer invalidate];
-    myTimer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFire:) userInfo:dict repeats:YES];
+
 //    [[requestServiceHelper defaultService]getESSIphoneFsNum:dict sucess:^(NSString *str) {
 //        NSString *num=[Utility changeTohu:str];
 //        self.numLabel.text=num;

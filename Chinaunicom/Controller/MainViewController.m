@@ -91,7 +91,13 @@
 
 }
 -(void) initParmeter{
-    myTableView =[[PullingRefreshTableView alloc] initWithFrame:CGRectMake(0, 44, 320, self.view.frame.size.height-44-44) pullingDelegate:self];
+    if (iPhone5) {
+            myTableView =[[PullingRefreshTableView alloc] initWithFrame:CGRectMake(0, 44, 320, 548-44-44) pullingDelegate:self];
+    }else
+    {
+        myTableView =[[PullingRefreshTableView alloc] initWithFrame:CGRectMake(0, 44, 320, self.view.frame.size.height-44-44) pullingDelegate:self];
+    }
+
     [myTableView setDelegate:self];
     [myTableView setDataSource:self];
     [myTableView setBackgroundView:nil];
@@ -255,8 +261,6 @@
     CGSize titleSize;
     NSString * path=[[dataSource objectAtIndex:indexPath.row]objectForKey:@"picPath"];
     NSArray *imageArray=[path componentsSeparatedByString:@","];
-//    NSLog(@"aaaaa=%@",path);
-//    NSLog(@"tit=%@",titleStr);
     if ([[dataSource objectAtIndex:indexPath.row]objectForKey:@"picPath"]!=nil) {
         
         if ([imageArray count]>1) {
@@ -448,6 +452,7 @@
     [self dismissKeyboard];
     [myTableView launchRefreshing];
 }
+
 -(void)searchBarMoreInfo
 {
     NSMutableDictionary *dir=[[NSMutableDictionary alloc]init];

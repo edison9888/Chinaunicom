@@ -28,7 +28,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
+
     }
     return self;
 }
@@ -36,11 +36,12 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    CGRect rect_screen = [[UIScreen mainScreen]applicationFrame];
+    self.view.frame=rect_screen;
     [self initLayout];
     [self getTheData];
 
@@ -52,7 +53,7 @@
     _topview=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
     [_topview setBackgroundColor:[CommonHelper hexStringToColor:@"#0E5DBF"]];
     _bottomScrollview=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 100, 320, self.view.frame.size.height-44-100)];
-    [_bottomScrollview setBackgroundColor:[UIColor whiteColor]];
+    [_bottomScrollview setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:_topview];
     [self.view addSubview:_bottomScrollview];
     //返回按钮
@@ -85,7 +86,6 @@
     //查看精彩评论
     commentsButton=[UIButton buttonWithType:UIButtonTypeCustom];
     commentsButton.frame=CGRectMake(50, 8, 210, 32);
-    [commentsButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [commentsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [commentsButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
     [commentsButton setTitle:[NSString stringWithFormat:@"查看精彩评论 共0条"] forState:UIControlStateNormal];

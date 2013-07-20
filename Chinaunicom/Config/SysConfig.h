@@ -12,7 +12,11 @@
 
 //定义接口服务器域名
 #ifndef SERVERDOMAIN
+//http://123.125.96.171:8080/mobilePortal/
+//测试
 #define SERVERDOMAIN @"http://123.125.96.171:8080/"
+//正式
+//#define SERVERDOMAIN @"http://123.125.96.185:8088/"
 #endif
 
 //定义接口服务器地址
@@ -144,4 +148,8 @@
 #define GET_PROVINCE_GUESS [SERVERPATH stringByAppendingFormat:@"daping/getProvinceRankingOfMallUser"]
 //ESS合约计划 省份排名（整点数据、月数据、年数据）
 #define GET_PROVINCE_ESS [SERVERPATH stringByAppendingFormat:@"daping/getProvinceRankingOfESS"]
+
+#define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+#define I5Height 548
+
 #endif

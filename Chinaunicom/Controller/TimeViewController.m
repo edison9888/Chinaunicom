@@ -27,6 +27,7 @@
 {
     [super viewWillAppear:animated];
     if ([self.title isEqualToString:@"201"]) {
+        self.titleLabel.text=@"整点地域排名";
         //合约计划实时
         NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObject:@"hourData" forKey:@"timeStr"];
         [[requestServiceHelper defaultService]getProvinceNum:dict url:GET_PROVINCE_ESS sucess:^(NSArray *str) {
@@ -36,6 +37,7 @@
         }];
     }else if ([self.title isEqualToString:@"202"])
     {
+        self.titleLabel.text=@"整点地域排名";
         //ecs实时
         NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObject:@"hourData" forKey:@"timeStr"];
         [[requestServiceHelper defaultService]getProvinceNum:dict url:GET_PROVINCE_ECS sucess:^(NSArray *str) {
@@ -44,6 +46,7 @@
         }];
     }else if ([self.title isEqualToString:@"203"])
     {
+        self.titleLabel.text=@"整点地域排名";
         //商城订单实时
         NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObject:@"hourData" forKey:@"timeStr"];
         [[requestServiceHelper defaultService]getProvinceNum:dict url:GET_PROVINCE_STORE sucess:^(NSArray *str) {
@@ -53,6 +56,7 @@
         
     }else if ([self.title isEqualToString:@"204"])
     {
+        self.titleLabel.text=@"整点地域排名";
         //用户发展实时
         NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObject:@"hourData" forKey:@"timeStr"];
         [[requestServiceHelper defaultService]getProvinceNum:dict url:GET_PROVINCE_GUESS sucess:^(NSArray *str) {
@@ -62,6 +66,7 @@
         
     }else if ([self.title isEqualToString:@"301"])
     {
+        self.titleLabel.text=@"月地域排名";
         //合约计划月数据
         NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObject:@"monthData" forKey:@"timeStr"];
         [[requestServiceHelper defaultService]getProvinceNum:dict url:GET_PROVINCE_ESS sucess:^(NSArray *str) {
@@ -71,6 +76,7 @@
 
     }else if ([self.title isEqualToString:@"302"])
     {
+        self.titleLabel.text=@"月地域排名";
         //ecs月数据
         NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObject:@"monthData" forKey:@"timeStr"];
         [[requestServiceHelper defaultService]getProvinceNum:dict url:GET_PROVINCE_ECS sucess:^(NSArray *str) {
@@ -80,6 +86,7 @@
 
     }else if ([self.title isEqualToString:@"303"])
     {
+        self.titleLabel.text=@"月地域排名";
         //商城订单月数据
         NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObject:@"monthData" forKey:@"timeStr"];
         [[requestServiceHelper defaultService]getProvinceNum:dict url:GET_PROVINCE_STORE sucess:^(NSArray *str) {
@@ -88,6 +95,7 @@
         }];
     }else if ([self.title isEqualToString:@"304"])
     {
+        self.titleLabel.text=@"月地域排名";
         //用户发展月数据
         NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObject:@"monthData" forKey:@"timeStr"];
         [[requestServiceHelper defaultService]getProvinceNum:dict url:GET_PROVINCE_GUESS sucess:^(NSArray *str) {
@@ -96,6 +104,7 @@
         }];
     }else if ([self.title isEqualToString:@"401"])
     {
+        self.titleLabel.text=@"年地域排名";
         //合约计划年数据
         NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObject:@"yearData" forKey:@"timeStr"];
         [[requestServiceHelper defaultService]getProvinceNum:dict url:GET_PROVINCE_ESS sucess:^(NSArray *str) {
@@ -104,6 +113,7 @@
         }];
     }else if ([self.title isEqualToString:@"402"])
     {
+        self.titleLabel.text=@"年地域排名";
         //ecs年数据
         NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObject:@"yearData" forKey:@"timeStr"];
         [[requestServiceHelper defaultService]getProvinceNum:dict url:GET_PROVINCE_ECS sucess:^(NSArray *str) {
@@ -112,6 +122,7 @@
         }];
     }else if ([self.title isEqualToString:@"403"])
     {
+        self.titleLabel.text=@"年地域排名";
         //商城订单年数据
         NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObject:@"yearData" forKey:@"timeStr"];
         [[requestServiceHelper defaultService]getProvinceNum:dict url:GET_PROVINCE_STORE sucess:^(NSArray *str) {
@@ -120,6 +131,7 @@
         }];
     }else if ([self.title isEqualToString:@"404"])
     {
+        self.titleLabel.text=@"年地域排名";
         //用户发展年数据
         NSMutableDictionary *dict=[NSMutableDictionary dictionaryWithObject:@"yearData" forKey:@"timeStr"];
         [[requestServiceHelper defaultService]getProvinceNum:dict url:GET_PROVINCE_GUESS sucess:^(NSArray *str) {
@@ -199,6 +211,7 @@
 }
 - (void)viewDidUnload {
     [self setMyScrollView:nil];
+    [self setTitleLabel:nil];
     [super viewDidUnload];
 }
 @end

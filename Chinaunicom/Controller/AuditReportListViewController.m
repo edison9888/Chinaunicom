@@ -44,13 +44,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    CGRect rect_screen = [[UIScreen mainScreen]applicationFrame];
+    self.view.frame=rect_screen;
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]]];
     [self initLayout];
 }
 -(void)initLayout
 {
     [self.senHeButton setSelected:YES];
-    self.myTableView = [[PullingRefreshTableView alloc]initWithFrame:CGRectMake(0, 88, 320, 460-44-44-44)pullingDelegate:self ];
+    self.myTableView = [[PullingRefreshTableView alloc]initWithFrame:CGRectMake(0, 88, 320, self.view.frame.size.height-44-44-44)pullingDelegate:self ];
     [self.myTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.myTableView setSeparatorColor:[UIColor clearColor]];
     [self.myTableView setBackgroundColor:[UIColor clearColor]];
@@ -161,7 +163,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIImage *image=[UIImage imageNamed:@"qitalei.png"];
+//    UIImage *image=[UIImage imageNamed:@"qitalei.png"];
     NSString *titleStr=[[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"title"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     CGSize titleSize;
     if ([[dataSoure objectAtIndex:indexPath.row]objectForKey:@"picPath"]!=nil) {
@@ -169,17 +171,17 @@
         NSArray *imageArray=[path componentsSeparatedByString:@","];
         if ([imageArray count]>1) {
             titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-            return 10+titleSize.height+5 +image.size.height+5 + 80 + 30;
+            return 10+titleSize.height+5 +30+5 + 60 + 5+20+5;
         }else
         {
             titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(190, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-            return 10+titleSize.height+5 +image.size.height+5 +25;
+            return 10+titleSize.height+5 +30+5 +20+5;
         }
         
     }else
     {
         titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-        return 10+titleSize.height+5 +image.size.height+5 +25;
+        return 10+titleSize.height+5 +30+5 +20+5;
     }
 }
 
@@ -207,12 +209,12 @@
     CGSize titleSize;
     NSString * path=[[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"picPath"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSArray *imageArray=[path componentsSeparatedByString:@","];
-     UIImage *aqImage=[UIImage imageNamed:@"anquanlei.png"];
+//     UIImage *aqImage=[UIImage imageNamed:@"anquanlei.png"];
     if (path!=nil) {
         
         if ([imageArray count]>1) {
             titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-            cell.pinlunLabel.frame=CGRectMake(150, 10+titleSize.height+5+30+5+80+5, 160, 20);
+            cell.pinlunLabel.frame=CGRectMake(150, 10+titleSize.height+5+30+5+60+5, 160, 20);
             
             for (int i=0; i<[imageArray count]; i++) {
                 
@@ -233,13 +235,13 @@
             NSString *content=[[NSString alloc]initWithData:data encoding:1];
             [cell.tupianImageView setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:content ]]];
            
-            cell.pinlunLabel.frame=CGRectMake(150, 10+titleSize.height+5+aqImage.size.height+5, 160, 20);
+            cell.pinlunLabel.frame=CGRectMake(150, 10+titleSize.height+5+30+5, 160, 20);
         }
         
     }else
     {
         titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-        cell.pinlunLabel.frame=CGRectMake(150, 10+titleSize.height+5+aqImage.size.height+5, 160, 20);
+        cell.pinlunLabel.frame=CGRectMake(150, 10+titleSize.height+5+30+5, 160, 20);
         cell.tupianImageView.frame=CGRectMake(0, 0, 0, 0);
         cell.tupianImageView.image=nil;
     }
@@ -261,21 +263,21 @@
         tupianImage=[UIImage imageNamed:@"qitalei.png"];
     }
     cell.qitaImageView.image=tupianImage;
-    cell.qitaImageView.frame=CGRectMake(15, 10+cell.titleLabel.frame.size.height+5, tupianImage.size.width, tupianImage.size.height);
+    cell.qitaImageView.frame=CGRectMake(15, 10+cell.titleLabel.frame.size.height+5, 30, 30);
     
     NSString *commentNum=[[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"published"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     cell.pinlunLabel.text=commentNum;
     
     if ([[dataSoure objectAtIndex:indexPath.row]objectForKey:@"picPath"]!=nil) {
         if ([imageArray count]>1) {
-            cell.bgImageView.frame=CGRectMake(3, 3, 320-6, cell.pinlunLabel.frame.origin.y+cell.pinlunLabel.frame.size.height+5);
+            cell.bgImageView.frame=CGRectMake(3, 0, 320-6, cell.pinlunLabel.frame.origin.y+cell.pinlunLabel.frame.size.height+5);
         }else
         {
-            cell.bgImageView.frame=CGRectMake(3, 3, 320-6, cell.pinlunLabel.frame.origin.y+cell.pinlunLabel.frame.size.height+5);
+            cell.bgImageView.frame=CGRectMake(3, 0, 320-6, cell.pinlunLabel.frame.origin.y+cell.pinlunLabel.frame.size.height+5);
         }
         
     }else{
-        cell.bgImageView.frame=CGRectMake(3, 3, 320-6, cell.pinlunLabel.frame.origin.y+cell.pinlunLabel.frame.size.height+5);
+        cell.bgImageView.frame=CGRectMake(3, 0, 320-6, cell.pinlunLabel.frame.origin.y+cell.pinlunLabel.frame.size.height+5);
     }
 }
 
@@ -308,6 +310,7 @@
     
 }
 - (IBAction)pressPassButton:(UIButton *)sender {
+    [MBHUDView dismissCurrentHUD];
     [MBHUDView hudWithBody:@"加载中..." type:MBAlertViewHUDTypeDefault hidesAfter:0 show:YES];
     [self.senHeButton setSelected:NO];
     [sender setSelected:YES];
@@ -317,6 +320,7 @@
 }
 
 - (IBAction)pressSenHeButton:(UIButton *)sender {
+    [MBHUDView dismissCurrentHUD];
     [MBHUDView hudWithBody:@"加载中..." type:MBAlertViewHUDTypeDefault hidesAfter:0 show:YES];
     [self.passButton setSelected:NO];
     [sender setSelected:YES];

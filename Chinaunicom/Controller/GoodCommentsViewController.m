@@ -325,9 +325,11 @@
     [dictionary setObject:[[NSString alloc] initWithData:[GTMBase64 encodeData:soundData] encoding:NSUTF8StringEncoding] forKey:@"audioStr"];
 
     [HttpRequestHelper asyncGetRequest:PublishComment parameter:dictionary requestComplete:^(NSString *responseStr) {
+        [MBHUDView dismissCurrentHUD];
         [MBHUDView hudWithBody:@"发表成功" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
         [_tableview launchRefreshing];
     } requestFailed:^(NSString *errorMsg) {
+        [MBHUDView dismissCurrentHUD];
         [MBHUDView hudWithBody:@"发表失败" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
     }];
 }

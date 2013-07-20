@@ -13,6 +13,8 @@
 @interface YearDataViewController ()
 {
     NSMutableArray *yearDataArray;
+    NSArray *btArray;
+    NSMutableArray *monthAllArray;
 }
 @end
 
@@ -24,12 +26,15 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+
     }
     return self;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    btArray=[[NSArray alloc]initWithObjects:self.b1,self.b2,self.b3,self.b4,self.b5,self.b6,self.b7,self.b8,self.b9,self.b10,self.b11,self.b12, nil];
+    monthAllArray=[[NSMutableArray alloc]init];
     //年数据
     NSMutableDictionary *yearDict=[NSMutableDictionary dictionary];
     NSString *url=@"";
@@ -49,30 +54,45 @@
     [[requestServiceHelper defaultService]getEssYearData:yearDict url:url  sucess:^(NSDictionary *nsdict) {
        
         NSArray *array=[self sortByKeys:nsdict];
-        int x = [array count]-6;
-        NSMutableArray *muArray=[NSMutableArray array];
-        for (int i=x; i<[array count]; i++) {
-           [muArray addObject:[array objectAtIndex:i]];
-            if (i==x) {
-                NSString *string=[array objectAtIndex:i];
+//        int x = [array count]-6;
+//        NSMutableArray *muArray=[NSMutableArray array];
+        for (int i=0; i<[array count]; i++) {
+//           [muArray addObject:[array objectAtIndex:i]];
+            NSString *string=[array objectAtIndex:i];
+            UILabel *label=[btArray objectAtIndex:i];
+            if (string.length==6) {
+                NSString *monthString=[string substringWithRange:NSMakeRange(4, 2)];
+                label.text=[NSString stringWithFormat:@"%d月",[monthString intValue]];
+                [monthAllArray addObject:monthString];
+            }
+            
+            if (i==0) {
                 NSString *value=[nsdict objectForKey:string];
                 NSString *changeValue=[Utility changeToyuan:value];
                 if (string.length==6) {
-                    NSString *yearString=[string substringWithRange:NSMakeRange(0, 4)];
-                    self.yearLabel.text=[NSString stringWithFormat:@"%@年数据趋势图",yearString];
+//                    NSString *yearString=[string substringWithRange:NSMakeRange(0, 4)];
+//                    self.yearLabel.text=[NSString stringWithFormat:@"%@年数据趋势图",yearString];
                     NSString *monthString=[string substringWithRange:NSMakeRange(4, 2)];
                     self.monthNumLabel.text=[NSString stringWithFormat:@"%d月 : %@",[monthString intValue],changeValue];
                 }
             }
+            if (i==[array count]-1) {
+                NSString *string=[array objectAtIndex:i];
+                if (string.length==6) {
+                    NSString *yearString=[string substringWithRange:NSMakeRange(0, 4)];
+                    self.yearLabel.text=[NSString stringWithFormat:@"%@年数据趋势图",yearString];
+                }
+            }
         }
         yearDataArray = [[NSMutableArray alloc]init];
-        for (int i=0; i<[muArray count]; i++) {
-            NSString *value= [nsdict objectForKey:[muArray objectAtIndex:i]];
+        for (int i=0; i<[array count]; i++) {
+            NSString *value= [nsdict objectForKey:[array objectAtIndex:i]];
             [yearDataArray addObject:value];
         }
         NSMutableArray *yearMuArray=[Utility calculatePercentage:yearDataArray height:200];
         [self drawView:yearMuArray];
-        NSString *at=[Utility changeToyuan:[muArray objectAtIndex:0]];
+        NSString *totalNum=[NSString stringWithFormat:@"%d",[self yearTotal:yearDataArray]];
+        NSString *at=[Utility changeToyuan:totalNum];
         self.yearNumLabel.text=at;
         
     } falid:^(NSString *errorMsg) {
@@ -138,6 +158,18 @@
     [self setYearNameLable:nil];
     [self setBgImageView:nil];
     [self setYearPointImage:nil];
+    [self setB1:nil];
+    [self setB2:nil];
+    [self setB3:nil];
+    [self setB4:nil];
+    [self setB5:nil];
+    [self setB6:nil];
+    [self setB7:nil];
+    [self setB8:nil];
+    [self setB9:nil];
+    [self setB10:nil];
+    [self setB11:nil];
+    [self setB12:nil];
     [super viewDidUnload];
 }
 -(void)drawView : (NSMutableArray *)array
@@ -148,7 +180,7 @@
             float y=[[array objectAtIndex:i]floatValue];
             //7*(i*3.77 +1)
             //i*(22+5)+7
-            UIView *newView=[[UIView alloc]initWithFrame:CGRectMake(7*(i*3.8 +1), 191-y, image.size.width-8, y)];
+            UIView *newView=[[UIView alloc]initWithFrame:CGRectMake(7*(i*3.77 +1), 191-y, image.size.width-8, y)];
             [newView setBackgroundColor:[UIColor colorWithPatternImage:image]];
             newView.transform = CGAffineTransformRotate(newView.transform, 3.14);
             [self.bgImageView addSubview:newView];
@@ -183,14 +215,9 @@
 #pragma YearPointImageViewDelegate
 -(void)showTheData:(int)num
 {
-    if (num>[yearDataArray count]) {
-        self.monthNumLabel.text=[NSString stringWithFormat:@"%d月 : 0元",num];
-    }else
-    {
-        NSString *string=[Utility changeToyuan:[yearDataArray objectAtIndex:num-1]];
-        self.monthNumLabel.text=[NSString stringWithFormat:@"%d月 : %@",num,string];
-    }
-
+    NSString *monthNum=[monthAllArray objectAtIndex:num-1];
+    NSString *string=[Utility changeToyuan:[yearDataArray objectAtIndex:num-1]];
+    self.monthNumLabel.text=[NSString stringWithFormat:@"%d月 : %@",[monthNum intValue],string];
 }
     
 @end

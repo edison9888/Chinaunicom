@@ -224,6 +224,7 @@
 		DD8AA94517868B61005BC4F3 /* toolbarbg~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = DD8AA94117868B58005BC4F3 /* toolbarbg~iphone.png */; };
 		DD92562C174DE01200A389A3 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD92562B174DE01200A389A3 /* AudioToolbox.framework */; };
 		DD92562E174DE07A00A389A3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD92562D174DE07A00A389A3 /* AVFoundation.framework */; };
+		DD9902BA179664BA006D1C48 /* juxing_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DD9902B9179664BA006D1C48 /* juxing_2@2x.png */; };
 		DD99D4C81745D10000488A70 /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = DD99D4C71745D10000488A70 /* Report.m */; };
 		DD9B87551764384100C979D3 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = DD9B87541764325100C979D3 /* Utility.m */; };
 		DDA225AC176EA759007659AA /* AudiReportDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = DDA225AA176EA758007659AA /* AudiReportDetail.m */; };
@@ -605,6 +606,7 @@
 		DD8AA94117868B58005BC4F3 /* toolbarbg~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbarbg~iphone.png"; sourceTree = "<group>"; };
 		DD92562B174DE01200A389A3 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DD92562D174DE07A00A389A3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		DD9902B9179664BA006D1C48 /* juxing_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "juxing_2@2x.png"; sourceTree = "<group>"; };
 		DD99D4C61745D10000488A70 /* Report.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Report.h; sourceTree = "<group>"; };
 		DD99D4C71745D10000488A70 /* Report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Report.m; sourceTree = "<group>"; };
 		DD9B87531764325100C979D3 /* Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
@@ -1171,6 +1173,7 @@
 		DD6E42C6177961B800B43DB7 /* new_resource */ = {
 			isa = PBXGroup;
 			children = (
+				DD9902B9179664BA006D1C48 /* juxing_2@2x.png */,
 				DDFCF3F11793D7950033B5CF /* main_juxing@2x.png */,
 				DDD61995178BD9820086EED0 /* 441@2x.png */,
 				DDD6199A178BD9D30086EED0 /* 442@2x.png */,
@@ -1341,10 +1344,10 @@
 			children = (
 				43784C5B17448DD500ECCCA7 /* AuditReportListViewController.h */,
 				43784C5C17448DD500ECCCA7 /* AuditReportListViewController.m */,
-				DDA86C93178D4A4E001ED157 /* ReportTypeViewController.h */,
-				DDA86C94178D4A4F001ED157 /* ReportTypeViewController.m */,
 				DDA225A9176EA758007659AA /* AudiReportDetail.h */,
 				DDA225AA176EA758007659AA /* AudiReportDetail.m */,
+				DDA86C93178D4A4E001ED157 /* ReportTypeViewController.h */,
+				DDA86C94178D4A4F001ED157 /* ReportTypeViewController.m */,
 				66C9802517898ADB00A45CE7 /* PubliceMessageViewConttoller.h */,
 				66C9802617898ADB00A45CE7 /* PubliceMessageViewConttoller.m */,
 				DDA86C8E178D3C5B001ED157 /* EditViewController.h */,
@@ -1668,6 +1671,7 @@
 				DDF43D6F178F946200F6127C /* x_label@2x.png in Resources */,
 				DDFCF3F21793D7950033B5CF /* main_juxing@2x.png in Resources */,
 				DDFCF3F41793DA7E0033B5CF /* deleteBt@2x.png in Resources */,
+				DD9902BA179664BA006D1C48 /* juxing_2@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1800,8 +1804,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Chenlong Zhou (JCE92PF6Q2)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chenlong Zhou (JCE92PF6Q2)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chenlong Zhou (D6J9TYP22S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chenlong Zhou (D6J9TYP22S)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1816,8 +1820,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
+				PROVISIONING_PROFILE = "6193D714-98EA-41A0-BC06-C24D38050D9E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6193D714-98EA-41A0-BC06-C24D38050D9E";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1834,8 +1838,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Chenlong Zhou (JCE92PF6Q2)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chenlong Zhou (JCE92PF6Q2)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chenlong Zhou (D6J9TYP22S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chenlong Zhou (D6J9TYP22S)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1844,8 +1848,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
+				PROVISIONING_PROFILE = "6193D714-98EA-41A0-BC06-C24D38050D9E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6193D714-98EA-41A0-BC06-C24D38050D9E";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1854,8 +1858,8 @@
 		77292B9817354936004988E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Chenlong Zhou (JCE92PF6Q2)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chenlong Zhou (JCE92PF6Q2)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chenlong Zhou (D6J9TYP22S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chenlong Zhou (D6J9TYP22S)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1872,8 +1876,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-Objc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
+				PROVISIONING_PROFILE = "6193D714-98EA-41A0-BC06-C24D38050D9E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6193D714-98EA-41A0-BC06-C24D38050D9E";
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1882,8 +1886,8 @@
 		77292B9917354936004988E0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Chenlong Zhou (JCE92PF6Q2)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chenlong Zhou (JCE92PF6Q2)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chenlong Zhou (D6J9TYP22S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chenlong Zhou (D6J9TYP22S)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1900,8 +1904,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-Objc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
+				PROVISIONING_PROFILE = "6193D714-98EA-41A0-BC06-C24D38050D9E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6193D714-98EA-41A0-BC06-C24D38050D9E";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
