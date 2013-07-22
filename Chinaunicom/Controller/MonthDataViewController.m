@@ -34,7 +34,7 @@
 //获取月数据
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-
+ float height=[[UIScreen mainScreen]applicationFrame].size.height;
     NSString *url=@"";
     if ([_str isEqualToString:@"ESS合约计划月数据趋势图"])
     {
@@ -71,7 +71,7 @@
         line.colorArray=[NSArray arrayWithObjects:lineColor,mianColor, nil];
         [self.bgImageVIew addSubview:line];
         [self.bgImageVIew sendSubviewToBack:line];
-        self.anotherBlue.frame=CGRectMake(5, 378-[[muArray objectAtIndex:0] floatValue], self.anotherBlue.frame.size.width, self.anotherBlue.frame.size.height);
+        self.anotherBlue.frame=CGRectMake(5, height-82-[[muArray objectAtIndex:0] floatValue], self.anotherBlue.frame.size.width, self.anotherBlue.frame.size.height);
         self.anotherBlue.hidden=NO;
     } falid:^(NSString *errorMsg) {
     }];
@@ -125,7 +125,7 @@
         line.colorArray=[NSArray arrayWithObjects:lineColor,mianColor, nil];
         [self.bgImageVIew addSubview:line];
         [self.bgImageVIew bringSubviewToFront:line];
-        self.bluedian.frame=CGRectMake(5, 378-[[muArray objectAtIndex:0] floatValue], self.bluedian.frame.size.width, self.bluedian.frame.size.height);
+        self.bluedian.frame=CGRectMake(5, height-82-[[muArray objectAtIndex:0] floatValue], self.bluedian.frame.size.width, self.bluedian.frame.size.height);
         self.bluedian.hidden=NO;
     } falid:^(NSString *errorMsg) {
     }];
@@ -231,6 +231,7 @@
 }
 -(void)showTheData:(float)num num:(int)objcNum
 {
+    float height=[[UIScreen mainScreen]applicationFrame].size.height;
     if (objcNum>[shangMonthArray count]-1) {
         
         self.anotherBlue.hidden=YES;
@@ -245,7 +246,7 @@
             NSString *changeMoney=[Utility changeToyuan:money];
             self.sMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
         }
-        self.anotherBlue.frame=CGRectMake(num-6, 378-[[shangMonthArray objectAtIndex:objcNum] floatValue], self.bluedian.frame.size.width, self.bluedian.frame.size.height);
+        self.anotherBlue.frame=CGRectMake(num-6, height-82-[[shangMonthArray objectAtIndex:objcNum] floatValue], self.bluedian.frame.size.width, self.bluedian.frame.size.height);
         self.anotherBlue.hidden=NO;
     }
     if (objcNum>[thisMonthArray count]-1) {
@@ -263,7 +264,7 @@
             NSString *changeMoney=[Utility changeToyuan:money];
             self.bMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
         }
-        self.bluedian.frame=CGRectMake(num-6, 378-[[thisMonthArray objectAtIndex:objcNum] floatValue], self.bluedian.frame.size.width, self.bluedian.frame.size.height);
+        self.bluedian.frame=CGRectMake(num-6, height-82-[[thisMonthArray objectAtIndex:objcNum] floatValue], self.bluedian.frame.size.width, self.bluedian.frame.size.height);
         self.bluedian.hidden=NO;
     }
 }

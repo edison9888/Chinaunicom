@@ -204,9 +204,8 @@
             [self.myScrollView addSubview:rightImageView];
             [self.myScrollView addSubview:label];
         }
-
     }
-    float height=[muArray count]*(leftImage.size.height+5);
+    float height=[muArray count]*(rightImage.size.height+5);
     [self.myScrollView setContentSize:CGSizeMake(320, height)];
 }
 - (void)viewDidUnload {

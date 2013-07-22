@@ -353,23 +353,24 @@
 #pragma PointImageviewDelegate
 -(void)showTheData:(NSString *)key x:(float)hx num:(int)num
 {
+    float height=[[UIScreen mainScreen]applicationFrame].size.height;
     NSString *value=nil;
     if (t==0) {
        value= [_todayDict objectForKey:key];
         if (value !=nil) {
-            self.blueDian.frame=CGRectMake(hx-6, 380-[[_todayArray objectAtIndex:num]floatValue]-4, self.blueDian.frame.size.width, self.blueDian.frame.size.height);
+            self.blueDian.frame=CGRectMake(hx-6, height-84-[[_todayArray objectAtIndex:num]floatValue], self.blueDian.frame.size.width, self.blueDian.frame.size.height);
         }
 
     }else if (t==1){
         value= [_yesterdayDict objectForKey:key];
         if (value!=nil) {
-            self.blueDian.frame=CGRectMake(hx-6, 380-[[_yesterdayArray objectAtIndex:num]floatValue]-4, self.blueDian.frame.size.width, self.blueDian.frame.size.height);
+            self.blueDian.frame=CGRectMake(hx-6, height-84-[[_yesterdayArray objectAtIndex:num]floatValue], self.blueDian.frame.size.width, self.blueDian.frame.size.height);
         }
 
     }else if (t==2){
        value= [_avgDict objectForKey:key];
         if (value !=nil) {
-                    self.blueDian.frame=CGRectMake(hx-6, 380-[[_avgArray objectAtIndex:num]floatValue]-4, self.blueDian.frame.size.width, self.blueDian.frame.size.height);
+                    self.blueDian.frame=CGRectMake(hx-6, height-84-[[_avgArray objectAtIndex:num]floatValue], self.blueDian.frame.size.width, self.blueDian.frame.size.height);
         }
     }
     
@@ -383,8 +384,6 @@
         self.blueDian.hidden=NO;
     }
     string=key;
-    
-    
     henx=hx;
     dijige=num;
 }
