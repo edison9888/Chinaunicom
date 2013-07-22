@@ -1859,35 +1859,7 @@
 		77292B9817354936004988E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Chenlong Zhou (JCE92PF6Q2)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chenlong Zhou (JCE92PF6Q2)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Chinaunicom/Chinaunicom-Prefix.pch";
-				INFOPLIST_FILE = "Chinaunicom/Chinaunicom-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Chinaunicom/Utils/speech/lib\"",
-					"\"$(SRCROOT)/Chinaunicom/Utils/speech\"",
-				);
-				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-Objc";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
-				SDKROOT = iphoneos;
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		77292B9917354936004988E0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Chenlong Zhou (JCE92PF6Q2)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chenlong Zhou (D6J9TYP22S)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chenlong Zhou (D6J9TYP22S)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1905,7 +1877,35 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-Objc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
+				PROVISIONING_PROFILE = "6193D714-98EA-41A0-BC06-C24D38050D9E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6193D714-98EA-41A0-BC06-C24D38050D9E";
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		77292B9917354936004988E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chenlong Zhou (D6J9TYP22S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chenlong Zhou (D6J9TYP22S)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Chinaunicom/Chinaunicom-Prefix.pch";
+				INFOPLIST_FILE = "Chinaunicom/Chinaunicom-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Chinaunicom/Utils/speech/lib\"",
+					"\"$(SRCROOT)/Chinaunicom/Utils/speech\"",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-Objc";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6193D714-98EA-41A0-BC06-C24D38050D9E";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6193D714-98EA-41A0-BC06-C24D38050D9E";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
