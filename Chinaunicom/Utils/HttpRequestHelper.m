@@ -75,8 +75,9 @@ typedef enum {
 //    [request addRequestHeader:@"Content-Type" value:@"application/json;charset=utf-8"];
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil];
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    [request appendPostData:[jsonString  dataUsingEncoding:NSUTF8StringEncoding]];
+//    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//    [request appendPostData:[jsonString  dataUsingEncoding:NSUTF8StringEncoding]];
+    [request appendPostData:jsonData];
     [request buildPostBody];
     
     //请求成功
