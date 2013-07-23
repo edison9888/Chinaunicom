@@ -905,6 +905,13 @@ zwllh123
 
 18834
 
+UIImage+Compress.h
+file
+0
+
+
+add
+
 LoginViewController.h
 file
 
@@ -1081,6 +1088,13 @@ zwllh123
 
 
 8016
+
+UIImage+Compress.m
+file
+0
+
+
+add
 
 ESSTimeViewController.m
 file

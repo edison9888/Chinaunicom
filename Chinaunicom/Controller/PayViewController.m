@@ -313,43 +313,23 @@
         }
         [muArray addObject:str];
     }
-    float maxNum=[self maxNum:muArray];
-    float minNum=[self minNum:muArray];
-    if (minNum==0) {
-        minNum=1;
-    }
-    float bei=maxNum/minNum;
-    
-    NSMutableArray *array=[NSMutableArray arrayWithCapacity:[muArray count]];
-    for (int i=0; i<[muArray count]; i++) {
-        float data = [[muArray objectAtIndex:i]floatValue];
-        float bi =data/bei*180;
-        [array addObject:[NSString stringWithFormat:@"%f",bi]];
-    }
+    NSMutableArray *array=[Utility calculatePercentage:muArray height:200];
+//    float maxNum=[self maxNum:muArray];
+//    float minNum=[self minNum:muArray];
+//    if (minNum==0) {
+//        minNum=1;
+//    }
+//    float bei=maxNum/minNum;
+//    
+//    NSMutableArray *array=[NSMutableArray arrayWithCapacity:[muArray count]];
+//    for (int i=0; i<[muArray count]; i++) {
+//        float data = [[muArray objectAtIndex:i]floatValue];
+//        float bi =data/bei*180;
+//        [array addObject:[NSString stringWithFormat:@"%f",bi]];
+//    }
     return array;
 }
-//找最大值
--(float )maxNum : (NSMutableArray *)array
-{
-    int big=[[array objectAtIndex:0] floatValue];
-    for (int i=0; i<[array count]; i++) {
-        if (big<[[array objectAtIndex:i] floatValue]) {
-            big=[[array objectAtIndex:i]floatValue];
-        }
-    }
-    return big;
-}
-//找最小值
--(float)minNum:(NSMutableArray *)array
-{
-    float small=[[array objectAtIndex:0] floatValue];
-    for (int i=0; i<[array count]; i++) {
-        if ([[array objectAtIndex:i] floatValue]<small) {
-            small=[[array objectAtIndex:i]floatValue];
-        }
-    }
-    return small;
-}
+
 #pragma PointImageviewDelegate
 -(void)showTheData:(NSString *)key x:(float)hx num:(int)num
 {

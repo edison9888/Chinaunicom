@@ -91,7 +91,7 @@
         }
         NSMutableArray *yearMuArray=[Utility calculatePercentage:yearDataArray height:200];
         [self drawView:yearMuArray];
-        NSString *totalNum=[NSString stringWithFormat:@"%d",[self yearTotal:yearDataArray]];
+        NSString *totalNum=[NSString stringWithFormat:@"%lld",[self yearTotal:yearDataArray]];
         NSString *at=[Utility changeToyuan:totalNum];
         self.yearNumLabel.text=at;
         
@@ -204,9 +204,9 @@
     }
     return array;
 }
--(int)yearTotal : (NSArray *)array
+-(long long int)yearTotal : (NSArray *)array
 {
-    int sum=0;
+    long long int sum=0;
     for (int i=0; i<[array count]; i++) {
         sum +=[[array objectAtIndex:i] intValue];
     }

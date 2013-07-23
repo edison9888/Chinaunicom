@@ -285,6 +285,7 @@
             cell.tupianImageView.frame=CGRectMake(220, 7, 80, 60);
 //            NSData *data = [picPath dataUsingEncoding: NSUTF8StringEncoding];
 //            NSString *content=[[NSString alloc]initWithData:data encoding:1];
+//            [cell.tupianImageView setImageWithURL:[NSURL URLWithString:@"http://www.apple.com.cn/home/images/promo_designed.jpg"]];
             [cell.tupianImageView setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:picPath]]];
         }
         
