@@ -59,8 +59,27 @@
             NSString *monthString= [string substringWithRange:NSMakeRange(4, 2)];
             NSString *dateString= [string substringWithRange:NSMakeRange(6, 2)];
             NSString *money=[nsdict objectForKey:[array objectAtIndex:0]];
-            NSString *changeMoney=[Utility changeToyuan:money];
-            self.sMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            if ([_str isEqualToString:@"ESS合约计划月数据趋势图"])
+            {
+                NSString *changeMoney=[Utility changeTohu:money];
+                self.sMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            }
+            else if ([_str isEqualToString:@"ECS商城订单月数据趋势图"])
+            {
+                NSString *changeMoney=[Utility changeTobi:money];
+                self.sMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            }
+            else if ([_str isEqualToString:@"ECS用户发展月数据趋势图"])
+            {
+                NSString *changeMoney=[Utility changeTohu:money];
+                self.sMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            }
+            else
+            {
+                NSString *changeMoney=[Utility changeToyuan:money];
+                self.sMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            }
+
         }
         NSMutableArray *muArray=[self ratio:array dict:nsdict];
         shangMonthArray=muArray;
@@ -83,19 +102,39 @@
         NSArray *sortarray=[self sortByKeys:nsdict];
         NSString *str=[Utility getTodayDate];
         NSArray *array=[sortarray subarrayWithRange:NSMakeRange(0, [str intValue]-1)];
-        int total=0;
+        long long int total=0;
         for (int i=0; i<[array count]; i++) {
-            int moneyNum=[[nsdict objectForKey:[array objectAtIndex:i]] intValue];
+            long long int moneyNum=[[nsdict objectForKey:[array objectAtIndex:i]] intValue];
             total=total+moneyNum;
         }
-        NSString *totalMoney=[Utility changeToyuan:[NSString stringWithFormat:@"%d",total]];
-        self.monthNumLabel.text=[NSString stringWithFormat:@"%@",totalMoney];
+        if ([_str isEqualToString:@"ESS合约计划月数据趋势图"])
+        {
+            NSString *totalMoney=[Utility changeTohu:[NSString stringWithFormat:@"%lld",total]];
+            self.monthNumLabel.text=[NSString stringWithFormat:@"%@",totalMoney];
+        }
+        else if ([_str isEqualToString:@"ECS商城订单月数据趋势图"])
+        {
+            NSString *totalMoney=[Utility changeTobi:[NSString stringWithFormat:@"%lld",total]];
+            self.monthNumLabel.text=[NSString stringWithFormat:@"%@",totalMoney];
+        }
+        else if ([_str isEqualToString:@"ECS用户发展月数据趋势图"])
+        {
+            NSString *totalMoney=[Utility changeTohu:[NSString stringWithFormat:@"%lld",total]];
+            self.monthNumLabel.text=[NSString stringWithFormat:@"%@",totalMoney];
+        }
+        else
+        {
+            NSString *totalMoney=[Utility changeToyuan:[NSString stringWithFormat:@"%lld",total]];
+            self.monthNumLabel.text=[NSString stringWithFormat:@"%@",totalMoney];
+        }
+
+        
         NSString *string=[array objectAtIndex:0];
         if (string.length==8) {
            NSString *monthString= [string substringWithRange:NSMakeRange(4, 2)];
            NSString *dateString= [string substringWithRange:NSMakeRange(6, 2)];
             NSString *money=[nsdict objectForKey:string];
-            NSString *changeMoney=[Utility changeToyuan:money];
+            
             if ([_str isEqualToString:@"ECS交易额月数据趋势图"])
             {
                 self.monthLabel.text=[NSString stringWithFormat:@"ECS交易额%d月数据总数",[monthString intValue]];
@@ -112,7 +151,27 @@
             {
                 self.monthLabel.text=[NSString stringWithFormat:@"ECS用户发展%d月数据总数",[monthString intValue]];
             }
-            self.bMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            if ([_str isEqualToString:@"ESS合约计划月数据趋势图"])
+            {
+                NSString *changeMoney=[Utility changeTohu:money];
+                self.bMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            }
+            else if ([_str isEqualToString:@"ECS商城订单月数据趋势图"])
+            {
+                NSString *changeMoney=[Utility changeTobi:money];
+                self.bMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            }
+            else if ([_str isEqualToString:@"ECS用户发展月数据趋势图"])
+            {
+                NSString *changeMoney=[Utility changeTohu:money];
+                self.bMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            }
+            else
+            {
+                NSString *changeMoney=[Utility changeToyuan:money];
+                self.bMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            }
+            
             //本月总数
         }
         NSMutableArray *muArray=[self ratio:array dict:nsdict];
@@ -223,8 +282,27 @@
             NSString *monthString= [string substringWithRange:NSMakeRange(4, 2)];
             NSString *dateString= [string substringWithRange:NSMakeRange(6, 2)];
             NSString *money=[shangMonthDict objectForKey:string];
-            NSString *changeMoney=[Utility changeToyuan:money];
-            self.sMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            
+            if ([_str isEqualToString:@"ESS合约计划月数据趋势图"])
+            {
+                NSString *changeMoney=[Utility changeTohu:money];
+                self.sMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            }
+            else if ([_str isEqualToString:@"ECS商城订单月数据趋势图"])
+            {
+                NSString *changeMoney=[Utility changeTobi:money];
+                self.sMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            }
+            else if ([_str isEqualToString:@"ECS用户发展月数据趋势图"])
+            {
+                NSString *changeMoney=[Utility changeTohu:money];
+                self.sMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            }
+            else
+            {
+                NSString *changeMoney=[Utility changeToyuan:money];
+                self.sMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            }
         }
         self.anotherBlue.frame=CGRectMake(num-6, height-82-[[shangMonthArray objectAtIndex:objcNum] floatValue], self.bluedian.frame.size.width, self.bluedian.frame.size.height);
         self.anotherBlue.hidden=NO;
@@ -241,8 +319,26 @@
             NSString *monthString= [string substringWithRange:NSMakeRange(4, 2)];
             NSString *dateString= [string substringWithRange:NSMakeRange(6, 2)];
             NSString *money=[thisMonthDict objectForKey:string];
-            NSString *changeMoney=[Utility changeToyuan:money];
-            self.bMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            if ([_str isEqualToString:@"ESS合约计划月数据趋势图"])
+            {
+                NSString *changeMoney=[Utility changeTohu:money];
+                self.bMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            }
+            else if ([_str isEqualToString:@"ECS商城订单月数据趋势图"])
+            {
+                NSString *changeMoney=[Utility changeTobi:money];
+                self.sMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            }
+            else if ([_str isEqualToString:@"ECS用户发展月数据趋势图"])
+            {
+                NSString *changeMoney=[Utility changeTohu:money];
+                self.bMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            }
+            else
+            {
+                NSString *changeMoney=[Utility changeToyuan:money];
+                self.bMonthLabel.text=[NSString stringWithFormat:@"%d月%d日 : %@",[monthString intValue],[dateString intValue],changeMoney];
+            }
         }
         self.bluedian.frame=CGRectMake(num-6, height-82-[[thisMonthArray objectAtIndex:objcNum] floatValue], self.bluedian.frame.size.width, self.bluedian.frame.size.height);
         self.bluedian.hidden=NO;

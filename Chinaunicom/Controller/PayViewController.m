@@ -51,8 +51,27 @@
     [[requestServiceHelper defaultService]getEssHourTrend:dict ulr:url sucess:^(NSDictionary *nsdict) {
         if (isPress) {
             if ([nsdict count]>0) {
-                NSString *num=[Utility changeToyuan:[nsdict objectForKey:@"00"]];
-                self.numLabel.text=[NSString stringWithFormat:@"00点 : %@",num];
+                if ([_str isEqualToString:@"ESS合约计划整点趋势图"])
+                {
+                    NSString *num=[Utility changeTohu:[nsdict objectForKey:@"00"]];
+                    self.numLabel.text=[NSString stringWithFormat:@"00点 : %@",num];
+                }
+                else if ([_str isEqualToString:@"ECS商城订单整点趋势图"])
+                {
+                    NSString *num=[Utility changeTobi:[nsdict objectForKey:@"00"]];
+                    self.numLabel.text=[NSString stringWithFormat:@"00点 : %@",num];
+                }
+                else if ([_str isEqualToString:@"ECS用户发展整点趋势图"])
+                {
+                    NSString *num=[Utility changeTohu:[nsdict objectForKey:@"00"]];
+                    self.numLabel.text=[NSString stringWithFormat:@"00点 : %@",num];
+                }
+                else
+                {
+                    NSString *num=[Utility changeToyuan:[nsdict objectForKey:@"00"]];
+                    self.numLabel.text=[NSString stringWithFormat:@"00点 : %@",num];
+                }
+
             }
         }
         _todayDict = [NSDictionary dictionaryWithDictionary:nsdict];
@@ -355,12 +374,50 @@
     }
     
     if (value==nil) {
-        [self.numLabel setText:[NSString stringWithFormat:@"%@点 : 0元",key]];
+        if ([_str isEqualToString:@"ESS合约计划整点趋势图"])
+        {
+            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : 0户",key]];
+            
+        }
+        else if ([_str isEqualToString:@"ECS商城订单整点趋势图"])
+        {
+            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : 0笔",key]];
+        }
+        else if ([_str isEqualToString:@"ECS用户发展整点趋势图"])
+        {
+            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : 0户",key]];
+        }
+        else
+        {
+            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : 0元",key]];
+        }
+        
         self.blueDian.hidden=YES;
     }else
     {
-        value= [Utility changeToyuan:value];
-        [self.numLabel setText:[NSString stringWithFormat:@"%@点 : %@",key,value]];
+        
+        if ([_str isEqualToString:@"ESS合约计划整点趋势图"])
+        {
+            value= [Utility changeTohu:value];
+            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : %@",key,value]];
+            
+        }
+        else if ([_str isEqualToString:@"ECS商城订单整点趋势图"])
+        {
+            value= [Utility changeTobi:value];
+            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : %@",key,value]];
+        }
+        else if ([_str isEqualToString:@"ECS用户发展整点趋势图"])
+        {
+            value= [Utility changeTohu:value];
+            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : %@",key,value]];
+        }
+        else
+        {
+            value= [Utility changeToyuan:value];
+            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : %@",key,value]];
+        }
+        
         self.blueDian.hidden=NO;
     }
     string=key;

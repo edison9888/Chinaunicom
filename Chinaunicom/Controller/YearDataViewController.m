@@ -56,6 +56,7 @@
         NSArray *array=[self sortByKeys:nsdict];
 //        int x = [array count]-6;
 //        NSMutableArray *muArray=[NSMutableArray array];
+        NSMutableArray *yeartotal=[[NSMutableArray alloc]init];
         for (int i=0; i<[array count]; i++) {
 //           [muArray addObject:[array objectAtIndex:i]];
             NSString *string=[array objectAtIndex:i];
@@ -68,12 +69,28 @@
             
             if (i==0) {
                 NSString *value=[nsdict objectForKey:string];
-                NSString *changeValue=[Utility changeToyuan:value];
                 if (string.length==6) {
-//                    NSString *yearString=[string substringWithRange:NSMakeRange(0, 4)];
-//                    self.yearLabel.text=[NSString stringWithFormat:@"%@年数据趋势图",yearString];
                     NSString *monthString=[string substringWithRange:NSMakeRange(4, 2)];
-                    self.monthNumLabel.text=[NSString stringWithFormat:@"%d月 : %@",[monthString intValue],changeValue];
+                    if ([_yearStr isEqualToString:@"ESS合约计划年数据趋势图"])
+                    {
+                        NSString *changeValue=[Utility changeTohu:value];
+                        self.monthNumLabel.text=[NSString stringWithFormat:@"%d月 : %@",[monthString intValue],changeValue];
+                    }else if ([_yearStr isEqualToString:@"ECS商城订单年数据趋势图"])
+                    {
+                        NSString *changeValue=[Utility changeTobi:value];
+                        self.monthNumLabel.text=[NSString stringWithFormat:@"%d月 : %@",[monthString intValue],changeValue];
+                    }
+                    else if ([_yearStr isEqualToString:@"ECS用户发展年数据趋势图"])
+                    {
+                        NSString *changeValue=[Utility changeTohu:value];
+                        self.monthNumLabel.text=[NSString stringWithFormat:@"%d月 : %@",[monthString intValue],changeValue];
+                    }
+                    else
+                    {
+                        NSString *changeValue=[Utility changeToyuan:value];
+                        self.monthNumLabel.text=[NSString stringWithFormat:@"%d月 : %@",[monthString intValue],changeValue];
+                    }
+                    
                 }
             }
             if (i==[array count]-1) {
@@ -81,6 +98,13 @@
                 if (string.length==6) {
                     NSString *yearString=[string substringWithRange:NSMakeRange(0, 4)];
                     self.yearLabel.text=[NSString stringWithFormat:@"%@年数据趋势图",yearString];
+                    for (int x=0; x<[array count]; x++) {
+                        NSString *yearstr=[array objectAtIndex:x];
+                        NSString *allyearString=[yearstr substringWithRange:NSMakeRange(0, 4)];
+                        if ([allyearString isEqualToString:yearString]) {
+                            [yeartotal addObject:yearstr];
+                        }
+                    }
                 }
             }
         }
@@ -91,9 +115,36 @@
         }
         NSMutableArray *yearMuArray=[Utility calculatePercentage:yearDataArray height:200];
         [self drawView:yearMuArray];
-        NSString *totalNum=[NSString stringWithFormat:@"%lld",[self yearTotal:yearDataArray]];
-        NSString *at=[Utility changeToyuan:totalNum];
-        self.yearNumLabel.text=at;
+        
+        NSMutableArray *mb=[NSMutableArray array];
+        for (int i=0; i<[yeartotal count]; i++) {
+            NSString *value= [nsdict objectForKey:[yeartotal objectAtIndex:i]];
+            [mb addObject:value];
+        }
+        
+        NSString *totalNum=[NSString stringWithFormat:@"%lld",[self yearTotal:mb]];
+        
+        if ([_yearStr isEqualToString:@"ESS合约计划年数据趋势图"])
+        {
+            NSString *at=[Utility changeTohu:totalNum];
+            self.yearNumLabel.text=at;
+        }
+        else if ([_yearStr isEqualToString:@"ECS商城订单年数据趋势图"])
+        {
+            NSString *at=[Utility changeTobi:totalNum];
+            self.yearNumLabel.text=at;
+        }
+        else if ([_yearStr isEqualToString:@"ECS用户发展年数据趋势图"])
+        {
+            NSString *at=[Utility changeTohu:totalNum];
+            self.yearNumLabel.text=at;
+        }
+        else
+        {
+            NSString *at=[Utility changeToyuan:totalNum];
+            self.yearNumLabel.text=at;
+        }
+
         
     } falid:^(NSString *errorMsg) {
     }];
@@ -216,8 +267,27 @@
 -(void)showTheData:(int)num
 {
     NSString *monthNum=[monthAllArray objectAtIndex:num-1];
-    NSString *string=[Utility changeToyuan:[yearDataArray objectAtIndex:num-1]];
-    self.monthNumLabel.text=[NSString stringWithFormat:@"%d月 : %@",[monthNum intValue],string];
+    if ([_yearStr isEqualToString:@"ESS合约计划年数据趋势图"])
+    {
+        NSString *string=[Utility changeTohu:[yearDataArray objectAtIndex:num-1]];
+        self.monthNumLabel.text=[NSString stringWithFormat:@"%d月 : %@",[monthNum intValue],string];
+    }
+    else if ([_yearStr isEqualToString:@"ECS商城订单年数据趋势图"])
+    {
+        NSString *string=[Utility changeTobi:[yearDataArray objectAtIndex:num-1]];
+        self.monthNumLabel.text=[NSString stringWithFormat:@"%d月 : %@",[monthNum intValue],string];
+    }
+    else if ([_yearStr isEqualToString:@"ECS用户发展年数据趋势图"])
+    {
+        NSString *string=[Utility changeTohu:[yearDataArray objectAtIndex:num-1]];
+        self.monthNumLabel.text=[NSString stringWithFormat:@"%d月 : %@",[monthNum intValue],string];
+    }
+    else
+    {
+        NSString *string=[Utility changeToyuan:[yearDataArray objectAtIndex:num-1]];
+        self.monthNumLabel.text=[NSString stringWithFormat:@"%d月 : %@",[monthNum intValue],string];
+    }
+
 }
     
 @end

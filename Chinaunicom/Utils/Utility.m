@@ -182,6 +182,21 @@ static Utility *shareSource = nil;
     }
     return str;
 }
+//转换成单位笔
++(NSString *)changeTobi :(NSString *)num
+{
+    NSString *str=[NSString stringWithFormat:@"%@",num];
+    if (str!=nil && ![str isEqualToString:@""]) {
+        if(str.length >4 && str.length <9){
+            str =[NSString stringWithFormat:@"%.2f万笔",[str doubleValue]/10000];
+        }else if (str.length>8){
+            str=[NSString stringWithFormat:@"%.2f亿笔",[str doubleValue]/100000000];
+        }else{
+            str=[NSString stringWithFormat:@"%@笔",str];
+        }
+    }
+    return str;
+}
 //转换成单位万
 +(NSString *)changeToWan :(NSString *)num
 {

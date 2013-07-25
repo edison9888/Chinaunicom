@@ -14,7 +14,9 @@
 #import "requestServiceHelper.h"
 #import "Utility.h"
 @interface BussinessDataViewController ()
-
+{
+     NSTimer *myTimer;
+}
 @end
 
 @implementation BussinessDataViewController
@@ -24,6 +26,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+       
     }
     return self;
 }
@@ -31,6 +34,11 @@
 {
     [super viewWillAppear:animated];
     
+    myTimer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFire:) userInfo:nil repeats:YES];
+    [myTimer fire];
+}
+-(void)timeFire : (NSTimer *)timer
+{
     if ([_name isEqualToString:@"ESS实时看板"]) {
         NSMutableDictionary *dict= [NSMutableDictionary dictionaryWithObjectsAndKeys:@"currData",@"timeStr", nil];
         [[requestServiceHelper defaultService]getESStotleNum:dict sucess:^(NSString *str) {
@@ -38,10 +46,10 @@
             self.moneyLabel.text=num;
         } falid:^(NSString *errorMsg) {
         }];
-
+        
     }else if ([_name isEqualToString:@"ESS合约计划"]){
         [[requestServiceHelper defaultService]getEsscontractNum:[NSMutableDictionary dictionary] sucess:^(NSString *str) {
-            NSString *num=[Utility changeToyuan:str];
+            NSString *num=[Utility changeTohu:str];
             self.moneyLabel.text=num;
         } falid:^(NSString *errorMsg) {
         }];
@@ -53,17 +61,18 @@
         }];
     }else if ([_name isEqualToString:@"ECS商城订单"]){
         [[requestServiceHelper defaultService]getEssstoreNum:[NSMutableDictionary dictionary] sucess:^(NSString *str) {
-            NSString *num=[Utility changeToyuan:str];
+            NSString *num=[Utility changeTobi:str];
             self.moneyLabel.text=num;
         } falid:^(NSString *errorMsg) {
         }];
     }else if ([_name isEqualToString:@"ECS用户发展"]){
         [[requestServiceHelper defaultService]getEssGuessNum:[NSMutableDictionary dictionary] sucess:^(NSString *str) {
-            NSString *num=[Utility changeToyuan:str];
+            NSString *num=[Utility changeTohu:str];
             self.moneyLabel.text=num;
         } falid:^(NSString *errorMsg) {
         }];
     }
+
 }
 - (void)viewDidLoad
 {
@@ -83,6 +92,11 @@
             [self.payButton setHidden:YES];
         }
     }
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [myTimer invalidate];
 }
 -(IBAction)pressPayButton:(UIButton *)sender
 {
@@ -163,25 +177,6 @@
         }
     }];
 }
-//-(NSString *)everyName
-//{
-//     if ([_name isEqualToString:@"实时ESS合约计划"]) {
-//        return @"ESS合约计划";
-//    }
-//    else if ([_name isEqualToString:@"实时ECS交易总额"])
-//    {
-//        return @"ECS交易总额";
-//    }
-//    else if ([_name isEqualToString:@"实时ECS商城订单"])
-//    {
-//        return @"ECS商城订单";
-//    }
-//    else if ([_name isEqualToString:@"实时ECS用户发展"])
-//    {
-//        return @"ECS用户发展";
-//    }
-//    return @"";
-//}
 -(void)viewDidUnload
 {
     [self setBackImageView:nil];
