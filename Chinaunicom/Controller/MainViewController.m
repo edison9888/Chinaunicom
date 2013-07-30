@@ -271,9 +271,9 @@
                 
                 CellImageView *imageView=[[CellImageView alloc]initWithFrame:CGRectMake((i+1)*15+i*80, 10+titleSize.height+5+35, 80, 60)];
                 NSString *picPath=[[imageArray objectAtIndex:i]stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
-                NSData *data = [picPath dataUsingEncoding: NSUTF8StringEncoding];
-                NSString *content=[[NSString alloc]initWithData:data encoding:1];
-                [imageView setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:content]]];
+//                NSData *data = [picPath dataUsingEncoding: NSUTF8StringEncoding];
+//                NSString *content=[[NSString alloc]initWithData:data encoding:1];
+                [imageView setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:picPath]]];
                 [cell.contentView addSubview:imageView];
             }
             
@@ -283,9 +283,10 @@
             cell.pinlunLabel.frame=CGRectMake(15+100, 10+titleSize.height+5+10, 70, 20);
             NSString *picPath=[[imageArray objectAtIndex:0]stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
             cell.tupianImageView.frame=CGRectMake(220, 7, 80, 60);
-            NSData *data = [picPath dataUsingEncoding: NSUTF8StringEncoding];
-            NSString *content=[[NSString alloc]initWithData:data encoding:1];
-            [cell.tupianImageView setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:content]]];
+//            NSData *data = [picPath dataUsingEncoding: NSUTF8StringEncoding];
+//            NSString *content=[[NSString alloc]initWithData:data encoding:1];
+//            [cell.tupianImageView setImageWithURL:[NSURL URLWithString:@"http://www.apple.com.cn/home/images/promo_designed.jpg"]];
+            [cell.tupianImageView setImageWithURL:[NSURL URLWithString:[ImageUrl stringByAppendingString:picPath]]];
         }
         
     }else

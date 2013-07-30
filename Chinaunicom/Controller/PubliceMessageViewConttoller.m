@@ -10,8 +10,17 @@
 #import "User.h"
 #import "GTMBase64.h"
 #import "HttpRequestHelper.h"
+#import <QuartzCore/QuartzCore.h>
+#define ADD_PHOTO_BUTTON_COUNT 3
+#define PHOTO_DELETE_TAG 250
 @interface PubliceMessageViewConttoller (){
     UIImageView *phoneImage;
+    UIButton *_addButton;
+    NSMutableArray *_photoViews;
+    CGRect btnFrame[ADD_PHOTO_BUTTON_COUNT+1];
+    UIView *photoView;
+    int _photoCount;
+    int _pressIndex;
 }
 
 @property (weak, nonatomic) IBOutlet UITextView *mesagTtextview;
@@ -39,6 +48,28 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.mesagTtextview.layer setBorderColor:[UIColor darkGrayColor].CGColor];
+    [self.mesagTtextview.layer setBorderWidth:1.0];
+    _photoViews = [[NSMutableArray alloc] initWithCapacity:ADD_PHOTO_BUTTON_COUNT];
+    
+    UIImage *image=[UIImage imageNamed:@"img_mine_addphoto_"];
+    photoView=[[UIView alloc]initWithFrame:CGRectMake(20, 140, 280, image.size.height+20)];
+    [photoView setBackgroundColor:[UIColor clearColor]];
+    [self.scrollview addSubview:photoView];
+    
+    for (int i=0; i<ADD_PHOTO_BUTTON_COUNT+1; i++)
+    {
+        btnFrame[i] = CGRectMake(107*i, 10, image.size.width, image.size.height);
+    }
+    
+    _addButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_addButton setBackgroundImage:image forState:UIControlStateNormal];
+    _addButton.frame = btnFrame[0];
+    [_addButton addTarget:self action:@selector(addPic:) forControlEvents:UIControlEventTouchUpInside];
+    [photoView addSubview:_addButton];
+    _photoCount = 0;
+    _pressIndex = 0;
+
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -97,14 +128,78 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    phoneImage = [[UIImageView alloc]init];
-    UIImage *newImage=[self imageWithImageSimple:image  scaledToSize:CGSizeMake(310, image.size.height/image.size.width*310)];
-    phoneImage.frame = CGRectMake(5, _mesagTtextview.frame.size.height+5, newImage.size.width, newImage.size.height);
-    phoneImage.image = newImage;
-    [_scrollview addSubview:phoneImage];
-    [_scrollview setContentSize:CGSizeMake(320, phoneImage.frame.origin.y+phoneImage.frame.size.height)];
+//    phoneImage = [[UIImageView alloc]init];
+//    UIImage *newImage=[self imageWithImageSimple:image  scaledToSize:CGSizeMake(310, image.size.height/image.size.width*310)];
+//    phoneImage.frame = CGRectMake(5, _mesagTtextview.frame.size.height+5, newImage.size.width, newImage.size.height);
+//    phoneImage.image = newImage;
+//    [_scrollview addSubview:phoneImage];
+//    [_scrollview setContentSize:CGSizeMake(320, phoneImage.frame.origin.y+phoneImage.frame.size.height)];
+    UIImageView *imageview = [[UIImageView alloc] initWithFrame:btnFrame[_pressIndex]];
+    [_photoViews addObject:imageview];
+    [photoView addSubview:imageview];
+    imageview.image=image;
+    [self creatButton:imageview];
+    [self changePhotoAtIndex:_pressIndex isAddOrDelete:YES];
     [picker dismissModalViewControllerAnimated:YES];
 
+}
+-(void)creatButton:(UIView*)sender
+{
+    UIButton *bt=[UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *xBt=[UIImage imageNamed:@"img_mine_butten_deletephoto_"];
+    [bt setBackgroundImage:xBt forState:UIControlStateNormal];
+    CGRect rect= CGRectMake(sender.frame.origin.x + sender.frame.size.width-xBt.size.width/2., sender.frame.origin.y-xBt.size.height/2., xBt.size.width, xBt.size.height);
+    [bt addTarget:self action:@selector(deleteThisPhoto:event:) forControlEvents:UIControlEventTouchUpInside];
+    bt.frame=rect;
+    bt.tag = [_photoViews indexOfObject:sender]+PHOTO_DELETE_TAG;
+    [photoView addSubview:bt];
+}
+-(void)deleteThisPhoto:(UIButton*)sender event:(UIEvent*)event
+{
+    _pressIndex = sender.tag - PHOTO_DELETE_TAG;
+    [sender removeFromSuperview];
+    [self changePhotoAtIndex:_pressIndex isAddOrDelete:NO];
+}
+- (void)changePhotoAtIndex:(int)index isAddOrDelete:(BOOL)isADD
+{
+    if (index >= ADD_PHOTO_BUTTON_COUNT
+        || index < 0)
+    {
+        NSLog(@"Photo index error!");
+        return;
+    }
+    __block int i=0;
+    __block UIView *view = nil;
+    if (isADD)
+    {
+        _addButton.frame = btnFrame[index+1];
+        _photoCount++;
+    }
+    else
+    {
+        [UIView animateWithDuration:0.5
+                         animations:^{
+                             view = [_photoViews objectAtIndex:index];
+                             view.alpha = 0;
+                             for (i=index+1;i<_photoCount;++i)
+                             {
+                                 view = [_photoViews objectAtIndex:i];
+                                 view.frame = btnFrame[i-1];
+                                 
+                                 UIView *deleteBtn = [photoView viewWithTag:i+PHOTO_DELETE_TAG];
+                                 deleteBtn.frame = CGRectMake(view.frame.origin.x + view.frame.size.width-deleteBtn.frame.size.width/2., view.frame.origin.y-deleteBtn.frame.size.height/2., deleteBtn.frame.size.width, deleteBtn.frame.size.height);
+                                 deleteBtn.tag = i-1+PHOTO_DELETE_TAG;
+                             }
+                             _addButton.frame = btnFrame[i-1];
+                             
+                         } completion:^(BOOL finished) {
+                             view = [_photoViews objectAtIndex:index];
+                             [_photoViews removeObject:view];
+                             
+                         }];
+        _photoCount--;
+    }
+    
 }
 
 - (void)pickImageFromCamera
@@ -167,13 +262,20 @@
     [self addSomeElements:viewController];
 }
 
-
 #pragma mark - ibaction
 - (IBAction)back:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
-- (IBAction)addPic:(UIButton *)sender {
-    if ([_mesagTtextview.text length] == 0){
+- (void)addPic:(UIButton *)sender {
+    if ([self.mesagTtextview isFirstResponder]) {
+        [self.mesagTtextview resignFirstResponder];
+    }else if([self.titleTextField isFirstResponder])
+    {
+        [self.titleTextField resignFirstResponder];
+    }
+        
+    if ([_titleTextField.text length]==0)
+    {
         UIAlertView *alert =[[UIAlertView alloc]initWithTitle:@"信息提示"
                                                       message:@"请输入主题"
                                                      delegate:nil
@@ -181,7 +283,17 @@
                                             otherButtonTitles:nil, nil];
         [alert show];
         return;
+
+    }else  if ([_mesagTtextview.text length] == 0){
+        UIAlertView *alert =[[UIAlertView alloc]initWithTitle:@"信息提示"
+                                                      message:@"请输入内容"
+                                                     delegate:nil
+                                            cancelButtonTitle:@"确定"
+                                            otherButtonTitles:nil, nil];
+        [alert show];
+        return;
     }
+    _pressIndex = _photoCount;
     UIActionSheet *actionsheet = [[UIActionSheet alloc]initWithTitle:nil
                                                             delegate:self
                                                    cancelButtonTitle:@"取消"
@@ -193,19 +305,30 @@
 
 - (IBAction)sendMessage:(UIButton *)sender {
     [MBHUDView dismissCurrentHUD];
+
     if ([self.titleTextField.text isEqualToString:@""]|| self.titleTextField.text==nil) {
         [MBHUDView hudWithBody:@"主题不能为空" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
         return;
     }
     //把图片转换成jpg格式
-    NSData *imageData = UIImageJPEGRepresentation(phoneImage.image, 1.0);
+    NSMutableString *muString=[NSMutableString string];
+    for (int i=0; i<[_photoViews count]; i++) {
+        UIImageView *imageview=[_photoViews objectAtIndex:i];
+        NSData *data=UIImageJPEGRepresentation(imageview.image, 1.0);
+        NSString *str=[[NSString alloc]initWithData:[GTMBase64 encodeData:data] encoding:NSUTF8StringEncoding];
+        [muString appendString:str];
+        if (i!=[_photoViews count]-1) {
+            [muString appendString:@","];
+        }
+    }
     NSMutableDictionary *dictionary=[[NSMutableDictionary alloc]init];
     NSData *myEncodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_INFO];
     User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedObject];
     NSString *userid = [NSString stringWithFormat:@"%d",[user.userId intValue]];
     [dictionary setObject:userid forKey:@"userId"];
     [dictionary setObject:@"jpg" forKey:@"picType"];
-    [dictionary setObject:[[NSString alloc] initWithData:[GTMBase64 encodeData:imageData] encoding:NSUTF8StringEncoding] forKey:@"imageStr"];
+//    [dictionary setObject:[[NSString alloc] initWithData:[GTMBase64 encodeData:imageData] encoding:NSUTF8StringEncoding] forKey:@"imageStr"];
+    [dictionary setObject:muString  forKey:@"imageStr"];
     [dictionary setObject:self.titleTextField.text forKey:@"title"];
     [dictionary setObject:@"summary" forKey:@"summary"];
     [dictionary setObject:@"1" forKey:@"status"];
@@ -223,6 +346,7 @@
     }];
 
 }
+
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];

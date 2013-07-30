@@ -163,7 +163,6 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    UIImage *image=[UIImage imageNamed:@"qitalei.png"];
     NSString *titleStr=[[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"title"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     CGSize titleSize;
     if ([[dataSoure objectAtIndex:indexPath.row]objectForKey:@"picPath"]!=nil) {
@@ -209,9 +208,7 @@
     CGSize titleSize;
     NSString * path=[[[dataSoure objectAtIndex:indexPath.row]objectForKey:@"picPath"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSArray *imageArray=[path componentsSeparatedByString:@","];
-//     UIImage *aqImage=[UIImage imageNamed:@"anquanlei.png"];
     if (path!=nil) {
-        
         if ([imageArray count]>1) {
             titleSize=[titleStr sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
             cell.pinlunLabel.frame=CGRectMake(150, 10+titleSize.height+5+30+5+60+5, 160, 20);

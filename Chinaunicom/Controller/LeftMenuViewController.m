@@ -96,8 +96,11 @@
         [topArray removeAllObjects];
         [bottomArray removeAllObjects];
         for (int s=0; s<[array count]; s++) {
+            
             int num=[[[array objectAtIndex:s] objectForKey:@"reportTypeId"] intValue];
+            
             if (num<18) {
+                
                 [topArray addObject:[NSString stringWithFormat:@"%d",num]];
             }else
             {
@@ -186,19 +189,19 @@
     {
         BottomButton *bt=(BottomButton *)button;
         BussinessDataViewController *bd=[[BussinessDataViewController alloc]initWithNibName:@"BussinessDataViewController" bundle:nil];
-        if ([bt.iamgeStr intValue]==441) {
+        if ([bt.iamgeStr intValue]==141) {
             
             bd.name=@"ESS实时看板";
             
-        }else if ([bt.iamgeStr intValue]==442)
+        }else if ([bt.iamgeStr intValue]==142)
         {
             bd.name=@"ESS合约计划";
            
-        }else if ([bt.iamgeStr intValue]==443)
+        }else if ([bt.iamgeStr intValue]==145)
         {
             bd.name=@"ECS交易额";
             
-        }else if ([bt.iamgeStr intValue]==444)
+        }else if ([bt.iamgeStr intValue]==144)
         {
             bd.name=@"ECS商城订单";
         }else

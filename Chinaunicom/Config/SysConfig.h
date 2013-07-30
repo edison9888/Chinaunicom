@@ -9,14 +9,13 @@
 #ifndef Chinaunicom_SysConfig_h
 #define Chinaunicom_SysConfig_h
 
-
 //定义接口服务器域名
 #ifndef SERVERDOMAIN
-//http://123.125.96.171:8080/mobilePortal/
-//测试
-#define SERVERDOMAIN @"http://123.125.96.171:8080/"
+
+////测试
+//#define SERVERDOMAIN @"http://123.125.96.171:8080/"
 //正式
-//#define SERVERDOMAIN @"http://123.125.96.185:8088/"
+#define SERVERDOMAIN @"http://123.125.96.185:8088/"
 #endif
 
 //定义接口服务器地址

@@ -51,8 +51,27 @@
     [[requestServiceHelper defaultService]getEssHourTrend:dict ulr:url sucess:^(NSDictionary *nsdict) {
         if (isPress) {
             if ([nsdict count]>0) {
-                NSString *num=[Utility changeToyuan:[nsdict objectForKey:@"00"]];
-                self.numLabel.text=[NSString stringWithFormat:@"00点 : %@",num];
+                if ([_str isEqualToString:@"ESS合约计划整点趋势图"])
+                {
+                    NSString *num=[Utility changeTohu:[nsdict objectForKey:@"00"]];
+                    self.numLabel.text=[NSString stringWithFormat:@"00点 : %@",num];
+                }
+                else if ([_str isEqualToString:@"ECS商城订单整点趋势图"])
+                {
+                    NSString *num=[Utility changeTobi:[nsdict objectForKey:@"00"]];
+                    self.numLabel.text=[NSString stringWithFormat:@"00点 : %@",num];
+                }
+                else if ([_str isEqualToString:@"ECS用户发展整点趋势图"])
+                {
+                    NSString *num=[Utility changeTohu:[nsdict objectForKey:@"00"]];
+                    self.numLabel.text=[NSString stringWithFormat:@"00点 : %@",num];
+                }
+                else
+                {
+                    NSString *num=[Utility changeToyuan:[nsdict objectForKey:@"00"]];
+                    self.numLabel.text=[NSString stringWithFormat:@"00点 : %@",num];
+                }
+
             }
         }
         _todayDict = [NSDictionary dictionaryWithDictionary:nsdict];
@@ -313,78 +332,95 @@
         }
         [muArray addObject:str];
     }
-    float maxNum=[self maxNum:muArray];
-    float minNum=[self minNum:muArray];
-    if (minNum==0) {
-        minNum=1;
-    }
-    float bei=maxNum/minNum;
-    
-    NSMutableArray *array=[NSMutableArray arrayWithCapacity:[muArray count]];
-    for (int i=0; i<[muArray count]; i++) {
-        float data = [[muArray objectAtIndex:i]floatValue];
-        float bi =data/bei*180;
-        [array addObject:[NSString stringWithFormat:@"%f",bi]];
-    }
+    NSMutableArray *array=[Utility calculatePercentage:muArray height:200];
+//    float maxNum=[self maxNum:muArray];
+//    float minNum=[self minNum:muArray];
+//    if (minNum==0) {
+//        minNum=1;
+//    }
+//    float bei=maxNum/minNum;
+//    
+//    NSMutableArray *array=[NSMutableArray arrayWithCapacity:[muArray count]];
+//    for (int i=0; i<[muArray count]; i++) {
+//        float data = [[muArray objectAtIndex:i]floatValue];
+//        float bi =data/bei*180;
+//        [array addObject:[NSString stringWithFormat:@"%f",bi]];
+//    }
     return array;
 }
-//找最大值
--(float )maxNum : (NSMutableArray *)array
-{
-    int big=[[array objectAtIndex:0] floatValue];
-    for (int i=0; i<[array count]; i++) {
-        if (big<[[array objectAtIndex:i] floatValue]) {
-            big=[[array objectAtIndex:i]floatValue];
-        }
-    }
-    return big;
-}
-//找最小值
--(float)minNum:(NSMutableArray *)array
-{
-    float small=[[array objectAtIndex:0] floatValue];
-    for (int i=0; i<[array count]; i++) {
-        if ([[array objectAtIndex:i] floatValue]<small) {
-            small=[[array objectAtIndex:i]floatValue];
-        }
-    }
-    return small;
-}
+
 #pragma PointImageviewDelegate
 -(void)showTheData:(NSString *)key x:(float)hx num:(int)num
 {
+    float height=[[UIScreen mainScreen]applicationFrame].size.height;
     NSString *value=nil;
     if (t==0) {
        value= [_todayDict objectForKey:key];
         if (value !=nil) {
-            self.blueDian.frame=CGRectMake(hx-6, 380-[[_todayArray objectAtIndex:num]floatValue]-4, self.blueDian.frame.size.width, self.blueDian.frame.size.height);
+            self.blueDian.frame=CGRectMake(hx-6, height-84-[[_todayArray objectAtIndex:num]floatValue], self.blueDian.frame.size.width, self.blueDian.frame.size.height);
         }
 
     }else if (t==1){
         value= [_yesterdayDict objectForKey:key];
         if (value!=nil) {
-            self.blueDian.frame=CGRectMake(hx-6, 380-[[_yesterdayArray objectAtIndex:num]floatValue]-4, self.blueDian.frame.size.width, self.blueDian.frame.size.height);
+            self.blueDian.frame=CGRectMake(hx-6, height-84-[[_yesterdayArray objectAtIndex:num]floatValue], self.blueDian.frame.size.width, self.blueDian.frame.size.height);
         }
 
     }else if (t==2){
        value= [_avgDict objectForKey:key];
         if (value !=nil) {
-                    self.blueDian.frame=CGRectMake(hx-6, 380-[[_avgArray objectAtIndex:num]floatValue]-4, self.blueDian.frame.size.width, self.blueDian.frame.size.height);
+                    self.blueDian.frame=CGRectMake(hx-6, height-84-[[_avgArray objectAtIndex:num]floatValue], self.blueDian.frame.size.width, self.blueDian.frame.size.height);
         }
     }
     
     if (value==nil) {
-        [self.numLabel setText:[NSString stringWithFormat:@"%@点 : 0元",key]];
+        if ([_str isEqualToString:@"ESS合约计划整点趋势图"])
+        {
+            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : 0户",key]];
+            
+        }
+        else if ([_str isEqualToString:@"ECS商城订单整点趋势图"])
+        {
+            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : 0笔",key]];
+        }
+        else if ([_str isEqualToString:@"ECS用户发展整点趋势图"])
+        {
+            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : 0户",key]];
+        }
+        else
+        {
+            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : 0元",key]];
+        }
+        
         self.blueDian.hidden=YES;
     }else
     {
-        value= [Utility changeToyuan:value];
-        [self.numLabel setText:[NSString stringWithFormat:@"%@点 : %@",key,value]];
+        
+        if ([_str isEqualToString:@"ESS合约计划整点趋势图"])
+        {
+            value= [Utility changeTohu:value];
+            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : %@",key,value]];
+            
+        }
+        else if ([_str isEqualToString:@"ECS商城订单整点趋势图"])
+        {
+            value= [Utility changeTobi:value];
+            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : %@",key,value]];
+        }
+        else if ([_str isEqualToString:@"ECS用户发展整点趋势图"])
+        {
+            value= [Utility changeTohu:value];
+            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : %@",key,value]];
+        }
+        else
+        {
+            value= [Utility changeToyuan:value];
+            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : %@",key,value]];
+        }
+        
         self.blueDian.hidden=NO;
     }
     string=key;
-    
-    
     henx=hx;
     dijige=num;
 }

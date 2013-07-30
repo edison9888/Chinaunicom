@@ -38,6 +38,8 @@
 +(NSString *)changeToyuan :(NSString *)num;
 +(NSString *)changeTohu :(NSString *)num;
 +(NSString *)changeToWan :(NSString *)num;
+//转换成单位笔
++(NSString *)changeTobi :(NSString *)num;
 //获取当天日期
 +(NSString *)getTodayDate;
 //计算比例

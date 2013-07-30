@@ -325,9 +325,15 @@
     [dictionary setObject:[[NSString alloc] initWithData:[GTMBase64 encodeData:soundData] encoding:NSUTF8StringEncoding] forKey:@"audioStr"];
 
     [HttpRequestHelper asyncGetRequest:PublishComment parameter:dictionary requestComplete:^(NSString *responseStr) {
-        [MBHUDView dismissCurrentHUD];
-        [MBHUDView hudWithBody:@"发表成功" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
-        [_tableview launchRefreshing];
+        if ([responseStr isEqualToString:@"success"]) {
+            [MBHUDView dismissCurrentHUD];
+            [MBHUDView hudWithBody:@"发表成功" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
+            [_tableview launchRefreshing];
+        }else
+        {
+            [MBHUDView hudWithBody:@"发表失败" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
+        }
+
     } requestFailed:^(NSString *errorMsg) {
         [MBHUDView dismissCurrentHUD];
         [MBHUDView hudWithBody:@"发表失败" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
@@ -353,7 +359,7 @@
     [dictionary setObject:self.reportId forKey:@"reportId"];
     [dictionary setObject:userid forKey:@"userId"];
     [dictionary setObject:inputToolbar.textView.text forKey:@"content"];
-    [dictionary setObject:@"nofile" forKey:@"audioType"];
+    [dictionary setObject:@"" forKey:@"audioType"];
     [dictionary setObject:@"" forKey:@"audioStr"];
     [HttpRequestHelper asyncGetRequest:PublishComment parameter:dictionary requestComplete:^(NSString *responseStr) {
         if ([responseStr isEqualToString:@"success"]) {

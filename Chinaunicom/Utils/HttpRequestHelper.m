@@ -55,8 +55,8 @@ typedef enum {
     //    [request setCachePolicy:ASIAskServerIfModifiedWhenStaleCachePolicy];//缓存策略
     //    [request setCacheStoragePolicy:ASICacheForSessionDurationCacheStoragePolicy];//缓存存储方式
     //    [request setSecondsToCache:60*60*24*30];// 缓存30天
-    
     return request;
+    
 }
 
 #pragma mark - 发送异步Get请求
@@ -64,7 +64,6 @@ typedef enum {
                            parameter:(NSMutableDictionary *)dictionary
                            requestComplete:(void (^)(NSString *responseStr))requestComplete
                            requestFailed:(void (^)(NSString *errorMsg))requestFailed{
-    
     ASIHTTPRequest *_request = [self requestWithUrl:url];
     __weak ASIHTTPRequest *request = _request;
     
@@ -75,8 +74,9 @@ typedef enum {
 //    [request addRequestHeader:@"Content-Type" value:@"application/json;charset=utf-8"];
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil];
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    [request appendPostData:[jsonString  dataUsingEncoding:NSUTF8StringEncoding]];
+//    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//    [request appendPostData:[jsonString  dataUsingEncoding:NSUTF8StringEncoding]];
+    [request appendPostData:jsonData];
     [request buildPostBody];
     
     //请求成功

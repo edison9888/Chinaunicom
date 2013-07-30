@@ -138,11 +138,11 @@
     // Do any additional setup after loading the view from its nib.
 }
 - (IBAction)pressThreeGbutton:(UIButton *)sender {
-    [self isInTheRect:sender];
      [myTimer invalidate];
+    [self isInTheRect:sender];
     //获取ESS实时3G用户发展总数
     NSMutableDictionary *dict= [NSMutableDictionary dictionary];
-    if ([_titleStr isEqualToString:@"ESS实时趋势图"]) {
+    if ([_titleStr isEqualToString:@"ESS实时数据趋势图"]) {
         [dict setValue:@"currData" forKey:@"timeStr"];
         self.vpLabel.text=@"3G用户实时开户数量 :";
        
@@ -181,8 +181,9 @@
 }
 
 - (IBAction)pressIphoneFiveButton:(UIButton *)sender {
+     [myTimer invalidate];
     [self isInTheRect:sender];
-    [myTimer invalidate];
+   
     //获取ESS实时Iphone5用户发展总数
     NSMutableDictionary *dict= [NSMutableDictionary dictionary];
     if ([_titleStr isEqualToString:@"ESS实时数据趋势图"]) {
@@ -223,8 +224,10 @@
 }
 
 - (IBAction)pressIphoneFour:(UIButton *)sender {
-    [self isInTheRect:sender];
     [myTimer invalidate];
+    
+    [self isInTheRect:sender];
+    
     //获取ESS实时iphone4s用户发展总数
     NSMutableDictionary *dict= [NSMutableDictionary dictionary];
     if ([_titleStr isEqualToString:@"ESS实时数据趋势图"]) {
@@ -266,17 +269,16 @@
 -(void)isInTheRect : (UIButton *)bt
 {
     CGPoint point=CGPointMake(self.lineImageView.frame.origin.x, self.lineImageView.frame.origin.y);
-   BOOL isIn= CGRectContainsPoint(bt.frame,point);
+    BOOL isIn= CGRectContainsPoint(bt.frame,point);
     if (!isIn) {
         
         [self.threeGButton.titleLabel setTextColor:[UIColor darkGrayColor]];
         [self.iphoneFiveButton.titleLabel setTextColor:[UIColor darkGrayColor]];
         [self.iphone4SButton.titleLabel setTextColor:[UIColor darkGrayColor]];
         [bt setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        
+
         [UIView animateWithDuration:0.3f animations:^{
             self.lineImageView.frame=CGRectMake(bt.frame.origin.x+2, self.lineImageView.frame.origin.y, self.lineImageView.frame.size.width, self.lineImageView.frame.size.height);
-            
         }];
 
     }
@@ -390,6 +392,7 @@
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     [myTimer invalidate];
 //    [myTimer setFireDate:[NSDate distantFuture]];
 }

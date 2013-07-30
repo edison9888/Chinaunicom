@@ -193,9 +193,15 @@
             [label setBackgroundColor:[UIColor clearColor]];
             [label setTextColor:[UIColor whiteColor]];
             label.adjustsFontSizeToFitWidth=YES;
-            if ([self.title isEqualToString:@"204"]||[self.title isEqualToString:@"304"]||[self.title isEqualToString:@"404"]) {
+            if ([self.title isEqualToString:@"204"]||[self.title isEqualToString:@"304"]||[self.title isEqualToString:@"404"]||[self.title isEqualToString:@"201"]||[self.title isEqualToString:@"301"]||[self.title isEqualToString:@"401"]) {
+                
                 label.text=[Utility changeTohu:[valueArray objectAtIndex:i]];
-            }else
+                
+            }else if ([self.title isEqualToString:@"203"]||[self.title isEqualToString:@"303"]||[self.title isEqualToString:@"403"])
+            {
+                label.text=[Utility changeTobi:[valueArray objectAtIndex:i]];
+            }
+            else
             {
                 label.text=[Utility changeToyuan:[valueArray objectAtIndex:i]];
             }
@@ -204,9 +210,8 @@
             [self.myScrollView addSubview:rightImageView];
             [self.myScrollView addSubview:label];
         }
-
     }
-    float height=[muArray count]*(leftImage.size.height+5);
+    float height=[muArray count]*(rightImage.size.height+5);
     [self.myScrollView setContentSize:CGSizeMake(320, height)];
 }
 - (void)viewDidUnload {
