@@ -36,6 +36,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 - (void)viewDidLoad
 {
@@ -130,7 +131,7 @@
         
         UILabel *comeLabel=[[UILabel alloc]initWithFrame:CGRectMake(90, 20+titleSize.height+5, 70, 20)];
         [comeLabel setBackgroundColor:[UIColor clearColor]];
-        [comeLabel setTextColor:[UIColor darkGrayColor]];
+        [comeLabel setTextColor:[UIColor whiteColor]];
         comeLabel.text=[NSString stringWithFormat:@"来自%@",typeName];
         [comeLabel setFont:[UIFont systemFontOfSize:13.0]];
         [_topview addSubview:comeLabel];
@@ -138,7 +139,7 @@
         NSString *timeStr=[[reportDetail objectForKey:@"published"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         UILabel *timeLabel=[[UILabel alloc]initWithFrame:CGRectMake(170, comeLabel.frame.origin.y, 130, 20)];
         timeLabel.text=timeStr;
-        [timeLabel setTextColor:[UIColor darkGrayColor]];
+        [timeLabel setTextColor:[UIColor whiteColor]];
         [timeLabel setBackgroundColor:[UIColor clearColor]];
         [timeLabel setFont:[UIFont systemFontOfSize:13.0]];
         [_topview addSubview:timeLabel];

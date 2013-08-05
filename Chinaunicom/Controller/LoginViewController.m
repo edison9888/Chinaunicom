@@ -122,20 +122,20 @@
     NSString *password=self.passWordTextField.text;
 
     if ([username isEqualToString:@""] || username==nil ) {
-        [MBHUDView hudWithBody:@"请输入帐号" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
+        [MBHUDView hudWithBody:@"请输入帐号" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
         return;
     }
     
     if ([password isEqualToString:@""] || password == nil) {
-        [MBHUDView hudWithBody:@"请输入密码" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
+        [MBHUDView hudWithBody:@"请输入密码" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
         return;
     }
     [MBHUDView hudWithBody:@"登录中..." type:MBAlertViewHUDTypeActivityIndicator hidesAfter:0 show:YES];
-
+    NSString *token=[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"];
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     [dictionary setValue:username forKey:@"userName"];
     [dictionary setValue:password forKey:@"password"];
- 
+    [dictionary setValue:token forKey:@"deviceToken"];
     [[requestServiceHelper defaultService] loginWithParamter:dictionary sucess:^(User *user) {
         //存储用户信息
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:user];
@@ -145,18 +145,17 @@
         //保存密码
         if ([[self.userDefault objectForKey:KEY_REMEMBER_PWD] boolValue]) {
             [self setField:self.passWordTextField forKey:KEY_USER_PWD];
-            [self.userDefault synchronize];
         }else{
             [self.userDefault setObject:@"" forKey:KEY_USER_PWD];
-            [self.userDefault synchronize];
         }
+        [self.userDefault synchronize];
         [MBHUDView dismissCurrentHUD];
         MMDrawerController *drawerController= [self makeNewframeWork];
         [self.navigationController pushViewController:drawerController animated:YES];
         
     } falid:^(NSString *errorMsg) {
         [MBHUDView dismissCurrentHUD];
-        [MBHUDView hudWithBody:@"登陆失败" type:MBAlertViewHUDTypeDefault hidesAfter:2.0 show:YES];
+        [MBHUDView hudWithBody:@"登陆失败" type:MBAlertViewHUDTypeDefault hidesAfter:1.0 show:YES];
     }];
 }
 
@@ -205,7 +204,7 @@
     //中间层导航条
     UINavigationController * navigationController = [[UINavigationController alloc] initWithRootViewController:centerViewController];
     [navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"title@2x.png"] forBarMetrics:UIBarMetricsDefault];
-    
+
     UINavigationController * navigationController2 = [[UINavigationController alloc] initWithRootViewController:rightSideDrawerViewController];
     [navigationController2.navigationBar setBackgroundImage:[UIImage imageNamed:@"title@2x.png"] forBarMetrics:UIBarMetricsDefault];
     

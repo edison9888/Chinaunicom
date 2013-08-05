@@ -16,35 +16,69 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
+    [application setApplicationIconBadgeNumber:0];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // 引导页
     loadingcontroller=[[LoadingController alloc] initWithNibName:@"LoadingController" bundle:nil];
     self.window.rootViewController =loadingcontroller;
+//    [self.window addSubview:loadingcontroller.view];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+
+        //推送的形式：标记，声音，提示
+
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeBadge |UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert];
+
+//    [NSThread sleepForTimeInterval:2];
+//    //实例化一个登陆页
+//    LoginViewController *login=[[LoginViewController alloc]  initWithNibName:@"LoginViewController" bundle:nil];
+//    UINavigationController *loginNav=[[UINavigationController alloc]initWithRootViewController:login];
+//    [loginNav setNavigationBarHidden:YES];
+//    self.window.rootViewController =loginNav;
+//    
+//    NSNumber *num=[[NSUserDefaults standardUserDefaults]objectForKey:KEY_REMEMBER_PWD];
+//    if ([num boolValue] == YES) {
+//        //自定义一个导航控制器
+//        [login login:nil];
+//    }
+//    else
+//    {
+//        //3秒后转到登陆页
+//    }
+//    [self myThreadMainMethod];
+    timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(myThreadMainMethod) userInfo:nil repeats:NO];
     
-    //3秒后转到登陆页
-   timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(myThreadMainMethod) userInfo:nil repeats:NO];
     return YES;
+}
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)pToken
+{
+    NSString *deviceTokenString=[NSString stringWithFormat:@"%@",pToken];
+    deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@"<" withString:@""];
+    deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@">" withString:@""];
+    deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    [[NSUserDefaults standardUserDefaults] setObject:deviceTokenString forKey:@"deviceToken"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
+    //注册成功，将deviceToken保存到应用服务器数据库中
 }
 //进入登陆页
 -(void)myThreadMainMethod
 {
-    //移除引导页
-    [loadingcontroller.view removeFromSuperview];
-    loadingcontroller=nil;
-    
     //实例化一个登陆页
     LoginViewController *login=[[LoginViewController alloc]  initWithNibName:@"LoginViewController" bundle:nil];
     //自定义一个导航控制器
-//    BaseNavigationController *baseNav=[[BaseNavigationController alloc] initWithRootViewController:login];
     UINavigationController *loginNav=[[UINavigationController alloc]initWithRootViewController:login];
     [loginNav setNavigationBarHidden:YES];
-//    [loginNav.navigationBar setBackgroundImage:[UIImage imageNamed:@"title@2x.png"] forBarMetrics:UIBarMetricsDefault];
     self.window.rootViewController =loginNav;
-//    self.revealSideViewController = [[PPRevealSideViewController alloc] initWithRootViewController:login];
-//    self.window.rootViewController =self.revealSideViewController;
+    NSNumber *num=[[NSUserDefaults standardUserDefaults]objectForKey:KEY_REMEMBER_PWD];
+    if ([num boolValue] == YES) {
+        //自定义一个导航控制器
+        [login login:nil];
+    }
+
+    //移除引导页
+    [loadingcontroller.view removeFromSuperview];
+    loadingcontroller=nil;
 }
 - (void)applicationWillResignActive:(UIApplication *)application
 {

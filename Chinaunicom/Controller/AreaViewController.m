@@ -9,6 +9,7 @@
 #import "AreaViewController.h"
 #import "requestServiceHelper.h"
 #import "Utility.h"
+#import "CommonHelper.h"
 @interface AreaViewController ()
 
 @end
@@ -174,6 +175,7 @@
     [super viewDidLoad];
     self.titleLabel.text=self.title;
     self.vpLabel.text=_vpString;
+    [self.numLabel setTextColor:[CommonHelper hexStringToColor:@"74d4fa"]];
     // Do any additional setup after loading the view from its nib.
 }
 

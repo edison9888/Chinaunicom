@@ -376,20 +376,20 @@
     if (value==nil) {
         if ([_str isEqualToString:@"ESS合约计划整点趋势图"])
         {
-            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : 0户",key]];
+            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : -户",key]];
             
         }
         else if ([_str isEqualToString:@"ECS商城订单整点趋势图"])
         {
-            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : 0笔",key]];
+            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : -笔",key]];
         }
         else if ([_str isEqualToString:@"ECS用户发展整点趋势图"])
         {
-            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : 0户",key]];
+            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : -户",key]];
         }
         else
         {
-            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : 0元",key]];
+            [self.numLabel setText:[NSString stringWithFormat:@"%@点 : -元",key]];
         }
         
         self.blueDian.hidden=YES;

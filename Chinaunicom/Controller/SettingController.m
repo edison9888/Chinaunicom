@@ -83,7 +83,6 @@
 {
     //自定义switch...
     self.message.on=YES;
-    
     self.message.onText=@"声音";
     self.message.offText=@"震动";
     NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
@@ -99,7 +98,18 @@
             self.sound.on=NO;
         }
     }
-
+    NSNumber *num=[userDefaults objectForKey:@"push"];
+    if (num==nil) {
+        self.message.on=YES;
+    }else
+    {
+        if ([num boolValue]==YES) {
+            self.message.on=YES;
+        }else
+        {
+            self.message.on=NO;
+        }
+    }
     self.sound.onText=@"开";
     self.sound.offText=@"关";
     [self.message addTarget:self action:@selector(messageChange:) forControlEvents:UIControlEventValueChanged];
@@ -238,8 +248,16 @@
     return newImage;
 }
 
-- (IBAction)messageChange:(id)sender {
-
+- (IBAction)messageChange:(DCRoundSwitch *)sender {
+    if (sender.isOn) {
+        NSNumber *num=[NSNumber numberWithBool:YES];
+        [[NSUserDefaults standardUserDefaults]setObject:num forKey:@"push"];
+    }else
+    {
+        NSNumber *num=[NSNumber numberWithBool:NO];
+        [[NSUserDefaults standardUserDefaults]setObject:num forKey:@"push"];
+    }
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (IBAction)soundChange:(DCRoundSwitch *)sender {

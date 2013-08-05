@@ -10,6 +10,7 @@
 #import "requestServiceHelper.h"
 #import "Utility.h"
 #import "TimeViewController.h"
+#import "CommonHelper.h"
 @interface YearDataViewController ()
 {
     NSMutableArray *yearDataArray;
@@ -167,6 +168,7 @@
     {
         self.yearNameLable.text=@"ECS用户发展年数据总数";
     }
+    [self.yearNumLabel setTextColor:[CommonHelper hexStringToColor:@"74d4fa"]];
 }
 -(IBAction)popToHigherLevel:(id)sender
 {

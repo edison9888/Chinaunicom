@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ESSTimeViewController : UIViewController
-@property (nonatomic,weak) IBOutlet UIImageView *lineImageView;
+@property (nonatomic,strong) UIImageView *lineImageView;
 @property (nonatomic,weak) IBOutlet UIButton *threeGButton;
 @property (nonatomic,weak) IBOutlet UIButton *iphoneFiveButton;
 @property (nonatomic,weak) IBOutlet UIButton *iphone4SButton;

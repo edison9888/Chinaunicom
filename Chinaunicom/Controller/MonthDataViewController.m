@@ -197,6 +197,7 @@
     self.monthPointImageView.myDelegate=self;
     self.monthPointImageView.blueDian=self.bluedian;
     self.monthPointImageView.anotherBlue=self.anotherBlue;
+    [self.monthNumLabel setTextColor:[CommonHelper hexStringToColor:@"74d4fa"]];
 }
 -(IBAction)popToHigherLevel:(id)sender
 {

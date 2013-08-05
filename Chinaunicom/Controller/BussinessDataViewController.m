@@ -13,6 +13,8 @@
 #import "ESSTimeViewController.h"
 #import "requestServiceHelper.h"
 #import "Utility.h"
+#import "CommonHelper.h"
+#import "UIViewController+MMDrawerController.h"
 @interface BussinessDataViewController ()
 {
      NSTimer *myTimer;
@@ -42,21 +44,21 @@
     if ([_name isEqualToString:@"ESS实时看板"]) {
         NSMutableDictionary *dict= [NSMutableDictionary dictionaryWithObjectsAndKeys:@"currData",@"timeStr", nil];
         [[requestServiceHelper defaultService]getESStotleNum:dict sucess:^(NSString *str) {
-            NSString *num=[Utility changeTohu:str];
-            self.moneyLabel.text=num;
+//            NSString *num=[Utility changeTohu:str];
+            self.moneyLabel.text=[NSString stringWithFormat:@"%@户",str];
         } falid:^(NSString *errorMsg) {
         }];
         
     }else if ([_name isEqualToString:@"ESS合约计划"]){
         [[requestServiceHelper defaultService]getEsscontractNum:[NSMutableDictionary dictionary] sucess:^(NSString *str) {
-            NSString *num=[Utility changeTohu:str];
-            self.moneyLabel.text=num;
+//            NSString *num=[Utility changeTohu:str];
+            self.moneyLabel.text=[NSString stringWithFormat:@"%@户",str];
         } falid:^(NSString *errorMsg) {
         }];
     }else if ([_name isEqualToString:@"ECS交易额"]){
         [[requestServiceHelper defaultService]getEcstradeNum:[NSMutableDictionary dictionary] sucess:^(NSString *str) {
-            NSString *num=[Utility changeToyuan:str];
-            self.moneyLabel.text=num;
+//            NSString *num=[Utility changeToyuan:str];
+            self.moneyLabel.text=[NSString stringWithFormat:@"%@元",str];
         } falid:^(NSString *errorMsg) {
         }];
     }else if ([_name isEqualToString:@"ECS商城订单"]){
@@ -78,6 +80,7 @@
 {
     [super viewDidLoad];
     self.nameLabel.text=_name;
+    [self.moneyLabel setTextColor:[CommonHelper hexStringToColor:@"74d4fa"]];
     if ([_name isEqualToString:@"ESS实时看板"]) {
         [self.payButton setTitle:@"ESS实时数据趋势图" forState:UIControlStateNormal];
         [self.monthButton setTitle:@"ESS月数据趋势图" forState:UIControlStateNormal];

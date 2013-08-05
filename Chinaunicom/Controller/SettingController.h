@@ -16,8 +16,8 @@
 @property (weak, nonatomic) IBOutlet DCRoundSwitch *sound;
 - (IBAction)changePwd:(id)sender;
 - (IBAction)quit:(id)sender;
-- (IBAction)messageChange:(id)sender;
-- (IBAction)soundChange:(id)sender;
+- (IBAction)messageChange:(DCRoundSwitch*)sender;
+- (IBAction)soundChange:(DCRoundSwitch*)sender;
 - (IBAction)headChange:(id)sender;
 - (IBAction)back:(id)sender;
 - (IBAction)updateVersion:(UIButton *)sender;

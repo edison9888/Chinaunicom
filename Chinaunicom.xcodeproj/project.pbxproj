@@ -124,6 +124,7 @@
 		77EB9CE8173D46CF0039AFB4 /* CommonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 77EB9CE7173D46CF0039AFB4 /* CommonHelper.m */; };
 		77EC03BF1739425400F5715A /* lists@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77EC03BE1739425400F5715A /* lists@2x.png */; };
 		77EC03C41739475200F5715A /* RightMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77EC03C31739475200F5715A /* RightMenuViewController.m */; };
+		DD05744717AF935B001DC036 /* allchina@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DD05744617AF935B001DC036 /* allchina@2x.png */; };
 		DD091D48174DF74E006630CC /* password1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DD091D44174DF74E006630CC /* password1@2x.png */; };
 		DD091D49174DF74E006630CC /* password2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DD091D45174DF74E006630CC /* password2@2x.png */; };
 		DD091D4A174DF74E006630CC /* user1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DD091D46174DF74E006630CC /* user1@2x.png */; };
@@ -488,6 +489,7 @@
 		77EC03BE1739425400F5715A /* lists@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lists@2x.png"; sourceTree = "<group>"; };
 		77EC03C21739475100F5715A /* RightMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RightMenuViewController.h; sourceTree = "<group>"; };
 		77EC03C31739475200F5715A /* RightMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RightMenuViewController.m; sourceTree = "<group>"; };
+		DD05744617AF935B001DC036 /* allchina@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "allchina@2x.png"; sourceTree = "<group>"; };
 		DD091D44174DF74E006630CC /* password1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "password1@2x.png"; sourceTree = "<group>"; };
 		DD091D45174DF74E006630CC /* password2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "password2@2x.png"; sourceTree = "<group>"; };
 		DD091D46174DF74E006630CC /* user1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user1@2x.png"; sourceTree = "<group>"; };
@@ -1178,6 +1180,7 @@
 		DD6E42C6177961B800B43DB7 /* new_resource */ = {
 			isa = PBXGroup;
 			children = (
+				DD05744617AF935B001DC036 /* allchina@2x.png */,
 				DD0FBF42179E309D009B7976 /* 141@2x.png */,
 				DD0FBF43179E309D009B7976 /* 142@2x.png */,
 				DD0FBF44179E309D009B7976 /* 143@2x.png */,
@@ -1681,6 +1684,7 @@
 				DD0FBF49179E309D009B7976 /* 143@2x.png in Resources */,
 				DD0FBF4A179E309D009B7976 /* 144@2x.png in Resources */,
 				DD0FBF4B179E309D009B7976 /* 145@2x.png in Resources */,
+				DD05744717AF935B001DC036 /* allchina@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1885,8 +1889,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-Objc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C32C2CD5-2951-4E62-8FB5-F8860BE61D7B";
+				PROVISIONING_PROFILE = "51382599-1554-4A8B-A540-B9A287A52BCA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "51382599-1554-4A8B-A540-B9A287A52BCA";
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1913,8 +1917,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-Objc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6193D714-98EA-41A0-BC06-C24D38050D9E";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6193D714-98EA-41A0-BC06-C24D38050D9E";
+				PROVISIONING_PROFILE = "1A38554B-220D-4B94-A927-F46954618A9E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1A38554B-220D-4B94-A927-F46954618A9E";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;

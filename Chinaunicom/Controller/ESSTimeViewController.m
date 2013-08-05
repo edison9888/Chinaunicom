@@ -10,6 +10,7 @@
 #import "requestServiceHelper.h"
 #import "Utility.h"
 #import "AreaViewController.h"
+#import "CommonHelper.h"
 @interface ESSTimeViewController ()
 {
     NSTimer *myTimer;
@@ -43,9 +44,6 @@
         [dict setValue:@"yearData" forKey:@"timeStr"];
         myTimer=[NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(timeFire:) userInfo:dict repeats:NO];
     }
-
-    
-//    [myTimer setFireDate:[NSDate distantPast]];
 }
 -(void)timeFire : (NSTimer *)timer
 {
@@ -108,12 +106,11 @@
         }];
 
     }
-
-
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.numLabel setTextColor:[CommonHelper hexStringToColor:@"74d4fa"]];
     [self.hdLabel setAdjustsFontSizeToFitWidth:YES];
     [self.hnLabel setAdjustsFontSizeToFitWidth:YES];
     [self.hbLabel setAdjustsFontSizeToFitWidth:YES];
@@ -134,8 +131,33 @@
     
         self.vpLabel.text=@"3G用户年开户数量 :";
     }
-
-    // Do any additional setup after loading the view from its nib.
+    self.lineImageView=[[UIImageView alloc]initWithFrame:CGRectMake(3, 86, 102, 2)];
+    [self.lineImageView setBackgroundColor:[UIColor whiteColor]];
+    [self.view addSubview:self.lineImageView];
+    
+    UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeFrom:)];
+    [recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
+    [[self view] addGestureRecognizer:recognizer];
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSUserDefaults *userdefaults=[NSUserDefaults standardUserDefaults];
+    BOOL num=[userdefaults boolForKey:@"isfirst"];
+    if (num==NO) {
+        UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapImage:)];
+        UIImageView *imageview=[[UIImageView alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
+        [imageview setUserInteractionEnabled:YES];
+        [imageview addGestureRecognizer:tap];
+        imageview.image=[UIImage imageNamed:@"allchina.png"];
+        [[UIApplication sharedApplication].keyWindow addSubview:imageview];
+        [userdefaults setBool:YES forKey:@"isfirst"];
+        [userdefaults synchronize];
+    }
+}
+-(void)tapImage:(UITapGestureRecognizer *)sender
+{
+    [sender.view removeFromSuperview];
 }
 - (IBAction)pressThreeGbutton:(UIButton *)sender {
      [myTimer invalidate];
@@ -159,25 +181,6 @@
         myTimer=[NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(timeFire:) userInfo:dict repeats:NO];
     }
 
-    
-//    [[requestServiceHelper defaultService]getESStotleNum:dict sucess:^(NSString *str) {
-//        NSString *num=[Utility changeTohu:str];
-//        self.numLabel.text=num;
-//    } falid:^(NSString *errorMsg) {
-//    }];
-//    
-//    [[requestServiceHelper defaultService]getEssAreaNum:dict sucess:^(NSArray *array) {
-//        self.hdLabel.text=[array objectAtIndex:3];
-//        self.hnLabel.text=[array objectAtIndex:5];
-//        self.hbLabel.text=[array objectAtIndex:0];
-//        self.hzLabel.text=[array objectAtIndex:6];
-//        self.xbLabel.text=[array objectAtIndex:1];
-//        self.xnLabel.text=[array objectAtIndex:2];
-//        self.dbLabel.text=[array objectAtIndex:4];
-//        [self numForLabel];
-//    } falid:^(NSString *errorMsg) {
-//
-//    }];
 }
 
 - (IBAction)pressIphoneFiveButton:(UIButton *)sender {
@@ -202,25 +205,6 @@
          self.vpLabel.text=@"iPhone5年开户数量 :";
          myTimer=[NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(timeFire:) userInfo:dict repeats:NO];
     }
-
-//    [[requestServiceHelper defaultService]getESSIphoneFiveNum:dict sucess:^(NSString *str) {
-//        NSString *num=[Utility changeTohu:str];
-//        self.numLabel.text=num;
-//    } falid:^(NSString *errorMsg) {
-//    }];
-//    
-//    [[requestServiceHelper defaultService]getEssAreaIphoneFiveNum:dict sucess:^(NSArray *array) {
-//        self.hdLabel.text=[array objectAtIndex:3];
-//        self.hnLabel.text=[array objectAtIndex:5];
-//        self.hbLabel.text=[array objectAtIndex:0];
-//        self.hzLabel.text=[array objectAtIndex:6];
-//        self.xbLabel.text=[array objectAtIndex:1];
-//        self.xnLabel.text=[array objectAtIndex:2];
-//        self.dbLabel.text=[array objectAtIndex:4];
-//        [self numForLabel];
-//    } falid:^(NSString *errorMsg) {
-//
-//    }];
 }
 
 - (IBAction)pressIphoneFour:(UIButton *)sender {
@@ -246,24 +230,6 @@
         myTimer=[NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(timeFire:) userInfo:dict repeats:NO];
     }
 
-//    [[requestServiceHelper defaultService]getESSIphoneFsNum:dict sucess:^(NSString *str) {
-//        NSString *num=[Utility changeTohu:str];
-//        self.numLabel.text=num;
-//    } falid:^(NSString *errorMsg) {
-//    }];
-//    
-//    [[requestServiceHelper defaultService]getEssAreaIphoneFsNum:dict sucess:^(NSArray *array) {
-//        self.hdLabel.text=[array objectAtIndex:3];
-//        self.hnLabel.text=[array objectAtIndex:5];
-//        self.hbLabel.text=[array objectAtIndex:0];
-//        self.hzLabel.text=[array objectAtIndex:6];
-//        self.xbLabel.text=[array objectAtIndex:1];
-//        self.xnLabel.text=[array objectAtIndex:2];
-//        self.dbLabel.text=[array objectAtIndex:4];
-//        [self numForLabel];
-//    } falid:^(NSString *errorMsg) {
-//    
-//    }];
 }
 
 -(void)isInTheRect : (UIButton *)bt
@@ -278,25 +244,11 @@
         [bt setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 
         [UIView animateWithDuration:0.3f animations:^{
-            self.lineImageView.frame=CGRectMake(bt.frame.origin.x+2, self.lineImageView.frame.origin.y, self.lineImageView.frame.size.width, self.lineImageView.frame.size.height);
+            self.lineImageView.frame=CGRectMake(bt.frame.origin.x+3, self.lineImageView.frame.origin.y, self.lineImageView.frame.size.width, self.lineImageView.frame.size.height);
         }];
 
     }
 }
-
-//-(void)changeVpLabel : (int) tag
-//{
-//
-//    if (tag==1) {
-//        self.vpLabel.text=@"3G用户实时开户数量 :";
-//    }else if (tag==2){
-//        self.vpLabel.text=@"iPhone5实时开户数量 :";
-//    }else if (tag==3)
-//    {
-//        self.vpLabel.text=@"iPhone4S实时开户数量 :";
-//    }
-//    
-//}
 -(void)numForLabel
 {
     NSMutableArray *array=[NSMutableArray arrayWithObjects:
@@ -308,10 +260,6 @@
                      self.xnLabel.text,
                      self.dbLabel.text,
                      nil] ;
-//    int a[]={[self.hdLabel.text intValue],[self.hnLabel.text intValue],[self.hbLabel.text intValue],[self.hzLabel.text intValue],[self.xbLabel.text intValue],[self.xnLabel.text intValue],[self.dbLabel.text intValue]};
-//    int num = totalsum(a, 7);
-//    NSMutableArray *muArray = [self ratio:array total:num];
-    
     NSMutableArray *muArray=[Utility calculatePercentage:array height:200];
     
     self.hdLabel.text=[Utility changeToWan:self.hdLabel.text];
@@ -421,5 +369,12 @@
 //        sum += a[i];
 //    return sum ;
 //}
-
+-(void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer{
+    
+    if(recognizer.direction==UISwipeGestureRecognizerDirectionLeft) {
+        
+//        NSLog(@"swipe left");
+        //执行程序
+    }
+}
 @end
