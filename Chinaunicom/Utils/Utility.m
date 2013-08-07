@@ -38,7 +38,6 @@ static Utility *shareSource = nil;
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    
     return self;
 }
 

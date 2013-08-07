@@ -11,6 +11,7 @@
 #import "Utility.h"
 #import "AreaViewController.h"
 #import "CommonHelper.h"
+#import "AllChinaViewController.h"
 @interface ESSTimeViewController ()
 {
     NSTimer *myTimer;
@@ -104,7 +105,6 @@
             [self numForLabel];
         } falid:^(NSString *errorMsg) {
         }];
-
     }
 }
 - (void)viewDidLoad
@@ -160,7 +160,7 @@
     [sender.view removeFromSuperview];
 }
 - (IBAction)pressThreeGbutton:(UIButton *)sender {
-     [myTimer invalidate];
+    [myTimer invalidate];
     [self isInTheRect:sender];
     //获取ESS实时3G用户发展总数
     NSMutableDictionary *dict= [NSMutableDictionary dictionary];
@@ -320,7 +320,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewDidUnload {
@@ -342,39 +341,16 @@
 {
     [super viewWillDisappear:animated];
     [myTimer invalidate];
-//    [myTimer setFireDate:[NSDate distantFuture]];
 }
-//-(NSMutableArray *)ratio :(NSArray *)dataArray total:(int)num
-//{
-//    float new=0;
-//    NSMutableArray *array=[NSMutableArray arrayWithCapacity:[dataArray count]];
-//    for (int i=0; i<[dataArray count]; i++) {
-//        int data = [[dataArray objectAtIndex:i]intValue];
-//        if (data==0) {
-//            new=0;
-//        }else
-//        {
-//           new =data*190/num;
-//        }
-//        
-//        [array addObject:[NSString stringWithFormat:@"%f",new]];
-//    }
-//    return array;
-//}
-//int totalsum( int* a, int n )
-//{
-//    int sum = 0;
-//    int i;
-//    for ( i = 0; i < n; ++i )
-//        sum += a[i];
-//    return sum ;
-//}
+
 -(void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer{
     
     if(recognizer.direction==UISwipeGestureRecognizerDirectionLeft) {
-        
+        AllChinaViewController *allchina=[[AllChinaViewController alloc]initWithNibName:@"AllChinaViewController" bundle:nil];
+        allchina.titleStr=_titleStr;
+        [self.navigationController pushViewController:allchina animated:YES];
 //        NSLog(@"swipe left");
-        //执行程序
     }
 }
+
 @end

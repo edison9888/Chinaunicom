@@ -148,6 +148,13 @@
 //ESS合约计划 省份排名（整点数据、月数据、年数据）
 #define GET_PROVINCE_ESS [SERVERPATH stringByAppendingFormat:@"daping/getProvinceRankingOfESS"]
 
+//全国数据 3G
+#define GET_CHINA_3G [SERVERPATH stringByAppendingFormat:@"daping/get3G_nationwide"]
+//全国数据 iphone5
+#define GET_CHINA_IPHONE5 [SERVERPATH stringByAppendingFormat:@"daping/getiPhone5_nationwide"]
+//全国数据 iphone4s
+#define GET_CHINA_IPHONE4S [SERVERPATH stringByAppendingFormat:@"daping/getiPhone4S_nationwide"]
+
 #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 #define I5Height 548
 

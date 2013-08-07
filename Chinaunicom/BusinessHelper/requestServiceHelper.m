@@ -607,5 +607,25 @@ static requestServiceHelper *requestService;
         
     }];
 }
-
+//全国数据
+-(void)getChinaNum:(NSMutableDictionary *)dictionary
+                  url:(NSString *)url
+               sucess:(void (^) (NSArray *str))sucess
+                falid:(void (^) (NSString *errorMsg))faild{
+    
+    [HttpRequestHelper asyncGetRequest:url parameter:dictionary requestComplete:^(NSString *responseStr) {
+        
+        NSData *data = [responseStr dataUsingEncoding: NSUTF8StringEncoding];
+        
+        NSArray *array=[NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingAllowFragments) error:nil];
+        if (array) {
+            sucess(array);
+        }
+        
+    }requestFailed:^(NSString *errorMsg) {
+        
+        faild(errorMsg);
+        
+    }];
+}
 @end

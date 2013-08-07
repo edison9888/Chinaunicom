@@ -182,6 +182,8 @@
 		DD1E357B178ABF8B00D0AD5F /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD1E357A178ABF8A00D0AD5F /* ImageIO.framework */; };
 		DD1E35AB178AC8C600D0AD5F /* LeftMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD1E35A9178AC8C500D0AD5F /* LeftMenuViewController.m */; };
 		DD1E35AC178AC8C600D0AD5F /* LeftMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD1E35AA178AC8C600D0AD5F /* LeftMenuViewController.xib */; };
+		DD2ADE6517B21C540016CE93 /* AllChinaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2ADE6317B21C540016CE93 /* AllChinaViewController.m */; };
+		DD2ADE6617B21C540016CE93 /* AllChinaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD2ADE6417B21C540016CE93 /* AllChinaViewController.xib */; };
 		DD3E0F46174EFD0C002AB4F4 /* LoadingController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3E0F44174EFD0C002AB4F4 /* LoadingController.m */; };
 		DD3E0F47174EFD0C002AB4F4 /* LoadingController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD3E0F45174EFD0C002AB4F4 /* LoadingController.xib */; };
 		DD3EF088179D1677008700CD /* img_mine_addphoto_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DD3EF087179D1677008700CD /* img_mine_addphoto_@2x.png */; };
@@ -557,6 +559,9 @@
 		DD1E35A8178AC8C500D0AD5F /* LeftMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuViewController.h; sourceTree = "<group>"; };
 		DD1E35A9178AC8C500D0AD5F /* LeftMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuViewController.m; sourceTree = "<group>"; };
 		DD1E35AA178AC8C600D0AD5F /* LeftMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LeftMenuViewController.xib; path = ../Controller/LeftMenuViewController.xib; sourceTree = "<group>"; };
+		DD2ADE6217B21C540016CE93 /* AllChinaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllChinaViewController.h; sourceTree = "<group>"; };
+		DD2ADE6317B21C540016CE93 /* AllChinaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllChinaViewController.m; sourceTree = "<group>"; };
+		DD2ADE6417B21C540016CE93 /* AllChinaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AllChinaViewController.xib; path = ../Controller/AllChinaViewController.xib; sourceTree = "<group>"; };
 		DD3E0F43174EFD0B002AB4F4 /* LoadingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingController.h; sourceTree = "<group>"; };
 		DD3E0F44174EFD0C002AB4F4 /* LoadingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingController.m; sourceTree = "<group>"; };
 		DD3E0F45174EFD0C002AB4F4 /* LoadingController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoadingController.xib; path = ../Controller/LoadingController.xib; sourceTree = "<group>"; };
@@ -1009,6 +1014,7 @@
 		77292B9C17354B99004988E0 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DD2ADE6417B21C540016CE93 /* AllChinaViewController.xib */,
 				66A8BC0E177CD4A200D6FF89 /* BussinessDataViewController.xib */,
 				DD1C524C177AD8480077042C /* ESSTimeViewController.xib */,
 				66A8BC00177CD21E00D6FF89 /* PayViewController.xib */,
@@ -1419,6 +1425,8 @@
 				66A8BC0D177CD4A200D6FF89 /* BussinessDataViewController.m */,
 				DD1C524A177AD8400077042C /* ESSTimeViewController.h */,
 				DD1C524B177AD8440077042C /* ESSTimeViewController.m */,
+				DD2ADE6217B21C540016CE93 /* AllChinaViewController.h */,
+				DD2ADE6317B21C540016CE93 /* AllChinaViewController.m */,
 				66A8BBFD177CD21E00D6FF89 /* PayViewController.h */,
 				66A8BBFF177CD21E00D6FF89 /* PayViewController.m */,
 				66A8BBFB177CD21E00D6FF89 /* MonthDataViewController.h */,
@@ -1685,6 +1693,7 @@
 				DD0FBF4A179E309D009B7976 /* 144@2x.png in Resources */,
 				DD0FBF4B179E309D009B7976 /* 145@2x.png in Resources */,
 				DD05744717AF935B001DC036 /* allchina@2x.png in Resources */,
+				DD2ADE6617B21C540016CE93 /* AllChinaViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1788,6 +1797,7 @@
 				DDA86C96178D4A50001ED157 /* ReportTypeViewController.m in Sources */,
 				DD798E56178E750300292F12 /* MianView.m in Sources */,
 				DD798E59178EAD3200292F12 /* MonthPointImageView.m in Sources */,
+				DD2ADE6517B21C540016CE93 /* AllChinaViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

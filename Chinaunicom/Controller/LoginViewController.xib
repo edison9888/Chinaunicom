@@ -119,7 +119,7 @@
 						</object>
 						<object class="NSCustomResource" key="IBUIBackground">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">user2@2x.png</string>
+							<string key="NSResourceName">password1@2x.png</string>
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription" id="320763754">
 							<int key="type">1</int>
@@ -159,7 +159,7 @@
 						</object>
 						<object class="NSCustomResource" key="IBUIBackground">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">password1@2x.png</string>
+							<string key="NSResourceName">user1@2x.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="320763754"/>
 						<reference key="IBUIFont" ref="27164828"/>
@@ -1187,7 +1187,7 @@
 			<string key="login@2x.png">{387, 73}</string>
 			<string key="password1@2x.png">{586, 93}</string>
 			<string key="title@2x.png">{640, 44}</string>
-			<string key="user2@2x.png">{586, 93}</string>
+			<string key="user1@2x.png">{586, 93}</string>
 		</dictionary>
 		<bool key="IBDocument.UseAutolayout">YES</bool>
 		<string key="IBCocoaTouchPluginVersion">2083</string>

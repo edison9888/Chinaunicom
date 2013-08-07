@@ -135,7 +135,7 @@
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     [dictionary setValue:username forKey:@"userName"];
     [dictionary setValue:password forKey:@"password"];
-    [dictionary setValue:token forKey:@"deviceToken"];
+    [dictionary setValue:@"fdsafas" forKey:@"deviceToken"];
     [[requestServiceHelper defaultService] loginWithParamter:dictionary sucess:^(User *user) {
         //存储用户信息
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:user];
@@ -164,12 +164,12 @@
     NSInteger tag=textField.tag;
     
     if(tag==10010){
-        [textField setBackground:[UIImage imageNamed:@"user2"]];
-        [self.passWordTextField setBackground:[UIImage imageNamed:@"password1"]];
+        [textField setBackground:[UIImage imageNamed:@"password2.png"]];
+        [self.passWordTextField setBackground:[UIImage imageNamed:@"user1.png"]];
     }
     else{
-        [textField setBackground:[UIImage imageNamed:@"password2"]];
-        [self.userNameTextField setBackground:[UIImage imageNamed:@"user1"]];
+        [textField setBackground:[UIImage imageNamed:@"user2.png"]];
+        [self.userNameTextField setBackground:[UIImage imageNamed:@"password1.png"]];
     }
 }
 
@@ -178,12 +178,12 @@
     
     if (isOff==YES) {
         if(tag==10010){
-            [textField setBackground:[UIImage imageNamed:@"user1"]];
-            [self.passWordTextField setBackground:[UIImage imageNamed:@"password2"]];
+            [textField setBackground:[UIImage imageNamed:@"password1.png"]];
+//            [self.passWordTextField setBackground:[UIImage imageNamed:@"user1.png"]];
         }
         else{
-            [textField setBackground:[UIImage imageNamed:@"password1"]];
-            [self.userNameTextField setBackground:[UIImage imageNamed:@"user2"]];
+            [textField setBackground:[UIImage imageNamed:@"user1.png"]];
+//            [self.userNameTextField setBackground:[UIImage imageNamed:@"user2.png"]];
         }
     }
 }

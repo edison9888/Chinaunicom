@@ -26,6 +26,10 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self sendRequest];
+}
+-(void)sendRequest
+{
     if ([self.title isEqualToString:@"201"]) {
         self.titleLabel.text=@"整点地域排名";
         //合约计划实时
@@ -73,7 +77,7 @@
             [self drawImage:str];
         } falid:^(NSString *errorMsg) {
         }];
-
+        
     }else if ([self.title isEqualToString:@"302"])
     {
         self.titleLabel.text=@"月地域排名";
@@ -83,7 +87,7 @@
             [self drawImage:str];
         } falid:^(NSString *errorMsg) {
         }];
-
+        
     }else if ([self.title isEqualToString:@"303"])
     {
         self.titleLabel.text=@"月地域排名";
@@ -143,7 +147,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
 }
 -(IBAction)popToHigherLevel:(id)sender
 {
@@ -154,9 +157,15 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)removeSubView
+{
+    for (UIView *view in self.myScrollView.subviews) {
+        [view removeFromSuperview];
+    }
+}
 -(void)drawImage : (NSArray *)array
 {
-
+    [self removeSubView];
     NSMutableArray *valueArray=[NSMutableArray arrayWithCapacity:[array count]];
     NSMutableArray *nameArray=[NSMutableArray arrayWithCapacity:[array count]];
     for (int i=0; i<[array count]; i++) {
